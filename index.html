@@ -1,0 +1,5543 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ethiopian Apostolic Church - Youth Meklit Service</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Chart.js Engine integration for dynamic directional charts -->
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=_qghTu8fvozjD14iedrjYErD7fxvAmp4bbinP1QccnharxsmLqS1s3M5oIT5vd5ry9_7ayyp9dG8B2fbfpAtgA0cvJj2KJcqZFCh4H92M0hx25LHIj8wYBmcnguexdPHg8cWa00gHhXseRBK4eEWg7iYNE_w67elO2_Im7HYoof6NN2TIbeInSZXtFhULkMACfnKa-8WrzyOuzxePueapcNUDoIoiHgQP5_uvcFTT_ZcejRM_CM_Xo4-1_GXTy9Y5Vq6xgEm4sRBFLIXlzQ4kRrokNf8ZC0WTxBI-Ns6ksdxjOk9JiNlo5FkMLJ_LCaUjb1MeCoq8Ide7OdTSKibEA" charset="UTF-8"></script><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=zaBaLXZvSOXSmZLtKYRxMjtzteIAZhQDPYxc2zeFJkPf_SJla190uEl_uXKT40AlVoP4Jefg6UFIpexQkJjPZ9JjwccJBaLet70OF6YG9Dv62Kr4DK3LGzcqMcSdKFFqHEKlN8Y-G903sYfLFj7zQB62XPZdnKJc-fSK5ijpy2872bZLuUdk30BJfH0wStr50emu-uyQMQh2bOvbmc1wUnlg8KWeIC7k5l8ao82f4z7pWP0vX_FF2jtw5IFikqIdDqNjqstflTrDbwT26KRVT7gn00_9JlQDoR8zAAAC62mGG2l2pTig-9BBdztZsLfVrcXb-NEe8-TGkP4RKPVVDmdqQDIzZhe5fTq2RMQCQ7A" charset="UTF-8"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root{
+ --primary-blue:#0b3c5d;
+ --secondary-blue:#1d2731;
+ --blue2:#173e65;
+ --blue3:#246b9a;
+ --accent-gold:#c5a059;
+ --gold:#d4af37;
+ --accent-gold-light:#f4ebd0;
+ --bg-color:#f4f6f9;
+ --card-bg:#fff;
+ --text-main:#333;
+ --text-muted:#667085;
+ --border-color:#d1d5db;
+ --success:#10b981;
+ --danger:#ef4444;
+ --warning:#f59e0b;
+ --info:#3b82f6;
+ --sidebar-width:260px;
+ --shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+*{
+ box-sizing:border-box;
+ margin:0;
+ padding:0;
+ font-family:'Inter','Noto Sans Ethiopic',sans-serif;
+}
+
+body{
+ background:var(--bg-color);
+ color:var(--text-main);
+ min-height:100vh;
+}
+
+button,.btn{
+ border:0;
+ background:var(--primary-blue);
+ color:#fff;
+ padding:.65rem 1rem;
+ border-radius:6px;
+ font-weight:600;
+ cursor:pointer;
+ transition:.2s;
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ gap:.45rem;
+ font-size:.88rem;
+}
+
+button:hover,.btn:hover{background:#082d45}
+button:active,.btn:active{transform:scale(.98)}
+
+.btn-gold{background:var(--accent-gold);color:#17202a}
+.btn-gold:hover{background:#ad8742}
+
+.btn-success{background:var(--success)}
+.btn-success:hover{background:#059669}
+
+.btn-danger{background:var(--danger)}
+.btn-danger:hover{background:#dc2626}
+
+.btn-warning{background:var(--warning);color:#17202a}
+.btn-warning:hover{background:#d97706}
+
+.btn-info{background:var(--info)}
+.btn-info:hover{background:#2563eb}
+
+.btn-outline{
+ background:#fff;
+ color:var(--text-main);
+ border:1px solid var(--border-color);
+}
+
+.btn-outline:hover{background:#f3f4f6}
+
+.btn-sm{
+ padding:.4rem .65rem;
+ font-size:.78rem;
+}
+
+.hidden{display:none!important}
+
+input,select,textarea{
+ width:100%;
+ padding:.65rem .75rem;
+ border:1px solid var(--border-color);
+ border-radius:6px;
+ font-size:.9rem;
+ background:#fff;
+ outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+ border-color:var(--primary-blue);
+ box-shadow:0 0 0 3px rgba(11,60,93,.1);
+}
+
+textarea{resize:vertical;min-height:90px}
+
+label{
+ display:block;
+ font-size:.82rem;
+ font-weight:700;
+ color:var(--secondary-blue);
+ margin-bottom:.35rem;
+}
+
+.form-group{margin-bottom:1rem}
+
+.grid-2{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:1rem;
+}
+
+.grid-3{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:1rem;
+}
+
+.grid-4{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:1rem;
+}
+
+.w-full{width:100%}
+
+/* LOGIN */
+
+#login-screen{
+ position:fixed;
+ inset:0;
+ z-index:9999;
+ background:linear-gradient(135deg,#0b3c5d,#1d2731);
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ padding:1rem;
+}
+
+.login-card{
+ background:#fff;
+ width:100%;
+ max-width:430px;
+ padding:2.3rem 2rem;
+ border-radius:14px;
+ box-shadow:0 20px 50px rgba(0,0,0,.3);
+ border-top:5px solid var(--accent-gold);
+ text-align:center;
+}
+
+.logo-large{
+ width:90px;
+ height:90px;
+ border-radius:50%;
+ object-fit:contain;
+ border:3px solid var(--accent-gold);
+ margin-bottom:1rem;
+}
+
+.login-card h1{
+ font-size:1.15rem;
+ color:var(--primary-blue);
+ margin-bottom:.35rem;
+}
+
+.login-card h2{
+ font-size:.86rem;
+ color:var(--text-muted);
+ margin-bottom:1.5rem;
+ font-weight:500;
+}
+
+.login-form{
+ text-align:left;
+}
+
+.password-wrapper{
+ position:relative;
+}
+
+.password-wrapper input{
+ padding-right:42px;
+}
+
+.password-toggle{
+ position:absolute;
+ right:12px;
+ top:50%;
+ transform:translateY(-50%);
+ color:#667085;
+ cursor:pointer;
+}
+
+/* APP */
+
+#app-container{
+ display:flex;
+ height:100vh;
+ overflow:hidden;
+}
+
+aside{
+ width:var(--sidebar-width);
+ background:var(--secondary-blue);
+ color:#fff;
+ display:flex;
+ flex-direction:column;
+ flex-shrink:0;
+}
+
+.sidebar-header{
+ padding:1.2rem 1rem;
+ display:flex;
+ align-items:center;
+ gap:.7rem;
+ background:rgba(0,0,0,.18);
+ border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.sidebar-logo{
+ width:48px;
+ height:48px;
+ border-radius:50%;
+ object-fit:contain;
+ background:#fff;
+ border:2px solid var(--accent-gold);
+}
+
+.sidebar-title{
+ font-weight:800;
+ font-size:.88rem;
+}
+
+.sidebar-role{
+ color:var(--accent-gold);
+ font-size:.7rem;
+ margin-top:2px;
+}
+
+.sidebar-menu{
+ list-style:none;
+ padding:.7rem 0;
+ overflow-y:auto;
+ flex:1;
+}
+
+.sidebar-menu li a{
+ color:#cbd5e1;
+ text-decoration:none;
+ display:flex;
+ align-items:center;
+ gap:.7rem;
+ padding:.72rem 1.15rem;
+ cursor:pointer;
+ font-size:.87rem;
+}
+
+.sidebar-menu li a:hover,
+.sidebar-menu li.active>a{
+ background:var(--primary-blue);
+ color:#fff;
+ border-left:4px solid var(--accent-gold);
+}
+
+.sidebar-menu li a i:first-child{
+ width:18px;
+ text-align:center;
+}
+
+.submenu{
+ list-style:none;
+ background:rgba(0,0,0,.13);
+}
+
+.submenu a{
+ padding-left:2.8rem!important;
+ font-size:.8rem!important;
+}
+
+main{
+ flex:1;
+ display:flex;
+ flex-direction:column;
+ min-width:0;
+}
+
+.topbar{
+ height:70px;
+ background:#fff;
+ border-bottom:1px solid var(--border-color);
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 1.7rem;
+ flex-shrink:0;
+}
+
+.page-title{
+ color:var(--primary-blue);
+ font-size:1.2rem;
+}
+
+.top-user{
+ display:flex;
+ align-items:center;
+ gap:.7rem;
+}
+
+.top-user img{
+ width:38px;
+ height:38px;
+ border-radius:50%;
+ object-fit:contain;
+ border:2px solid var(--accent-gold);
+}
+
+.top-user-name{
+ font-weight:700;
+ font-size:.85rem;
+}
+
+.top-user-role{
+ color:var(--text-muted);
+ font-size:.72rem;
+}
+
+.content-body{
+ flex:1;
+ overflow-y:auto;
+ padding:1.7rem;
+}
+
+/* CARDS */
+
+.card{
+ background:#fff;
+ border-radius:9px;
+ box-shadow:var(--shadow);
+ border:1px solid #edf0f3;
+ margin-bottom:1.2rem;
+}
+
+.card-header{
+ padding:1rem 1.2rem;
+ border-bottom:1px solid var(--border-color);
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:1rem;
+}
+
+.card-title{
+ font-size:.95rem;
+ font-weight:800;
+ color:var(--secondary-blue);
+}
+
+.card-body{
+ padding:1.2rem;
+}
+
+.stats-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+ gap:1rem;
+ margin-bottom:1.3rem;
+}
+
+.stat-card{
+ background:#fff;
+ border-radius:9px;
+ padding:1.2rem;
+ box-shadow:var(--shadow);
+ border-left:4px solid var(--primary-blue);
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+}
+
+.stat-card.gold{border-left-color:var(--accent-gold)}
+.stat-card.success{border-left-color:var(--success)}
+.stat-card.warning{border-left-color:var(--warning)}
+.stat-card.info{border-left-color:var(--info)}
+
+.stat-label{
+ color:var(--text-muted);
+ font-size:.72rem;
+ font-weight:800;
+ text-transform:uppercase;
+ margin-bottom:.25rem;
+}
+
+.stat-value{
+ color:var(--secondary-blue);
+ font-size:1.65rem;
+ font-weight:800;
+}
+
+.stat-card i{
+ color:#d7dde3;
+ font-size:1.8rem;
+}
+
+/* TABLE */
+
+.table-wrap{
+ overflow-x:auto;
+}
+
+table{
+ width:100%;
+ border-collapse:collapse;
+ font-size:.82rem;
+}
+
+th,td{
+ padding:.7rem .75rem;
+ border-bottom:1px solid var(--border-color);
+ text-align:left;
+ white-space:nowrap;
+}
+
+th{
+ background:#f8fafc;
+ color:var(--secondary-blue);
+ font-weight:800;
+}
+
+tr:hover td{background:#f9fafb}
+
+.actions{
+ display:flex;
+ gap:.35rem;
+ align-items:center;
+}
+
+.badge{
+ display:inline-flex;
+ align-items:center;
+ padding:.25rem .55rem;
+ border-radius:20px;
+ font-size:.7rem;
+ font-weight:800;
+}
+
+.badge-success{background:#d1fae5;color:#047857}
+.badge-danger{background:#fee2e2;color:#b91c1c}
+.badge-warning{background:#fef3c7;color:#92400e}
+.badge-info{background:#dbeafe;color:#1d4ed8}
+.badge-gray{background:#e5e7eb;color:#374151}
+
+.empty{
+ text-align:center;
+ color:var(--text-muted);
+ padding:2.5rem 1rem;
+}
+
+.toolbar{
+ display:flex;
+ flex-wrap:wrap;
+ gap:.6rem;
+ align-items:center;
+}
+
+.toolbar .search{
+ flex:1;
+ min-width:200px;
+}
+
+/* MODAL */
+
+.modal-backdrop{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.55);
+ z-index:5000;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:1rem;
+}
+
+.modal{
+ width:100%;
+ max-width:720px;
+ max-height:92vh;
+ background:#fff;
+ border-radius:10px;
+ overflow:hidden;
+ box-shadow:0 20px 60px rgba(0,0,0,.3);
+ display:flex;
+ flex-direction:column;
+}
+
+.modal-lg{max-width:1000px}
+
+.modal-header{
+ background:var(--primary-blue);
+ color:#fff;
+ padding:1rem 1.25rem;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+}
+
+.modal-body{
+ padding:1.25rem;
+ overflow-y:auto;
+}
+
+.modal-footer{
+ padding:1rem 1.25rem;
+ background:#f8fafc;
+ border-top:1px solid var(--border-color);
+ display:flex;
+ justify-content:flex-end;
+ gap:.5rem;
+}
+
+/* TOAST */
+
+#toast-container{
+ position:fixed;
+ right:20px;
+ top:20px;
+ z-index:10000;
+ display:flex;
+ flex-direction:column;
+ gap:8px;
+}
+
+.toast{
+ min-width:280px;
+ max-width:420px;
+ padding:.85rem 1rem;
+ border-radius:7px;
+ background:#1d2731;
+ color:#fff;
+ box-shadow:0 8px 25px rgba(0,0,0,.18);
+ border-left:4px solid var(--success);
+ animation:toastIn .25s ease;
+ font-size:.82rem;
+}
+
+.toast.error{border-left-color:var(--danger)}
+.toast.warning{border-left-color:var(--warning)}
+.toast.info{border-left-color:var(--info)}
+
+@keyframes toastIn{
+ from{transform:translateX(100%);opacity:0}
+ to{transform:translateX(0);opacity:1}
+}
+
+/* A4 FORM */
+
+#form-print-area{
+ background:#dfe4e8;
+ padding:1rem;
+ overflow:auto;
+}
+
+.sheet{
+ width:210mm;
+ min-height:297mm;
+ margin:0 auto;
+ background:linear-gradient(135deg,#fff,#fbfdff,#fff);
+ padding:4mm 5mm 3mm;
+ position:relative;
+ display:flex;
+ flex-direction:column;
+ overflow:hidden;
+ border:1.1mm solid #173e65;
+ box-shadow:0 10px 35px rgba(0,0,0,.18);
+}
+
+.sheet:before{
+ content:"";
+ position:absolute;
+ inset:1.8mm;
+ border:.25mm solid #d4af37;
+ pointer-events:none;
+}
+
+.header-container{
+ position:relative;
+ z-index:2;
+ display:flex;
+ align-items:center;
+ min-height:20mm;
+ padding:1mm;
+ margin-bottom:1mm;
+ border-bottom:.65mm solid #173e65;
+ background:linear-gradient(90deg,#f5f9fc,#fff,#f5f9fc);
+}
+
+.logo-frame{
+ width:19mm;
+ height:19mm;
+ flex-shrink:0;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:#fff;
+ border:.55mm solid #d4af37;
+ padding:1mm;
+}
+
+.logo-frame img{
+ width:100%;
+ height:100%;
+ object-fit:contain;
+}
+
+.header-titles{
+ flex:1;
+ text-align:center;
+ padding:0 4mm;
+}
+
+.header-titles h1{
+ font-size:14px;
+ font-weight:900;
+ color:#173e65;
+ line-height:1.15;
+ margin-bottom:.8mm;
+}
+
+.header-titles h2{
+ font-size:10px;
+ font-weight:800;
+ color:#246b9a;
+ margin-bottom:1.2mm;
+}
+
+.header-titles h3{
+ display:inline-block;
+ font-size:10px;
+ font-weight:900;
+ color:#fff;
+ background:linear-gradient(90deg,#173e65,#246b9a,#173e65);
+ padding:1.1mm 5mm;
+ border:.3mm solid #d4af37;
+ border-radius:1mm;
+}
+
+.info-box{
+ position:relative;
+ z-index:2;
+ min-height:26mm;
+ display:grid;
+ grid-template-columns:1fr 21mm;
+ gap:3mm;
+ align-items:center;
+ padding:2mm 3mm;
+ margin-bottom:1mm;
+ background:linear-gradient(135deg,#edf5fa,#fff,#edf5fa);
+ border:.5mm solid #173e65;
+}
+
+.info-grid{
+ width:100%;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ column-gap:5mm;
+ row-gap:2mm;
+}
+
+.full-span{grid-column:span 2}
+
+.info-row{
+ display:flex;
+ align-items:baseline;
+ gap:2mm;
+ font-size:8.2px;
+ min-height:3.8mm;
+}
+
+.info-row .label{
+ font-weight:800;
+ color:#173e65;
+ white-space:nowrap;
+}
+
+.write-line{
+ flex:1;
+ min-width:15mm;
+ min-height:4mm;
+ border:none;
+ border-bottom:.35mm dotted #246b9a;
+ background:transparent;
+ font-size:8.2px;
+ padding:0 2mm;
+ color:#173e65;
+ outline:none;
+}
+
+.write-line-short{
+ display:inline-block;
+ width:16mm;
+ min-height:4mm;
+ border:none;
+ border-bottom:.35mm dotted #246b9a;
+ background:transparent;
+ font-size:8.2px;
+ text-align:center;
+ color:#173e65;
+ outline:none;
+}
+
+.photo-btn-container{
+ width:20mm;
+ height:24mm;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ background:#f1f5f8;
+ border:.55mm solid #173e65;
+ font-size:7.2px;
+ font-weight:900;
+ text-align:center;
+ cursor:pointer;
+ position:relative;
+ overflow:hidden;
+}
+
+.photo-btn-container img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ position:absolute;
+ inset:0;
+}
+
+.photo-btn-container input{
+ position:absolute;
+ inset:0;
+ opacity:0;
+ cursor:pointer;
+}
+
+.embedded-table-area{
+ flex:1;
+ display:flex;
+ flex-direction:column;
+ position:relative;
+ z-index:2;
+}
+
+.embedded-table-area table{
+ width:100%;
+ border-collapse:collapse;
+ table-layout:fixed;
+ border:.65mm solid #173e65;
+ background:#fff;
+}
+
+.embedded-table-area th,
+.embedded-table-area td{
+ border:.25mm solid #246b9a;
+ text-align:center;
+ vertical-align:middle;
+ padding:.4mm .2mm;
+ font-size:7px;
+ line-height:1;
+ overflow:hidden;
+}
+
+.embedded-table-area thead tr:first-child th{
+ background:linear-gradient(180deg,#214f78,#173e65);
+ color:#fff;
+ font-weight:900;
+ font-size:7.2px;
+ height:8mm;
+}
+
+.sub-th{
+ background:linear-gradient(180deg,#2d7ba8,#246b9a)!important;
+ color:#fff!important;
+ font-size:6.8px!important;
+ font-weight:800;
+ height:5mm;
+}
+
+.data-row{height:5.4mm}
+.data-row td{
+ height:5.4mm;
+ background:#fff;
+ border-color:#8eafc4;
+}
+
+.data-row:nth-child(even) td{background:#f1f7fb}
+
+.date-input,
+.money-input,
+.total-input,
+.text-input{
+ width:100%;
+ height:100%;
+ min-height:4.5mm;
+ border:none;
+ outline:none;
+ background:transparent;
+ text-align:center;
+ font-size:6.8px;
+ color:#173e65;
+ padding:0;
+}
+
+.total-input{
+ font-weight:bold;
+ background:#fdfae7;
+}
+
+.sheet-footer{
+ position:relative;
+ z-index:5;
+ text-align:center;
+ margin-top:1mm;
+ padding-top:1.2mm;
+ background:#fff;
+}
+
+.verse{
+ font-size:8.2px;
+ color:#173e65;
+ font-weight:800;
+ font-style:italic;
+}
+
+/* DASHBOARD */
+
+.quick-actions{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:.8rem;
+ margin-bottom:1.3rem;
+}
+
+.quick-action{
+ background:#fff;
+ padding:1rem;
+ border-radius:8px;
+ border:1px solid #edf0f3;
+ box-shadow:var(--shadow);
+ cursor:pointer;
+ display:flex;
+ align-items:center;
+ gap:.8rem;
+ transition:.2s;
+}
+
+.quick-action:hover{
+ transform:translateY(-2px);
+ border-color:var(--accent-gold);
+}
+
+.quick-action i{
+ width:40px;
+ height:40px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ border-radius:8px;
+ background:#eef5fa;
+ color:var(--primary-blue);
+}
+
+/* INTERACTIVE ANALYTICS EXTENSIONS */
+.rank-badge{
+ display:inline-block;
+ width:24px;
+ height:24px;
+ line-height:24px;
+ text-align:center;
+ border-radius:50%;
+ font-weight:bold;
+ font-size:.75rem;
+ background:#e2e8f0;
+ color:#475569;
+}
+.rank-1{background:#fef08a;color:#854d0e;border:1px solid #eab308}
+.rank-2{background:#e2e8f0;color:#334155;border:1px solid #94a3b8}
+.rank-3{background:#ffedd5;color:#9a3412;border:1px solid #f97316}
+
+.compare-card{
+ border-top:4px solid var(--accent-gold);
+ background:#fff;
+ border-radius:8px;
+ padding:1rem;
+ box-shadow:var(--shadow);
+}
+.compare-title{
+ font-weight:800;
+ font-size:1.1rem;
+ color:var(--primary-blue);
+ margin-bottom:.5rem;
+ text-align:center;
+}
+
+/* MOBILE */
+
+.mobile-menu{
+ display:none;
+ background:none;
+ color:var(--primary-blue);
+ padding:.2rem;
+}
+
+@media(max-width:900px){
+ aside{
+  position:fixed;
+  left:-270px;
+  top:0;
+  bottom:0;
+  z-index:4000;
+  transition:.25s;
+ }
+
+ aside.open{left:0}
+
+ .mobile-menu{display:block}
+
+ .grid-4{grid-template-columns:repeat(2,1fr)}
+ .grid-3{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:650px){
+ .content-body{padding:1rem}
+ .topbar{padding:0 1rem}
+ .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+ .top-user div{display:none}
+ .stats-grid{grid-template-columns:1fr 1fr}
+ .stats-grid .stat-value{font-size:1.3rem}
+ .quick-actions{grid-template-columns:1fr}
+}
+
+@media print{
+ body{background:#fff}
+ body *{visibility:hidden}
+ #form-print-area,#form-print-area *{
+  visibility:visible;
+ }
+ #form-print-area{
+  position:absolute;
+  left:0;
+  top:0;
+  padding:0;
+  background:#fff;
+  width:100%;
+ }
+ .sheet{
+  margin:0;
+  box-shadow:none;
+ }
+ .no-print{display:none!important}
+ @page{
+  size:A4 portrait;
+  margin:0;
+ }
+}
+
+/* ============================================================
+   SEPARATE GROUP FUNDS - DOES NOT TOUCH CANDIDATE MONEY
+============================================================ */
+.group-funds-panel{margin-top:1.25rem}
+.group-fund-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1rem}
+.group-fund-stat{background:linear-gradient(135deg,#fff,#f8fafc);border:1px solid #e5e7eb;border-radius:12px;padding:1rem;box-shadow:0 4px 14px rgba(15,23,42,.05)}
+.group-fund-stat .label{font-size:.78rem;color:#667085;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.group-fund-stat .value{margin-top:.35rem;font-size:1.35rem;font-weight:800;color:var(--primary-blue)}
+.group-fund-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.group-fund-card{border:1px solid #e5e7eb;border-radius:12px;padding:1rem;background:#fff;box-shadow:0 4px 16px rgba(15,23,42,.05)}
+.group-fund-card h4{margin:0 0 .35rem;color:var(--primary-blue)}
+.group-fund-balance{font-size:1.45rem;font-weight:900;color:#15803d}
+.group-fund-meta{font-size:.78rem;color:#667085;margin-top:.2rem}
+.group-members-list{max-height:420px;overflow:auto}
+.group-member-row{display:flex;align-items:center;gap:.8rem;padding:.75rem;border:1px solid #eef2f7;border-radius:10px;margin-bottom:.55rem;background:#fafcff}
+.group-member-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#eaf0f6;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--primary-blue)}
+.group-member-name{font-weight:800;color:#243b53}
+.group-member-meta{font-size:.78rem;color:#667085}
+@media(max-width:900px){.group-fund-summary{grid-template-columns:repeat(2,1fr)}.group-fund-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.group-fund-summary,.group-fund-grid{grid-template-columns:1fr}}
+
+</style>
+</head>
+
+<body>
+
+<div id="toast-container"></div>
+
+<!-- LOGIN -->
+<div id="login-screen">
+ <div class="login-card">
+
+  <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg"
+       class="logo-large"
+       alt="Church Logo">
+
+  <h1>Apostolic Church Youth Meklit</h1>
+  <h2>Youth Meklit Service - Contribution Management</h2>
+
+  <form id="login-form" onsubmit="handleLogin(event)" class="login-form">
+
+   <div class="form-group">
+    <label>Username</label>
+    <input id="login-username"
+           autocomplete="username"
+           placeholder="Enter username"
+           required>
+   </div>
+
+   <div class="form-group">
+    <label>Password</label>
+
+    <div class="password-wrapper">
+     <input id="login-password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Enter password"
+            required>
+
+     <i class="fa fa-eye password-toggle"
+        onclick="toggleLoginPassword()"></i>
+    </div>
+   </div>
+
+   <label style="display:flex;align-items:center;gap:.45rem;cursor:pointer">
+    <input type="checkbox"
+           id="remember-login"
+           style="width:auto">
+    Remember login on this browser
+   </label>
+
+   <button type="submit" class="w-full" style="margin-top:.8rem">
+    <i class="fa fa-sign-in-alt"></i>
+    LOGIN
+   </button>
+
+  </form>
+
+  <div style="margin-top:1.5rem;font-size:.73rem;color:#667085">
+   Default Admin:
+   <strong>admin</strong> /
+   <strong>Admin@2026</strong>
+  </div>
+
+ </div>
+</div>
+
+
+<!-- APPLICATION -->
+<div id="app-container" class="hidden">
+
+ <aside id="sidebar">
+
+  <div class="sidebar-header">
+
+   <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg"
+        class="sidebar-logo">
+
+   <div>
+    <div class="sidebar-title">Youth Meklit</div>
+    <div id="sidebar-role" class="sidebar-role">Administrator</div>
+   </div>
+
+  </div>
+
+  <ul class="sidebar-menu">
+
+   <li class="active" data-page="dashboard">
+    <a onclick="navigate('dashboard')">
+     <i class="fa fa-chart-pie"></i>
+     Dashboard
+    </a>
+   </li>
+
+   <li data-page="analytics">
+    <a onclick="navigate('analytics')">
+     <i class="fa fa-chart-line"></i>
+     Money & Groups Comparison
+    </a>
+   </li>
+
+   <li onclick="toggleSubmenu(this)">
+    <a>
+     <i class="fa fa-users"></i>
+     Candidates
+     <i class="fa fa-chevron-down" style="margin-left:auto;font-size:.65rem"></i>
+    </a>
+   </li>
+
+   <ul class="submenu" id="candidate-submenu">
+    <li>
+     <a onclick="navigate('add-candidate')">
+      <i class="fa fa-file-circle-plus"></i>
+      Interactive A4 Form
+     </a>
+    </li>
+    <li>
+     <a onclick="navigate('candidates-list')">
+      <i class="fa fa-address-book"></i>
+      Candidates Directory
+     </a>
+    </li>
+   </ul>
+
+   <li class="admin-only" data-page="groups">
+    <a onclick="navigate('groups')">
+     <i class="fa fa-layer-group"></i>
+     Manage Groups
+    </a>
+   </li>
+
+   <li data-page="contributions">
+    <a onclick="navigate('contributions')">
+     <i class="fa fa-hand-holding-dollar"></i>
+     Contributions
+    </a>
+   </li>
+
+   <li data-page="reports">
+    <a onclick="navigate('reports')">
+     <i class="fa fa-chart-column"></i>
+     Reports
+    </a>
+   </li>
+
+   <li class="admin-only" data-page="users">
+    <a onclick="navigate('users')">
+     <i class="fa fa-user-shield"></i>
+     User Management
+    </a>
+   </li>
+
+   <li class="admin-only" data-page="activity">
+    <a onclick="navigate('activity')">
+     <i class="fa fa-history"></i>
+     Activity Log
+    </a>
+   </li>
+
+   <li class="admin-only" data-page="backup">
+    <a onclick="navigate('backup')">
+     <i class="fa fa-database"></i>
+     Backup / Restore
+    </a>
+   </li>
+
+   <li data-page="settings">
+    <a onclick="navigate('settings')">
+     <i class="fa fa-cog"></i>
+     Settings
+    </a>
+   </li>
+
+   <li>
+    <a onclick="openChangePasswordModal()">
+     <i class="fa fa-key"></i>
+     Change Password
+    </a>
+   </li>
+
+   <li>
+    <a onclick="logout()" style="color:#fca5a5">
+     <i class="fa fa-sign-out-alt"></i>
+     Logout
+    </a>
+   </li>
+
+  </ul>
+
+ </aside>
+
+
+ <main>
+
+  <header class="topbar no-print">
+
+   <div style="display:flex;align-items:center;gap:.8rem">
+
+    <button class="mobile-menu"
+            onclick="toggleMobileSidebar()">
+     <i class="fa fa-bars"></i>
+    </button>
+
+    <h2 id="page-title" class="page-title">
+     Dashboard
+    </h2>
+
+   </div>
+
+   <div class="top-user">
+
+    <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg">
+
+    <div>
+     <div id="topbar-username" class="top-user-name">
+      Administrator
+     </div>
+
+     <div id="topbar-role" class="top-user-role">
+      Admin
+     </div>
+    </div>
+
+   </div>
+
+  </header>
+
+
+  <div id="content-body" class="content-body"></div>
+
+ </main>
+
+</div>
+
+
+<!-- GENERAL MODAL -->
+<div id="general-modal" class="modal-backdrop hidden">
+ <div class="modal">
+
+  <div class="modal-header">
+   <h3 id="modal-title">Modal</h3>
+   <i class="fa fa-times"
+      style="cursor:pointer"
+      onclick="closeModal('general-modal')"></i>
+  </div>
+
+  <div id="modal-body" class="modal-body"></div>
+
+  <div id="modal-footer" class="modal-footer"></div>
+
+ </div>
+</div>
+
+
+<!-- CHANGE PASSWORD -->
+<div id="password-modal" class="modal-backdrop hidden">
+ <div class="modal">
+
+  <div class="modal-header">
+   <h3>Change Password</h3>
+   <i class="fa fa-times"
+      onclick="closeModal('password-modal')"
+      style="cursor:pointer"></i>
+  </div>
+
+  <div class="modal-body">
+
+   <form id="change-password-form"
+         onsubmit="handleChangePassword(event)">
+
+    <div class="form-group">
+     <label>Current Password</label>
+     <input id="current-password"
+            type="password"
+            required>
+    </div>
+
+    <div class="form-group">
+     <label>New Password</label>
+     <input id="new-password"
+            type="password"
+            minlength="6"
+            required>
+    </div>
+
+    <div class="form-group">
+     <label>Confirm New Password</label>
+     <input id="confirm-password"
+            type="password"
+            minlength="6"
+            required>
+    </div>
+
+    <div class="modal-footer"
+         style="margin:1rem -1.25rem -1.25rem">
+
+     <button type="button"
+             class="btn-outline"
+             onclick="closeModal('password-modal')">
+      Cancel
+     </button>
+
+     <button type="submit">
+      <i class="fa fa-key"></i>
+      Update Password
+     </button>
+
+    </div>
+
+   </form>
+
+  </div>
+ </div>
+</div>
+
+
+<script>
+/* ============================================================
+   DATABASE
+============================================================ */
+
+const DB_KEY="EAC_YOUTH_MEKLIT_DB_V3";
+const SESSION_KEY="EAC_CURRENT_USER";
+
+const defaultData={
+ settings:{
+  churchName:"ኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን",
+  department:"የወጣቶች መክሊት አገልግሎት ክፍል",
+  formTitle:"የአባላት ገንዘብ መሰብሰቢያ ቅጽ",
+  phone:"",
+  email:"",
+  address:"",
+  verse:"“መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።” ማቴ 6:21"
+ },
+
+ users:[
+  {
+   id:1,
+   fullName:"Natnael Yonas",
+   username:"admin",
+   passwordHash:btoa("Admin@2026"),
+   role:"Admin",
+   phone:"+251911000000",
+   email:"admin@eac.org",
+   status:"Active",
+   createdDate:"2026-02-01",
+   lastLogin:""
+  }
+ ],
+
+ groups:[
+  {id:1,groupName:"Meklit 1",description:"Meklit Group 1",status:"Active"},
+  {id:2,groupName:"Meklit 2",description:"Meklit Group 2",status:"Active"},
+  {id:3,groupName:"Meklit 3",description:"Meklit Group 3",status:"Active"},
+  {id:4,groupName:"Meklit 4",description:"Meklit Group 4",status:"Active"},
+  {id:5,groupName:"Meklit 5",description:"Meklit Group 5",status:"Active"},
+  {id:6,groupName:"Meklit 6",description:"Meklit Group 6",status:"Active"}
+ ],
+
+ candidates:[],
+
+ activityLog:[
+  {
+   logId:1,
+   userId:1,
+   action:"System Init",
+   description:"Database initialized with 6 Meklit groups.",
+   dateTime:"2026-08-25 08:00:00"
+  }
+ ]
+};
+
+function getDB(){
+ let raw=localStorage.getItem(DB_KEY);
+
+ if(!raw){
+  localStorage.setItem(DB_KEY,JSON.stringify(defaultData));
+  return structuredClone(defaultData);
+ }
+
+ try{
+  const db=JSON.parse(raw);
+
+  db.settings ||= structuredClone(defaultData.settings);
+  db.users ||= [];
+  db.groups ||= [];
+  db.candidates ||= [];
+  db.activityLog ||= [];
+
+  return db;
+ }catch(e){
+  localStorage.removeItem(DB_KEY);
+  localStorage.setItem(DB_KEY,JSON.stringify(defaultData));
+  return structuredClone(defaultData);
+ }
+}
+
+function saveDB(db){
+ localStorage.setItem(DB_KEY,JSON.stringify(db));
+}
+
+let currentUser=
+ JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null");
+
+let activePage="dashboard";
+let currentPhotoBase64="";
+let editingCandidateId=null;
+
+
+/* ============================================================
+   UTILITIES
+============================================================ */
+
+function esc(value){
+ return String(value ?? "")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+}
+
+function today(){
+ return new Date().toISOString().split("T")[0];
+}
+
+function nowDateTime(){
+ return new Date()
+  .toISOString()
+  .replace("T"," ")
+  .split(".")[0];
+}
+
+function money(value){
+ return Number(value || 0).toLocaleString(
+  "en-US",
+  {minimumFractionDigits:2,maximumFractionDigits:2}
+);
+}
+
+function generateId(prefix="ID"){
+ return prefix+"-"+Math.floor(100000+Math.random()*900000);
+}
+
+function isAdmin(){
+ return currentUser && currentUser.role==="Admin";
+}
+
+function confirmAction(message){
+ return window.confirm(message);
+}
+
+function showToast(message,type="success"){
+ const container=document.getElementById("toast-container");
+
+ const toast=document.createElement("div");
+
+ toast.className="toast "+type;
+
+ const icon=
+  type==="success" ? "fa-check-circle" :
+  type==="error" ? "fa-exclamation-circle" :
+  type==="warning" ? "fa-exclamation-triangle" :
+  "fa-info-circle";
+
+ toast.innerHTML=
+  `<i class="fa ${icon}"></i> ${esc(message)}`;
+
+ container.appendChild(toast);
+
+ setTimeout(()=>{
+  toast.remove();
+ },4000);
+}
+
+function closeModal(id){
+ document.getElementById(id).classList.add("hidden");
+}
+
+function openModal(title,body,footer=""){
+ document.getElementById("modal-title").innerText=title;
+ document.getElementById("modal-body").innerHTML=body;
+ document.getElementById("modal-footer").innerHTML=footer;
+ document.getElementById("general-modal").classList.remove("hidden");
+}
+
+function openChangePasswordModal(){
+ document.getElementById("password-modal").classList.remove("hidden");
+}
+
+function handleChangePassword(e){
+ e.preventDefault();
+ const curr = document.getElementById("current-password").value;
+ const newP = document.getElementById("new-password").value;
+ const confP = document.getElementById("confirm-password").value;
+
+ if(btoa(curr) !== currentUser.passwordHash){
+  showToast("Current password incorrect.","error");
+  return;
+ }
+ if(newP !== confP){
+  showToast("New passwords do not match.","error");
+  return;
+ }
+ const db = getDB();
+ const u = db.users.find(x=>x.id===currentUser.id);
+ if(u){
+  u.passwordHash = btoa(newP);
+  saveDB(db);
+  currentUser.passwordHash = u.passwordHash;
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
+  showToast("Password updated successfully.","success");
+  closeModal("password-modal");
+  document.getElementById("change-password-form").reset();
+ }
+}
+
+function logActivity(userId,action,description){
+ const db=getDB();
+
+ db.activityLog.unshift({
+  logId:Date.now(),
+  userId,
+  action,
+  description,
+  dateTime:nowDateTime()
+ });
+
+ if(db.activityLog.length>1000){
+  db.activityLog=db.activityLog.slice(0,1000);
+ }
+
+ saveDB(db);
+}
+
+
+/* ============================================================
+   LOGIN
+============================================================ */
+
+function toggleLoginPassword(){
+ const input=document.getElementById("login-password");
+
+ input.type=input.type==="password"
+  ? "text"
+  : "password";
+}
+
+function handleLogin(e){
+ e.preventDefault();
+
+ const username=
+  document.getElementById("login-username").value.trim();
+
+ const password=
+  document.getElementById("login-password").value;
+
+ const db=getDB();
+
+ const user=db.users.find(u=>
+  u.username===username &&
+  u.passwordHash===btoa(password) &&
+  u.status==="Active"
+ );
+
+ if(!user){
+  showToast(
+   "Invalid username/password or account is disabled.",
+   "error"
+  );
+  return;
+ }
+
+ user.lastLogin=today();
+ saveDB(db);
+
+ currentUser=user;
+
+ sessionStorage.setItem(
+  SESSION_KEY,
+  JSON.stringify(user)
+ );
+
+ if(document.getElementById("remember-login").checked){
+  localStorage.setItem(
+   "EAC_REMEMBER_LOGIN",
+   JSON.stringify(user)
+  );
+ }
+
+ logActivity(
+  user.id,
+  "Login",
+  `User ${user.username} logged in.`
+ );
+
+ document
+  .getElementById("login-screen")
+  .classList.add("hidden");
+
+ document
+  .getElementById("app-container")
+  .classList.remove("hidden");
+
+ initApp();
+
+ showToast(
+  "Welcome back, "+user.fullName,
+  "success"
+ );
+}
+
+function logout(){
+ if(currentUser){
+  logActivity(
+   currentUser.id,
+   "Logout",
+   `User ${currentUser.username} logged out.`
+  );
+ }
+
+ sessionStorage.removeItem(SESSION_KEY);
+ localStorage.removeItem("EAC_REMEMBER_LOGIN");
+
+ currentUser=null;
+
+ document
+  .getElementById("app-container")
+  .classList.add("hidden");
+
+ document
+  .getElementById("login-screen")
+  .classList.remove("hidden");
+
+ document.getElementById("login-form").reset();
+
+ showToast("Logged out successfully.","success");
+}
+
+
+/* ============================================================
+   APP
+============================================================ */
+
+function initApp(){
+
+ if(!currentUser)return;
+
+ document.getElementById("topbar-username").innerText=
+  currentUser.fullName;
+
+ document.getElementById("topbar-role").innerText=
+  currentUser.role;
+
+ document.getElementById("sidebar-role").innerText=
+  currentUser.role==="Admin"
+   ? "Administrator"
+   : "Staff User";
+
+ document
+  .querySelectorAll(".admin-only")
+  .forEach(el=>{
+   el.style.display=isAdmin() ? "" : "none";
+  });
+
+ navigate("dashboard");
+}
+
+function toggleMobileSidebar(){
+ document.getElementById("sidebar").classList.toggle("open");
+}
+
+function toggleSubmenu(el){
+ const menu=document.getElementById("candidate-submenu");
+ menu.classList.toggle("hidden");
+}
+
+function navigate(page){
+
+ if(
+  ["groups","users","activity","backup"].includes(page)
+  && !isAdmin()
+ ){
+  showToast(
+   "Administrator permission required.",
+   "error"
+  );
+  return;
+ }
+
+ activePage=page;
+
+ document
+  .querySelectorAll(".sidebar-menu li[data-page]")
+  .forEach(li=>{
+   li.classList.remove("active");
+  });
+
+ const target=
+  document.querySelector(
+   `.sidebar-menu li[data-page="${page}"]`
+  );
+
+ if(target)target.classList.add("active");
+
+ const titles={
+  dashboard:"Dashboard",
+  analytics:"Money & Groups Directional Comparison",
+  "add-candidate":"Interactive A4 Form & Candidate Entry",
+  "candidates-list":"Candidates Directory",
+  groups:"Group Management",
+  contributions:"Contribution Records",
+  reports:"Financial Reports",
+  users:"User Management",
+  activity:"System Activity Log",
+  backup:"Backup & Restore",
+  settings:"System Settings"
+ };
+
+ document.getElementById("page-title").innerText=
+  titles[page] || "Dashboard";
+
+ renderPage(page);
+
+ document.getElementById("sidebar").classList.remove("open");
+}
+
+function renderPage(page){
+
+ const container=
+  document.getElementById("content-body");
+
+ container.innerHTML="";
+
+ switch(page){
+
+  case "dashboard":
+   renderDashboard(container);
+   break;
+
+  case "analytics":
+   renderAnalyticsPage(container);
+   break;
+
+  case "add-candidate":
+   renderFormIntegration(container);
+   break;
+
+  case "candidates-list":
+   renderCandidatesList(container);
+   break;
+
+  case "groups":
+   renderGroupsPage(container);
+   break;
+
+  case "contributions":
+   renderContributionsPage(container);
+   break;
+
+  case "reports":
+   renderReportsPage(container);
+   break;
+
+  case "users":
+   renderUsersPage(container);
+   break;
+
+  case "activity":
+   renderActivityPage(container);
+   break;
+
+  case "backup":
+   renderBackupPage(container);
+   break;
+
+  case "settings":
+   renderSettingsPage(container);
+   break;
+
+  default:
+   renderDashboard(container);
+ }
+}
+
+
+/* ============================================================
+   DASHBOARD
+============================================================ */
+
+function getCandidateContribution(candidate){
+
+ let total=0;
+
+ (candidate.contributions||[]).forEach(row=>{
+  total+=
+   Number(row.monthlyBirr||0)+
+   Number(row.monthlyCent||0)/100+
+   Number(row.personalBirr||0)+
+   Number(row.personalCent||0)/100+
+   Number(row.giftBirr||0)+
+   Number(row.giftCent||0)/100+
+   Number(row.otherBirr||0)+
+   Number(row.otherCent||0)/100;
+ });
+
+ return total;
+}
+
+function getCandidateBreakdown(candidate){
+ let b = {monthly:0, personal:0, gift:0, other:0};
+ (candidate.contributions||[]).forEach(r=>{
+  b.monthly += Number(r.monthlyBirr||0) + Number(r.monthlyCent||0)/100;
+  b.personal += Number(r.personalBirr||0) + Number(r.personalCent||0)/100;
+  b.gift += Number(r.giftBirr||0) + Number(r.giftCent||0)/100;
+  b.other += Number(r.otherBirr||0) + Number(r.otherCent||0)/100;
+ });
+ return b;
+}
+
+function getGrandTotal(db){
+ return db.candidates.reduce(
+  (sum,c)=>sum+getCandidateContribution(c),
+  0
+ );
+}
+
+function renderDashboard(container){
+
+ const db=getDB();
+
+ const totalCandidates=db.candidates.length;
+ const activeGroups=
+  db.groups.filter(g=>g.status==="Active").length;
+
+ const totalContribution=getGrandTotal(db);
+
+ const recent=db.activityLog.slice(0,8);
+
+ container.innerHTML=`
+
+  <div class="stats-grid">
+
+   <div class="stat-card">
+    <div>
+     <div class="stat-label">Total Candidates</div>
+     <div class="stat-value">${totalCandidates}</div>
+    </div>
+    <i class="fa fa-users"></i>
+   </div>
+
+   <div class="stat-card gold">
+    <div>
+     <div class="stat-label">Active Groups</div>
+     <div class="stat-value">${activeGroups}</div>
+    </div>
+    <i class="fa fa-layer-group"></i>
+   </div>
+
+   <div class="stat-card success">
+    <div>
+     <div class="stat-label">Total Contributions</div>
+     <div class="stat-value">${money(totalContribution)}</div>
+    </div>
+    <i class="fa fa-money-bill-wave"></i>
+   </div>
+
+   <div class="stat-card info">
+    <div>
+     <div class="stat-label">System Users</div>
+     <div class="stat-value">${db.users.length}</div>
+    </div>
+    <i class="fa fa-user-shield"></i>
+   </div>
+
+  </div>
+
+  <div class="quick-actions">
+
+   <div class="quick-action"
+        onclick="navigate('add-candidate')">
+    <i class="fa fa-user-plus"></i>
+    <div>
+     <strong>Register Candidate</strong>
+     <small style="display:block;color:#667085">
+      Open A4 registration form
+     </small>
+    </div>
+   </div>
+
+   <div class="quick-action"
+        onclick="navigate('analytics')">
+    <i class="fa fa-chart-line"></i>
+    <div>
+     <strong>Money Analytics</strong>
+     <small style="display:block;color:#667085">
+      Directional Groups & Candidates comparison
+     </small>
+    </div>
+   </div>
+
+   <div class="quick-action"
+        onclick="navigate('candidates-list')">
+    <i class="fa fa-address-book"></i>
+    <div>
+     <strong>Candidate Directory</strong>
+     <small style="display:block;color:#667085">
+      Search and manage candidates
+     </small>
+    </div>
+   </div>
+
+   <div class="quick-action"
+        onclick="navigate('contributions')">
+    <i class="fa fa-hand-holding-dollar"></i>
+    <div>
+     <strong>Contributions</strong>
+     <small style="display:block;color:#667085">
+      View financial records
+     </small>
+    </div>
+   </div>
+
+  </div>
+
+  <div class="grid-2">
+
+   <div class="card">
+    <div class="card-header">
+     <div class="card-title">
+      <i class="fa fa-clock"></i>
+      Recent Activity
+     </div>
+     <button class="btn-outline btn-sm"
+             onclick="navigate('activity')">
+      View All
+     </button>
+    </div>
+
+    <div class="table-wrap">
+     <table>
+      <thead>
+       <tr>
+        <th>Action</th>
+        <th>Description</th>
+        <th>Date</th>
+       </tr>
+      </thead>
+
+      <tbody>
+       ${
+        recent.length
+        ? recent.map(l=>`
+         <tr>
+          <td><b>${esc(l.action)}</b></td>
+          <td>${esc(l.description)}</td>
+          <td>${esc(l.dateTime)}</td>
+         </tr>
+        `).join("")
+        : `
+         <tr>
+          <td colspan="3" class="empty">
+           No activity.
+          </td>
+         </tr>
+        `
+       }
+      </tbody>
+     </table>
+    </div>
+   </div>
+
+
+   <div class="card">
+    <div class="card-header">
+     <div class="card-title">
+      <i class="fa fa-layer-group"></i>
+      Group Financial Ranking
+     </div>
+     <button class="btn-sm btn-gold" onclick="navigate('analytics')"><i class="fa fa-sliders"></i> Comparative View</button>
+    </div>
+
+    <div class="table-wrap">
+     <table>
+      <thead>
+       <tr>
+        <th>Rank</th>
+        <th>Group</th>
+        <th>Members</th>
+        <th>Contribution</th>
+       </tr>
+      </thead>
+
+      <tbody>
+
+       ${
+        db.groups.map(g=>{
+         const members=db.candidates.filter(c=>c.group===g.groupName);
+         const amount=members.reduce((s,c)=>s+getCandidateContribution(c),0);
+         return {groupName: g.groupName, count: members.length, amount};
+        }).sort((a,b)=>b.amount - a.amount).map((g, idx)=>`
+          <tr>
+           <td><span class="rank-badge ${idx===0?'rank-1':idx===1?'rank-2':idx===2?'rank-3':''}">${idx+1}</span></td>
+           <td><b>${esc(g.groupName)}</b></td>
+           <td>${g.count}</td>
+           <td><strong style="color:var(--primary-blue)">${money(g.amount)} ETB</strong></td>
+          </tr>
+         `).join("")
+       }
+
+      </tbody>
+     </table>
+    </div>
+   </div>
+
+  </div>
+ `;
+}
+
+/* ============================================================
+   DIRECTIONAL MONEY & GROUP COMPARISON ANALYTICS ENGINE
+============================================================ */
+
+function renderAnalyticsPage(container){
+ const db = getDB();
+
+ container.innerHTML = `
+ <div class="card">
+   <div class="card-header">
+     <div class="card-title">
+       <i class="fa fa-chart-line"></i> Money Comparison & Directional Analytics Engine
+     </div>
+     <div class="toolbar">
+       <button class="btn-gold" onclick="renderAnalyticsPage(document.getElementById('content-body'))">
+         <i class="fa fa-rotate"></i> Refresh Analytics
+       </button>
+     </div>
+   </div>
+   <div class="card-body">
+     <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.2rem">
+       Analyze money, contributions, and performance dynamically across candidate rankings, group leaderboards, financial breakdown channels, and side-by-side comparative views.
+     </p>
+
+     <div class="grid-2">
+       <!-- Dynamic Group Financial Leaderboard Chart -->
+       <div class="card">
+         <div class="card-header"><div class="card-title"><i class="fa fa-chart-bar"></i> Group Revenue Comparison</div></div>
+         <div class="card-body"><canvas id="chart-groups-revenue" style="max-height:280px"></canvas></div>
+       </div>
+
+       <!-- Financial Breakdown Distribution Chart -->
+       <div class="card">
+         <div class="card-header"><div class="card-title"><i class="fa fa-chart-pie"></i> Contribution Channels Breakdown</div></div>
+         <div class="card-body"><canvas id="chart-channels-pie" style="max-height:280px"></canvas></div>
+       </div>
+     </div>
+
+     <!-- Side-by-Side Candidates Comparison tool -->
+     <div class="card" style="margin-top:1.2rem">
+       <div class="card-header">
+         <div class="card-title"><i class="fa fa-code-compare"></i> Side-by-Side Candidate Money Comparison</div>
+       </div>
+       <div class="card-body">
+         <div class="grid-2" style="margin-bottom:1rem">
+           <div>
+             <label>Select First Candidate</label>
+             <select id="compare-c1" onchange="updateCandidatesComparison()">
+               <option value="">-- Choose Candidate 1 --</option>
+               ${db.candidates.map(c=>`<option value="${esc(c.id)}">${esc(c.fullName)} (${esc(c.group)})</option>`).join("")}
+             </select>
+           </div>
+           <div>
+             <label>Select Second Candidate</label>
+             <select id="compare-c2" onchange="updateCandidatesComparison()">
+               <option value="">-- Choose Candidate 2 --</option>
+               ${db.candidates.map(c=>`<option value="${esc(c.id)}">${esc(c.fullName)} (${esc(c.group)})</option>`).join("")}
+             </select>
+           </div>
+         </div>
+         <div id="candidate-comparison-results" class="grid-2">
+           <div class="empty">Select two candidates above to generate detailed money, pledge channel, and ranking comparison.</div>
+         </div>
+       </div>
+     </div>
+
+     <!-- Top Financial Donors Leaderboard Table -->
+     <div class="card" style="margin-top:1.2rem">
+       <div class="card-header">
+         <div class="card-title"><i class="fa fa-trophy"></i> Top Money-Contributing Candidates Leaderboard</div>
+       </div>
+       <div class="table-wrap">
+         <table>
+           <thead>
+             <tr>
+               <th>Rank</th>
+               <th>Candidate Name</th>
+               <th>Group</th>
+               <th>Monthly Contrib.</th>
+               <th>Personal Meklit</th>
+               <th>Gifts & Gifts</th>
+               <th>Other</th>
+               <th>Total Money</th>
+             </tr>
+           </thead>
+           <tbody>
+             ${
+               db.candidates.map(c => {
+                 const b = getCandidateBreakdown(c);
+                 const total = b.monthly + b.personal + b.gift + b.other;
+                 return { candidate: c, breakdown: b, total };
+               })
+               .sort((a,b) => b.total - a.total)
+               .slice(0, 15)
+               .map((item, index) => `
+                 <tr>
+                   <td><span class="rank-badge ${index===0?'rank-1':index===1?'rank-2':index===2?'rank-3':''}">${index+1}</span></td>
+                   <td><b>${esc(item.candidate.fullName)}</b></td>
+                   <td><span class="badge badge-info">${esc(item.candidate.group)}</span></td>
+                   <td>${money(item.breakdown.monthly)}</td>
+                   <td>${money(item.breakdown.personal)}</td>
+                   <td>${money(item.breakdown.gift)}</td>
+                   <td>${money(item.breakdown.other)}</td>
+                   <td><strong style="color:var(--success);font-size:.95rem">${money(item.total)} ETB</strong></td>
+                 </tr>
+               `).join("") || `<tr><td colspan="8" class="empty">No candidates available for money analysis.</td></tr>`
+             }
+           </tbody>
+         </table>
+       </div>
+     </div>
+
+   </div>
+ </div>
+ `;
+
+ setTimeout(() => {
+   initAnalyticsCharts(db);
+ }, 50);
+}
+
+function initAnalyticsCharts(db){
+ const ctxGroup = document.getElementById("chart-groups-revenue")?.getContext("2d");
+ const ctxPie = document.getElementById("chart-channels-pie")?.getContext("2d");
+
+ if(!ctxGroup || !ctxPie) return;
+
+ const groupData = db.groups.map(g => {
+   const members = db.candidates.filter(c=>c.group===g.groupName);
+   const total = members.reduce((s,c)=>s+getCandidateContribution(c),0);
+   return { name: g.groupName, total };
+ });
+
+ new Chart(ctxGroup, {
+   type: 'bar',
+   data: {
+     labels: groupData.map(g=>g.name),
+     datasets: [{
+       label: 'Total Money (ETB)',
+       data: groupData.map(g=>g.total),
+       backgroundColor: '#0b3c5d',
+       borderColor: '#c5a059',
+       borderWidth: 1.5,
+       borderRadius: 5
+     }]
+   },
+   options: { responsive: true, maintainAspectRatio: false }
+ });
+
+ let totalMonthly = 0, totalPersonal = 0, totalGift = 0, totalOther = 0;
+ db.candidates.forEach(c => {
+   const b = getCandidateBreakdown(c);
+   totalMonthly += b.monthly;
+   totalPersonal += b.personal;
+   totalGift += b.gift;
+   totalOther += b.other;
+ });
+
+ new Chart(ctxPie, {
+   type: 'doughnut',
+   data: {
+     labels: ['Monthly', 'Personal Meklit', 'Gift', 'Other'],
+     datasets: [{
+       data: [totalMonthly, totalPersonal, totalGift, totalOther],
+       backgroundColor: ['#0b3c5d', '#c5a059', '#10b981', '#3b82f6']
+     }]
+   },
+   options: { responsive: true, maintainAspectRatio: false }
+ });
+}
+
+function updateCandidatesComparison(){
+ const db = getDB();
+ const c1Id = document.getElementById("compare-c1")?.value;
+ const c2Id = document.getElementById("compare-c2")?.value;
+ const target = document.getElementById("candidate-comparison-results");
+
+ if(!c1Id || !c2Id){
+  target.innerHTML = `<div class="empty">Please select both candidates to see the money directional comparison.</div>`;
+  return;
+ }
+
+ const c1 = db.candidates.find(x=>x.id===c1Id);
+ const c2 = db.candidates.find(x=>x.id===c2Id);
+
+ if(!c1 || !c2) return;
+
+ const b1 = getCandidateBreakdown(c1);
+ const b2 = getCandidateBreakdown(c2);
+ const t1 = b1.monthly + b1.personal + b1.gift + b1.other;
+ const t2 = b2.monthly + b2.personal + b2.gift + b2.other;
+
+ const diff = Math.abs(t1 - t2);
+ const leader = t1 > t2 ? c1.fullName : t2 > t1 ? c2.fullName : "Equal";
+
+ target.innerHTML = `
+   <div class="compare-card">
+     <div class="compare-title">${esc(c1.fullName)}</div>
+     <div style="text-align:center;margin-bottom:.8rem"><span class="badge badge-info">${esc(c1.group)}</span></div>
+     <div class="info-row"><span class="label">Monthly:</span> <span>${money(b1.monthly)} ETB</span></div>
+     <div class="info-row"><span class="label">Personal:</span> <span>${money(b1.personal)} ETB</span></div>
+     <div class="info-row"><span class="label">Gift:</span> <span>${money(b1.gift)} ETB</span></div>
+     <div class="info-row"><span class="label">Other:</span> <span>${money(b1.other)} ETB</span></div>
+     <hr style="margin:.5rem 0">
+     <div style="font-size:1.1rem;font-weight:800;color:var(--primary-blue);text-align:center">
+       Total: ${money(t1)} ETB
+     </div>
+   </div>
+
+   <div class="compare-card">
+     <div class="compare-title">${esc(c2.fullName)}</div>
+     <div style="text-align:center;margin-bottom:.8rem"><span class="badge badge-info">${esc(c2.group)}</span></div>
+     <div class="info-row"><span class="label">Monthly:</span> <span>${money(b2.monthly)} ETB</span></div>
+     <div class="info-row"><span class="label">Personal:</span> <span>${money(b2.personal)} ETB</span></div>
+     <div class="info-row"><span class="label">Gift:</span> <span>${money(b2.gift)} ETB</span></div>
+     <div class="info-row"><span class="label">Other:</span> <span>${money(b2.other)} ETB</span></div>
+     <hr style="margin:.5rem 0">
+     <div style="font-size:1.1rem;font-weight:800;color:var(--primary-blue);text-align:center">
+       Total: ${money(t2)} ETB
+     </div>
+   </div>
+
+   <div class="full-span" style="background:#fef3c7;padding:1rem;border-radius:8px;border:1px solid #f59e0b;text-align:center;margin-top:.5rem">
+     <strong style="color:#92400e">Comparison Insight:</strong> 
+     ${leader === "Equal" ? "Both candidates have identical overall contributions." : `<b>${esc(leader)}</b> leads by a difference of <b>${money(diff)} ETB</b>.`}
+   </div>
+ `;
+}
+
+/* ============================================================
+   A4 FORM
+============================================================ */
+
+function renderFormIntegration(container,candidateId=null){
+
+ const db=getDB();
+
+ let candidate=null;
+
+ if(candidateId){
+  candidate=
+   db.candidates.find(c=>c.id===candidateId);
+ }
+
+ editingCandidateId=
+  candidate ? candidate.id : null;
+
+ currentPhotoBase64=
+  candidate?.photo || "";
+
+ const formNumber=
+  candidate?.id || generateId("EAC");
+
+ container.innerHTML=`
+
+ <div class="card no-print" style="margin-bottom:1rem">
+
+  <div class="card-body">
+
+   <div class="toolbar">
+
+    <button onclick="saveCandidateForm()">
+     <i class="fa fa-save"></i>
+     ${candidate ? "Update Candidate" : "Save Candidate"}
+    </button>
+
+    <button class="btn-gold"
+            onclick="newCandidateForm()">
+     <i class="fa fa-user-plus"></i>
+     New Candidate
+    </button>
+
+    <button class="btn-outline"
+            onclick="window.print()">
+     <i class="fa fa-print"></i>
+     Print A4
+    </button>
+
+    <button class="btn-info"
+            onclick="clearContributionRows()">
+     <i class="fa fa-eraser"></i>
+     Clear Contributions
+    </button>
+
+    ${
+     candidate
+     ? `
+      <button class="btn-danger"
+              onclick="deleteCandidate('${esc(candidate.id)}')">
+       <i class="fa fa-trash"></i>
+       Delete
+      </button>
+     `
+     :""
+    }
+
+    <span id="form-save-status"
+          style="margin-left:auto;color:#10b981;font-weight:700">
+    </span>
+
+   </div>
+
+  </div>
+ </div>
+
+
+ <div id="form-print-area">
+
+  <div class="sheet">
+
+   <div class="header-container">
+
+    <div class="logo-frame">
+     <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg">
+    </div>
+
+    <div class="header-titles">
+
+     <h1>
+      በኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን
+     </h1>
+
+     <h2>
+      የወጣቶች መክሊት አገልግሎት ክፍል
+     </h2>
+
+     <h3>
+      የአባላት ገንዘብ መሰብሰቢያ ቅጽ
+     </h3>
+
+    </div>
+
+    <div style="width:25mm;text-align:right">
+     <div style="font-size:8px;font-weight:800;color:#173e65;border-bottom:.35mm solid #173e65;padding-bottom:1mm">
+      ቁጥር፡
+      <span id="lbl-form-no">${esc(formNumber)}</span>
+     </div>
+    </div>
+
+   </div>
+
+
+   <div class="info-box">
+
+    <div class="info-grid">
+
+     <div class="info-row full-span">
+
+      <span class="label">የ</span>
+
+      <input id="inp-church-branch"
+             class="write-line-short"
+             value="${esc(candidate?.branch||"")}"
+             placeholder="ሰበካ">
+
+      <span class="label">
+       ቅርንጫፍ ሰበካ በ
+      </span>
+
+      <input id="inp-sub-branch"
+             class="write-line-short"
+             value="${esc(candidate?.subBranch||"")}"
+             placeholder="ንኡስ ሰበካ">
+
+      <span class="label">
+       ንኡስ ሰበካ የ
+      </span>
+
+      <input id="inp-assembly"
+             class="write-line-short"
+             value="${esc(candidate?.assembly||"")}"
+             placeholder="አጥቢያ">
+
+      <span class="label">አጥቢያ</span>
+
+     </div>
+
+
+     <div class="info-row">
+
+      <span class="label">ስም፡</span>
+
+      <input id="inp-fullname"
+             class="write-line"
+             value="${esc(candidate?.fullName||"")}"
+             placeholder="ሙሉ ስም ያስገቡ">
+
+     </div>
+
+
+     <div class="info-row">
+
+      <span class="label">መክሊት ቡድን፡</span>
+
+      <select id="inp-group"
+              class="write-line"
+              style="height:4.5mm;padding:0;font-size:8.2px">
+
+       <option value="">-- ቡድን --</option>
+
+       ${
+        db.groups
+         .filter(g=>g.status==="Active")
+         .map(g=>`
+          <option
+           value="${esc(g.groupName)}"
+           ${candidate?.group===g.groupName?"selected":""}>
+           ${esc(g.groupName)}
+          </option>
+         `).join("")
+       }
+
+      </select>
+
+     </div>
+
+
+     <div class="info-row">
+
+      <span class="label">አድራሻ-ቀበሌ፡</span>
+
+      <input id="inp-address"
+             class="write-line"
+             value="${esc(candidate?.address||"")}"
+             placeholder="አድራሻ / ቀበሌ">
+
+     </div>
+
+
+     <div class="info-row">
+
+      <span class="label">ስልክ ቁጥር፡</span>
+
+      <input id="inp-phone"
+             class="write-line"
+             value="${esc(candidate?.phone||"")}"
+             placeholder="09xxxxxxxx">
+
+     </div>
+
+    </div>
+
+
+    <div class="photo-btn-container"
+         title="Click to upload photo">
+
+     <span id="photo-text"
+           class="${candidate?.photo?"hidden":""}">
+      ፎቶ<br>ይጫኑ
+     </span>
+
+     <img id="photo-preview"
+          class="${candidate?.photo?"":"hidden"}"
+          src="${candidate?.photo||""}"
+          alt="Candidate Photo">
+
+     <input type="file"
+            accept="image/*"
+            onchange="handlePhotoUpload(event)">
+
+    </div>
+
+   </div>
+
+
+   <div class="embedded-table-area">
+
+    <table>
+
+     <colgroup>
+      <col style="width:11%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:11%">
+     </colgroup>
+
+     <thead>
+
+      <tr>
+
+       <th rowspan="2">ቀን</th>
+
+       <th colspan="2">ወርሃዊ መዋጮ</th>
+       <th colspan="2">የግል መክሊት</th>
+       <th colspan="2">ስጦታ</th>
+       <th colspan="2">ልዪ ልዪ</th>
+       <th colspan="2">ጠቅላላ ድምር</th>
+
+       <th rowspan="2">ፊርማ</th>
+
+      </tr>
+
+      <tr>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+      </tr>
+
+     </thead>
+
+     <tbody id="embedded-table-body"></tbody>
+
+    </table>
+
+    <div class="no-print" style="display:flex;justify-content:center;align-items:center;padding:1.5mm 0 1mm;">
+     <button type="button"
+             class="btn-sm btn-gold"
+             onclick="addContributionRow()"
+             title="Add a new contribution row">
+      <i class="fa fa-plus"></i>
+      Add Row
+     </button>
+    </div>
+
+   </div>
+
+
+   <div class="sheet-footer">
+
+    <div style="width:100%;height:.4mm;background:#d4af37;margin-bottom:1mm"></div>
+
+    <div class="verse">
+     “መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።”
+     <span style="font-weight:900;margin-left:1mm;color:#246b9a">
+      ማቴ 6:21
+     </span>
+    </div>
+
+   </div>
+
+  </div>
+
+ </div>
+ `;
+
+ const tbody=document.getElementById("embedded-table-body");
+
+ const rows=
+  candidate?.contributions || [];
+
+ for(let i=0;i<28;i++){
+
+  const data=rows[i]||{};
+
+  const tr=document.createElement("tr");
+
+  tr.className="data-row";
+
+  tr.innerHTML=`
+
+   <td>
+    <input type="date"
+           class="date-input"
+           value="${esc(data.date||"")}">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           class="money-input"
+           value="${data.monthlyBirr||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           max="99"
+           class="money-input"
+           value="${data.monthlyCent||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           class="money-input"
+           value="${data.personalBirr||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           max="99"
+           class="money-input"
+           value="${data.personalCent||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           class="money-input"
+           value="${data.giftBirr||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           max="99"
+           class="money-input"
+           value="${data.giftCent||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           class="money-input"
+           value="${data.otherBirr||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           max="99"
+           class="money-input"
+           value="${data.otherCent||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="text"
+           readonly
+           class="total-input row-total-birr"
+           value="0">
+   </td>
+
+   <td>
+    <input type="text"
+           readonly
+           class="total-input row-total-cent"
+           value="00">
+   </td>
+
+   <td>
+    <input type="text"
+           class="text-input"
+           value="${esc(data.signature||"")}"
+           placeholder="ፊርማ">
+   </td>
+
+  `;
+
+  tbody.appendChild(tr);
+
+  calculateRowTotals(
+   tr.querySelector(".money-input")
+  );
+ }
+}
+
+function addContributionRow(){
+
+ const tbody=document.getElementById("embedded-table-body");
+
+ if(!tbody)return;
+
+ const lastRow=tbody.querySelector("tr:last-child");
+
+ if(!lastRow)return;
+
+ const newRow=lastRow.cloneNode(true);
+
+ newRow.querySelectorAll("input").forEach(input=>{
+  if(
+   input.classList.contains("date-input") ||
+   input.classList.contains("money-input") ||
+   input.classList.contains("text-input")
+  ){
+   input.value="";
+  }
+ });
+
+ const totalBirr=newRow.querySelector(".row-total-birr");
+ const totalCent=newRow.querySelector(".row-total-cent");
+
+ if(totalBirr)totalBirr.value="0";
+ if(totalCent)totalCent.value="00";
+
+ tbody.appendChild(newRow);
+
+ const firstInput=newRow.querySelector(".date-input");
+
+ if(firstInput){
+  firstInput.focus();
+ }
+
+ newRow.scrollIntoView({
+  behavior:"smooth",
+  block:"nearest"
+ });
+}
+
+
+function handlePhotoUpload(event){
+
+ const file=event.target.files[0];
+
+ if(!file)return;
+
+ if(file.size>3*1024*1024){
+  showToast(
+   "Photo is too large. Please select an image under 3 MB.",
+   "error"
+  );
+  event.target.value="";
+  return;
+ }
+
+ const reader=new FileReader();
+
+ reader.onload=function(e){
+
+  currentPhotoBase64=e.target.result;
+
+  document.getElementById("photo-preview").src=
+   currentPhotoBase64;
+
+  document.getElementById("photo-preview")
+   .classList.remove("hidden");
+
+  document.getElementById("photo-text")
+   .classList.add("hidden");
+ };
+
+ reader.readAsDataURL(file);
+}
+
+function calculateRowTotals(input){
+
+ if(!input)return;
+
+ const row=input.closest("tr");
+
+ const inputs=
+  row.querySelectorAll(".money-input");
+
+ let birr=0;
+ let cents=0;
+
+ for(let i=0;i<inputs.length;i+=2){
+
+  birr+=Number(inputs[i].value||0);
+  cents+=Number(inputs[i+1].value||0);
+ }
+
+ birr+=Math.floor(cents/100);
+ cents=cents%100;
+
+ row.querySelector(".row-total-birr").value=
+  birr;
+
+ row.querySelector(".row-total-cent").value=
+  String(cents).padStart(2,"0");
+}
+
+function collectContributionRows(){
+
+ const rows=[];
+
+ document
+  .querySelectorAll("#embedded-table-body tr")
+  .forEach(tr=>{
+
+   const inputs=
+    tr.querySelectorAll("input");
+
+   const row={
+    date:inputs[0].value,
+
+    monthlyBirr:Number(inputs[1].value||0),
+    monthlyCent:Number(inputs[2].value||0),
+
+    personalBirr:Number(inputs[3].value||0),
+    personalCent:Number(inputs[4].value||0),
+
+    giftBirr:Number(inputs[5].value||0),
+    giftCent:Number(inputs[6].value||0),
+
+    otherBirr:Number(inputs[7].value||0),
+    otherCent:Number(inputs[8].value||0),
+
+    totalBirr:Number(
+     tr.querySelector(".row-total-birr").value||0
+    ),
+
+    totalCent:Number(
+     tr.querySelector(".row-total-cent").value||0
+    ),
+
+    signature:inputs[11].value
+   };
+
+   if(
+    row.date ||
+    row.monthlyBirr ||
+    row.monthlyCent ||
+    row.personalBirr ||
+    row.personalCent ||
+    row.giftBirr ||
+    row.giftCent ||
+    row.otherBirr ||
+    row.otherCent ||
+    row.signature
+   ){
+    rows.push(row);
+   }
+  });
+
+ return rows;
+}
+
+function saveCandidateForm(){
+
+ const name=
+  document.getElementById("inp-fullname")
+   .value.trim();
+
+ if(!name){
+  showToast(
+   "Please enter candidate full name.",
+   "error"
+  );
+  document.getElementById("inp-fullname").focus();
+  return;
+ }
+
+ const db=getDB();
+
+ const candidateData={
+  id:document.getElementById("lbl-form-no").innerText,
+  fullName:name,
+  group:document.getElementById("inp-group").value || "None",
+  branch:document.getElementById("inp-church-branch").value,
+  subBranch:document.getElementById("inp-sub-branch").value,
+  assembly:document.getElementById("inp-assembly").value,
+  address:document.getElementById("inp-address").value,
+  phone:document.getElementById("inp-phone").value,
+  photo:currentPhotoBase64,
+  contributions:collectContributionRows(),
+  registeredDate:today(),
+  updatedDate:today()
+ };
+
+ if(editingCandidateId){
+
+  const index=
+   db.candidates.findIndex(
+    c=>c.id===editingCandidateId
+   );
+
+  if(index<0){
+   showToast("Candidate not found.","error");
+   return;
+  }
+
+  candidateData.registeredDate=
+   db.candidates[index].registeredDate;
+
+  db.candidates[index]={
+   ...db.candidates[index],
+   ...candidateData
+  };
+
+  logActivity(
+   currentUser.id,
+   "Candidate Updated",
+   `Updated candidate ${name}.`
+  );
+
+  saveDB(db);
+
+  document.getElementById("form-save-status").innerText=
+   "Successfully Updated!";
+
+  showToast(
+   "Candidate updated successfully.",
+   "success"
+  );
+
+ }else{
+
+  db.candidates.push(candidateData);
+
+  saveDB(db);
+
+  logActivity(
+   currentUser.id,
+   "Candidate Saved",
+   `Saved candidate ${name} under group ${candidateData.group}.`
+  );
+
+  editingCandidateId=candidateData.id;
+
+  document.getElementById("form-save-status").innerText=
+   "Successfully Saved!";
+
+  showToast(
+   "Candidate information saved successfully.",
+   "success"
+  );
+ }
+}
+
+function newCandidateForm(){
+
+ editingCandidateId=null;
+ currentPhotoBase64="";
+
+ renderFormIntegration(
+  document.getElementById("content-body")
+ );
+}
+
+function clearContributionRows(){
+
+ document
+  .querySelectorAll("#embedded-table-body input")
+  .forEach(input=>{
+
+   if(
+    input.classList.contains("date-input") ||
+    input.classList.contains("money-input") ||
+    input.classList.contains("text-input")
+   ){
+    input.value="";
+   }
+  });
+
+ document
+  .querySelectorAll(".row-total-birr")
+  .forEach(x=>x.value="0");
+
+ document
+  .querySelectorAll(".row-total-cent")
+  .forEach(x=>x.value="00");
+
+ showToast(
+  "Contribution rows cleared.",
+  "success"
+ );
+}
+
+
+/* ============================================================
+   CANDIDATES
+============================================================ */
+
+function renderCandidatesList(container){
+
+ const db=getDB();
+
+ container.innerHTML=`
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-address-book"></i>
+    Candidates Directory
+   </div>
+
+   <button onclick="navigate('add-candidate')">
+    <i class="fa fa-plus"></i>
+    Add Candidate
+   </button>
+
+  </div>
+
+  <div class="card-body">
+
+   <div class="toolbar" style="margin-bottom:1rem">
+
+    <input id="candidate-search"
+           class="search"
+           placeholder="Search name, phone, group, address..."
+           oninput="filterCandidatesTable()">
+
+    <select id="candidate-group-filter"
+            style="max-width:180px"
+            onchange="filterCandidatesTable()">
+
+     <option value="">All Groups</option>
+
+     ${
+      db.groups.map(g=>
+       `<option value="${esc(g.groupName)}">
+        ${esc(g.groupName)}
+       </option>`
+      ).join("")
+     }
+
+    </select>
+
+    <button class="btn-outline"
+            onclick="exportCandidatesCSV()">
+     <i class="fa fa-file-csv"></i>
+     Export CSV
+    </button>
+
+   </div>
+
+   <div class="table-wrap">
+
+    <table id="candidates-table">
+
+     <thead>
+
+      <tr>
+       <th>Form ID</th>
+       <th>Full Name</th>
+       <th>Group</th>
+       <th>Phone</th>
+       <th>Address</th>
+       <th>Contribution</th>
+       <th>Registered</th>
+       <th>Actions</th>
+      </tr>
+
+     </thead>
+
+     <tbody id="candidates-tbody">
+
+      ${candidateRows(db.candidates)}
+
+     </tbody>
+
+    </table>
+
+   </div>
+
+  </div>
+
+ </div>
+ `;
+}
+
+function candidateRows(candidates){
+
+ if(!candidates.length){
+  return `
+   <tr>
+    <td colspan="8" class="empty">
+     <i class="fa fa-users"
+        style="font-size:2rem;margin-bottom:.5rem"></i>
+     <br>
+     No candidates found.
+    </td>
+   </tr>
+  `;
+ }
+
+ return candidates.map(c=>`
+
+  <tr>
+
+   <td>${esc(c.id)}</td>
+
+   <td>
+    <b>${esc(c.fullName)}</b>
+   </td>
+
+   <td>
+    <span class="badge badge-info">
+     ${esc(c.group)}
+    </span>
+   </td>
+
+   <td>${esc(c.phone||"N/A")}</td>
+
+   <td>${esc(c.address||"N/A")}</td>
+
+   <td>
+    <b>${money(getCandidateContribution(c))}</b>
+   </td>
+
+   <td>${esc(c.registeredDate||"")}</td>
+
+   <td>
+
+    <div class="actions">
+
+     <button class="btn-info btn-sm"
+             onclick="viewCandidate('${esc(c.id)}')"
+             title="View">
+      <i class="fa fa-eye"></i>
+     </button>
+
+     <button class="btn-sm"
+             onclick="editCandidate('${esc(c.id)}')"
+             title="Edit">
+      <i class="fa fa-edit"></i>
+     </button>
+
+     <button class="btn-gold btn-sm"
+             onclick="printCandidate('${esc(c.id)}')"
+             title="Print">
+      <i class="fa fa-print"></i>
+     </button>
+
+     <button class="btn-danger btn-sm"
+             onclick="deleteCandidate('${esc(c.id)}')"
+             title="Delete">
+      <i class="fa fa-trash"></i>
+     </button>
+
+    </div>
+
+   </td>
+
+  </tr>
+
+ `).join("");
+}
+
+function filterCandidatesTable(){
+
+ const db=getDB();
+
+ const search=
+  (document.getElementById("candidate-search")?.value||"")
+   .toLowerCase();
+
+ const group=
+  document.getElementById("candidate-group-filter")?.value||"";
+
+ const filtered=db.candidates.filter(c=>{
+
+  const text=[
+   c.id,
+   c.fullName,
+   c.group,
+   c.phone,
+   c.address,
+   c.branch
+  ].join(" ").toLowerCase();
+
+  return text.includes(search) &&
+   (!group || c.group===group);
+ });
+
+ document.getElementById("candidates-tbody").innerHTML=
+  candidateRows(filtered);
+}
+
+function viewCandidate(id){
+
+ const db=getDB();
+
+ const c=db.candidates.find(x=>x.id===id);
+
+ if(!c)return;
+
+ openModal(
+  "Candidate Details",
+  `
+
+   <div style="display:flex;gap:1.2rem;align-items:flex-start">
+
+    <div style="width:130px">
+
+     ${
+      c.photo
+      ? `
+       <img src="${c.photo}"
+            style="width:120px;height:145px;object-fit:cover;border:3px solid #d4af37;border-radius:6px">
+      `
+      : `
+       <div style="width:120px;height:145px;background:#f1f5f8;border:1px solid #d1d5db;display:flex;align-items:center;justify-content:center;color:#667085">
+        No Photo
+       </div>
+      `
+     }
+
+    </div>
+
+    <div style="flex:1">
+
+     <h2 style="color:#173e65;margin-bottom:.8rem">
+      ${esc(c.fullName)}
+     </h2>
+
+     <div class="grid-2">
+
+      <div>
+       <label>Form ID</label>
+       <div>${esc(c.id)}</div>
+      </div>
+
+      <div>
+       <label>Group</label>
+       <div>${esc(c.group)}</div>
+      </div>
+
+      <div>
+       <label>Phone</label>
+       <div>${esc(c.phone||"N/A")}</div>
+      </div>
+
+      <div>
+       <label>Address</label>
+       <div>${esc(c.address||"N/A")}</div>
+      </div>
+
+      <div>
+       <label>Branch</label>
+       <div>${esc(c.branch||"N/A")}</div>
+      </div>
+
+      <div>
+       <label>Assembly</label>
+       <div>${esc(c.assembly||"N/A")}</div>
+      </div>
+
+      <div>
+       <label>Registered</label>
+       <div>${esc(c.registeredDate)}</div>
+      </div>
+
+      <div>
+       <label>Total Contribution</label>
+       <div>
+        <strong style="color:#047857;font-size:1.1rem">
+         ${money(getCandidateContribution(c))}
+        </strong>
+       </div>
+      </div>
+
+     </div>
+
+    </div>
+
+   </div>
+
+   <hr style="margin:1.2rem 0;border:0;border-top:1px solid #d1d5db">
+
+   <h3 style="color:#173e65;margin-bottom:.7rem">
+    Contribution Summary
+   </h3>
+
+   ${contributionSummary(c)}
+
+  `,
+  `
+   <button class="btn-outline"
+           onclick="closeModal('general-modal')">
+    Close
+   </button>
+
+   <button onclick="editCandidate('${esc(c.id)}');closeModal('general-modal')">
+    <i class="fa fa-edit"></i>
+    Edit
+   </button>
+  `
+ );
+}
+
+function contributionSummary(c){
+
+ const rows=c.contributions||[];
+
+ if(!rows.length){
+  return `<div class="empty">No contribution records.</div>`;
+ }
+
+ return `
+  <div class="table-wrap">
+   <table>
+
+    <thead>
+     <tr>
+      <th>Date</th>
+      <th>Monthly</th>
+      <th>Personal</th>
+      <th>Gift</th>
+      <th>Other</th>
+      <th>Total</th>
+     </tr>
+    </thead>
+
+    <tbody>
+
+     ${
+      rows.map(r=>{
+
+       const monthly=
+        Number(r.monthlyBirr||0)+
+        Number(r.monthlyCent||0)/100;
+
+       const personal=
+        Number(r.personalBirr||0)+
+        Number(r.personalCent||0)/100;
+
+       const gift=
+        Number(r.giftBirr||0)+
+        Number(r.giftCent||0)/100;
+
+       const other=
+        Number(r.otherBirr||0)+
+        Number(r.otherCent||0)/100;
+
+       return `
+        <tr>
+         <td>${esc(r.date||"")}</td>
+         <td>${money(monthly)}</td>
+         <td>${money(personal)}</td>
+         <td>${money(gift)}</td>
+         <td>${money(other)}</td>
+         <td><b>${money(r.totalBirr+Number(r.totalCent||0)/100)}</b></td>
+        </tr>
+       `;
+
+      }).join("")
+     }
+
+    </tbody>
+
+   </table>
+  </div>
+ `;
+}
+
+function editCandidate(id){
+
+ closeModal("general-modal");
+
+ navigate("add-candidate");
+
+ setTimeout(()=>{
+  renderFormIntegration(
+   document.getElementById("content-body"),
+   id
+  );
+ },50);
+}
+
+function deleteCandidate(id){
+
+ const db=getDB();
+
+ const c=db.candidates.find(x=>x.id===id);
+
+ if(!c)return;
+
+ if(!confirmAction(
+  `Delete candidate "${c.fullName}"?\n\nThis will also remove their contribution records.`
+ ))return;
+
+ db.candidates=
+  db.candidates.filter(x=>x.id!==id);
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "Candidate Deleted",
+  `Deleted candidate ${c.fullName}.`
+ );
+
+ if(activePage==="candidates-list"){
+  renderCandidatesList(
+   document.getElementById("content-body")
+  );
+ }
+
+ showToast(
+  "Candidate deleted successfully.",
+  "success"
+ );
+}
+
+function printCandidate(id){
+
+ editCandidate(id);
+
+ setTimeout(()=>{
+  window.print();
+ },300);
+}
+
+function exportCandidatesCSV(){
+ const db = getDB();
+ let csv = "Form ID,Full Name,Group,Phone,Address,Branch,SubBranch,Assembly,Registered Date,Total Contribution\n";
+ db.candidates.forEach(c => {
+  const total = getCandidateContribution(c);
+  csv += `"${c.id}","${c.fullName}","${c.group}","${c.phone||""}","${c.address||""}","${c.branch||""}","${c.subBranch||""}","${c.assembly||""}","${c.registeredDate||""}","${total}"\n`;
+ });
+ downloadCSV(csv, `EAC_Candidates_${today()}.csv`);
+}
+
+function exportContributionsCSV(){
+ const db = getDB();
+ let csv = "Date,Candidate ID,Candidate Name,Group,Monthly,Personal,Gift,Other,Total\n";
+ db.candidates.forEach(c => {
+  (c.contributions||[]).forEach(r => {
+   const m = Number(r.monthlyBirr||0)+Number(r.monthlyCent||0)/100;
+   const p = Number(r.personalBirr||0)+Number(r.personalCent||0)/100;
+   const g = Number(r.giftBirr||0)+Number(r.giftCent||0)/100;
+   const o = Number(r.otherBirr||0)+Number(r.otherCent||0)/100;
+   const t = Number(r.totalBirr||0)+Number(r.totalCent||0)/100;
+   csv += `"${r.date||""}","${c.id}","${c.fullName}","${c.group}","${m}","${p}","${g}","${o}","${t}"\n`;
+  });
+ });
+ downloadCSV(csv, `EAC_Contributions_${today()}.csv`);
+}
+
+function downloadCSV(csv, filename){
+ const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement("a");
+ a.href = url;
+ a.download = filename;
+ a.click();
+ URL.revokeObjectURL(url);
+ showToast("CSV file exported successfully.", "success");
+}
+
+/* ============================================================
+   GROUP MANAGEMENT
+============================================================ */
+
+function renderGroupsPage(container){
+
+ const db=getDB();
+
+ container.innerHTML=`
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-layer-group"></i>
+    Meklit Groups
+   </div>
+
+   <button onclick="openGroupModal()">
+    <i class="fa fa-plus"></i>
+    Add Group
+   </button>
+
+  </div>
+
+  <div class="card-body">
+
+   <div class="table-wrap">
+
+    <table>
+
+     <thead>
+      <tr>
+       <th>ID</th>
+       <th>Group Name</th>
+       <th>Description</th>
+       <th>Members</th>
+       <th>Status</th>
+       <th>Actions</th>
+      </tr>
+     </thead>
+
+     <tbody>
+
+      ${
+       db.groups.map(g=>{
+
+        const members=
+         db.candidates.filter(
+          c=>c.group===g.groupName
+         ).length;
+
+        return `
+         <tr>
+
+          <td>${g.id}</td>
+
+          <td>
+           <b>
+            <i class="fa fa-layer-group"
+               style="color:#c5a059"></i>
+            ${esc(g.groupName)}
+           </b>
+          </td>
+
+          <td>${esc(g.description)}</td>
+
+          <td>${members}</td>
+
+          <td>
+           <span class="badge ${
+            g.status==="Active"
+             ?"badge-success"
+             :"badge-danger"
+           }">
+            ${esc(g.status)}
+           </span>
+          </td>
+
+          <td>
+
+           <div class="actions">
+
+            <button class="btn-sm"
+                    onclick="openGroupModal(${g.id})">
+             <i class="fa fa-edit"></i>
+            </button>
+
+            <button class="btn-sm btn-info"
+                    onclick="openGroupMembersModal(${g.id})"
+                    title="Show group members">
+             <i class="fa fa-users"></i>
+            </button>
+
+            <button class="btn-warning btn-sm"
+                    onclick="toggleGroupStatus(${g.id})">
+             <i class="fa fa-power-off"></i>
+            </button>
+
+            <button class="btn-danger btn-sm"
+                    onclick="deleteGroup(${g.id})">
+             <i class="fa fa-trash"></i>
+            </button>
+
+           </div>
+
+          </td>
+
+         </tr>
+        `;
+
+       }).join("")
+      }
+
+     </tbody>
+
+    </table>
+
+   </div>
+
+  </div>
+
+ </div>
+ `;
+}
+
+function openGroupModal(id=null){
+
+ const db=getDB();
+
+ const g=
+  id
+  ? db.groups.find(x=>x.id===id)
+  : null;
+
+ openModal(
+  g ? "Edit Group" : "Add Meklit Group",
+
+  `
+
+   <div class="form-group">
+    <label>Group Name</label>
+    <input id="group-name"
+           value="${esc(g?.groupName||"")}"
+           placeholder="e.g. Meklit 7">
+   </div>
+
+   <div class="form-group">
+    <label>Description</label>
+    <textarea id="group-description"
+              placeholder="Group description">${esc(g?.description||"")}</textarea>
+   </div>
+
+   <div class="form-group">
+    <label>Status</label>
+    <select id="group-status">
+     <option value="Active"
+      ${g?.status==="Active"?"selected":""}>
+      Active
+     </option>
+     <option value="Inactive"
+      ${g?.status==="Inactive"?"selected":""}>
+      Inactive
+     </option>
+    </select>
+   </div>
+
+  `,
+
+  `
+
+   <button class="btn-outline"
+           onclick="closeModal('general-modal')">
+    Cancel
+   </button>
+
+   <button onclick="saveGroup(${id||"null"})">
+    <i class="fa fa-save"></i>
+    Save Group
+   </button>
+
+  `
+ );
+}
+
+function saveGroup(id){
+
+ const name=
+  document.getElementById("group-name")
+   .value.trim();
+
+ const description=
+  document.getElementById("group-description")
+   .value.trim();
+
+ const status=
+  document.getElementById("group-status").value;
+
+ if(!name){
+  showToast("Group name is required.","error");
+  return;
+ }
+
+ const db=getDB();
+
+ const duplicate=
+  db.groups.find(
+   g=>g.groupName.toLowerCase()===name.toLowerCase()
+    && g.id!==id
+  );
+
+ if(duplicate){
+  showToast("A group with this name already exists.","error");
+  return;
+ }
+
+ if(id){
+
+  const g=db.groups.find(x=>x.id===id);
+
+  if(!g)return;
+
+  const oldName=g.groupName;
+
+  g.groupName=name;
+  g.description=description;
+  g.status=status;
+
+  db.candidates.forEach(c=>{
+   if(c.group===oldName)c.group=name;
+  });
+
+  logActivity(
+   currentUser.id,
+   "Group Updated",
+   `Updated group ${name}.`
+  );
+
+  showToast("Group updated.","success");
+
+ }else{
+
+  const newGroup={
+   id:db.groups.length
+    ? Math.max(...db.groups.map(g=>g.id))+1
+    : 1,
+   groupName:name,
+   description,
+   status
+  };
+
+  db.groups.push(newGroup);
+
+  logActivity(
+   currentUser.id,
+   "Group Created",
+   `Created group ${name}.`
+  );
+
+  showToast("Group created.","success");
+ }
+
+ saveDB(db);
+ closeModal("general-modal");
+
+ renderGroupsPage(
+  document.getElementById("content-body")
+ );
+}
+
+function toggleGroupStatus(id){
+
+ const db=getDB();
+
+ const g=db.groups.find(x=>x.id===id);
+
+ if(!g)return;
+
+ g.status=
+  g.status==="Active"
+   ?"Inactive"
+   :"Active";
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "Group Status Changed",
+  `${g.groupName} changed to ${g.status}.`
+ );
+
+ renderGroupsPage(
+  document.getElementById("content-body")
+ );
+
+ showToast(
+  `${g.groupName} is now ${g.status}.`,
+  "success"
+ );
+}
+
+function deleteGroup(id){
+
+ const db=getDB();
+
+ const g=db.groups.find(x=>x.id===id);
+
+ if(!g)return;
+
+ const members=
+  db.candidates.filter(
+   c=>c.group===g.groupName
+  ).length;
+
+ if(members>0){
+  showToast(
+   "Cannot delete a group that has candidates. Deactivate it instead.",
+   "error"
+  );
+  return;
+ }
+
+ if(!confirmAction(
+  `Delete group "${g.groupName}"?`
+ ))return;
+
+ db.groups=
+  db.groups.filter(x=>x.id!==id);
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "Group Deleted",
+  `Deleted group ${g.groupName}.`
+ );
+
+ renderGroupsPage(
+  document.getElementById("content-body")
+ );
+
+ showToast("Group deleted.","success");
+}
+
+
+/* ============================================================
+   CONTRIBUTIONS
+============================================================ */
+
+function renderContributionsPage(container){
+
+ const db=getDB();
+
+ const total=getGrandTotal(db);
+
+ const rows=[];
+
+ db.candidates.forEach(c=>{
+
+  (c.contributions||[]).forEach(r=>{
+
+   const amount=
+    Number(r.totalBirr||0)+
+    Number(r.totalCent||0)/100;
+
+   rows.push({
+    candidate:c,
+    row:r,
+    amount
+   });
+
+  });
+
+ });
+
+ rows.sort((a,b)=>
+  String(b.row.date||"")
+   .localeCompare(String(a.row.date||""))
+ );
+
+ container.innerHTML=`
+
+ <div class="stats-grid">
+
+  <div class="stat-card success">
+   <div>
+    <div class="stat-label">
+     Total Contributions
+    </div>
+    <div class="stat-value">
+     ${money(total)}
+    </div>
+   </div>
+   <i class="fa fa-money-bill-wave"></i>
+  </div>
+
+  <div class="stat-card">
+   <div>
+    <div class="stat-label">
+     Contribution Entries
+    </div>
+    <div class="stat-value">
+     ${rows.length}
+    </div>
+   </div>
+   <i class="fa fa-receipt"></i>
+  </div>
+
+  <div class="stat-card gold">
+   <div>
+    <div class="stat-label">
+     Candidates With Contributions
+    </div>
+    <div class="stat-value">
+     ${
+      db.candidates.filter(
+       c=>getCandidateContribution(c)>0
+      ).length
+     }
+    </div>
+   </div>
+   <i class="fa fa-users"></i>
+  </div>
+
+ </div>
+
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-hand-holding-dollar"></i>
+    Contribution Records
+   </div>
+
+   <div class="toolbar">
+
+    <input id="contribution-search"
+           placeholder="Search candidate/group..."
+           oninput="filterContributionRows()"
+           style="max-width:230px">
+
+    <button class="btn-outline"
+            onclick="exportContributionsCSV()">
+     <i class="fa fa-file-csv"></i>
+     Export CSV
+    </button>
+
+   </div>
+
+  </div>
+
+  <div class="table-wrap">
+
+   <table>
+
+    <thead>
+     <tr>
+      <th>Date</th>
+      <th>Candidate</th>
+      <th>Group</th>
+      <th>Monthly</th>
+      <th>Personal</th>
+      <th>Gift</th>
+      <th>Other</th>
+      <th>Total</th>
+     </tr>
+    </thead>
+
+    <tbody id="contributions-tbody">
+
+     ${contributionTableRows(rows)}
+
+    </tbody>
+
+   </table>
+
+  </div>
+
+ </div>
+ `;
+}
+
+function contributionTableRows(rows){
+
+ if(!rows.length){
+  return `
+   <tr>
+    <td colspan="8" class="empty">
+     No contribution records found.
+    </td>
+   </tr>
+  `;
+ }
+
+ return rows.map(x=>{
+
+  const r=x.row;
+
+  const monthly=
+   Number(r.monthlyBirr||0)+
+   Number(r.monthlyCent||0)/100;
+
+  const personal=
+   Number(r.personalBirr||0)+
+   Number(r.personalCent||0)/100;
+
+  const gift=
+   Number(r.giftBirr||0)+
+   Number(r.giftCent||0)/100;
+
+  const other=
+   Number(r.otherBirr||0)+
+   Number(r.otherCent||0)/100;
+
+  return `
+   <tr
+    data-search="${esc(
+     `${x.candidate.fullName} ${x.candidate.group}`
+    ).toLowerCase()}">
+
+    <td>${esc(r.date||"")}</td>
+    <td><b>${esc(x.candidate.fullName)}</b></td>
+    <td>${esc(x.candidate.group)}</td>
+    <td>${money(monthly)}</td>
+    <td>${money(personal)}</td>
+    <td>${money(gift)}</td>
+    <td>${money(other)}</td>
+    <td>
+     <strong style="color:#047857">
+      ${money(x.amount)}
+     </strong>
+    </td>
+
+   </tr>
+  `;
+ }).join("");
+}
+
+function filterContributionRows(){
+
+ const search=
+  document.getElementById("contribution-search")
+   .value.toLowerCase();
+
+ document
+  .querySelectorAll("#contributions-tbody tr[data-search]")
+  .forEach(row=>{
+   row.style.display=
+    row.dataset.search.includes(search)
+     ? ""
+     : "none";
+  });
+}
+
+
+/* ============================================================
+   REPORTS
+============================================================ */
+
+function renderReportsPage(container){
+
+ const db=getDB();
+
+ container.innerHTML=`
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-chart-column"></i>
+    Financial Reports
+   </div>
+
+   <div class="toolbar">
+
+    <button onclick="generateReport()">
+     <i class="fa fa-chart-pie"></i>
+     Generate Report
+    </button>
+
+    <button class="btn-outline"
+            onclick="printReport()">
+     <i class="fa fa-print"></i>
+     Print
+    </button>
+
+    <button class="btn-success"
+            onclick="exportReportCSV()">
+     <i class="fa fa-file-csv"></i>
+     Export CSV
+    </button>
+
+   </div>
+
+  </div>
+
+  <div class="card-body">
+
+   <div class="grid-4">
+
+    <div>
+     <label>From Date</label>
+     <input type="date" id="report-from">
+    </div>
+
+    <div>
+     <label>To Date</label>
+     <input type="date" id="report-to">
+    </div>
+
+    <div>
+     <label>Group</label>
+     <select id="report-group">
+
+      <option value="">All Groups</option>
+
+      ${
+       db.groups.map(g=>`
+        <option value="${esc(g.groupName)}">
+         ${esc(g.groupName)}
+        </option>
+       `).join("")
+      }
+
+     </select>
+    </div>
+
+    <div>
+     <label>Candidate</label>
+     <select id="report-candidate">
+
+      <option value="">All Candidates</option>
+
+      ${
+       db.candidates.map(c=>`
+        <option value="${esc(c.id)}">
+         ${esc(c.fullName)}
+        </option>
+       `).join("")
+      }
+
+     </select>
+    </div>
+
+   </div>
+
+  </div>
+
+ </div>
+
+
+ <div id="report-result"
+      style="margin-top:1rem"></div>
+ `;
+}
+
+function getFilteredReportData(){
+
+ const db=getDB();
+
+ const from=
+  document.getElementById("report-from")?.value||"";
+
+ const to=
+  document.getElementById("report-to")?.value||"";
+
+ const group=
+  document.getElementById("report-group")?.value||"";
+
+ const candidateId=
+  document.getElementById("report-candidate")?.value||"";
+
+ const data=[];
+
+ db.candidates.forEach(c=>{
+
+  if(group && c.group!==group)return;
+
+  if(candidateId && c.id!==candidateId)return;
+
+  (c.contributions||[]).forEach(r=>{
+
+   if(from && r.date<from)return;
+
+   if(to && r.date>to)return;
+
+   data.push({
+    candidate:c,
+    row:r
+   });
+
+  });
+
+ });
+
+ return data;
+}
+
+function generateReport(){
+
+ const data=getFilteredReportData();
+
+ let monthly=0;
+ let personal=0;
+ let gift=0;
+ let other=0;
+ let total=0;
+
+ data.forEach(x=>{
+
+  const r=x.row;
+
+  monthly+=
+   Number(r.monthlyBirr||0)+
+   Number(r.monthlyCent||0)/100;
+
+  personal+=
+   Number(r.personalBirr||0)+
+   Number(r.personalCent||0)/100;
+
+  gift+=
+   Number(r.giftBirr||0)+
+   Number(r.giftCent||0)/100;
+
+  other+=
+   Number(r.otherBirr||0)+
+   Number(r.otherCent||0)/100;
+
+ });
+
+ total=monthly+personal+gift+other;
+
+ const groups={};
+
+ data.forEach(x=>{
+
+  const g=x.candidate.group;
+
+  groups[g] ||= {
+   candidates:new Set(),
+   amount:0
+  };
+
+  groups[g].candidates.add(x.candidate.id);
+
+  groups[g].amount+=
+   Number(x.row.totalBirr||0)+
+   Number(x.row.totalCent||0)/100;
+ });
+
+ document.getElementById("report-result").innerHTML=`
+
+ <div class="card" id="printable-report">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    Financial Summary Report
+   </div>
+
+   <div style="font-size:.75rem;color:#667085">
+    Generated: ${nowDateTime()}
+   </div>
+
+  </div>
+
+  <div class="card-body">
+
+   <div class="stats-grid">
+
+    <div class="stat-card">
+     <div>
+      <div class="stat-label">Monthly</div>
+      <div class="stat-value">${money(monthly)}</div>
+     </div>
+    </div>
+
+    <div class="stat-card gold">
+     <div>
+      <div class="stat-label">Personal Meklit</div>
+      <div class="stat-value">${money(personal)}</div>
+     </div>
+    </div>
+
+    <div class="stat-card warning">
+     <div>
+      <div class="stat-label">Gift</div>
+      <div class="stat-value">${money(gift)}</div>
+     </div>
+    </div>
+
+    <div class="stat-card success">
+     <div>
+      <div class="stat-label">Grand Total</div>
+      <div class="stat-value">${money(total)}</div>
+     </div>
+    </div>
+
+   </div>
+
+
+   <h3 style="margin:1.5rem 0 .7rem;color:#173e65">
+    Group Summary
+   </h3>
+
+   <div class="table-wrap">
+
+    <table>
+
+     <thead>
+      <tr>
+       <th>Group</th>
+       <th>Candidates</th>
+       <th>Contribution</th>
+      </tr>
+     </thead>
+
+     <tbody>
+
+      ${
+       Object.keys(groups).length
+       ? Object.entries(groups).map(([name,v])=>`
+        <tr>
+         <td><b>${esc(name)}</b></td>
+         <td>${v.candidates.size}</td>
+         <td>
+          <strong>
+           ${money(v.amount)}
+          </strong>
+         </td>
+        </tr>
+       `).join("")
+       : `
+        <tr>
+         <td colspan="3" class="empty">
+          No records match the selected filters.
+         </td>
+        </tr>
+       `
+      }
+
+     </tbody>
+
+    </table>
+
+   </div>
+
+
+   <h3 style="margin:1.5rem 0 .7rem;color:#173e65">
+    Detailed Records
+   </h3>
+
+   <div class="table-wrap">
+
+    <table>
+
+     <thead>
+      <tr>
+       <th>Date</th>
+       <th>Candidate</th>
+       <th>Group</th>
+       <th>Total</th>
+      </tr>
+     </thead>
+
+     <tbody>
+
+      ${
+       data.map(x=>`
+        <tr>
+         <td>${esc(x.row.date||"")}</td>
+         <td>${esc(x.candidate.fullName)}</td>
+         <td>${esc(x.candidate.group)}</td>
+         <td>
+          ${money(
+           Number(x.row.totalBirr||0)+
+           Number(x.row.totalCent||0)/100
+          )}
+         </td>
+        </tr>
+       `).join("")
+      }
+
+     </tbody>
+
+    </table>
+
+   </div>
+
+  </div>
+
+ </div>
+ `;
+
+ logActivity(
+  currentUser.id,
+  "Report Generated",
+  `Generated financial report containing ${data.length} contribution entries.`
+ );
+}
+
+function printReport(){
+
+ if(!document.getElementById("printable-report")){
+  generateReport();
+ }
+
+ setTimeout(()=>{
+  window.print();
+ },200);
+}
+
+function exportReportCSV(){
+ const data = getFilteredReportData();
+ let csv = "Date,Candidate,Group,Monthly,Personal,Gift,Other,Total\n";
+ data.forEach(x => {
+  const r = x.row;
+  const m = Number(r.monthlyBirr||0)+Number(r.monthlyCent||0)/100;
+  const p = Number(r.personalBirr||0)+Number(r.personalCent||0)/100;
+  const g = Number(r.giftBirr||0)+Number(r.giftCent||0)/100;
+  const o = Number(r.otherBirr||0)+Number(r.otherCent||0)/100;
+  const t = Number(r.totalBirr||0)+Number(r.totalCent||0)/100;
+  csv += `"${r.date||""}","${x.candidate.fullName}","${x.candidate.group}","${m}","${p}","${g}","${o}","${t}"\n`;
+ });
+ downloadCSV(csv, `EAC_Filtered_Report_${today()}.csv`);
+}
+
+
+/* ============================================================
+   USERS
+============================================================ */
+
+function renderUsersPage(container){
+
+ const db=getDB();
+
+ container.innerHTML=`
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-user-shield"></i>
+    User Management
+   </div>
+
+   <button onclick="openUserModal()">
+    <i class="fa fa-user-plus"></i>
+    Add User
+   </button>
+
+  </div>
+
+  <div class="table-wrap">
+
+   <table>
+
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Status</th>
+      <th>Last Login</th>
+      <th>Actions</th>
+     </tr>
+    </thead>
+
+    <tbody>
+
+     ${
+      db.users.map(u=>`
+
+       <tr>
+
+        <td><b>${esc(u.fullName)}</b></td>
+
+        <td>${esc(u.username)}</td>
+
+        <td>
+         <span class="badge ${
+          u.role==="Admin"
+           ?"badge-info"
+           :"badge-gray"
+         }">
+          ${esc(u.role)}
+         </span>
+        </td>
+
+        <td>${esc(u.phone||"")}</td>
+
+        <td>${esc(u.email||"")}</td>
+
+        <td>
+         <span class="badge ${
+          u.status==="Active"
+           ?"badge-success"
+           :"badge-danger"
+         }">
+          ${esc(u.status)}
+         </span>
+        </td>
+
+        <td>${esc(u.lastLogin||"Never")}</td>
+
+        <td>
+
+         <div class="actions">
+
+          <button class="btn-sm"
+                  onclick="openUserModal(${u.id})">
+           <i class="fa fa-edit"></i>
+          </button>
+
+          <button class="btn-warning btn-sm"
+                  onclick="toggleUserStatus(${u.id})">
+           <i class="fa fa-power-off"></i>
+          </button>
+
+          <button class="btn-danger btn-sm"
+                  onclick="deleteUser(${u.id})">
+           <i class="fa fa-trash"></i>
+          </button>
+
+         </div>
+
+        </td>
+
+       </tr>
+
+      `).join("")
+     }
+
+    </tbody>
+
+   </table>
+
+  </div>
+
+ </div>
+ `;
+}
+
+function openUserModal(id=null){
+
+ const db=getDB();
+
+ const u=
+  id
+   ? db.users.find(x=>x.id===id)
+   : null;
+
+ openModal(
+  u?"Edit User":"Create User",
+
+  `
+
+   <div class="grid-2">
+
+    <div class="form-group">
+     <label>Full Name</label>
+     <input id="user-full-name"
+            value="${esc(u?.fullName||"")}"
+            required>
+    </div>
+
+    <div class="form-group">
+     <label>Username</label>
+     <input id="user-username"
+            value="${esc(u?.username||"")}"
+            ${u?"disabled":""}
+            required>
+    </div>
+
+    <div class="form-group">
+     <label>Phone</label>
+     <input id="user-phone"
+            value="${esc(u?.phone||"")}"
+            placeholder="+251...">
+    </div>
+
+    <div class="form-group">
+     <label>Email</label>
+     <input type="email"
+            id="user-email"
+            value="${esc(u?.email||"")}">
+    </div>
+
+    <div class="form-group">
+     <label>Role</label>
+     <select id="user-role">
+      <option value="Staff"
+       ${u?.role==="Staff"?"selected":""}>
+       Staff
+      </option>
+      <option value="Admin"
+       ${u?.role==="Admin"?"selected":""}>
+       Admin
+      </option>
+     </select>
+    </div>
+
+    <div class="form-group">
+     <label>Status</label>
+     <select id="user-status">
+      <option value="Active"
+       ${u?.status==="Active"?"selected":""}>
+       Active
+      </option>
+      <option value="Inactive"
+       ${u?.status==="Inactive"?"selected":""}>
+       Inactive
+      </option>
+     </select>
+    </div>
+
+   </div>
+
+   ${
+    !u
+    ? `
+     <div class="form-group">
+      <label>Temporary Password</label>
+      <input id="user-password"
+             type="password"
+             minlength="6"
+             placeholder="Minimum 6 characters">
+     </div>
+    `
+    :""
+   }
+
+  `,
+
+  `
+
+   <button class="btn-outline"
+           onclick="closeModal('general-modal')">
+    Cancel
+   </button>
+
+   <button onclick="saveUser(${id||"null"})">
+    <i class="fa fa-save"></i>
+    Save User
+   </button>
+
+  `
+ );
+}
+
+function saveUser(id){
+
+ const db=getDB();
+
+ const fullName=
+  document.getElementById("user-full-name")
+   .value.trim();
+
+ const username=
+  document.getElementById("user-username")
+   .value.trim();
+
+ const phone=
+  document.getElementById("user-phone")
+   .value.trim();
+
+ const email=
+  document.getElementById("user-email")
+   .value.trim();
+
+ const role=
+  document.getElementById("user-role").value;
+
+ const status=
+  document.getElementById("user-status").value;
+
+ if(!fullName || !username){
+  showToast("Full name and username are required.","error");
+  return;
+ }
+
+ if(id){
+
+  const u=db.users.find(x=>x.id===id);
+
+  if(!u)return;
+
+  u.fullName=fullName;
+  u.phone=phone;
+  u.email=email;
+  u.role=role;
+  u.status=status;
+
+  if(
+   currentUser &&
+   currentUser.id===id
+  ){
+   currentUser={...u};
+
+   sessionStorage.setItem(
+    SESSION_KEY,
+    JSON.stringify(currentUser)
+   );
+  }
+
+  logActivity(
+   currentUser.id,
+   "User Updated",
+   `Updated user ${username}.`
+  );
+
+  showToast("User updated.","success");
+
+ }else{
+
+  const password=
+   document.getElementById("user-password")
+    .value;
+
+  if(password.length<6){
+   showToast(
+    "Password must contain at least 6 characters.",
+    "error"
+   );
+   return;
+  }
+
+  if(
+   db.users.some(
+    x=>x.username.toLowerCase()===username.toLowerCase()
+   )
+  ){
+   showToast(
+    "Username already exists.",
+    "error"
+   );
+   return;
+  }
+
+  const u={
+   id:Date.now(),
+   fullName,
+   username,
+   passwordHash:btoa(password),
+   role,
+   phone,
+   email,
+   status,
+   createdDate:today(),
+   lastLogin:""
+  };
+
+  db.users.push(u);
+
+  logActivity(
+   currentUser.id,
+   "User Created",
+   `Created user ${username}.`
+  );
+
+  showToast("User created.","success");
+ }
+
+ saveDB(db);
+ closeModal("general-modal");
+
+ initApp();
+ navigate("users");
+}
+
+function toggleUserStatus(id){
+
+ const db=getDB();
+
+ const u=db.users.find(x=>x.id===id);
+
+ if(!u)return;
+
+ if(
+  currentUser.id===u.id &&
+  u.status==="Active"
+ ){
+  showToast(
+   "You cannot disable your own active account.",
+   "error"
+  );
+  return;
+ }
+
+ u.status=
+  u.status==="Active"
+   ?"Inactive"
+   :"Active";
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "User Status Changed",
+  `${u.username} changed to ${u.status}.`
+ );
+
+ renderUsersPage(
+  document.getElementById("content-body")
+ );
+
+ showToast("User status updated.","success");
+}
+
+function deleteUser(id){
+
+ const db=getDB();
+
+ const u=db.users.find(x=>x.id===id);
+
+ if(!u)return;
+
+ if(u.id===currentUser.id){
+  showToast(
+   "You cannot delete your own account.",
+   "error"
+  );
+  return;
+ }
+
+ if(!confirmAction(
+  `Delete user "${u.username}"?`
+ ))return;
+
+ db.users=
+  db.users.filter(x=>x.id!==id);
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "User Deleted",
+  `Deleted user ${u.username}.`
+ );
+
+ renderUsersPage(
+  document.getElementById("content-body")
+ );
+
+ showToast("User deleted.","success");
+}
+
+
+/* ============================================================
+   ACTIVITY
+============================================================ */
+
+function renderActivityPage(container){
+
+ const db=getDB();
+
+ container.innerHTML=`
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-history"></i>
+    System Activity Log
+   </div>
+
+   <div class="toolbar">
+
+    <input id="activity-search"
+           placeholder="Search activity..."
+           oninput="filterActivity()"
+           style="max-width:250px">
+
+    <button class="btn-danger btn-sm"
+            onclick="clearActivityLog()">
+     <i class="fa fa-trash"></i>
+     Clear Log
+    </button>
+
+   </div>
+
+  </div>
+
+  <div class="table-wrap">
+
+   <table>
+
+    <thead>
+     <tr>
+      <th>Date / Time</th>
+      <th>User</th>
+      <th>Action</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+
+    <tbody id="activity-tbody">
+
+     ${activityRows(db)}
+
+    </tbody>
+
+   </table>
+
+  </div>
+
+ </div>
+ `;
+}
+
+function activityRows(db){
+
+ return db.activityLog.map(l=>{
+
+  const u=
+   db.users.find(x=>x.id===l.userId);
+
+  return `
+   <tr data-activity="${esc(
+    `${l.action} ${l.description} ${u?.username||""}`
+   ).toLowerCase()}">
+
+    <td>${esc(l.dateTime)}</td>
+    <td>${esc(u?.username||"System")}</td>
+    <td><b>${esc(l.action)}</b></td>
+    <td>${esc(l.description)}</td>
+
+   </tr>
+  `;
+
+ }).join("");
+}
+
+function filterActivity(){
+
+ const q=
+  document.getElementById("activity-search")
+   .value.toLowerCase();
+
+ document
+  .querySelectorAll("#activity-tbody tr[data-activity]")
+  .forEach(row=>{
+   row.style.display=
+    row.dataset.activity.includes(q)
+     ? ""
+     : "none";
+  });
+}
+
+function clearActivityLog(){
+
+ if(!confirmAction(
+  "Clear the complete activity log?"
+ ))return;
+
+ const db=getDB();
+
+ db.activityLog=[];
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "Activity Log Cleared",
+  "The activity log was cleared."
+ );
+
+ renderActivityPage(
+  document.getElementById("content-body")
+ );
+
+ showToast("Activity log cleared.","success");
+}
+
+
+/* ============================================================
+   BACKUP / RESTORE
+============================================================ */
+
+function renderBackupPage(container){
+
+ container.innerHTML=`
+
+ <div class="grid-2">
+
+  <div class="card">
+
+   <div class="card-header">
+    <div class="card-title">
+     <i class="fa fa-download"></i>
+     Database Backup
+    </div>
+   </div>
+
+   <div class="card-body">
+
+    <p style="color:#667085;margin-bottom:1rem">
+     Download a complete JSON backup containing
+     candidates, contribution records, groups,
+     users, settings and activity history.
+    </p>
+
+    <button onclick="downloadBackup()">
+     <i class="fa fa-download"></i>
+     Download JSON Backup
+    </button>
+
+   </div>
+
+  </div>
+
+
+  <div class="card">
+
+   <div class="card-header">
+    <div class="card-title">
+     <i class="fa fa-upload"></i>
+     Restore Database
+    </div>
+   </div>
+
+   <div class="card-body">
+
+    <p style="color:#667085;margin-bottom:1rem">
+     Restore a previously downloaded JSON backup.
+     Existing browser data will be replaced.
+    </p>
+
+    <input type="file"
+           id="restore-file"
+           accept=".json,application/json">
+
+    <button class="btn-warning"
+            style="margin-top:.8rem"
+            onclick="restoreBackup()">
+     <i class="fa fa-upload"></i>
+     Restore Backup
+    </button>
+
+   </div>
+
+  </div>
+
+
+  <div class="card">
+
+   <div class="card-header">
+    <div class="card-title">
+     <i class="fa fa-file-csv"></i>
+     Export Data
+    </div>
+   </div>
+
+   <div class="card-body">
+
+    <div class="toolbar">
+
+     <button onclick="exportCandidatesCSV()">
+      Candidates CSV
+     </button>
+
+     <button onclick="exportContributionsCSV()">
+      Contributions CSV
+     </button>
+
+     <button onclick="exportReportCSV()">
+      Report CSV
+     </button>
+
+    </div>
+
+   </div>
+
+  </div>
+
+
+  <div class="card">
+
+   <div class="card-header">
+    <div class="card-title">
+     <i class="fa fa-triangle-exclamation"></i>
+     Danger Zone
+    </div>
+   </div>
+
+   <div class="card-body">
+
+    <p style="color:#b91c1c;margin-bottom:1rem">
+     This permanently removes all application
+     data from this browser.
+    </p>
+
+    <button class="btn-danger"
+            onclick="resetDatabase()">
+     <i class="fa fa-trash"></i>
+     Reset Application Database
+    </button>
+
+   </div>
+
+  </div>
+
+ </div>
+ `;
+}
+
+function downloadBackup(){
+
+ const db=getDB();
+
+ const backup={
+  application:"EAC Youth Meklit",
+  version:"3.0",
+  exportedAt:nowDateTime(),
+  data:db
+ };
+
+ const blob=new Blob(
+  [JSON.stringify(backup,null,2)],
+  {type:"application/json"}
+ );
+
+ const url=URL.createObjectURL(blob);
+
+ const a=document.createElement("a");
+
+ a.href=url;
+ a.download=
+  `EAC_Youth_Meklit_Backup_${today()}.json`;
+
+ a.click();
+
+ URL.revokeObjectURL(url);
+
+ logActivity(
+  currentUser.id,
+  "Database Backup",
+  "Downloaded database backup."
+ );
+
+ showToast(
+  "Backup downloaded successfully.",
+  "success"
+ );
+}
+
+function restoreBackup(){
+
+ const file=
+  document.getElementById("restore-file")
+   .files[0];
+
+ if(!file){
+  showToast(
+   "Please select a JSON backup file.",
+   "error"
+  );
+  return;
+ }
+
+ if(!confirmAction(
+  "Restore this backup?\n\nCurrent local database will be replaced."
+ ))return;
+
+ const reader=new FileReader();
+
+ reader.onload=function(e){
+
+  try{
+
+   const backup=JSON.parse(e.target.result);
+
+   const data=
+    backup.data || backup;
+
+   if(
+    !data.users ||
+    !data.groups ||
+    !data.candidates
+   ){
+    throw new Error("Invalid backup");
+   }
+
+   localStorage.setItem(
+    DB_KEY,
+    JSON.stringify(data)
+   );
+
+   showToast(
+    "Backup restored. Reloading application...",
+    "success"
+   );
+
+   setTimeout(()=>{
+    location.reload();
+   },1000);
+
+  }catch(err){
+
+   showToast(
+    "Invalid backup file.",
+    "error"
+   );
+
+  }
+ };
+
+ reader.readAsText(file);
+}
+
+function resetDatabase(){
+
+ if(!confirmAction(
+  "WARNING!\n\nThis will permanently delete all candidates, contributions, users, groups and activity data from this browser.\n\nContinue?"
+ ))return;
+
+ if(!confirmAction(
+  "Are you absolutely sure?"
+ ))return;
+
+ localStorage.removeItem(DB_KEY);
+ sessionStorage.removeItem(SESSION_KEY);
+
+ location.reload();
+}
+
+
+/* ============================================================
+   SETTINGS
+============================================================ */
+
+function renderSettingsPage(container){
+
+ const db=getDB();
+
+ const s=db.settings;
+
+ container.innerHTML=`
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-cog"></i>
+    System Settings
+   </div>
+
+   <button onclick="saveSettings()">
+    <i class="fa fa-save"></i>
+    Save Settings
+   </button>
+
+  </div>
+
+  <div class="card-body">
+
+   <div class="form-group">
+    <label>Church / Organization Name</label>
+    <input id="set-church" value="${esc(s.churchName||"")}">
+   </div>
+
+   <div class="form-group">
+    <label>Department Name</label>
+    <input id="set-department" value="${esc(s.department||"")}">
+   </div>
+
+   <div class="form-group">
+    <label>Form Document Title</label>
+    <input id="set-form-title" value="${esc(s.formTitle||"")}">
+   </div>
+
+   <div class="form-group">
+    <label>Bible Verse Text</label>
+    <input id="set-verse" value="${esc(s.verse||"")}">
+   </div>
+
+   <div class="grid-3">
+
+    <div class="form-group">
+     <label>Phone Number</label>
+     <input id="set-phone" value="${esc(s.phone||"")}">
+    </div>
+
+    <div class="form-group">
+     <label>Email Address</label>
+     <input id="set-email" value="${esc(s.email||"")}">
+    </div>
+
+    <div class="form-group">
+     <label>Address / Location</label>
+     <input id="set-address" value="${esc(s.address||"")}">
+    </div>
+
+   </div>
+
+  </div>
+
+ </div>
+ `;
+}
+
+function saveSettings(){
+
+ const db=getDB();
+
+ db.settings={
+  churchName:document.getElementById("set-church").value,
+  department:document.getElementById("set-department").value,
+  formTitle:document.getElementById("set-form-title").value,
+  verse:document.getElementById("set-verse").value,
+  phone:document.getElementById("set-phone").value,
+  email:document.getElementById("set-email").value,
+  address:document.getElementById("set-address").value
+ };
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "Settings Saved",
+  "Updated system settings."
+ );
+
+ showToast("Settings updated successfully.","success");
+}
+
+/* ============================================================
+   SEPARATE GROUP MONEY MANAGEMENT
+   IMPORTANT: This ledger is intentionally independent from
+   EAC_YOUTH_MEKLIT_DB_V3. It never changes candidate money,
+   candidate contributions, candidate rankings, or balances.
+============================================================ */
+const GROUP_FUNDS_KEY = "EAC_YOUTH_MEKLIT_GROUP_FUNDS_V1";
+
+function getGroupFunds(){
+ try{
+  const raw=localStorage.getItem(GROUP_FUNDS_KEY);
+  if(!raw) return [];
+  const data=JSON.parse(raw);
+  return Array.isArray(data) ? data : [];
+ }catch(e){
+  return [];
+ }
+}
+
+function saveGroupFunds(funds){
+ localStorage.setItem(GROUP_FUNDS_KEY, JSON.stringify(funds));
+}
+
+function groupFundTotal(groupName){
+ return getGroupFunds()
+  .filter(x=>x.groupName===groupName)
+  .reduce((sum,x)=>sum+Number(x.amount||0),0);
+}
+
+function openGroupMembersModal(groupId){
+ const db=getDB();
+ const group=db.groups.find(g=>g.id===groupId);
+ if(!group){ showToast("Group not found.","error"); return; }
+
+ const members=db.candidates.filter(c=>c.group===group.groupName);
+ const memberRows=members.length ? members.map((c,i)=>{
+  const initials=String(c.fullName||"?").trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
+  return `<div class="group-member-row">
+    ${c.photo ? `<img class="group-member-avatar" src="${esc(c.photo)}" alt="">` : `<div class="group-member-avatar">${esc(initials||"?")}</div>`}
+    <div>
+      <div class="group-member-name">${esc(c.fullName||"Unnamed Candidate")}</div>
+      <div class="group-member-meta">${esc(c.phone||c.phoneNumber||"No phone number")} ${c.id ? ` • ID: ${esc(c.id)}` : ""}</div>
+    </div>
+  </div>`;
+ }).join("") : `<div class="empty">No candidates are assigned to ${esc(group.groupName)}.</div>`;
+
+ openModal(
+  `${group.groupName} — Members`,
+  `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <div><strong>${members.length}</strong> candidate${members.length===1?'':'s'} belong to this group.</div>
+    <span class="badge badge-info">${esc(group.status)}</span>
+  </div>
+  <div class="group-members-list">${memberRows}</div>`,
+  `<button class="btn-outline" onclick="closeModal('general-modal')">Close</button>`
+ );
+}
+
+function openGroupFundModal(groupId=null){
+ const db=getDB();
+ const groups=db.groups||[];
+ const selected=groupId ? groups.find(g=>g.id===groupId) : null;
+ if(!groups.length){ showToast("No groups are available.","error"); return; }
+
+ const options=groups.map(g=>`<option value="${esc(g.groupName)}" ${selected&&selected.id===g.id?'selected':''}>${esc(g.groupName)}</option>`).join("");
+ const activities=[
+  "",
+  "Worship Service",
+  "Prayer Meeting",
+  "Youth Program",
+  "Evangelism",
+  "Church Conference",
+  "Outreach",
+  "Choir / Worship Ministry",
+  "Sunday School",
+  "Community Service",
+  "Fundraising",
+  "Church Project",
+  "Other"
+ ];
+
+ openModal(
+  "Add Money to Group",
+  `<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:.8rem;margin-bottom:1rem;color:#1e3a8a">
+    <i class="fa fa-circle-info"></i>
+    <strong>Separate group funds:</strong> this money belongs to the group and will never be added to any candidate's contribution.
+  </div>
+  <div class="form-group">
+   <label>Group</label>
+   <select id="group-fund-group">${options}</select>
+  </div>
+  <div class="form-group">
+   <label>Amount (ETB)</label>
+   <input id="group-fund-amount" type="number" min="0.01" step="0.01" placeholder="Enter group money amount" required>
+  </div>
+  <div class="form-group">
+   <label>Date</label>
+   <input id="group-fund-date" type="date" value="${today()}">
+  </div>
+  <div class="form-group">
+   <label>Church Activity <span style="font-weight:400;color:#667085">(optional)</span></label>
+   <select id="group-fund-activity">${activities.map(a=>`<option value="${esc(a)}">${a?esc(a):"— Select activity —"}</option>`).join("")}</select>
+  </div>
+  <div class="form-group">
+   <label>Description <span style="font-weight:400;color:#667085">(optional)</span></label>
+   <textarea id="group-fund-description" placeholder="What is this group money for?"></textarea>
+  </div>`,
+  `<button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
+   <button class="btn-gold" onclick="saveGroupFund()"><i class="fa fa-vault"></i> Save Group Money</button>`
+ );
+}
+
+function saveGroupFund(){
+ const groupName=document.getElementById("group-fund-group")?.value||"";
+ const amount=Number(document.getElementById("group-fund-amount")?.value||0);
+ const date=document.getElementById("group-fund-date")?.value||today();
+ const activity=document.getElementById("group-fund-activity")?.value||"";
+ const description=document.getElementById("group-fund-description")?.value.trim()||"";
+
+ if(!groupName){showToast("Please select a group.","error");return;}
+ if(!(amount>0)){showToast("Enter a valid amount greater than zero.","error");return;}
+
+ const db=getDB();
+ if(!db.groups.some(g=>g.groupName===groupName)){
+  showToast("Selected group no longer exists.","error");return;
+ }
+
+ const funds=getGroupFunds();
+ funds.unshift({
+  id:"GF-"+Date.now()+"-"+Math.floor(Math.random()*1000),
+  groupName,
+  amount:Number(amount.toFixed(2)),
+  date,
+  activity,
+  description,
+  createdBy:currentUser?.username||currentUser?.fullName||"System",
+  createdAt:nowDateTime()
+ });
+ saveGroupFunds(funds);
+
+ closeModal("general-modal");
+ logActivity(currentUser.id,"Group Money Added",`Added ${money(amount)} ETB to ${groupName} group funds. Candidate contributions were not changed.`);
+ renderGroupsPage(document.getElementById("content-body"));
+ showToast(`${money(amount)} ETB added to ${groupName} group funds.`,`success`);
+}
+
+function deleteGroupFund(id){
+ if(!confirmAction("Delete this group-money entry? This will only affect the separate group-fund ledger."))return;
+ const funds=getGroupFunds();
+ const next=funds.filter(x=>String(x.id)!==String(id));
+ if(next.length===funds.length)return;
+ saveGroupFunds(next);
+ logActivity(currentUser.id,"Group Money Deleted","Deleted a separate group-fund entry.");
+ renderGroupsPage(document.getElementById("content-body"));
+ showToast("Group-money entry deleted.","success");
+}
+
+function exportGroupFundsCSV(){
+ const funds=getGroupFunds();
+ if(!funds.length){showToast("There are no group-money records to export.","warning");return;}
+ const rows=[
+  ["Date","Group","Amount (ETB)","Church Activity","Description","Added By","Created At"],
+  ...funds.map(x=>[x.date,x.groupName,Number(x.amount||0).toFixed(2),x.activity||"",x.description||"",x.createdBy||"",x.createdAt||""])
+ ];
+ const csv=rows.map(row=>row.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\n");
+ const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);
+ a.download=`Meklit_Group_Funds_${today()}.csv`;
+ a.click();
+ URL.revokeObjectURL(a.href);
+}
+
+function renderGroupFundsSection(db){
+ const groups=db.groups||[];
+ const funds=getGroupFunds();
+ const total=funds.reduce((s,x)=>s+Number(x.amount||0),0);
+ const groupsWithFunds=groups.filter(g=>groupFundTotal(g.groupName)>0).length;
+
+ return `<div class="group-funds-panel">
+  <div class="card">
+   <div class="card-header">
+    <div>
+     <div class="card-title"><i class="fa fa-vault"></i> Group Money Management</div>
+     <div style="font-size:.78rem;color:#667085;margin-top:.25rem">Independent group funds — candidate contributions and candidate rankings are not affected.</div>
+    </div>
+    <div class="toolbar">
+     <button class="btn-gold" onclick="openGroupFundModal()"><i class="fa fa-plus"></i> Add Money to Group</button>
+     <button class="btn-outline" onclick="exportGroupFundsCSV()"><i class="fa fa-file-csv"></i> Export</button>
+    </div>
+   </div>
+   <div class="card-body">
+    <div class="group-fund-summary">
+     <div class="group-fund-stat"><div class="label">Total Group Funds</div><div class="value">${money(total)} ETB</div></div>
+     <div class="group-fund-stat"><div class="label">Fund Entries</div><div class="value">${funds.length}</div></div>
+     <div class="group-fund-stat"><div class="label">Groups With Funds</div><div class="value">${groupsWithFunds}</div></div>
+     <div class="group-fund-stat"><div class="label">Groups</div><div class="value">${groups.length}</div></div>
+    </div>
+    <div class="group-fund-grid">
+     ${groups.map(g=>`<div class="group-fund-card">
+       <h4><i class="fa fa-layer-group"></i> ${esc(g.groupName)}</h4>
+       <div class="group-fund-balance">${money(groupFundTotal(g.groupName))} ETB</div>
+       <div class="group-fund-meta">Separate group money</div>
+       <div style="margin-top:.8rem;display:flex;gap:.45rem;flex-wrap:wrap">
+        <button class="btn-sm btn-gold" onclick="openGroupFundModal(${g.id})"><i class="fa fa-plus"></i> Add</button>
+        <button class="btn-sm" onclick="openGroupMembersModal(${g.id})"><i class="fa fa-users"></i> Members (${db.candidates.filter(c=>c.group===g.groupName).length})</button>
+       </div>
+      </div>`).join("")}
+    </div>
+   </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+   <div class="card-header">
+    <div class="card-title"><i class="fa fa-receipt"></i> Group Money History</div>
+   </div>
+   <div class="card-body">
+    ${funds.length?`<div class="table-wrap"><table><thead><tr><th>Date</th><th>Group</th><th>Amount</th><th>Church Activity</th><th>Description</th><th>Added By</th><th>Action</th></tr></thead><tbody>
+     ${funds.map(x=>`<tr><td>${esc(x.date||"")}</td><td><b>${esc(x.groupName||"")}</b></td><td><strong>${money(x.amount)} ETB</strong></td><td>${esc(x.activity||"—")}</td><td>${esc(x.description||"—")}</td><td>${esc(x.createdBy||"—")}</td><td><button class="btn-danger btn-sm" onclick="deleteGroupFund('${esc(x.id)}')"><i class="fa fa-trash"></i></button></td></tr>`).join("")}
+    </tbody></table></div>`:`<div class="empty"><i class="fa fa-vault" style="font-size:2rem;opacity:.35"></i><div style="margin-top:.5rem">No group money recorded yet.</div><div style="font-size:.8rem;color:#667085;margin-top:.25rem">This ledger is completely separate from candidate contributions.</div></div>`}
+   </div>
+  </div>
+ </div>`;
+}
+
+/* Add the separate section after the original group-management table.
+   The original DB is read only here; no candidate/group records are changed. */
+const _originalRenderGroupsPage = renderGroupsPage;
+renderGroupsPage = function(container){
+ _originalRenderGroupsPage(container);
+ container.insertAdjacentHTML("beforeend", renderGroupFundsSection(getDB()));
+};
+
+/* Check remembered login on page boot */
+(function autoLogin(){
+ const remembered = localStorage.getItem("EAC_REMEMBER_LOGIN");
+ if(remembered){
+  try{
+   currentUser = JSON.parse(remembered);
+   sessionStorage.setItem(SESSION_KEY, remembered);
+  }catch(e){}
+ }
+ if(currentUser){
+  document.getElementById("login-screen").classList.add("hidden");
+  document.getElementById("app-container").classList.remove("hidden");
+  initApp();
+ }
+})();
+</script>
+
+</body>
+</html>
