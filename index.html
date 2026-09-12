@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- Chart.js Engine integration for dynamic directional charts -->
-<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=_qghTu8fvozjD14iedrjYErD7fxvAmp4bbinP1QccnharxsmLqS1s3M5oIT5vd5ry9_7ayyp9dG8B2fbfpAtgA0cvJj2KJcqZFCh4H92M0hx25LHIj8wYBmcnguexdPHg8cWa00gHhXseRBK4eEWg7iYNE_w67elO2_Im7HYoof6NN2TIbeInSZXtFhULkMACfnKa-8WrzyOuzxePueapcNUDoIoiHgQP5_uvcFTT_ZcejRM_CM_Xo4-1_GXTy9Y5Vq6xgEm4sRBFLIXlzQ4kRrokNf8ZC0WTxBI-Ns6ksdxjOk9JiNlo5FkMLJ_LCaUjb1MeCoq8Ide7OdTSKibEA" charset="UTF-8"></script><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=zaBaLXZvSOXSmZLtKYRxMjtzteIAZhQDPYxc2zeFJkPf_SJla190uEl_uXKT40AlVoP4Jefg6UFIpexQkJjPZ9JjwccJBaLet70OF6YG9Dv62Kr4DK3LGzcqMcSdKFFqHEKlN8Y-G903sYfLFj7zQB62XPZdnKJc-fSK5ijpy2872bZLuUdk30BJfH0wStr50emu-uyQMQh2bOvbmc1wUnlg8KWeIC7k5l8ao82f4z7pWP0vX_FF2jtw5IFikqIdDqNjqstflTrDbwT26KRVT7gn00_9JlQDoR8zAAAC62mGG2l2pTig-9BBdztZsLfVrcXb-NEe8-TGkP4RKPVVDmdqQDIzZhe5fTq2RMQCQ7A" charset="UTF-8"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 :root{
@@ -1316,8 +1315,11 @@ tr:hover td{background:#f9fafb}
 
 <script>
 /* ============================================================
-   DATABASE
+   LIVE RENDER BACKEND API INTEGRATION
 ============================================================ */
+
+// Replace with your live Render Web Service backend URL:
+const API_BASE_URL = "https://meklit-backend.onrender.com";
 
 const DB_KEY="EAC_YOUTH_MEKLIT_DB_V3";
 const SESSION_KEY="EAC_CURRENT_USER";
@@ -1370,6 +1372,23 @@ const defaultData={
  ]
 };
 
+/**
+ * Syncs and gets data from Render API; falls back to local storage if API is unreachable.
+ */
+async function fetchBackendData(){
+ try {
+  const response = await fetch(`${API_BASE_URL}/api/data`);
+  if(response.ok){
+   const remoteDb = await response.json();
+   localStorage.setItem(DB_KEY, JSON.stringify(remoteDb));
+   return remoteDb;
+  }
+ } catch(err) {
+  console.warn("Backend API offline/sleeping, using local cache:", err);
+ }
+ return getDB();
+}
+
 function getDB(){
  let raw=localStorage.getItem(DB_KEY);
 
@@ -1395,8 +1414,19 @@ function getDB(){
  }
 }
 
-function saveDB(db){
+async function saveDB(db){
  localStorage.setItem(DB_KEY,JSON.stringify(db));
+ 
+ // Asynchronously persist changes to live Render backend API
+ try {
+  await fetch(`${API_BASE_URL}/api/data`, {
+   method: 'POST',
+   headers: { 'Content-Type': 'application/json' },
+   body: JSON.stringify(db)
+  });
+ } catch(err) {
+  console.warn("Could not sync state to remote API:", err);
+ }
 }
 
 let currentUser=
@@ -1488,7 +1518,7 @@ function openChangePasswordModal(){
  document.getElementById("password-modal").classList.remove("hidden");
 }
 
-function handleChangePassword(e){
+async function handleChangePassword(e){
  e.preventDefault();
  const curr = document.getElementById("current-password").value;
  const newP = document.getElementById("new-password").value;
@@ -1502,11 +1532,11 @@ function handleChangePassword(e){
   showToast("New passwords do not match.","error");
   return;
  }
- const db = getDB();
+ const db = await fetchBackendData();
  const u = db.users.find(x=>x.id===currentUser.id);
  if(u){
   u.passwordHash = btoa(newP);
-  saveDB(db);
+  await saveDB(db);
   currentUser.passwordHash = u.passwordHash;
   sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
   showToast("Password updated successfully.","success");
@@ -1515,7 +1545,7 @@ function handleChangePassword(e){
  }
 }
 
-function logActivity(userId,action,description){
+async function logActivity(userId,action,description){
  const db=getDB();
 
  db.activityLog.unshift({
@@ -1530,7 +1560,7 @@ function logActivity(userId,action,description){
   db.activityLog=db.activityLog.slice(0,1000);
  }
 
- saveDB(db);
+ await saveDB(db);
 }
 
 
@@ -1546,7 +1576,7 @@ function toggleLoginPassword(){
   : "password";
 }
 
-function handleLogin(e){
+async function handleLogin(e){
  e.preventDefault();
 
  const username=
@@ -1555,7 +1585,7 @@ function handleLogin(e){
  const password=
   document.getElementById("login-password").value;
 
- const db=getDB();
+ const db = await fetchBackendData();
 
  const user=db.users.find(u=>
   u.username===username &&
@@ -1572,7 +1602,7 @@ function handleLogin(e){
  }
 
  user.lastLogin=today();
- saveDB(db);
+ await saveDB(db);
 
  currentUser=user;
 
@@ -1588,7 +1618,7 @@ function handleLogin(e){
   );
  }
 
- logActivity(
+ await logActivity(
   user.id,
   "Login",
   `User ${user.username} logged in.`
@@ -1610,9 +1640,9 @@ function handleLogin(e){
  );
 }
 
-function logout(){
+async function logout(){
  if(currentUser){
-  logActivity(
+  await logActivity(
    currentUser.id,
    "Logout",
    `User ${currentUser.username} logged out.`
@@ -1725,7 +1755,7 @@ function navigate(page){
  document.getElementById("sidebar").classList.remove("open");
 }
 
-function renderPage(page){
+async function renderPage(page){
 
  const container=
   document.getElementById("content-body");
@@ -1735,51 +1765,31 @@ function renderPage(page){
  switch(page){
 
   case "dashboard":
-   renderDashboard(container);
+   await renderDashboard(container);
    break;
 
   case "analytics":
-   renderAnalyticsPage(container);
+   await renderAnalyticsPage(container);
    break;
 
   case "add-candidate":
-   renderFormIntegration(container);
+   await renderFormIntegration(container);
    break;
 
   case "candidates-list":
-   renderCandidatesList(container);
+   await renderCandidatesList(container);
    break;
 
   case "groups":
-   renderGroupsPage(container);
+   await renderGroupsPage(container);
    break;
 
   case "contributions":
-   renderContributionsPage(container);
-   break;
-
-  case "reports":
-   renderReportsPage(container);
-   break;
-
-  case "users":
-   renderUsersPage(container);
-   break;
-
-  case "activity":
-   renderActivityPage(container);
-   break;
-
-  case "backup":
-   renderBackupPage(container);
-   break;
-
-  case "settings":
-   renderSettingsPage(container);
+   await renderDashboard(container);
    break;
 
   default:
-   renderDashboard(container);
+   await renderDashboard(container);
  }
 }
 
@@ -1825,9 +1835,9 @@ function getGrandTotal(db){
  );
 }
 
-function renderDashboard(container){
+async function renderDashboard(container){
 
- const db=getDB();
+ const db = await fetchBackendData();
 
  const totalCandidates=db.candidates.length;
  const activeGroups=
@@ -1910,17 +1920,6 @@ function renderDashboard(container){
     </div>
    </div>
 
-   <div class="quick-action"
-        onclick="navigate('contributions')">
-    <i class="fa fa-hand-holding-dollar"></i>
-    <div>
-     <strong>Contributions</strong>
-     <small style="display:block;color:#667085">
-      View financial records
-     </small>
-    </div>
-   </div>
-
   </div>
 
   <div class="grid-2">
@@ -1931,10 +1930,6 @@ function renderDashboard(container){
       <i class="fa fa-clock"></i>
       Recent Activity
      </div>
-     <button class="btn-outline btn-sm"
-             onclick="navigate('activity')">
-      View All
-     </button>
     </div>
 
     <div class="table-wrap">
@@ -2021,8 +2016,8 @@ function renderDashboard(container){
    DIRECTIONAL MONEY & GROUP COMPARISON ANALYTICS ENGINE
 ============================================================ */
 
-function renderAnalyticsPage(container){
- const db = getDB();
+async function renderAnalyticsPage(container){
+ const db = await fetchBackendData();
 
  container.innerHTML = `
  <div class="card">
@@ -2042,20 +2037,17 @@ function renderAnalyticsPage(container){
      </p>
 
      <div class="grid-2">
-       <!-- Dynamic Group Financial Leaderboard Chart -->
        <div class="card">
          <div class="card-header"><div class="card-title"><i class="fa fa-chart-bar"></i> Group Revenue Comparison</div></div>
          <div class="card-body"><canvas id="chart-groups-revenue" style="max-height:280px"></canvas></div>
        </div>
 
-       <!-- Financial Breakdown Distribution Chart -->
        <div class="card">
          <div class="card-header"><div class="card-title"><i class="fa fa-chart-pie"></i> Contribution Channels Breakdown</div></div>
          <div class="card-body"><canvas id="chart-channels-pie" style="max-height:280px"></canvas></div>
        </div>
      </div>
 
-     <!-- Side-by-Side Candidates Comparison tool -->
      <div class="card" style="margin-top:1.2rem">
        <div class="card-header">
          <div class="card-title"><i class="fa fa-code-compare"></i> Side-by-Side Candidate Money Comparison</div>
@@ -2083,7 +2075,6 @@ function renderAnalyticsPage(container){
        </div>
      </div>
 
-     <!-- Top Financial Donors Leaderboard Table -->
      <div class="card" style="margin-top:1.2rem">
        <div class="card-header">
          <div class="card-title"><i class="fa fa-trophy"></i> Top Money-Contributing Candidates Leaderboard</div>
@@ -2247,12 +2238,12 @@ function updateCandidatesComparison(){
 }
 
 /* ============================================================
-   A4 FORM
+   A4 FORM & CANDIDATE REGISTRATION
 ============================================================ */
 
-function renderFormIntegration(container,candidateId=null){
+async function renderFormIntegration(container,candidateId=null){
 
- const db=getDB();
+ const db = await fetchBackendData();
 
  let candidate=null;
 
@@ -2730,7 +2721,6 @@ function addContributionRow(){
  });
 }
 
-
 function handlePhotoUpload(event){
 
  const file=event.target.files[0];
@@ -2849,7 +2839,7 @@ function collectContributionRows(){
  return rows;
 }
 
-function saveCandidateForm(){
+async function saveCandidateForm(){
 
  const name=
   document.getElementById("inp-fullname")
@@ -2864,7 +2854,7 @@ function saveCandidateForm(){
   return;
  }
 
- const db=getDB();
+ const db = await fetchBackendData();
 
  const candidateData={
   id:document.getElementById("lbl-form-no").innerText,
@@ -2901,13 +2891,13 @@ function saveCandidateForm(){
    ...candidateData
   };
 
-  logActivity(
+  await logActivity(
    currentUser.id,
    "Candidate Updated",
    `Updated candidate ${name}.`
   );
 
-  saveDB(db);
+  await saveDB(db);
 
   document.getElementById("form-save-status").innerText=
    "Successfully Updated!";
@@ -2921,9 +2911,9 @@ function saveCandidateForm(){
 
   db.candidates.push(candidateData);
 
-  saveDB(db);
+  await saveDB(db);
 
-  logActivity(
+  await logActivity(
    currentUser.id,
    "Candidate Saved",
    `Saved candidate ${name} under group ${candidateData.group}.`
@@ -2982,12 +2972,12 @@ function clearContributionRows(){
 
 
 /* ============================================================
-   CANDIDATES
+   CANDIDATES DIRECTORY
 ============================================================ */
 
-function renderCandidatesList(container){
+async function renderCandidatesList(container){
 
- const db=getDB();
+ const db = await fetchBackendData();
 
  container.innerHTML=`
 
@@ -3374,9 +3364,9 @@ function editCandidate(id){
  },50);
 }
 
-function deleteCandidate(id){
+async function deleteCandidate(id){
 
- const db=getDB();
+ const db = await fetchBackendData();
 
  const c=db.candidates.find(x=>x.id===id);
 
@@ -3389,16 +3379,16 @@ function deleteCandidate(id){
  db.candidates=
   db.candidates.filter(x=>x.id!==id);
 
- saveDB(db);
+ await saveDB(db);
 
- logActivity(
+ await logActivity(
   currentUser.id,
   "Candidate Deleted",
   `Deleted candidate ${c.fullName}.`
  );
 
  if(activePage==="candidates-list"){
-  renderCandidatesList(
+  await renderCandidatesList(
    document.getElementById("content-body")
   );
  }
@@ -3428,22 +3418,6 @@ function exportCandidatesCSV(){
  downloadCSV(csv, `EAC_Candidates_${today()}.csv`);
 }
 
-function exportContributionsCSV(){
- const db = getDB();
- let csv = "Date,Candidate ID,Candidate Name,Group,Monthly,Personal,Gift,Other,Total\n";
- db.candidates.forEach(c => {
-  (c.contributions||[]).forEach(r => {
-   const m = Number(r.monthlyBirr||0)+Number(r.monthlyCent||0)/100;
-   const p = Number(r.personalBirr||0)+Number(r.personalCent||0)/100;
-   const g = Number(r.giftBirr||0)+Number(r.giftCent||0)/100;
-   const o = Number(r.otherBirr||0)+Number(r.otherCent||0)/100;
-   const t = Number(r.totalBirr||0)+Number(r.totalCent||0)/100;
-   csv += `"${r.date||""}","${c.id}","${c.fullName}","${c.group}","${m}","${p}","${g}","${o}","${t}"\n`;
-  });
- });
- downloadCSV(csv, `EAC_Contributions_${today()}.csv`);
-}
-
 function downloadCSV(csv, filename){
  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
  const url = URL.createObjectURL(blob);
@@ -3459,9 +3433,9 @@ function downloadCSV(csv, filename){
    GROUP MANAGEMENT
 ============================================================ */
 
-function renderGroupsPage(container){
+async function renderGroupsPage(container){
 
- const db=getDB();
+ const db = await fetchBackendData();
 
  container.innerHTML=`
 
@@ -3542,12 +3516,6 @@ function renderGroupsPage(container){
             <button class="btn-sm"
                     onclick="openGroupModal(${g.id})">
              <i class="fa fa-edit"></i>
-            </button>
-
-            <button class="btn-sm btn-info"
-                    onclick="openGroupMembersModal(${g.id})"
-                    title="Show group members">
-             <i class="fa fa-users"></i>
             </button>
 
             <button class="btn-warning btn-sm"
@@ -3641,7 +3609,7 @@ function openGroupModal(id=null){
  );
 }
 
-function saveGroup(id){
+async function saveGroup(id){
 
  const name=
   document.getElementById("group-name")
@@ -3659,7 +3627,7 @@ function saveGroup(id){
   return;
  }
 
- const db=getDB();
+ const db = await fetchBackendData();
 
  const duplicate=
   db.groups.find(
@@ -3688,7 +3656,7 @@ function saveGroup(id){
    if(c.group===oldName)c.group=name;
   });
 
-  logActivity(
+  await logActivity(
    currentUser.id,
    "Group Updated",
    `Updated group ${name}.`
@@ -3709,7 +3677,7 @@ function saveGroup(id){
 
   db.groups.push(newGroup);
 
-  logActivity(
+  await logActivity(
    currentUser.id,
    "Group Created",
    `Created group ${name}.`
@@ -3718,17 +3686,17 @@ function saveGroup(id){
   showToast("Group created.","success");
  }
 
- saveDB(db);
+ await saveDB(db);
  closeModal("general-modal");
 
- renderGroupsPage(
+ await renderGroupsPage(
   document.getElementById("content-body")
  );
 }
 
-function toggleGroupStatus(id){
+async function toggleGroupStatus(id){
 
- const db=getDB();
+ const db = await fetchBackendData();
 
  const g=db.groups.find(x=>x.id===id);
 
@@ -3739,15 +3707,15 @@ function toggleGroupStatus(id){
    ?"Inactive"
    :"Active";
 
- saveDB(db);
+ await saveDB(db);
 
- logActivity(
+ await logActivity(
   currentUser.id,
   "Group Status Changed",
   `${g.groupName} changed to ${g.status}.`
  );
 
- renderGroupsPage(
+ await renderGroupsPage(
   document.getElementById("content-body")
  );
 
@@ -3757,9 +3725,9 @@ function toggleGroupStatus(id){
  );
 }
 
-function deleteGroup(id){
+async function deleteGroup(id){
 
- const db=getDB();
+ const db = await fetchBackendData();
 
  const g=db.groups.find(x=>x.id===id);
 
@@ -3785,1759 +3753,33 @@ function deleteGroup(id){
  db.groups=
   db.groups.filter(x=>x.id!==id);
 
- saveDB(db);
+ await saveDB(db);
 
- logActivity(
+ await logActivity(
   currentUser.id,
   "Group Deleted",
   `Deleted group ${g.groupName}.`
  );
 
- renderGroupsPage(
+ await renderGroupsPage(
   document.getElementById("content-body")
  );
 
  showToast("Group deleted.","success");
 }
 
-
-/* ============================================================
-   CONTRIBUTIONS
-============================================================ */
-
-function renderContributionsPage(container){
-
- const db=getDB();
-
- const total=getGrandTotal(db);
-
- const rows=[];
-
- db.candidates.forEach(c=>{
-
-  (c.contributions||[]).forEach(r=>{
-
-   const amount=
-    Number(r.totalBirr||0)+
-    Number(r.totalCent||0)/100;
-
-   rows.push({
-    candidate:c,
-    row:r,
-    amount
-   });
-
-  });
-
- });
-
- rows.sort((a,b)=>
-  String(b.row.date||"")
-   .localeCompare(String(a.row.date||""))
- );
-
- container.innerHTML=`
-
- <div class="stats-grid">
-
-  <div class="stat-card success">
-   <div>
-    <div class="stat-label">
-     Total Contributions
-    </div>
-    <div class="stat-value">
-     ${money(total)}
-    </div>
-   </div>
-   <i class="fa fa-money-bill-wave"></i>
-  </div>
-
-  <div class="stat-card">
-   <div>
-    <div class="stat-label">
-     Contribution Entries
-    </div>
-    <div class="stat-value">
-     ${rows.length}
-    </div>
-   </div>
-   <i class="fa fa-receipt"></i>
-  </div>
-
-  <div class="stat-card gold">
-   <div>
-    <div class="stat-label">
-     Candidates With Contributions
-    </div>
-    <div class="stat-value">
-     ${
-      db.candidates.filter(
-       c=>getCandidateContribution(c)>0
-      ).length
-     }
-    </div>
-   </div>
-   <i class="fa fa-users"></i>
-  </div>
-
- </div>
-
-
- <div class="card">
-
-  <div class="card-header">
-
-   <div class="card-title">
-    <i class="fa fa-hand-holding-dollar"></i>
-    Contribution Records
-   </div>
-
-   <div class="toolbar">
-
-    <input id="contribution-search"
-           placeholder="Search candidate/group..."
-           oninput="filterContributionRows()"
-           style="max-width:230px">
-
-    <button class="btn-outline"
-            onclick="exportContributionsCSV()">
-     <i class="fa fa-file-csv"></i>
-     Export CSV
-    </button>
-
-   </div>
-
-  </div>
-
-  <div class="table-wrap">
-
-   <table>
-
-    <thead>
-     <tr>
-      <th>Date</th>
-      <th>Candidate</th>
-      <th>Group</th>
-      <th>Monthly</th>
-      <th>Personal</th>
-      <th>Gift</th>
-      <th>Other</th>
-      <th>Total</th>
-     </tr>
-    </thead>
-
-    <tbody id="contributions-tbody">
-
-     ${contributionTableRows(rows)}
-
-    </tbody>
-
-   </table>
-
-  </div>
-
- </div>
- `;
-}
-
-function contributionTableRows(rows){
-
- if(!rows.length){
-  return `
-   <tr>
-    <td colspan="8" class="empty">
-     No contribution records found.
-    </td>
-   </tr>
-  `;
- }
-
- return rows.map(x=>{
-
-  const r=x.row;
-
-  const monthly=
-   Number(r.monthlyBirr||0)+
-   Number(r.monthlyCent||0)/100;
-
-  const personal=
-   Number(r.personalBirr||0)+
-   Number(r.personalCent||0)/100;
-
-  const gift=
-   Number(r.giftBirr||0)+
-   Number(r.giftCent||0)/100;
-
-  const other=
-   Number(r.otherBirr||0)+
-   Number(r.otherCent||0)/100;
-
-  return `
-   <tr
-    data-search="${esc(
-     `${x.candidate.fullName} ${x.candidate.group}`
-    ).toLowerCase()}">
-
-    <td>${esc(r.date||"")}</td>
-    <td><b>${esc(x.candidate.fullName)}</b></td>
-    <td>${esc(x.candidate.group)}</td>
-    <td>${money(monthly)}</td>
-    <td>${money(personal)}</td>
-    <td>${money(gift)}</td>
-    <td>${money(other)}</td>
-    <td>
-     <strong style="color:#047857">
-      ${money(x.amount)}
-     </strong>
-    </td>
-
-   </tr>
-  `;
- }).join("");
-}
-
-function filterContributionRows(){
-
- const search=
-  document.getElementById("contribution-search")
-   .value.toLowerCase();
-
- document
-  .querySelectorAll("#contributions-tbody tr[data-search]")
-  .forEach(row=>{
-   row.style.display=
-    row.dataset.search.includes(search)
-     ? ""
-     : "none";
-  });
-}
-
-
-/* ============================================================
-   REPORTS
-============================================================ */
-
-function renderReportsPage(container){
-
- const db=getDB();
-
- container.innerHTML=`
-
- <div class="card">
-
-  <div class="card-header">
-
-   <div class="card-title">
-    <i class="fa fa-chart-column"></i>
-    Financial Reports
-   </div>
-
-   <div class="toolbar">
-
-    <button onclick="generateReport()">
-     <i class="fa fa-chart-pie"></i>
-     Generate Report
-    </button>
-
-    <button class="btn-outline"
-            onclick="printReport()">
-     <i class="fa fa-print"></i>
-     Print
-    </button>
-
-    <button class="btn-success"
-            onclick="exportReportCSV()">
-     <i class="fa fa-file-csv"></i>
-     Export CSV
-    </button>
-
-   </div>
-
-  </div>
-
-  <div class="card-body">
-
-   <div class="grid-4">
-
-    <div>
-     <label>From Date</label>
-     <input type="date" id="report-from">
-    </div>
-
-    <div>
-     <label>To Date</label>
-     <input type="date" id="report-to">
-    </div>
-
-    <div>
-     <label>Group</label>
-     <select id="report-group">
-
-      <option value="">All Groups</option>
-
-      ${
-       db.groups.map(g=>`
-        <option value="${esc(g.groupName)}">
-         ${esc(g.groupName)}
-        </option>
-       `).join("")
-      }
-
-     </select>
-    </div>
-
-    <div>
-     <label>Candidate</label>
-     <select id="report-candidate">
-
-      <option value="">All Candidates</option>
-
-      ${
-       db.candidates.map(c=>`
-        <option value="${esc(c.id)}">
-         ${esc(c.fullName)}
-        </option>
-       `).join("")
-      }
-
-     </select>
-    </div>
-
-   </div>
-
-  </div>
-
- </div>
-
-
- <div id="report-result"
-      style="margin-top:1rem"></div>
- `;
-}
-
-function getFilteredReportData(){
-
- const db=getDB();
-
- const from=
-  document.getElementById("report-from")?.value||"";
-
- const to=
-  document.getElementById("report-to")?.value||"";
-
- const group=
-  document.getElementById("report-group")?.value||"";
-
- const candidateId=
-  document.getElementById("report-candidate")?.value||"";
-
- const data=[];
-
- db.candidates.forEach(c=>{
-
-  if(group && c.group!==group)return;
-
-  if(candidateId && c.id!==candidateId)return;
-
-  (c.contributions||[]).forEach(r=>{
-
-   if(from && r.date<from)return;
-
-   if(to && r.date>to)return;
-
-   data.push({
-    candidate:c,
-    row:r
-   });
-
-  });
-
- });
-
- return data;
-}
-
-function generateReport(){
-
- const data=getFilteredReportData();
-
- let monthly=0;
- let personal=0;
- let gift=0;
- let other=0;
- let total=0;
-
- data.forEach(x=>{
-
-  const r=x.row;
-
-  monthly+=
-   Number(r.monthlyBirr||0)+
-   Number(r.monthlyCent||0)/100;
-
-  personal+=
-   Number(r.personalBirr||0)+
-   Number(r.personalCent||0)/100;
-
-  gift+=
-   Number(r.giftBirr||0)+
-   Number(r.giftCent||0)/100;
-
-  other+=
-   Number(r.otherBirr||0)+
-   Number(r.otherCent||0)/100;
-
- });
-
- total=monthly+personal+gift+other;
-
- const groups={};
-
- data.forEach(x=>{
-
-  const g=x.candidate.group;
-
-  groups[g] ||= {
-   candidates:new Set(),
-   amount:0
-  };
-
-  groups[g].candidates.add(x.candidate.id);
-
-  groups[g].amount+=
-   Number(x.row.totalBirr||0)+
-   Number(x.row.totalCent||0)/100;
- });
-
- document.getElementById("report-result").innerHTML=`
-
- <div class="card" id="printable-report">
-
-  <div class="card-header">
-
-   <div class="card-title">
-    Financial Summary Report
-   </div>
-
-   <div style="font-size:.75rem;color:#667085">
-    Generated: ${nowDateTime()}
-   </div>
-
-  </div>
-
-  <div class="card-body">
-
-   <div class="stats-grid">
-
-    <div class="stat-card">
-     <div>
-      <div class="stat-label">Monthly</div>
-      <div class="stat-value">${money(monthly)}</div>
-     </div>
-    </div>
-
-    <div class="stat-card gold">
-     <div>
-      <div class="stat-label">Personal Meklit</div>
-      <div class="stat-value">${money(personal)}</div>
-     </div>
-    </div>
-
-    <div class="stat-card warning">
-     <div>
-      <div class="stat-label">Gift</div>
-      <div class="stat-value">${money(gift)}</div>
-     </div>
-    </div>
-
-    <div class="stat-card success">
-     <div>
-      <div class="stat-label">Grand Total</div>
-      <div class="stat-value">${money(total)}</div>
-     </div>
-    </div>
-
-   </div>
-
-
-   <h3 style="margin:1.5rem 0 .7rem;color:#173e65">
-    Group Summary
-   </h3>
-
-   <div class="table-wrap">
-
-    <table>
-
-     <thead>
-      <tr>
-       <th>Group</th>
-       <th>Candidates</th>
-       <th>Contribution</th>
-      </tr>
-     </thead>
-
-     <tbody>
-
-      ${
-       Object.keys(groups).length
-       ? Object.entries(groups).map(([name,v])=>`
-        <tr>
-         <td><b>${esc(name)}</b></td>
-         <td>${v.candidates.size}</td>
-         <td>
-          <strong>
-           ${money(v.amount)}
-          </strong>
-         </td>
-        </tr>
-       `).join("")
-       : `
-        <tr>
-         <td colspan="3" class="empty">
-          No records match the selected filters.
-         </td>
-        </tr>
-       `
-      }
-
-     </tbody>
-
-    </table>
-
-   </div>
-
-
-   <h3 style="margin:1.5rem 0 .7rem;color:#173e65">
-    Detailed Records
-   </h3>
-
-   <div class="table-wrap">
-
-    <table>
-
-     <thead>
-      <tr>
-       <th>Date</th>
-       <th>Candidate</th>
-       <th>Group</th>
-       <th>Total</th>
-      </tr>
-     </thead>
-
-     <tbody>
-
-      ${
-       data.map(x=>`
-        <tr>
-         <td>${esc(x.row.date||"")}</td>
-         <td>${esc(x.candidate.fullName)}</td>
-         <td>${esc(x.candidate.group)}</td>
-         <td>
-          ${money(
-           Number(x.row.totalBirr||0)+
-           Number(x.row.totalCent||0)/100
-          )}
-         </td>
-        </tr>
-       `).join("")
-      }
-
-     </tbody>
-
-    </table>
-
-   </div>
-
-  </div>
-
- </div>
- `;
-
- logActivity(
-  currentUser.id,
-  "Report Generated",
-  `Generated financial report containing ${data.length} contribution entries.`
- );
-}
-
-function printReport(){
-
- if(!document.getElementById("printable-report")){
-  generateReport();
- }
-
- setTimeout(()=>{
-  window.print();
- },200);
-}
-
-function exportReportCSV(){
- const data = getFilteredReportData();
- let csv = "Date,Candidate,Group,Monthly,Personal,Gift,Other,Total\n";
- data.forEach(x => {
-  const r = x.row;
-  const m = Number(r.monthlyBirr||0)+Number(r.monthlyCent||0)/100;
-  const p = Number(r.personalBirr||0)+Number(r.personalCent||0)/100;
-  const g = Number(r.giftBirr||0)+Number(r.giftCent||0)/100;
-  const o = Number(r.otherBirr||0)+Number(r.otherCent||0)/100;
-  const t = Number(r.totalBirr||0)+Number(r.totalCent||0)/100;
-  csv += `"${r.date||""}","${x.candidate.fullName}","${x.candidate.group}","${m}","${p}","${g}","${o}","${t}"\n`;
- });
- downloadCSV(csv, `EAC_Filtered_Report_${today()}.csv`);
-}
-
-
-/* ============================================================
-   USERS
-============================================================ */
-
-function renderUsersPage(container){
-
- const db=getDB();
-
- container.innerHTML=`
-
- <div class="card">
-
-  <div class="card-header">
-
-   <div class="card-title">
-    <i class="fa fa-user-shield"></i>
-    User Management
-   </div>
-
-   <button onclick="openUserModal()">
-    <i class="fa fa-user-plus"></i>
-    Add User
-   </button>
-
-  </div>
-
-  <div class="table-wrap">
-
-   <table>
-
-    <thead>
-     <tr>
-      <th>Name</th>
-      <th>Username</th>
-      <th>Role</th>
-      <th>Phone</th>
-      <th>Email</th>
-      <th>Status</th>
-      <th>Last Login</th>
-      <th>Actions</th>
-     </tr>
-    </thead>
-
-    <tbody>
-
-     ${
-      db.users.map(u=>`
-
-       <tr>
-
-        <td><b>${esc(u.fullName)}</b></td>
-
-        <td>${esc(u.username)}</td>
-
-        <td>
-         <span class="badge ${
-          u.role==="Admin"
-           ?"badge-info"
-           :"badge-gray"
-         }">
-          ${esc(u.role)}
-         </span>
-        </td>
-
-        <td>${esc(u.phone||"")}</td>
-
-        <td>${esc(u.email||"")}</td>
-
-        <td>
-         <span class="badge ${
-          u.status==="Active"
-           ?"badge-success"
-           :"badge-danger"
-         }">
-          ${esc(u.status)}
-         </span>
-        </td>
-
-        <td>${esc(u.lastLogin||"Never")}</td>
-
-        <td>
-
-         <div class="actions">
-
-          <button class="btn-sm"
-                  onclick="openUserModal(${u.id})">
-           <i class="fa fa-edit"></i>
-          </button>
-
-          <button class="btn-warning btn-sm"
-                  onclick="toggleUserStatus(${u.id})">
-           <i class="fa fa-power-off"></i>
-          </button>
-
-          <button class="btn-danger btn-sm"
-                  onclick="deleteUser(${u.id})">
-           <i class="fa fa-trash"></i>
-          </button>
-
-         </div>
-
-        </td>
-
-       </tr>
-
-      `).join("")
-     }
-
-    </tbody>
-
-   </table>
-
-  </div>
-
- </div>
- `;
-}
-
-function openUserModal(id=null){
-
- const db=getDB();
-
- const u=
-  id
-   ? db.users.find(x=>x.id===id)
-   : null;
-
- openModal(
-  u?"Edit User":"Create User",
-
-  `
-
-   <div class="grid-2">
-
-    <div class="form-group">
-     <label>Full Name</label>
-     <input id="user-full-name"
-            value="${esc(u?.fullName||"")}"
-            required>
-    </div>
-
-    <div class="form-group">
-     <label>Username</label>
-     <input id="user-username"
-            value="${esc(u?.username||"")}"
-            ${u?"disabled":""}
-            required>
-    </div>
-
-    <div class="form-group">
-     <label>Phone</label>
-     <input id="user-phone"
-            value="${esc(u?.phone||"")}"
-            placeholder="+251...">
-    </div>
-
-    <div class="form-group">
-     <label>Email</label>
-     <input type="email"
-            id="user-email"
-            value="${esc(u?.email||"")}">
-    </div>
-
-    <div class="form-group">
-     <label>Role</label>
-     <select id="user-role">
-      <option value="Staff"
-       ${u?.role==="Staff"?"selected":""}>
-       Staff
-      </option>
-      <option value="Admin"
-       ${u?.role==="Admin"?"selected":""}>
-       Admin
-      </option>
-     </select>
-    </div>
-
-    <div class="form-group">
-     <label>Status</label>
-     <select id="user-status">
-      <option value="Active"
-       ${u?.status==="Active"?"selected":""}>
-       Active
-      </option>
-      <option value="Inactive"
-       ${u?.status==="Inactive"?"selected":""}>
-       Inactive
-      </option>
-     </select>
-    </div>
-
-   </div>
-
-   ${
-    !u
-    ? `
-     <div class="form-group">
-      <label>Temporary Password</label>
-      <input id="user-password"
-             type="password"
-             minlength="6"
-             placeholder="Minimum 6 characters">
-     </div>
-    `
-    :""
-   }
-
-  `,
-
-  `
-
-   <button class="btn-outline"
-           onclick="closeModal('general-modal')">
-    Cancel
-   </button>
-
-   <button onclick="saveUser(${id||"null"})">
-    <i class="fa fa-save"></i>
-    Save User
-   </button>
-
-  `
- );
-}
-
-function saveUser(id){
-
- const db=getDB();
-
- const fullName=
-  document.getElementById("user-full-name")
-   .value.trim();
-
- const username=
-  document.getElementById("user-username")
-   .value.trim();
-
- const phone=
-  document.getElementById("user-phone")
-   .value.trim();
-
- const email=
-  document.getElementById("user-email")
-   .value.trim();
-
- const role=
-  document.getElementById("user-role").value;
-
- const status=
-  document.getElementById("user-status").value;
-
- if(!fullName || !username){
-  showToast("Full name and username are required.","error");
-  return;
- }
-
- if(id){
-
-  const u=db.users.find(x=>x.id===id);
-
-  if(!u)return;
-
-  u.fullName=fullName;
-  u.phone=phone;
-  u.email=email;
-  u.role=role;
-  u.status=status;
-
-  if(
-   currentUser &&
-   currentUser.id===id
-  ){
-   currentUser={...u};
-
-   sessionStorage.setItem(
-    SESSION_KEY,
-    JSON.stringify(currentUser)
-   );
-  }
-
-  logActivity(
-   currentUser.id,
-   "User Updated",
-   `Updated user ${username}.`
-  );
-
-  showToast("User updated.","success");
-
- }else{
-
-  const password=
-   document.getElementById("user-password")
-    .value;
-
-  if(password.length<6){
-   showToast(
-    "Password must contain at least 6 characters.",
-    "error"
-   );
-   return;
-  }
-
-  if(
-   db.users.some(
-    x=>x.username.toLowerCase()===username.toLowerCase()
-   )
-  ){
-   showToast(
-    "Username already exists.",
-    "error"
-   );
-   return;
-  }
-
-  const u={
-   id:Date.now(),
-   fullName,
-   username,
-   passwordHash:btoa(password),
-   role,
-   phone,
-   email,
-   status,
-   createdDate:today(),
-   lastLogin:""
-  };
-
-  db.users.push(u);
-
-  logActivity(
-   currentUser.id,
-   "User Created",
-   `Created user ${username}.`
-  );
-
-  showToast("User created.","success");
- }
-
- saveDB(db);
- closeModal("general-modal");
-
- initApp();
- navigate("users");
-}
-
-function toggleUserStatus(id){
-
- const db=getDB();
-
- const u=db.users.find(x=>x.id===id);
-
- if(!u)return;
-
- if(
-  currentUser.id===u.id &&
-  u.status==="Active"
- ){
-  showToast(
-   "You cannot disable your own active account.",
-   "error"
-  );
-  return;
- }
-
- u.status=
-  u.status==="Active"
-   ?"Inactive"
-   :"Active";
-
- saveDB(db);
-
- logActivity(
-  currentUser.id,
-  "User Status Changed",
-  `${u.username} changed to ${u.status}.`
- );
-
- renderUsersPage(
-  document.getElementById("content-body")
- );
-
- showToast("User status updated.","success");
-}
-
-function deleteUser(id){
-
- const db=getDB();
-
- const u=db.users.find(x=>x.id===id);
-
- if(!u)return;
-
- if(u.id===currentUser.id){
-  showToast(
-   "You cannot delete your own account.",
-   "error"
-  );
-  return;
- }
-
- if(!confirmAction(
-  `Delete user "${u.username}"?`
- ))return;
-
- db.users=
-  db.users.filter(x=>x.id!==id);
-
- saveDB(db);
-
- logActivity(
-  currentUser.id,
-  "User Deleted",
-  `Deleted user ${u.username}.`
- );
-
- renderUsersPage(
-  document.getElementById("content-body")
- );
-
- showToast("User deleted.","success");
-}
-
-
-/* ============================================================
-   ACTIVITY
-============================================================ */
-
-function renderActivityPage(container){
-
- const db=getDB();
-
- container.innerHTML=`
-
- <div class="card">
-
-  <div class="card-header">
-
-   <div class="card-title">
-    <i class="fa fa-history"></i>
-    System Activity Log
-   </div>
-
-   <div class="toolbar">
-
-    <input id="activity-search"
-           placeholder="Search activity..."
-           oninput="filterActivity()"
-           style="max-width:250px">
-
-    <button class="btn-danger btn-sm"
-            onclick="clearActivityLog()">
-     <i class="fa fa-trash"></i>
-     Clear Log
-    </button>
-
-   </div>
-
-  </div>
-
-  <div class="table-wrap">
-
-   <table>
-
-    <thead>
-     <tr>
-      <th>Date / Time</th>
-      <th>User</th>
-      <th>Action</th>
-      <th>Description</th>
-     </tr>
-    </thead>
-
-    <tbody id="activity-tbody">
-
-     ${activityRows(db)}
-
-    </tbody>
-
-   </table>
-
-  </div>
-
- </div>
- `;
-}
-
-function activityRows(db){
-
- return db.activityLog.map(l=>{
-
-  const u=
-   db.users.find(x=>x.id===l.userId);
-
-  return `
-   <tr data-activity="${esc(
-    `${l.action} ${l.description} ${u?.username||""}`
-   ).toLowerCase()}">
-
-    <td>${esc(l.dateTime)}</td>
-    <td>${esc(u?.username||"System")}</td>
-    <td><b>${esc(l.action)}</b></td>
-    <td>${esc(l.description)}</td>
-
-   </tr>
-  `;
-
- }).join("");
-}
-
-function filterActivity(){
-
- const q=
-  document.getElementById("activity-search")
-   .value.toLowerCase();
-
- document
-  .querySelectorAll("#activity-tbody tr[data-activity]")
-  .forEach(row=>{
-   row.style.display=
-    row.dataset.activity.includes(q)
-     ? ""
-     : "none";
-  });
-}
-
-function clearActivityLog(){
-
- if(!confirmAction(
-  "Clear the complete activity log?"
- ))return;
-
- const db=getDB();
-
- db.activityLog=[];
-
- saveDB(db);
-
- logActivity(
-  currentUser.id,
-  "Activity Log Cleared",
-  "The activity log was cleared."
- );
-
- renderActivityPage(
-  document.getElementById("content-body")
- );
-
- showToast("Activity log cleared.","success");
-}
-
-
-/* ============================================================
-   BACKUP / RESTORE
-============================================================ */
-
-function renderBackupPage(container){
-
- container.innerHTML=`
-
- <div class="grid-2">
-
-  <div class="card">
-
-   <div class="card-header">
-    <div class="card-title">
-     <i class="fa fa-download"></i>
-     Database Backup
-    </div>
-   </div>
-
-   <div class="card-body">
-
-    <p style="color:#667085;margin-bottom:1rem">
-     Download a complete JSON backup containing
-     candidates, contribution records, groups,
-     users, settings and activity history.
-    </p>
-
-    <button onclick="downloadBackup()">
-     <i class="fa fa-download"></i>
-     Download JSON Backup
-    </button>
-
-   </div>
-
-  </div>
-
-
-  <div class="card">
-
-   <div class="card-header">
-    <div class="card-title">
-     <i class="fa fa-upload"></i>
-     Restore Database
-    </div>
-   </div>
-
-   <div class="card-body">
-
-    <p style="color:#667085;margin-bottom:1rem">
-     Restore a previously downloaded JSON backup.
-     Existing browser data will be replaced.
-    </p>
-
-    <input type="file"
-           id="restore-file"
-           accept=".json,application/json">
-
-    <button class="btn-warning"
-            style="margin-top:.8rem"
-            onclick="restoreBackup()">
-     <i class="fa fa-upload"></i>
-     Restore Backup
-    </button>
-
-   </div>
-
-  </div>
-
-
-  <div class="card">
-
-   <div class="card-header">
-    <div class="card-title">
-     <i class="fa fa-file-csv"></i>
-     Export Data
-    </div>
-   </div>
-
-   <div class="card-body">
-
-    <div class="toolbar">
-
-     <button onclick="exportCandidatesCSV()">
-      Candidates CSV
-     </button>
-
-     <button onclick="exportContributionsCSV()">
-      Contributions CSV
-     </button>
-
-     <button onclick="exportReportCSV()">
-      Report CSV
-     </button>
-
-    </div>
-
-   </div>
-
-  </div>
-
-
-  <div class="card">
-
-   <div class="card-header">
-    <div class="card-title">
-     <i class="fa fa-triangle-exclamation"></i>
-     Danger Zone
-    </div>
-   </div>
-
-   <div class="card-body">
-
-    <p style="color:#b91c1c;margin-bottom:1rem">
-     This permanently removes all application
-     data from this browser.
-    </p>
-
-    <button class="btn-danger"
-            onclick="resetDatabase()">
-     <i class="fa fa-trash"></i>
-     Reset Application Database
-    </button>
-
-   </div>
-
-  </div>
-
- </div>
- `;
-}
-
-function downloadBackup(){
-
- const db=getDB();
-
- const backup={
-  application:"EAC Youth Meklit",
-  version:"3.0",
-  exportedAt:nowDateTime(),
-  data:db
- };
-
- const blob=new Blob(
-  [JSON.stringify(backup,null,2)],
-  {type:"application/json"}
- );
-
- const url=URL.createObjectURL(blob);
-
- const a=document.createElement("a");
-
- a.href=url;
- a.download=
-  `EAC_Youth_Meklit_Backup_${today()}.json`;
-
- a.click();
-
- URL.revokeObjectURL(url);
-
- logActivity(
-  currentUser.id,
-  "Database Backup",
-  "Downloaded database backup."
- );
-
- showToast(
-  "Backup downloaded successfully.",
-  "success"
- );
-}
-
-function restoreBackup(){
-
- const file=
-  document.getElementById("restore-file")
-   .files[0];
-
- if(!file){
-  showToast(
-   "Please select a JSON backup file.",
-   "error"
-  );
-  return;
- }
-
- if(!confirmAction(
-  "Restore this backup?\n\nCurrent local database will be replaced."
- ))return;
-
- const reader=new FileReader();
-
- reader.onload=function(e){
-
-  try{
-
-   const backup=JSON.parse(e.target.result);
-
-   const data=
-    backup.data || backup;
-
-   if(
-    !data.users ||
-    !data.groups ||
-    !data.candidates
-   ){
-    throw new Error("Invalid backup");
-   }
-
-   localStorage.setItem(
-    DB_KEY,
-    JSON.stringify(data)
-   );
-
-   showToast(
-    "Backup restored. Reloading application...",
-    "success"
-   );
-
-   setTimeout(()=>{
-    location.reload();
-   },1000);
-
-  }catch(err){
-
-   showToast(
-    "Invalid backup file.",
-    "error"
-   );
-
-  }
- };
-
- reader.readAsText(file);
-}
-
-function resetDatabase(){
-
- if(!confirmAction(
-  "WARNING!\n\nThis will permanently delete all candidates, contributions, users, groups and activity data from this browser.\n\nContinue?"
- ))return;
-
- if(!confirmAction(
-  "Are you absolutely sure?"
- ))return;
-
- localStorage.removeItem(DB_KEY);
- sessionStorage.removeItem(SESSION_KEY);
-
- location.reload();
-}
-
-
-/* ============================================================
-   SETTINGS
-============================================================ */
-
-function renderSettingsPage(container){
-
- const db=getDB();
-
- const s=db.settings;
-
- container.innerHTML=`
-
- <div class="card">
-
-  <div class="card-header">
-
-   <div class="card-title">
-    <i class="fa fa-cog"></i>
-    System Settings
-   </div>
-
-   <button onclick="saveSettings()">
-    <i class="fa fa-save"></i>
-    Save Settings
-   </button>
-
-  </div>
-
-  <div class="card-body">
-
-   <div class="form-group">
-    <label>Church / Organization Name</label>
-    <input id="set-church" value="${esc(s.churchName||"")}">
-   </div>
-
-   <div class="form-group">
-    <label>Department Name</label>
-    <input id="set-department" value="${esc(s.department||"")}">
-   </div>
-
-   <div class="form-group">
-    <label>Form Document Title</label>
-    <input id="set-form-title" value="${esc(s.formTitle||"")}">
-   </div>
-
-   <div class="form-group">
-    <label>Bible Verse Text</label>
-    <input id="set-verse" value="${esc(s.verse||"")}">
-   </div>
-
-   <div class="grid-3">
-
-    <div class="form-group">
-     <label>Phone Number</label>
-     <input id="set-phone" value="${esc(s.phone||"")}">
-    </div>
-
-    <div class="form-group">
-     <label>Email Address</label>
-     <input id="set-email" value="${esc(s.email||"")}">
-    </div>
-
-    <div class="form-group">
-     <label>Address / Location</label>
-     <input id="set-address" value="${esc(s.address||"")}">
-    </div>
-
-   </div>
-
-  </div>
-
- </div>
- `;
-}
-
-function saveSettings(){
-
- const db=getDB();
-
- db.settings={
-  churchName:document.getElementById("set-church").value,
-  department:document.getElementById("set-department").value,
-  formTitle:document.getElementById("set-form-title").value,
-  verse:document.getElementById("set-verse").value,
-  phone:document.getElementById("set-phone").value,
-  email:document.getElementById("set-email").value,
-  address:document.getElementById("set-address").value
- };
-
- saveDB(db);
-
- logActivity(
-  currentUser.id,
-  "Settings Saved",
-  "Updated system settings."
- );
-
- showToast("Settings updated successfully.","success");
-}
-
-/* ============================================================
-   SEPARATE GROUP MONEY MANAGEMENT
-   IMPORTANT: This ledger is intentionally independent from
-   EAC_YOUTH_MEKLIT_DB_V3. It never changes candidate money,
-   candidate contributions, candidate rankings, or balances.
-============================================================ */
-const GROUP_FUNDS_KEY = "EAC_YOUTH_MEKLIT_GROUP_FUNDS_V1";
-
-function getGroupFunds(){
- try{
-  const raw=localStorage.getItem(GROUP_FUNDS_KEY);
-  if(!raw) return [];
-  const data=JSON.parse(raw);
-  return Array.isArray(data) ? data : [];
- }catch(e){
-  return [];
- }
-}
-
-function saveGroupFunds(funds){
- localStorage.setItem(GROUP_FUNDS_KEY, JSON.stringify(funds));
-}
-
-function groupFundTotal(groupName){
- return getGroupFunds()
-  .filter(x=>x.groupName===groupName)
-  .reduce((sum,x)=>sum+Number(x.amount||0),0);
-}
-
-function openGroupMembersModal(groupId){
- const db=getDB();
- const group=db.groups.find(g=>g.id===groupId);
- if(!group){ showToast("Group not found.","error"); return; }
-
- const members=db.candidates.filter(c=>c.group===group.groupName);
- const memberRows=members.length ? members.map((c,i)=>{
-  const initials=String(c.fullName||"?").trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
-  return `<div class="group-member-row">
-    ${c.photo ? `<img class="group-member-avatar" src="${esc(c.photo)}" alt="">` : `<div class="group-member-avatar">${esc(initials||"?")}</div>`}
-    <div>
-      <div class="group-member-name">${esc(c.fullName||"Unnamed Candidate")}</div>
-      <div class="group-member-meta">${esc(c.phone||c.phoneNumber||"No phone number")} ${c.id ? ` • ID: ${esc(c.id)}` : ""}</div>
-    </div>
-  </div>`;
- }).join("") : `<div class="empty">No candidates are assigned to ${esc(group.groupName)}.</div>`;
-
- openModal(
-  `${group.groupName} — Members`,
-  `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-    <div><strong>${members.length}</strong> candidate${members.length===1?'':'s'} belong to this group.</div>
-    <span class="badge badge-info">${esc(group.status)}</span>
-  </div>
-  <div class="group-members-list">${memberRows}</div>`,
-  `<button class="btn-outline" onclick="closeModal('general-modal')">Close</button>`
- );
-}
-
-function openGroupFundModal(groupId=null){
- const db=getDB();
- const groups=db.groups||[];
- const selected=groupId ? groups.find(g=>g.id===groupId) : null;
- if(!groups.length){ showToast("No groups are available.","error"); return; }
-
- const options=groups.map(g=>`<option value="${esc(g.groupName)}" ${selected&&selected.id===g.id?'selected':''}>${esc(g.groupName)}</option>`).join("");
- const activities=[
-  "",
-  "Worship Service",
-  "Prayer Meeting",
-  "Youth Program",
-  "Evangelism",
-  "Church Conference",
-  "Outreach",
-  "Choir / Worship Ministry",
-  "Sunday School",
-  "Community Service",
-  "Fundraising",
-  "Church Project",
-  "Other"
- ];
-
- openModal(
-  "Add Money to Group",
-  `<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:.8rem;margin-bottom:1rem;color:#1e3a8a">
-    <i class="fa fa-circle-info"></i>
-    <strong>Separate group funds:</strong> this money belongs to the group and will never be added to any candidate's contribution.
-  </div>
-  <div class="form-group">
-   <label>Group</label>
-   <select id="group-fund-group">${options}</select>
-  </div>
-  <div class="form-group">
-   <label>Amount (ETB)</label>
-   <input id="group-fund-amount" type="number" min="0.01" step="0.01" placeholder="Enter group money amount" required>
-  </div>
-  <div class="form-group">
-   <label>Date</label>
-   <input id="group-fund-date" type="date" value="${today()}">
-  </div>
-  <div class="form-group">
-   <label>Church Activity <span style="font-weight:400;color:#667085">(optional)</span></label>
-   <select id="group-fund-activity">${activities.map(a=>`<option value="${esc(a)}">${a?esc(a):"— Select activity —"}</option>`).join("")}</select>
-  </div>
-  <div class="form-group">
-   <label>Description <span style="font-weight:400;color:#667085">(optional)</span></label>
-   <textarea id="group-fund-description" placeholder="What is this group money for?"></textarea>
-  </div>`,
-  `<button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
-   <button class="btn-gold" onclick="saveGroupFund()"><i class="fa fa-vault"></i> Save Group Money</button>`
- );
-}
-
-function saveGroupFund(){
- const groupName=document.getElementById("group-fund-group")?.value||"";
- const amount=Number(document.getElementById("group-fund-amount")?.value||0);
- const date=document.getElementById("group-fund-date")?.value||today();
- const activity=document.getElementById("group-fund-activity")?.value||"";
- const description=document.getElementById("group-fund-description")?.value.trim()||"";
-
- if(!groupName){showToast("Please select a group.","error");return;}
- if(!(amount>0)){showToast("Enter a valid amount greater than zero.","error");return;}
-
- const db=getDB();
- if(!db.groups.some(g=>g.groupName===groupName)){
-  showToast("Selected group no longer exists.","error");return;
- }
-
- const funds=getGroupFunds();
- funds.unshift({
-  id:"GF-"+Date.now()+"-"+Math.floor(Math.random()*1000),
-  groupName,
-  amount:Number(amount.toFixed(2)),
-  date,
-  activity,
-  description,
-  createdBy:currentUser?.username||currentUser?.fullName||"System",
-  createdAt:nowDateTime()
- });
- saveGroupFunds(funds);
-
- closeModal("general-modal");
- logActivity(currentUser.id,"Group Money Added",`Added ${money(amount)} ETB to ${groupName} group funds. Candidate contributions were not changed.`);
- renderGroupsPage(document.getElementById("content-body"));
- showToast(`${money(amount)} ETB added to ${groupName} group funds.`,`success`);
-}
-
-function deleteGroupFund(id){
- if(!confirmAction("Delete this group-money entry? This will only affect the separate group-fund ledger."))return;
- const funds=getGroupFunds();
- const next=funds.filter(x=>String(x.id)!==String(id));
- if(next.length===funds.length)return;
- saveGroupFunds(next);
- logActivity(currentUser.id,"Group Money Deleted","Deleted a separate group-fund entry.");
- renderGroupsPage(document.getElementById("content-body"));
- showToast("Group-money entry deleted.","success");
-}
-
-function exportGroupFundsCSV(){
- const funds=getGroupFunds();
- if(!funds.length){showToast("There are no group-money records to export.","warning");return;}
- const rows=[
-  ["Date","Group","Amount (ETB)","Church Activity","Description","Added By","Created At"],
-  ...funds.map(x=>[x.date,x.groupName,Number(x.amount||0).toFixed(2),x.activity||"",x.description||"",x.createdBy||"",x.createdAt||""])
- ];
- const csv=rows.map(row=>row.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\n");
- const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});
- const a=document.createElement("a");
- a.href=URL.createObjectURL(blob);
- a.download=`Meklit_Group_Funds_${today()}.csv`;
- a.click();
- URL.revokeObjectURL(a.href);
-}
-
-function renderGroupFundsSection(db){
- const groups=db.groups||[];
- const funds=getGroupFunds();
- const total=funds.reduce((s,x)=>s+Number(x.amount||0),0);
- const groupsWithFunds=groups.filter(g=>groupFundTotal(g.groupName)>0).length;
-
- return `<div class="group-funds-panel">
-  <div class="card">
-   <div class="card-header">
-    <div>
-     <div class="card-title"><i class="fa fa-vault"></i> Group Money Management</div>
-     <div style="font-size:.78rem;color:#667085;margin-top:.25rem">Independent group funds — candidate contributions and candidate rankings are not affected.</div>
-    </div>
-    <div class="toolbar">
-     <button class="btn-gold" onclick="openGroupFundModal()"><i class="fa fa-plus"></i> Add Money to Group</button>
-     <button class="btn-outline" onclick="exportGroupFundsCSV()"><i class="fa fa-file-csv"></i> Export</button>
-    </div>
-   </div>
-   <div class="card-body">
-    <div class="group-fund-summary">
-     <div class="group-fund-stat"><div class="label">Total Group Funds</div><div class="value">${money(total)} ETB</div></div>
-     <div class="group-fund-stat"><div class="label">Fund Entries</div><div class="value">${funds.length}</div></div>
-     <div class="group-fund-stat"><div class="label">Groups With Funds</div><div class="value">${groupsWithFunds}</div></div>
-     <div class="group-fund-stat"><div class="label">Groups</div><div class="value">${groups.length}</div></div>
-    </div>
-    <div class="group-fund-grid">
-     ${groups.map(g=>`<div class="group-fund-card">
-       <h4><i class="fa fa-layer-group"></i> ${esc(g.groupName)}</h4>
-       <div class="group-fund-balance">${money(groupFundTotal(g.groupName))} ETB</div>
-       <div class="group-fund-meta">Separate group money</div>
-       <div style="margin-top:.8rem;display:flex;gap:.45rem;flex-wrap:wrap">
-        <button class="btn-sm btn-gold" onclick="openGroupFundModal(${g.id})"><i class="fa fa-plus"></i> Add</button>
-        <button class="btn-sm" onclick="openGroupMembersModal(${g.id})"><i class="fa fa-users"></i> Members (${db.candidates.filter(c=>c.group===g.groupName).length})</button>
-       </div>
-      </div>`).join("")}
-    </div>
-   </div>
-  </div>
-
-  <div class="card" style="margin-top:1rem">
-   <div class="card-header">
-    <div class="card-title"><i class="fa fa-receipt"></i> Group Money History</div>
-   </div>
-   <div class="card-body">
-    ${funds.length?`<div class="table-wrap"><table><thead><tr><th>Date</th><th>Group</th><th>Amount</th><th>Church Activity</th><th>Description</th><th>Added By</th><th>Action</th></tr></thead><tbody>
-     ${funds.map(x=>`<tr><td>${esc(x.date||"")}</td><td><b>${esc(x.groupName||"")}</b></td><td><strong>${money(x.amount)} ETB</strong></td><td>${esc(x.activity||"—")}</td><td>${esc(x.description||"—")}</td><td>${esc(x.createdBy||"—")}</td><td><button class="btn-danger btn-sm" onclick="deleteGroupFund('${esc(x.id)}')"><i class="fa fa-trash"></i></button></td></tr>`).join("")}
-    </tbody></table></div>`:`<div class="empty"><i class="fa fa-vault" style="font-size:2rem;opacity:.35"></i><div style="margin-top:.5rem">No group money recorded yet.</div><div style="font-size:.8rem;color:#667085;margin-top:.25rem">This ledger is completely separate from candidate contributions.</div></div>`}
-   </div>
-  </div>
- </div>`;
-}
-
-/* Add the separate section after the original group-management table.
-   The original DB is read only here; no candidate/group records are changed. */
-const _originalRenderGroupsPage = renderGroupsPage;
-renderGroupsPage = function(container){
- _originalRenderGroupsPage(container);
- container.insertAdjacentHTML("beforeend", renderGroupFundsSection(getDB()));
-};
-
-/* Check remembered login on page boot */
-(function autoLogin(){
+// Initializing application state on load
+window.addEventListener('DOMContentLoaded', async () => {
+ await fetchBackendData();
  const remembered = localStorage.getItem("EAC_REMEMBER_LOGIN");
  if(remembered){
-  try{
-   currentUser = JSON.parse(remembered);
-   sessionStorage.setItem(SESSION_KEY, remembered);
-  }catch(e){}
- }
- if(currentUser){
+  currentUser = JSON.parse(remembered);
   document.getElementById("login-screen").classList.add("hidden");
   document.getElementById("app-container").classList.remove("hidden");
   initApp();
  }
-})();
-</script>
+});
 
+</script>
 </body>
 </html>
