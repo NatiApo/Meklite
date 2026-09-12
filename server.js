@@ -1,92 +1,73 @@
-const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const express = require("express");
+const cors = require("cors");
+const { createClient } = require("@libsql/client");
 
 const app = express();
-const PORT = process.env.PORT || 10000;
-
-// Middleware for parsing JSON body data
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Serve static frontend files (index.html, CSS, client JS)
-app.use(express.static(__dirname));
-
-// Initialize SQLite database
-const db = new sqlite3.Database('./database.sqlite', (err) => {
-    if (err) {
-        console.error('Error connecting to SQLite database:', err.message);
-    } else {
-        console.log('Connected to SQLite database.');
-    }
+// Connect to Turso Cloud SQLite Database
+const db = createClient({
+  url: process.env.TURSO_DATABASE_URL,
+  authToken: process.env.TURSO_AUTH_TOKEN,
 });
 
-// Create tables automatically if they do not exist
-db.serialize(() => {
-    db.run(`
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
+// Auto-initialize tables when server starts
+async function initDatabase() {
+  try {
+    // Example: Create users table if it doesn't exist
+    await db.execute(`
+      CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
     `);
+    console.log("Turso database schema initialized successfully.");
+  } catch (err) {
+    console.error("Database initialization error:", err);
+  }
+}
 
-    db.run(`
-        CREATE TABLE IF NOT EXISTS records (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-    `);
+initDatabase();
+
+// API Health Check Endpoint
+app.get("/", (req, res) => {
+  res.json({ status: "OK", message: "Meklit API is running with Turso Database" });
 });
 
-// Serve frontend at root route
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+// GET Endpoint: Fetch all users
+app.get("/api/users", async (req, res) => {
+  try {
+    const result = await db.execute("SELECT * FROM users ORDER BY id DESC");
+    res.json({ success: true, data: result.rows });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
-// Health check endpoint
-app.get('/api/health', (req, res) => {
-    res.json({ status: 'success', message: 'MeklitApp Backend Server is running successfully!' });
-});
+// POST Endpoint: Insert new user
+app.post("/api/users", async (req, res) => {
+  const { name, email } = req.body;
+  
+  if (!name || !email) {
+    return res.status(400).json({ success: false, error: "Name and email are required" });
+  }
 
-// API Routes: Users
-app.get('/api/users', (req, res) => {
-    db.all('SELECT * FROM users', [], (err, rows) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ users: rows });
+  try {
+    await db.execute({
+      sql: "INSERT INTO users (name, email) VALUES (?, ?)",
+      args: [name, email],
     });
+    res.status(201).json({ success: true, message: "User added successfully" });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
-app.post('/api/users', (req, res) => {
-    const { name } = req.body;
-    if (!name) return res.status(400).json({ error: 'Name is required' });
-
-    db.run('INSERT INTO users (name) VALUES (?)', [name], function (err) {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ id: this.lastID, name });
-    });
-});
-
-// API Routes: Records
-app.get('/api/records', (req, res) => {
-    db.all('SELECT * FROM records', [], (err, rows) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ records: rows });
-    });
-});
-
-app.post('/api/records', (req, res) => {
-    const { title } = req.body;
-    if (!title) return res.status(400).json({ error: 'Title is required' });
-
-    db.run('INSERT INTO records (title) VALUES (?)', [title], function (err) {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ id: this.lastID, title });
-    });
-});
-
-// Start Server
+// Start the Express server
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
