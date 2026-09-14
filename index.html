@@ -1317,7 +1317,6 @@ tr:hover td{background:#f9fafb}
 // Replace with your live Render Web Service backend URL:
 const API_BASE_URL = "https://meklit-backend.onrender.com";
 
-const SESSION_KEY="EAC_CURRENT_USER";
 let currentDB = null;
 
 const defaultData={
@@ -1373,7 +1372,7 @@ const defaultData={
 
 /**
  * Loads and saves data ONLY through the Render backend API.
- * No browser localStorage is used anywhere in this application.
+ * Browser localStorage/sessionStorage are not used for application data.
  */
 async function fetchBackendData(){
  try{
@@ -1431,8 +1430,7 @@ async function saveDB(db){
  }
 }
 
-let currentUser=
- JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null");
+let currentUser=null;
 
 let activePage="dashboard";
 let currentPhotoBase64="";
@@ -1540,7 +1538,6 @@ async function handleChangePassword(e){
   u.passwordHash = btoa(newP);
   await saveDB(db);
   currentUser.passwordHash = u.passwordHash;
-  sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
   showToast("Password updated successfully.","success");
   closeModal("password-modal");
   document.getElementById("change-password-form").reset();
@@ -1608,10 +1605,6 @@ async function handleLogin(e){
 
  currentUser=user;
 
- sessionStorage.setItem(
-  SESSION_KEY,
-  JSON.stringify(user)
- );
 await logActivity(
   user.id,
   "Login",
@@ -1643,7 +1636,7 @@ async function logout(){
   );
  }
 
- sessionStorage.removeItem(SESSION_KEY);
+ 
 
  currentUser=null;
 
@@ -3719,7 +3712,9 @@ function openGroupMoneyModal(preselectedGroupId=null){
      <option value="Event">Event / Program</option>
      <option value="Gift">Gift</option>
      <option value="Sponsorship">Sponsorship</option>
+     <option value="Church Contribution">Church Contribution</option>
      <option value="Group Business">Group Business</option>
+     <option value="Sale / Fundraiser Item">Sale / Fundraiser Item</option>
      <option value="Other">Other</option>
     </select>
    </div>
@@ -3738,6 +3733,12 @@ function openGroupMoneyModal(preselectedGroupId=null){
     <label>Reason / Details</label>
     <input id="group-money-reason"
            placeholder="Example: Fundraising from New Year program">
+   </div>
+
+   <div class="form-group">
+    <label>Description / Note (Optional)</label>
+    <textarea id="group-money-description"
+              placeholder="Add more information about how the group received this money"></textarea>
    </div>
 
    <div class="form-group">
@@ -4143,8 +4144,7 @@ window.addEventListener('DOMContentLoaded', async () => {
    initApp();
   }else{
    currentUser=null;
-   sessionStorage.removeItem(SESSION_KEY);
-  }
+   }
  }
 });
 
