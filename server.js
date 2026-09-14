@@ -9,10 +9,11 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// PostgreSQL Pool connection using DATABASE_URL from Railway/Supabase
+// PostgreSQL Pool connection with family: 4 to force IPv4 connection
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
+  ssl: { rejectUnauthorized: false },
+  family: 4
 });
 
 // Root check route
