@@ -1041,13 +1041,6 @@ tr:hover td{background:#f9fafb}
     </div>
    </div>
 
-   <label style="display:flex;align-items:center;gap:.45rem;cursor:pointer">
-    <input type="checkbox"
-           id="remember-login"
-           style="width:auto">
-    Remember login on this browser
-   </label>
-
    <button type="submit" class="w-full" style="margin-top:.8rem">
     <i class="fa fa-sign-in-alt"></i>
     LOGIN
@@ -1318,13 +1311,9 @@ tr:hover td{background:#f9fafb}
    LIVE RENDER BACKEND API INTEGRATION
 ============================================================ */
 
-// Replace with your live Render Web Service backend URL:
 const API_BASE_URL = "https://meklit-backend.onrender.com";
 
-const DB_KEY="EAC_YOUTH_MEKLIT_DB_V3";
-const SESSION_KEY="EAC_CURRENT_USER";
-
-const defaultData={
+let dbCache = {
  settings:{
   churchName:"ኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን",
   department:"የወጣቶች መክሊት አገልግሎት ክፍል",
@@ -1334,7 +1323,6 @@ const defaultData={
   address:"",
   verse:"“መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።” ማቴ 6:21"
  },
-
  users:[
   {
    id:1,
@@ -1349,7 +1337,6 @@ const defaultData={
    lastLogin:""
   }
  ],
-
  groups:[
   {id:1,groupName:"Meklit 1",description:"Meklit Group 1",status:"Active"},
   {id:2,groupName:"Meklit 2",description:"Meklit Group 2",status:"Active"},
@@ -1358,9 +1345,8 @@ const defaultData={
   {id:5,groupName:"Meklit 5",description:"Meklit Group 5",status:"Active"},
   {id:6,groupName:"Meklit 6",description:"Meklit Group 6",status:"Active"}
  ],
-
+ groupMoney:[],
  candidates:[],
-
  activityLog:[
   {
    logId:1,
@@ -1373,51 +1359,33 @@ const defaultData={
 };
 
 /**
- * Syncs and gets data from Render API; falls back to local storage if API is unreachable.
+ * Syncs and gets data directly from Render API.
  */
 async function fetchBackendData(){
  try {
   const response = await fetch(`${API_BASE_URL}/api/data`);
   if(response.ok){
    const remoteDb = await response.json();
-   localStorage.setItem(DB_KEY, JSON.stringify(remoteDb));
-   return remoteDb;
+   dbCache = remoteDb;
   }
  } catch(err) {
-  console.warn("Backend API offline/sleeping, using local cache:", err);
+  console.warn("Backend API offline/sleeping, using in-memory state:", err);
  }
  return getDB();
 }
 
 function getDB(){
- let raw=localStorage.getItem(DB_KEY);
-
- if(!raw){
-  localStorage.setItem(DB_KEY,JSON.stringify(defaultData));
-  return structuredClone(defaultData);
- }
-
- try{
-  const db=JSON.parse(raw);
-
-  db.settings ||= structuredClone(defaultData.settings);
-  db.users ||= [];
-  db.groups ||= [];
-  db.candidates ||= [];
-  db.activityLog ||= [];
-
-  return db;
- }catch(e){
-  localStorage.removeItem(DB_KEY);
-  localStorage.setItem(DB_KEY,JSON.stringify(defaultData));
-  return structuredClone(defaultData);
- }
+ dbCache.settings ||= {};
+ dbCache.users ||= [];
+ dbCache.groups ||= [];
+ dbCache.groupMoney ||= [];
+ dbCache.candidates ||= [];
+ dbCache.activityLog ||= [];
+ return dbCache;
 }
 
 async function saveDB(db){
- localStorage.setItem(DB_KEY,JSON.stringify(db));
- 
- // Asynchronously persist changes to live Render backend API
+ dbCache = db;
  try {
   await fetch(`${API_BASE_URL}/api/data`, {
    method: 'POST',
@@ -1429,12 +1397,10 @@ async function saveDB(db){
  }
 }
 
-let currentUser=
- JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null");
-
-let activePage="dashboard";
-let currentPhotoBase64="";
-let editingCandidateId=null;
+let currentUser = null;
+let activePage = "dashboard";
+let currentPhotoBase64 = "";
+let editingCandidateId = null;
 
 
 /* ============================================================
@@ -1465,7 +1431,7 @@ function money(value){
  return Number(value || 0).toLocaleString(
   "en-US",
   {minimumFractionDigits:2,maximumFractionDigits:2}
-);
+ );
 }
 
 function generateId(prefix="ID"){
@@ -1538,7 +1504,6 @@ async function handleChangePassword(e){
   u.passwordHash = btoa(newP);
   await saveDB(db);
   currentUser.passwordHash = u.passwordHash;
-  sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
   showToast("Password updated successfully.","success");
   closeModal("password-modal");
   document.getElementById("change-password-form").reset();
@@ -1606,18 +1571,6 @@ async function handleLogin(e){
 
  currentUser=user;
 
- sessionStorage.setItem(
-  SESSION_KEY,
-  JSON.stringify(user)
- );
-
- if(document.getElementById("remember-login").checked){
-  localStorage.setItem(
-   "EAC_REMEMBER_LOGIN",
-   JSON.stringify(user)
-  );
- }
-
  await logActivity(
   user.id,
   "Login",
@@ -1648,9 +1601,6 @@ async function logout(){
    `User ${currentUser.username} logged out.`
   );
  }
-
- sessionStorage.removeItem(SESSION_KEY);
- localStorage.removeItem("EAC_REMEMBER_LOGIN");
 
  currentUser=null;
 
@@ -3430,8 +3380,19 @@ function downloadCSV(csv, filename){
 }
 
 /* ============================================================
-   GROUP MANAGEMENT
+   GROUP MANAGEMENT & INDEPENDENT GROUP FUNDS
 ============================================================ */
+
+function getGroupMoneyTotal(db, groupName){
+ return (db.groupMoney || [])
+  .filter(m => m.groupName === groupName)
+  .reduce((sum, item) => sum + Number(item.amount || 0), 0);
+}
+
+function getGroupTotalFundsSummary(db){
+ return (db.groupMoney || [])
+  .reduce((sum, item) => sum + Number(item.amount || 0), 0);
+}
 
 async function renderGroupsPage(container){
 
@@ -3445,13 +3406,19 @@ async function renderGroupsPage(container){
 
    <div class="card-title">
     <i class="fa fa-layer-group"></i>
-    Meklit Groups
+    Meklit Groups & Independent Group Funds
    </div>
 
-   <button onclick="openGroupModal()">
-    <i class="fa fa-plus"></i>
-    Add Group
-   </button>
+   <div class="toolbar">
+    <button class="btn-gold" onclick="openAddGroupMoneyModal()">
+     <i class="fa fa-hand-holding-dollar"></i>
+     Add Group Money
+    </button>
+    <button onclick="openGroupModal()">
+     <i class="fa fa-plus"></i>
+     Add Group
+    </button>
+   </div>
 
   </div>
 
@@ -3467,6 +3434,7 @@ async function renderGroupsPage(container){
        <th>Group Name</th>
        <th>Description</th>
        <th>Members</th>
+       <th>Group Money Total</th>
        <th>Status</th>
        <th>Actions</th>
       </tr>
@@ -3481,6 +3449,8 @@ async function renderGroupsPage(container){
          db.candidates.filter(
           c=>c.group===g.groupName
          ).length;
+
+        const groupMoneyVal = getGroupMoneyTotal(db, g.groupName);
 
         return `
          <tr>
@@ -3500,6 +3470,12 @@ async function renderGroupsPage(container){
           <td>${members}</td>
 
           <td>
+           <strong style="color:var(--success);font-size:.9rem">
+            ${money(groupMoneyVal)} ETB
+           </strong>
+          </td>
+
+          <td>
            <span class="badge ${
             g.status==="Active"
              ?"badge-success"
@@ -3512,6 +3488,12 @@ async function renderGroupsPage(container){
           <td>
 
            <div class="actions">
+
+            <button class="btn-gold btn-sm"
+                    onclick="openGroupMoneyHistoryModal('${esc(g.groupName)}')"
+                    title="View Group Money Records">
+             <i class="fa fa-receipt"></i>
+            </button>
 
             <button class="btn-sm"
                     onclick="openGroupModal(${g.id})">
@@ -3547,7 +3529,269 @@ async function renderGroupsPage(container){
   </div>
 
  </div>
+
+ <!-- INDEPENDENT GROUP FUNDS PANEL -->
+ <div class="card group-funds-panel">
+  <div class="card-header">
+   <div class="card-title">
+    <i class="fa fa-wallet"></i>
+    Group Money Directory (Independent Group Collections)
+   </div>
+   <button class="btn-gold btn-sm" onclick="openAddGroupMoneyModal()">
+    <i class="fa fa-plus-circle"></i> Add Money to Group
+   </button>
+  </div>
+  <div class="card-body">
+
+   <div class="group-fund-summary">
+    <div class="group-fund-stat">
+     <div class="label">Total Independent Group Money</div>
+     <div class="value">${money(getGroupTotalFundsSummary(db))} ETB</div>
+    </div>
+    <div class="group-fund-stat">
+     <div class="label">Total Money Records</div>
+     <div class="value">${(db.groupMoney||[]).length}</div>
+    </div>
+    <div class="group-fund-stat">
+     <div class="label">Active Groups</div>
+     <div class="value">${db.groups.filter(g=>g.status==='Active').length}</div>
+    </div>
+    <div class="group-fund-stat">
+     <div class="label">Total Candidates (Separate)</div>
+     <div class="value">${db.candidates.length}</div>
+    </div>
+   </div>
+
+   <div class="table-wrap">
+    <table>
+     <thead>
+      <tr>
+       <th>Date</th>
+       <th>Group Name</th>
+       <th>Source / Method</th>
+       <th>Reason / Description</th>
+       <th>Recorded By</th>
+       <th>Amount (ETB)</th>
+       <th>Actions</th>
+      </tr>
+     </thead>
+     <tbody>
+      ${
+       (db.groupMoney || []).length === 0
+       ? `<tr><td colspan="7" class="empty">No group money records added yet. Click "Add Group Money" to record separate group funds.</td></tr>`
+       : db.groupMoney.slice().reverse().map((m) => `
+        <tr>
+         <td>${esc(m.date || '')}</td>
+         <td><span class="badge badge-info">${esc(m.groupName)}</span></td>
+         <td><b>${esc(m.method || 'General Source')}</b></td>
+         <td>${esc(m.reason || 'N/A')}</td>
+         <td>${esc(m.recordedBy || 'Admin')}</td>
+         <td><strong style="color:var(--success)">${money(m.amount)} ETB</strong></td>
+         <td>
+          <button class="btn-danger btn-sm" onclick="deleteGroupMoneyRecord('${esc(m.id)}')">
+           <i class="fa fa-trash"></i>
+          </button>
+         </td>
+        </tr>
+       `).join("")
+      }
+     </tbody>
+    </table>
+   </div>
+
+  </div>
+ </div>
  `;
+}
+
+function openAddGroupMoneyModal(){
+ const db = getDB();
+ const activeGroups = db.groups.filter(g=>g.status==="Active");
+
+ if(!activeGroups.length){
+  showToast("Please create an active group first.","error");
+  return;
+ }
+
+ openModal(
+  "Add Money to Group (Separate Fund)",
+  `
+   <div class="form-group">
+    <label>Select Group</label>
+    <select id="group-money-group">
+     ${activeGroups.map(g=>`<option value="${esc(g.groupName)}">${esc(g.groupName)}</option>`).join("")}
+    </select>
+   </div>
+
+   <div class="form-group">
+    <label>How Group Got This Money (Source / Combo Box)</label>
+    <select id="group-money-method" onchange="toggleCustomReasonInput(this.value)">
+     <option value="Fundraising Event">Fundraising Event</option>
+     <option value="Group Donation">Group Donation</option>
+     <option value="Special Collection">Special Collection</option>
+     <option value="Monthly Group Contribution">Monthly Group Contribution</option>
+     <option value="Sponsorship">Sponsorship</option>
+     <option value="Custom / Other Reason">Custom / Other Reason</option>
+    </select>
+   </div>
+
+   <div class="form-group" id="custom-reason-group" style="display:none">
+    <label>Custom Reason / Source</label>
+    <input id="group-money-custom-method" placeholder="Enter custom source name">
+   </div>
+
+   <div class="grid-2">
+    <div class="form-group">
+     <label>Amount (ETB)</label>
+     <input id="group-money-amount" type="number" step="0.01" min="0.01" placeholder="0.00" required>
+    </div>
+
+    <div class="form-group">
+     <label>Date Received</label>
+     <input id="group-money-date" type="date" value="${today()}">
+    </div>
+   </div>
+
+   <div class="form-group">
+    <label>Detailed Reason / Description Note</label>
+    <textarea id="group-money-reason" placeholder="Explain how the group obtained this money..."></textarea>
+   </div>
+  `,
+  `
+   <button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
+   <button class="btn-success" onclick="saveGroupMoneyRecord()">
+    <i class="fa fa-plus-circle"></i> Save Group Money
+   </button>
+  `
+ );
+}
+
+function toggleCustomReasonInput(val){
+ const customGroup = document.getElementById("custom-reason-group");
+ if(customGroup){
+  customGroup.style.display = (val === "Custom / Other Reason") ? "block" : "none";
+ }
+}
+
+async function saveGroupMoneyRecord(){
+ const groupName = document.getElementById("group-money-group")?.value;
+ const methodSelect = document.getElementById("group-money-method")?.value;
+ const customMethod = document.getElementById("group-money-custom-method")?.value.trim();
+ const amount = Number(document.getElementById("group-money-amount")?.value || 0);
+ const date = document.getElementById("group-money-date")?.value || today();
+ const reason = document.getElementById("group-money-reason")?.value.trim();
+
+ if(!groupName){
+  showToast("Please choose a group.","error");
+  return;
+ }
+
+ if(amount <= 0){
+  showToast("Please enter a valid amount greater than 0.","error");
+  return;
+ }
+
+ const finalMethod = (methodSelect === "Custom / Other Reason")
+  ? (customMethod || "Custom Reason")
+  : methodSelect;
+
+ const db = await fetchBackendData();
+ db.groupMoney ||= [];
+
+ const newRecord = {
+  id: generateId("GM"),
+  groupName,
+  method: finalMethod,
+  amount,
+  date,
+  reason: reason || "No description provided",
+  recordedBy: currentUser ? currentUser.fullName : "Admin",
+  createdAt: nowDateTime()
+ };
+
+ db.groupMoney.push(newRecord);
+
+ await saveDB(db);
+
+ await logActivity(
+  currentUser.id,
+  "Group Money Recorded",
+  `Added ${money(amount)} ETB to ${groupName} via ${finalMethod}.`
+ );
+
+ closeModal("general-modal");
+ showToast(`Successfully added ${money(amount)} ETB to ${groupName}.`, "success");
+
+ await renderGroupsPage(document.getElementById("content-body"));
+}
+
+async function deleteGroupMoneyRecord(recordId){
+ const db = await fetchBackendData();
+ const record = (db.groupMoney || []).find(r => r.id === recordId);
+ if(!record) return;
+
+ if(!confirmAction(`Are you sure you want to delete this group money record of ${money(record.amount)} ETB from ${record.groupName}?`)){
+  return;
+ }
+
+ db.groupMoney = (db.groupMoney || []).filter(r => r.id !== recordId);
+ await saveDB(db);
+
+ await logActivity(
+  currentUser.id,
+  "Group Money Record Deleted",
+  `Deleted ${money(record.amount)} ETB group money record for ${record.groupName}.`
+ );
+
+ showToast("Group money record deleted successfully.", "success");
+ await renderGroupsPage(document.getElementById("content-body"));
+}
+
+function openGroupMoneyHistoryModal(groupName){
+ const db = getDB();
+ const records = (db.groupMoney || []).filter(r => r.groupName === groupName);
+ const total = getGroupMoneyTotal(db, groupName);
+
+ openModal(
+  `${esc(groupName)} - Group Money Breakdown`,
+  `
+   <div style="margin-bottom:1rem;padding:.8rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px">
+    <div style="font-size:.82rem;color:#166534;font-weight:700">Total Independent Group Balance</div>
+    <div style="font-size:1.5rem;font-weight:900;color:#15803d">${money(total)} ETB</div>
+    <small style="color:#667085">Candidate contributions are maintained separately and not included here.</small>
+   </div>
+
+   <div class="table-wrap">
+    <table>
+     <thead>
+      <tr>
+       <th>Date</th>
+       <th>Method / How Received</th>
+       <th>Reason / Description</th>
+       <th>Recorded By</th>
+       <th>Amount</th>
+      </tr>
+     </thead>
+     <tbody>
+      ${
+       records.length === 0
+       ? `<tr><td colspan="5" class="empty">No separate group money recorded for this group yet.</td></tr>`
+       : records.map(r => `
+        <tr>
+         <td>${esc(r.date)}</td>
+         <td><b>${esc(r.method)}</b></td>
+         <td>${esc(r.reason)}</td>
+         <td>${esc(r.recordedBy)}</td>
+         <td><strong style="color:var(--success)">${money(r.amount)} ETB</strong></td>
+        </tr>
+       `).join("")
+      }
+     </tbody>
+    </table>
+   </div>
+  `,
+  `<button class="btn-outline" onclick="closeModal('general-modal')">Close</button>`
+ );
 }
 
 function openGroupModal(id=null){
@@ -3654,6 +3898,10 @@ async function saveGroup(id){
 
   db.candidates.forEach(c=>{
    if(c.group===oldName)c.group=name;
+  });
+
+  (db.groupMoney||[]).forEach(m=>{
+   if(m.groupName===oldName)m.groupName=name;
   });
 
   await logActivity(
@@ -3771,13 +4019,6 @@ async function deleteGroup(id){
 // Initializing application state on load
 window.addEventListener('DOMContentLoaded', async () => {
  await fetchBackendData();
- const remembered = localStorage.getItem("EAC_REMEMBER_LOGIN");
- if(remembered){
-  currentUser = JSON.parse(remembered);
-  document.getElementById("login-screen").classList.add("hidden");
-  document.getElementById("app-container").classList.remove("hidden");
-  initApp();
- }
 });
 
 </script>
