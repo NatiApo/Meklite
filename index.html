@@ -1309,42 +1309,24 @@ tr:hover td{background:#f9fafb}
 </div>
 
 
+<script type="module" src="firebase-bridge.js"></script>
+
 <script>
 /* ============================================================
-   LIVE RENDER BACKEND API INTEGRATION
+   FIREBASE AUTHENTICATION + FIRESTORE DATA LAYER
+   Firebase Authentication handles passwords. Firestore is the
+   authoritative MEKLITE database. No Render/localStorage login.
 ============================================================ */
-
-// Replace with your live Render Web Service backend URL:
-const API_BASE_URL = "https://meklit-backend.onrender.com";
-
-let currentDB = null;
 
 const defaultData={
  settings:{
   churchName:"ኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን",
   department:"የወጣቶች መክሊት አገልግሎት ክፍል",
   formTitle:"የአባላት ገንዘብ መሰብሰቢያ ቅጽ",
-  phone:"",
-  email:"",
-  address:"",
+  phone:"", email:"", address:"",
   verse:"“መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።” ማቴ 6:21"
  },
-
- users:[
-  {
-   id:1,
-   fullName:"Natnael Yonas",
-   username:"admin",
-   passwordHash:btoa("Admin@2026"),
-   role:"Admin",
-   phone:"+251911000000",
-   email:"admin@eac.org",
-   status:"Active",
-   createdDate:"2026-02-01",
-   lastLogin:""
-  }
- ],
-
+ users:[],
  groups:[
   {id:1,groupName:"Meklit 1",description:"Meklit Group 1",status:"Active"},
   {id:2,groupName:"Meklit 2",description:"Meklit Group 2",status:"Active"},
@@ -1353,89 +1335,148 @@ const defaultData={
   {id:5,groupName:"Meklit 5",description:"Meklit Group 5",status:"Active"},
   {id:6,groupName:"Meklit 6",description:"Meklit Group 6",status:"Active"}
  ],
-
- /* GROUP MONEY IS COMPLETELY SEPARATE FROM CANDIDATE CONTRIBUTIONS */
- groupFunds:[],
-
- candidates:[],
-
- activityLog:[
-  {
-   logId:1,
-   userId:1,
-   action:"System Init",
-   description:"Database initialized with 6 Meklit groups.",
-   dateTime:"2026-08-25 08:00:00"
-  }
- ]
+ groupFunds:[], candidates:[], activityLog:[]
 };
 
-/**
- * Loads and saves data ONLY through the Render backend API.
- * Browser localStorage/sessionStorage are not used for application data.
- */
+let currentDB=null;
+let currentUser=null;
+let activePage="dashboard";
+
 async function fetchBackendData(){
  try{
-  const response=await fetch(`${API_BASE_URL}/api/data`,{cache:"no-store"});
-  if(!response.ok) throw new Error(`Backend returned ${response.status}`);
-
-  const remoteDb=await response.json();
-
-  remoteDb.settings ||= structuredClone(defaultData.settings);
-  remoteDb.users ||= [];
-  remoteDb.groups ||= [];
-  remoteDb.groupFunds ||= [];
-  remoteDb.candidates ||= [];
-  remoteDb.activityLog ||= [];
-
-  currentDB=remoteDb;
-  return currentDB;
- }catch(err){
-  console.warn("Backend API unavailable:",err);
-
-  if(!currentDB) currentDB=structuredClone(defaultData);
-
+  currentDB=await window.FirebaseBridge.loadDB();
   currentDB.settings ||= structuredClone(defaultData.settings);
   currentDB.users ||= [];
-  currentDB.groups ||= [];
+  currentDB.groups ||= structuredClone(defaultData.groups);
   currentDB.groupFunds ||= [];
   currentDB.candidates ||= [];
   currentDB.activityLog ||= [];
-
+  return currentDB;
+ }catch(err){
+  console.error("Firebase data load failed",err);
+  if(!currentDB) currentDB=structuredClone(defaultData);
+  showToast(window.FirebaseBridge?.authError?.(err) || "Could not load Firebase data.","error");
   return currentDB;
  }
 }
 
-function getDB(){
- return currentDB || structuredClone(defaultData);
-}
+function getDB(){ return currentDB || structuredClone(defaultData); }
 
 async function saveDB(db){
  currentDB=db;
-
  try{
-  const response=await fetch(`${API_BASE_URL}/api/data`,{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify(db)
-  });
-
-  if(!response.ok) throw new Error(`Backend returned ${response.status}`);
-
+  await window.FirebaseBridge.saveDB(db);
   return true;
  }catch(err){
-  console.warn("Could not sync state to remote API:",err);
-  showToast("Could not save to the backend. Please check the connection.","error");
+  console.error("Firebase save failed",err);
+  showToast(window.FirebaseBridge?.authError?.(err) || "Could not save to Firebase.","error");
   return false;
  }
 }
 
-let currentUser=null;
+async function logActivity(userId,action,description){
+ try{
+  await window.FirebaseBridge.logActivity({userId,action,description});
+ }catch(err){ console.warn("Activity log failed",err); }
+}
 
-let activePage="dashboard";
-let currentPhotoBase64="";
-let editingCandidateId=null;
+function toggleLoginPassword(){
+ const input=document.getElementById("login-password");
+ input.type=input.type==="password" ? "text" : "password";
+}
 
+async function handleLogin(e){
+ e.preventDefault();
+ const loginValue=document.getElementById("login-username").value.trim();
+ const password=document.getElementById("login-password").value;
+ if(!loginValue || !password)return;
+
+ const button=document.querySelector('#login-form button[type="submit"]');
+ const original=button?.innerHTML;
+ if(button){button.disabled=true;button.innerHTML='<i class="fa fa-spinner fa-spin"></i> Signing in...';}
+
+ try{
+  const authUser=await window.FirebaseBridge.signIn(loginValue,password);
+  const profile=await window.FirebaseBridge.getUserProfile(authUser.uid);
+
+  if(!profile){
+   await window.FirebaseBridge.signOut();
+   throw new Error("Your Firebase account is not connected to a MEKLITE user profile. Create users/"+authUser.uid+" in Firestore.");
+  }
+
+  if(profile.status!=="Active"){
+   await window.FirebaseBridge.signOut();
+   throw new Error("Your MEKLITE account is disabled. Contact an administrator.");
+  }
+
+  currentUser=profile;
+  await window.FirebaseBridge.updateLastLogin(profile.uid);
+  await logActivity(profile.uid,"Login",`User ${profile.username || profile.email} logged in.`);
+
+  document.getElementById("login-screen").classList.add("hidden");
+  document.getElementById("app-container").classList.remove("hidden");
+  await fetchBackendData();
+  initApp();
+  showToast("Welcome back, "+(profile.fullName || profile.displayName || profile.email),"success");
+ }catch(err){
+  console.error("Login failed:",err);
+  showToast(window.FirebaseBridge?.authError?.(err) || err.message || "Login failed.","error");
+ }finally{
+  if(button){button.disabled=false;button.innerHTML=original;}
+ }
+}
+
+async function logout(){
+ try{
+  if(currentUser) await logActivity(currentUser.uid || currentUser.id,"Logout",`User ${currentUser.username || currentUser.email} logged out.`);
+  await window.FirebaseBridge.signOut();
+ }catch(err){ console.warn("Logout error",err); }
+ currentUser=null;
+ document.getElementById("app-container").classList.add("hidden");
+ document.getElementById("login-screen").classList.remove("hidden");
+ document.getElementById("login-form").reset();
+ showToast("Logged out successfully.","success");
+}
+
+async function handleChangePassword(e){
+ e.preventDefault();
+ const curr=document.getElementById("current-password").value;
+ const newP=document.getElementById("new-password").value;
+ const confP=document.getElementById("confirm-password").value;
+ if(newP.length<6){showToast("New password must contain at least 6 characters.","error");return;}
+ if(newP!==confP){showToast("New passwords do not match.","error");return;}
+ try{
+  await window.FirebaseBridge.changePassword(curr,newP);
+  await logActivity(currentUser.uid || currentUser.id,"Password Changed","User changed their password.");
+  showToast("Password updated successfully.","success");
+  closeModal("password-modal");
+  document.getElementById("change-password-form").reset();
+ }catch(err){showToast(window.FirebaseBridge?.authError?.(err) || "Could not change password.","error");}
+}
+
+window.addEventListener("DOMContentLoaded",async()=>{
+ try{
+  await window.FirebaseBridge.ready();
+  window.FirebaseBridge.onAuth(async authUser=>{
+   if(!authUser){return;}
+   try{
+    const profile=await window.FirebaseBridge.getUserProfile(authUser.uid);
+    if(profile && profile.status==="Active"){
+     currentUser=profile;
+     document.getElementById("login-screen").classList.add("hidden");
+     document.getElementById("app-container").classList.remove("hidden");
+     await fetchBackendData();
+     initApp();
+    }
+   }catch(err){console.warn("Auth state profile check failed",err);}
+  });
+ }catch(err){
+  console.error("Firebase initialization failed",err);
+  showToast("Firebase could not be initialized. Check firebase-config.js and your internet connection.","error");
+ }
+});
+
+</script>
 
 /* ============================================================
    UTILITIES
@@ -1517,142 +1558,6 @@ function openModal(title,body,footer=""){
 function openChangePasswordModal(){
  document.getElementById("password-modal").classList.remove("hidden");
 }
-
-async function handleChangePassword(e){
- e.preventDefault();
- const curr = document.getElementById("current-password").value;
- const newP = document.getElementById("new-password").value;
- const confP = document.getElementById("confirm-password").value;
-
- if(btoa(curr) !== currentUser.passwordHash){
-  showToast("Current password incorrect.","error");
-  return;
- }
- if(newP !== confP){
-  showToast("New passwords do not match.","error");
-  return;
- }
- const db = await fetchBackendData();
- const u = db.users.find(x=>x.id===currentUser.id);
- if(u){
-  u.passwordHash = btoa(newP);
-  await saveDB(db);
-  currentUser.passwordHash = u.passwordHash;
-  showToast("Password updated successfully.","success");
-  closeModal("password-modal");
-  document.getElementById("change-password-form").reset();
- }
-}
-
-async function logActivity(userId,action,description){
- const db=getDB();
-
- db.activityLog.unshift({
-  logId:Date.now(),
-  userId,
-  action,
-  description,
-  dateTime:nowDateTime()
- });
-
- if(db.activityLog.length>1000){
-  db.activityLog=db.activityLog.slice(0,1000);
- }
-
- await saveDB(db);
-}
-
-
-/* ============================================================
-   LOGIN
-============================================================ */
-
-function toggleLoginPassword(){
- const input=document.getElementById("login-password");
-
- input.type=input.type==="password"
-  ? "text"
-  : "password";
-}
-
-async function handleLogin(e){
- e.preventDefault();
-
- const username=
-  document.getElementById("login-username").value.trim();
-
- const password=
-  document.getElementById("login-password").value;
-
- const db = await fetchBackendData();
-
- const user=db.users.find(u=>
-  u.username===username &&
-  u.passwordHash===btoa(password) &&
-  u.status==="Active"
- );
-
- if(!user){
-  showToast(
-   "Invalid username/password or account is disabled.",
-   "error"
-  );
-  return;
- }
-
- user.lastLogin=today();
- await saveDB(db);
-
- currentUser=user;
-
-await logActivity(
-  user.id,
-  "Login",
-  `User ${user.username} logged in.`
- );
-
- document
-  .getElementById("login-screen")
-  .classList.add("hidden");
-
- document
-  .getElementById("app-container")
-  .classList.remove("hidden");
-
- initApp();
-
- showToast(
-  "Welcome back, "+user.fullName,
-  "success"
- );
-}
-
-async function logout(){
- if(currentUser){
-  await logActivity(
-   currentUser.id,
-   "Logout",
-   `User ${currentUser.username} logged out.`
-  );
- }
-
- 
-
- currentUser=null;
-
- document
-  .getElementById("app-container")
-  .classList.add("hidden");
-
- document
-  .getElementById("login-screen")
-  .classList.remove("hidden");
-
- document.getElementById("login-form").reset();
-
- showToast("Logged out successfully.","success");
-}
-
 
 /* ============================================================
    APP
