@@ -3,15 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#0b3c5d">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="MEKLITE">
-<meta name="application-name" content="MEKLITE">
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
 <title>Ethiopian Apostolic Church - Youth Meklit Service</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -4060,14 +4051,6 @@ window.addEventListener('DOMContentLoaded', async () => {
    }
  }
 });
-
-// MEKLITE PWA service worker registration
-if ('serviceWorker' in navigator) {
- window.addEventListener('load', () => {
-  navigator.serviceWorker.register('./sw.js', { scope: './' })
-   .catch(error => console.warn('MEKLITE service worker registration failed:', error));
- });
-}
 
 </script>
 </body>
