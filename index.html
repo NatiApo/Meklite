@@ -1309,14 +1309,30 @@ tr:hover td{background:#f9fafb}
 </div>
 
 
-<script type="module" src="firebase-bridge.js"></script>
-
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyC-0EazLVdjgWkcTISVjNiTZoVQ4HNp4Nc",
+  authDomain: "meklite-eb789.firebaseapp.com",
+  projectId: "meklite-eb789",
+  storageBucket: "meklite-eb789.firebasestorage.app",
+  messagingSenderId: "1026124745064",
+  appId: "1:1026124745064:web:75eb26af141764e7462edd"
+};
+if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+const mekLiteFirebaseAuth = firebase.auth();
+const mekLiteFirestore = firebase.firestore();
+</script>
 <script>
 /* ============================================================
-   FIREBASE AUTHENTICATION + FIRESTORE DATA LAYER
-   Firebase Authentication handles passwords. Firestore is the
-   authoritative MEKLITE database. No Render/localStorage login.
+   FIREBASE FIRESTORE DATA LAYER
+   Application data is stored in Firestore. No localStorage.
 ============================================================ */
+
+let currentDB = null;
+let lastPersistedDB = null;
 
 const defaultData={
  settings:{
@@ -1326,7 +1342,12 @@ const defaultData={
   phone:"", email:"", address:"",
   verse:"“መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።” ማቴ 6:21"
  },
- users:[],
+ users:[{
+  id:1, uid:"hKKEsSCzZWaPU3m1UkUCxnE7sy62", fullName:"Natnael Yonas",
+  username:"admin", passwordHash:btoa("Admin@2026"), role:"Admin",
+  phone:"+251911000000", email:"natinaelyonas28@gmail.com", status:"Active",
+  createdDate:"2026-02-01", lastLogin:""
+ }],
  groups:[
   {id:1,groupName:"Meklit 1",description:"Meklit Group 1",status:"Active"},
   {id:2,groupName:"Meklit 2",description:"Meklit Group 2",status:"Active"},
@@ -1338,143 +1359,137 @@ const defaultData={
  groupFunds:[], candidates:[], activityLog:[]
 };
 
-let currentDB=null;
-let currentUser=null;
-let activePage="dashboard";
+function cleanForFirestore(value){
+ try{return JSON.parse(JSON.stringify(value));}
+ catch(e){return value;}
+}
+
+async function readCollection(name){
+ const snap=await mekLiteFirestore.collection(name).get();
+ return snap.docs.map(d=>({__docId:d.id,...d.data()}));
+}
 
 async function fetchBackendData(){
  try{
-  currentDB=await window.FirebaseBridge.loadDB();
-  currentDB.settings ||= structuredClone(defaultData.settings);
+  if(!mekLiteFirebaseAuth.currentUser){
+   throw new Error("Not authenticated");
+  }
+
+  const [users,groups,groupFunds,candidates,activityLog,settingsSnap]=await Promise.all([
+   readCollection("users"),
+   readCollection("groups"),
+   readCollection("groupFunds"),
+   readCollection("candidates"),
+   readCollection("activityLog"),
+   mekLiteFirestore.collection("settings").doc("main").get()
+  ]);
+
+  const settings=settingsSnap.exists ? settingsSnap.data() : structuredClone(defaultData.settings);
+  const stripDoc=d=>{const x={...d}; delete x.__docId; return x;};
+
+  currentDB={
+   settings,
+   users:users.map(stripDoc),
+   groups:groups.map(stripDoc),
+   groupFunds:groupFunds.map(stripDoc),
+   candidates:candidates.map(stripDoc),
+   activityLog:activityLog.map(stripDoc).sort((a,b)=>Number(b.logId||0)-Number(a.logId||0))
+  };
+
   currentDB.users ||= [];
-  currentDB.groups ||= structuredClone(defaultData.groups);
+  currentDB.groups ||= [];
   currentDB.groupFunds ||= [];
   currentDB.candidates ||= [];
   currentDB.activityLog ||= [];
+  lastPersistedDB=cleanForFirestore(currentDB);
   return currentDB;
  }catch(err){
-  console.error("Firebase data load failed",err);
-  if(!currentDB) currentDB=structuredClone(defaultData);
-  showToast(window.FirebaseBridge?.authError?.(err) || "Could not load Firebase data.","error");
-  return currentDB;
+  console.error("Meklite Firestore load failed:",err);
+  showToast("Could not load Meklite data from Firebase. Please check your internet and Firebase rules.","error");
+  return null;
  }
 }
 
-function getDB(){ return currentDB || structuredClone(defaultData); }
+function getDB(){ return currentDB; }
+
+function firestoreDocId(item,fallback){
+ return String(item?.uid || item?.id || item?.logId || fallback);
+}
+
+async function replaceCollection(name,items){
+ const ref=mekLiteFirestore.collection(name);
+ const existing=await ref.get();
+ const desired=new Set();
+ const batches=[];
+ let batch=mekLiteFirestore.batch(), count=0;
+ const queue=(op,docRef,data)=>{
+  if(op==='set') batch.set(docRef,cleanForFirestore(data),{merge:false});
+  else batch.delete(docRef);
+  count++;
+  if(count===450){batches.push(batch); batch=mekLiteFirestore.batch(); count=0;}
+ };
+
+ (items||[]).forEach((item,index)=>{
+  const id=firestoreDocId(item,index+1);
+  desired.add(id);
+  const data=cleanForFirestore(item);
+  delete data.__docId;
+  queue('set',ref.doc(id),data);
+ });
+
+ existing.docs.forEach(doc=>{
+  if(!desired.has(doc.id)) queue('delete',doc.ref);
+ });
+ if(count) batches.push(batch);
+ for(const b of batches) await b.commit();
+}
 
 async function saveDB(db){
- currentDB=db;
+ if(!db){showToast("Nothing to save.","error");return false;}
+ if(!mekLiteFirebaseAuth.currentUser){showToast("Please sign in again before saving.","error");return false;}
+
  try{
-  await window.FirebaseBridge.saveDB(db);
+  const previous=lastPersistedDB || {};
+  const changed=(key)=>JSON.stringify(cleanForFirestore(db[key] ?? null))!==JSON.stringify(cleanForFirestore(previous[key] ?? null));
+  let changedAnything=false;
+
+  // Only write collections that actually changed. This prevents an ordinary
+  // candidate edit from rewriting Users/Groups/other collections and makes
+  // the save compatible with tighter Firestore security rules.
+  if(changed("settings")){
+   await mekLiteFirestore.collection("settings").doc("main").set(
+    cleanForFirestore(db.settings||defaultData.settings),{merge:true}
+   );
+   changedAnything=true;
+  }
+
+  for(const name of ["users","groups","groupFunds","candidates","activityLog"]){
+   if(changed(name)){
+    await replaceCollection(name,db[name]||[]);
+    changedAnything=true;
+   }
+  }
+
+  currentDB=db;
+  lastPersistedDB=cleanForFirestore(db);
   return true;
  }catch(err){
-  console.error("Firebase save failed",err);
-  showToast(window.FirebaseBridge?.authError?.(err) || "Could not save to Firebase.","error");
+  console.error("Meklite Firestore save failed:",err);
+  const code=err?.code || "";
+  let detail="";
+  if(code==="permission-denied") detail=" Firebase permission denied.";
+  else if(code==="failed-precondition") detail=" Firebase is offline or the request failed a database condition.";
+  else if(code==="unavailable") detail=" Firebase is temporarily unavailable. Check your internet connection.";
+  showToast("Save failed."+detail+" Your data was not reported as saved.","error");
   return false;
  }
 }
 
-async function logActivity(userId,action,description){
- try{
-  await window.FirebaseBridge.logActivity({userId,action,description});
- }catch(err){ console.warn("Activity log failed",err); }
-}
+let currentUser=null;
 
-function toggleLoginPassword(){
- const input=document.getElementById("login-password");
- input.type=input.type==="password" ? "text" : "password";
-}
-
-async function handleLogin(e){
- e.preventDefault();
- const loginValue=document.getElementById("login-username").value.trim();
- const password=document.getElementById("login-password").value;
- if(!loginValue || !password)return;
-
- const button=document.querySelector('#login-form button[type="submit"]');
- const original=button?.innerHTML;
- if(button){button.disabled=true;button.innerHTML='<i class="fa fa-spinner fa-spin"></i> Signing in...';}
-
- try{
-  const authUser=await window.FirebaseBridge.signIn(loginValue,password);
-  const profile=await window.FirebaseBridge.getUserProfile(authUser.uid);
-
-  if(!profile){
-   await window.FirebaseBridge.signOut();
-   throw new Error("Your Firebase account is not connected to a MEKLITE user profile. Create users/"+authUser.uid+" in Firestore.");
-  }
-
-  if(profile.status!=="Active"){
-   await window.FirebaseBridge.signOut();
-   throw new Error("Your MEKLITE account is disabled. Contact an administrator.");
-  }
-
-  currentUser=profile;
-  await window.FirebaseBridge.updateLastLogin(profile.uid);
-  await logActivity(profile.uid,"Login",`User ${profile.username || profile.email} logged in.`);
-
-  document.getElementById("login-screen").classList.add("hidden");
-  document.getElementById("app-container").classList.remove("hidden");
-  await fetchBackendData();
-  initApp();
-  showToast("Welcome back, "+(profile.fullName || profile.displayName || profile.email),"success");
- }catch(err){
-  console.error("Login failed:",err);
-  showToast(window.FirebaseBridge?.authError?.(err) || err.message || "Login failed.","error");
- }finally{
-  if(button){button.disabled=false;button.innerHTML=original;}
- }
-}
-
-async function logout(){
- try{
-  if(currentUser) await logActivity(currentUser.uid || currentUser.id,"Logout",`User ${currentUser.username || currentUser.email} logged out.`);
-  await window.FirebaseBridge.signOut();
- }catch(err){ console.warn("Logout error",err); }
- currentUser=null;
- document.getElementById("app-container").classList.add("hidden");
- document.getElementById("login-screen").classList.remove("hidden");
- document.getElementById("login-form").reset();
- showToast("Logged out successfully.","success");
-}
-
-async function handleChangePassword(e){
- e.preventDefault();
- const curr=document.getElementById("current-password").value;
- const newP=document.getElementById("new-password").value;
- const confP=document.getElementById("confirm-password").value;
- if(newP.length<6){showToast("New password must contain at least 6 characters.","error");return;}
- if(newP!==confP){showToast("New passwords do not match.","error");return;}
- try{
-  await window.FirebaseBridge.changePassword(curr,newP);
-  await logActivity(currentUser.uid || currentUser.id,"Password Changed","User changed their password.");
-  showToast("Password updated successfully.","success");
-  closeModal("password-modal");
-  document.getElementById("change-password-form").reset();
- }catch(err){showToast(window.FirebaseBridge?.authError?.(err) || "Could not change password.","error");}
-}
-
-window.addEventListener("DOMContentLoaded",async()=>{
- try{
-  await window.FirebaseBridge.ready();
-  window.FirebaseBridge.onAuth(async authUser=>{
-   if(!authUser){return;}
-   try{
-    const profile=await window.FirebaseBridge.getUserProfile(authUser.uid);
-    if(profile && profile.status==="Active"){
-     currentUser=profile;
-     document.getElementById("login-screen").classList.add("hidden");
-     document.getElementById("app-container").classList.remove("hidden");
-     await fetchBackendData();
-     initApp();
-    }
-   }catch(err){console.warn("Auth state profile check failed",err);}
-  });
- }catch(err){
-  console.error("Firebase initialization failed",err);
-  showToast("Firebase could not be initialized. Check firebase-config.js and your internet connection.","error");
- }
-});
+let activePage="dashboard";
+let currentPhotoBase64="";
+let editingCandidateId=null;
 
 
 /* ============================================================
@@ -1505,7 +1520,7 @@ function money(value){
  return Number(value || 0).toLocaleString(
   "en-US",
   {minimumFractionDigits:2,maximumFractionDigits:2}
-);
+ );
 }
 
 function generateId(prefix="ID"){
@@ -1522,41 +1537,241 @@ function confirmAction(message){
 
 function showToast(message,type="success"){
  const container=document.getElementById("toast-container");
-
+ if(!container){ alert(message); return; }
  const toast=document.createElement("div");
-
  toast.className="toast "+type;
-
  const icon=
   type==="success" ? "fa-check-circle" :
   type==="error" ? "fa-exclamation-circle" :
   type==="warning" ? "fa-exclamation-triangle" :
   "fa-info-circle";
-
- toast.innerHTML=
-  `<i class="fa ${icon}"></i> ${esc(message)}`;
-
+ toast.innerHTML=`<i class="fa ${icon}"></i> ${esc(message)}`;
  container.appendChild(toast);
-
- setTimeout(()=>{
-  toast.remove();
- },4000);
+ setTimeout(()=>toast.remove(),4000);
 }
 
-function closeModal(id){
- document.getElementById(id).classList.add("hidden");
-}
-
+function closeModal(id){ document.getElementById(id).classList.add("hidden"); }
 function openModal(title,body,footer=""){
  document.getElementById("modal-title").innerText=title;
  document.getElementById("modal-body").innerHTML=body;
  document.getElementById("modal-footer").innerHTML=footer;
  document.getElementById("general-modal").classList.remove("hidden");
 }
+function openChangePasswordModal(){ document.getElementById("password-modal").classList.remove("hidden"); }
 
-function openChangePasswordModal(){
- document.getElementById("password-modal").classList.remove("hidden");
+async function handleChangePassword(e){
+ e.preventDefault();
+ const curr=document.getElementById("current-password").value;
+ const newP=document.getElementById("new-password").value;
+ const confP=document.getElementById("confirm-password").value;
+ if(!curr || !newP){showToast("Please complete all password fields.","error");return;}
+ if(newP!==confP){showToast("New passwords do not match.","error");return;}
+ if(newP.length<6){showToast("New password must be at least 6 characters.","error");return;}
+
+ try{
+  const fbUser=mekLiteFirebaseAuth.currentUser;
+  if(!fbUser){showToast("Your Firebase session has expired. Please log in again.","error");return;}
+  const email=fbUser.email || currentUser?.email;
+  const credential=firebase.auth.EmailAuthProvider.credential(email,curr);
+  await fbUser.reauthenticateWithCredential(credential);
+  await fbUser.updatePassword(newP);
+
+  const db=await fetchBackendData();
+  if(db){
+   const u=db.users.find(x=>String(x.uid||"")===String(fbUser.uid)) || db.users.find(x=>x.id===currentUser.id);
+   if(u){u.passwordHash=btoa(newP);u.updatedAt=nowDateTime();}
+   await saveDB(db);
+  }
+  if(currentUser) currentUser.passwordHash=btoa(newP);
+  showToast("Password updated successfully.","success");
+  closeModal("password-modal");
+  document.getElementById("change-password-form").reset();
+ }catch(err){
+  console.error("Password update failed:",err);
+  const msg=err?.code==="auth/wrong-password" || err?.code==="auth/invalid-credential"
+   ? "Current password is incorrect."
+   : err?.code==="auth/requires-recent-login"
+    ? "Please log out and log in again, then change the password."
+    : "Password update failed. Please try again.";
+  showToast(msg,"error");
+ }
 }
+
+async function logActivity(userId,action,description){
+ const db=getDB();
+ if(!db)return false;
+ db.activityLog.unshift({logId:Date.now(),userId,action,description,dateTime:nowDateTime()});
+ if(db.activityLog.length>1000)db.activityLog=db.activityLog.slice(0,1000);
+ return await saveDB(db);
+}
+
+
+/* ============================================================
+   LOGIN
+============================================================ */
+
+function toggleLoginPassword(){
+ const input=document.getElementById("login-password");
+
+ input.type=input.type==="password"
+  ? "text"
+  : "password";
+}
+
+async function handleLogin(e){
+  e.preventDefault();
+
+  const usernameEl=document.getElementById("login-username");
+  const passwordEl=document.getElementById("login-password");
+  const username=(usernameEl.value||"").trim();
+  const password=passwordEl.value||"";
+
+  if(!username || !password){
+    showToast("Please enter username and password.","error");
+    return;
+  }
+
+  const loginButton=document.querySelector('#login-form button[type="submit"]');
+  const oldButtonText=loginButton ? loginButton.innerHTML : "";
+  if(loginButton){
+    loginButton.disabled=true;
+    loginButton.innerHTML='<i class="fa fa-spinner fa-spin"></i> Signing in...';
+  }
+
+  try{
+    const emailMap={
+      "admin":"natinaelyonas28@gmail.com",
+      "natinaelyonas28@gmail.com":"natinaelyonas28@gmail.com"
+    };
+
+    const email=emailMap[username.toLowerCase()] || username;
+
+    if(!email.includes("@")){
+      showToast("Use the username: admin","error");
+      return;
+    }
+
+    const credential=await mekLiteFirebaseAuth.signInWithEmailAndPassword(email,password);
+    const firebaseUser=credential.user;
+
+    let db=null;
+    try{
+      db=await fetchBackendData();
+    }catch(err){
+      console.warn("Application database unavailable:",err);
+    }
+
+    if(!db){
+      db=structuredClone(defaultData);
+      currentDB=db;
+      showToast("Login successful. Application data server is unavailable right now.","warning");
+    }
+
+    let user=db.users.find(u=>
+      String(u.username||"").toLowerCase()===username.toLowerCase() ||
+      String(u.email||"").toLowerCase()===String(firebaseUser.email||"").toLowerCase() ||
+      String(u.uid||"")===String(firebaseUser.uid||"")
+    );
+
+    if(!user && username.toLowerCase()==="admin"){
+      user=structuredClone(defaultData.users[0]);
+      user.email=firebaseUser.email || user.email;
+    }
+
+    if(!user){
+      await mekLiteFirebaseAuth.signOut();
+      showToast("Login succeeded, but no Meklite user profile was found.","error");
+      return;
+    }
+
+    if(user.status && user.status!=="Active"){
+      await mekLiteFirebaseAuth.signOut();
+      showToast("This Meklite account is disabled.","error");
+      return;
+    }
+
+    user.lastLogin=today();
+    currentUser=user;
+
+    document.getElementById("login-screen").classList.add("hidden");
+    document.getElementById("app-container").classList.remove("hidden");
+    initApp();
+
+    try{
+      await logActivity(user.id,"Login",`User ${user.username} logged in.`);
+    }catch(err){
+      console.warn("Login activity could not be recorded:",err);
+    }
+
+    showToast("Welcome back, "+user.fullName,"success");
+
+  }catch(err){
+    console.error("Firebase login error:",err);
+
+    let message="Login failed. Please check your username and password.";
+
+    if(err && err.code){
+      switch(err.code){
+        case "auth/invalid-credential":
+        case "auth/wrong-password":
+        case "auth/user-not-found":
+          message="Invalid username or password.";
+          break;
+        case "auth/invalid-email":
+          message="Login email is not configured correctly.";
+          break;
+        case "auth/user-disabled":
+          message="This Firebase account is disabled.";
+          break;
+        case "auth/too-many-requests":
+          message="Too many attempts. Please wait and try again.";
+          break;
+        case "auth/network-request-failed":
+          message="Internet connection problem. Check your internet.";
+          break;
+      }
+    }
+
+    showToast(message,"error");
+    passwordEl.focus();
+    passwordEl.select();
+
+  }finally{
+    if(loginButton){
+      loginButton.disabled=false;
+      loginButton.innerHTML=oldButtonText;
+    }
+  }
+}
+
+async function logout(){
+ if(currentUser){
+  await logActivity(
+   currentUser.id,
+   "Logout",
+   `User ${currentUser.username} logged out.`
+  );
+ }
+
+ 
+
+ try{await mekLiteFirebaseAuth.signOut();}catch(err){}
+
+ currentUser=null;
+
+ document
+  .getElementById("app-container")
+  .classList.add("hidden");
+
+ document
+  .getElementById("login-screen")
+  .classList.remove("hidden");
+
+ document.getElementById("login-form").reset();
+
+ showToast("Logged out successfully.","success");
+}
+
 
 /* ============================================================
    APP
@@ -2734,20 +2949,15 @@ function collectContributionRows(){
 
 async function saveCandidateForm(){
 
- const name=
-  document.getElementById("inp-fullname")
-   .value.trim();
-
+ const name=document.getElementById("inp-fullname").value.trim();
  if(!name){
-  showToast(
-   "Please enter candidate full name.",
-   "error"
-  );
+  showToast("Please enter candidate full name.","error");
   document.getElementById("inp-fullname").focus();
   return;
  }
 
- const db = await fetchBackendData();
+ const db=await fetchBackendData();
+ if(!db)return;
 
  const candidateData={
   id:document.getElementById("lbl-form-no").innerText,
@@ -2765,62 +2975,43 @@ async function saveCandidateForm(){
  };
 
  if(editingCandidateId){
+  const index=db.candidates.findIndex(c=>c.id===editingCandidateId);
+  if(index<0){ showToast("Candidate not found.","error"); return; }
 
-  const index=
-   db.candidates.findIndex(
-    c=>c.id===editingCandidateId
-   );
+  candidateData.registeredDate=db.candidates[index].registeredDate;
+  db.candidates[index]={...db.candidates[index],...candidateData};
 
-  if(index<0){
-   showToast("Candidate not found.","error");
+  const saved=await saveDB(db);
+  if(!saved){
+   document.getElementById("form-save-status").innerText="Save failed";
    return;
   }
 
-  candidateData.registeredDate=
-   db.candidates[index].registeredDate;
-
-  db.candidates[index]={
-   ...db.candidates[index],
-   ...candidateData
-  };
-
-  await logActivity(
-   currentUser.id,
-   "Candidate Updated",
-   `Updated candidate ${name}.`
-  );
-
-  await saveDB(db);
-
-  document.getElementById("form-save-status").innerText=
-   "Successfully Updated!";
-
-  showToast(
-   "Candidate updated successfully.",
-   "success"
-  );
+  try{
+   await logActivity(currentUser.id,"Candidate Updated",`Updated candidate ${name}.`);
+  }catch(err){
+   console.warn("Activity log failed after candidate update:",err);
+  }
+  document.getElementById("form-save-status").innerText="Successfully Updated!";
+  showToast("Candidate updated and saved to Firebase.","success");
 
  }else{
-
   db.candidates.push(candidateData);
 
-  await saveDB(db);
+  const saved=await saveDB(db);
+  if(!saved){
+   document.getElementById("form-save-status").innerText="Save failed";
+   return;
+  }
 
-  await logActivity(
-   currentUser.id,
-   "Candidate Saved",
-   `Saved candidate ${name} under group ${candidateData.group}.`
-  );
-
+  try{
+   await logActivity(currentUser.id,"Candidate Saved",`Saved candidate ${name} under group ${candidateData.group}.`);
+  }catch(err){
+   console.warn("Activity log failed after candidate save:",err);
+  }
   editingCandidateId=candidateData.id;
-
-  document.getElementById("form-save-status").innerText=
-   "Successfully Saved!";
-
-  showToast(
-   "Candidate information saved successfully.",
-   "success"
-  );
+  document.getElementById("form-save-status").innerText="Successfully Saved!";
+  showToast("Candidate information saved to Firebase.","success");
  }
 }
 
@@ -3760,11 +3951,15 @@ async function saveGroupMoney(){
  const saved=await saveDB(db);
  if(!saved)return;
 
- await logActivity(
-  currentUser.id,
-  "Group Money Added",
-  `Added ${money(amount)} ETB to ${group.groupName} group fund from ${source}.`
- );
+ try{
+  await logActivity(
+   currentUser.id,
+   "Group Money Added",
+   `Added ${money(amount)} ETB to ${group.groupName} group fund from ${source}.`
+  );
+ }catch(err){
+  console.warn("Activity log failed after group money save:",err);
+ }
 
  closeModal("general-modal");
 
@@ -3802,11 +3997,15 @@ async function deleteGroupMoney(id){
  const saved=await saveDB(db);
  if(!saved)return;
 
- await logActivity(
-  currentUser.id,
-  "Group Money Deleted",
-  `Deleted ${money(row.amount)} ETB group money entry from ${group?.groupName||"Unknown Group"}.`
- );
+ try{
+  await logActivity(
+   currentUser.id,
+   "Group Money Deleted",
+   `Deleted ${money(row.amount)} ETB group money entry from ${group?.groupName||"Unknown Group"}.`
+  );
+ }catch(err){
+  console.warn("Activity log failed after group money delete:",err);
+ }
 
  await renderGroupsPage(
   document.getElementById("content-body")
@@ -4034,459 +4233,50 @@ async function deleteGroup(id){
 }
 
 // Initializing application state on load
-window.addEventListener('DOMContentLoaded', async () => {
- await fetchBackendData();
+window.addEventListener('DOMContentLoaded', () => {
+ mekLiteFirebaseAuth.onAuthStateChanged(async (firebaseUser) => {
+  if(!firebaseUser){
+   currentUser=null;
+   document.getElementById("app-container").classList.add("hidden");
+   document.getElementById("login-screen").classList.remove("hidden");
+   return;
+  }
 
- if(currentUser){
-  const db=getDB();
-  const freshUser=db.users.find(u=>u.id===currentUser.id);
+  try{
+   const db=await fetchBackendData();
+   if(!db){
+    await mekLiteFirebaseAuth.signOut();
+    return;
+   }
 
-  if(freshUser && freshUser.status==="Active"){
-   currentUser=freshUser;
+   let user=db.users.find(u=>String(u.uid||"")===String(firebaseUser.uid));
+   if(!user){
+    user=db.users.find(u=>String(u.email||"").toLowerCase()===String(firebaseUser.email||"").toLowerCase());
+   }
+
+   if(!user && firebaseUser.email==="natinaelyonas28@gmail.com"){
+    user=structuredClone(defaultData.users[0]);
+    user.uid=firebaseUser.uid;
+    user.email=firebaseUser.email;
+   }
+
+   if(!user || (user.status && user.status!=="Active")){
+    showToast("Your Firebase account has no active Meklite user profile.","error");
+    await mekLiteFirebaseAuth.signOut();
+    return;
+   }
+
+   currentUser=user;
    document.getElementById("login-screen").classList.add("hidden");
    document.getElementById("app-container").classList.remove("hidden");
    initApp();
-  }else{
-   currentUser=null;
-   }
- }
-});
-
-</script>
-
-<script>
-/* ============================================================
-   MEKLITE GOLDEN MASTER FIX PATCH
-   Preserves the original UI, A4 form, calculations, Firebase
-   bridge, backend bridge, groups, group funds and candidate data.
-   Fixes routing, caching/performance, permissions, contributions,
-   reports, user management, backup/restore and settings.
-============================================================ */
-
-/* ---------- Fast authoritative DB cache ---------- */
-const _mekliteOriginalFetchBackendData = fetchBackendData;
-let _mekliteDataLoadedAt = 0;
-
-async function fetchBackendData(force=false){
-  if(currentDB && !force) return currentDB;
-  try{
-    if(!window.FirebaseBridge) throw new Error('Firebase bridge is not available.');
-    if(typeof window.FirebaseBridge.ready==='function') await window.FirebaseBridge.ready();
-    currentDB = await window.FirebaseBridge.loadDB();
-    currentDB ||= structuredClone(defaultData);
-    currentDB.settings ||= structuredClone(defaultData.settings);
-    currentDB.users ||= [];
-    currentDB.groups ||= structuredClone(defaultData.groups);
-    currentDB.groupFunds ||= [];
-    currentDB.candidates ||= [];
-    currentDB.activityLog ||= [];
-    _mekliteDataLoadedAt = Date.now();
-    return currentDB;
   }catch(err){
-    console.error('MEKLITE database load failed:', err);
-    if(!currentDB) currentDB=structuredClone(defaultData);
-    showToast(window.FirebaseBridge?.authError?.(err) || 'Could not load MEKLITE data from Firebase.', 'error');
-    return currentDB;
+   console.error("Firebase session restore failed:",err);
+   showToast("Could not load your Meklite account from Firebase.","error");
+   try{await mekLiteFirebaseAuth.signOut();}catch(e){}
   }
-}
-
-async function refreshMekliteData(){
-  return fetchBackendData(true);
-}
-
-/* ---------- Permission engine ---------- */
-function hasPermission(permission){
-  if(isAdmin()) return true;
-  const p=currentUser?.permissions;
-  if(Array.isArray(p)) return p.includes(permission) || p.includes('all');
-  if(p && typeof p==='object') return !!p[permission];
-  return false;
-}
-
-function requirePermission(permission,message='You do not have permission to perform this action.'){
-  if(hasPermission(permission)) return true;
-  showToast(message,'error');
-  return false;
-}
-
-function normalizeUser(u={}){
-  return {
-    ...u,
-    uid:u.uid || u.id || '',
-    id:u.id || u.uid || generateId('USR'),
-    username:String(u.username||'').trim(),
-    email:String(u.email||'').trim().toLowerCase(),
-    fullName:String(u.fullName||u.displayName||u.username||u.email||'').trim(),
-    role:u.role==='Admin'?'Admin':'Staff',
-    status:u.status==='Inactive'?'Inactive':'Active',
-    permissions:Array.isArray(u.permissions)?u.permissions:[],
-    createdAt:u.createdAt||nowDateTime(),
-    lastLogin:u.lastLogin||''
-  };
-}
-
-const MEKLITE_PERMISSIONS={
-  dashboard:'Dashboard',
-  candidates_view:'View Candidates',
-  candidates_add:'Add Candidates',
-  candidates_edit:'Edit Candidates',
-  candidates_delete:'Delete Candidates',
-  contributions_add:'Add Contributions',
-  contributions_edit:'Edit Contributions',
-  contributions_delete:'Delete Contributions',
-  group_money_add:'Add Group Money',
-  group_money_edit:'Edit Group Money',
-  group_money_delete:'Delete Group Money',
-  groups_view:'View Groups',
-  groups_edit:'Manage Groups',
-  reports:'Reports',
-  settings:'Settings',
-  backup:'Backup / Restore'
-};
-
-/* ---------- Safer username/email login fallback ---------- */
-async function handleLogin(e){
-  e.preventDefault();
-  const loginValue=(document.getElementById('login-username')?.value||'').trim();
-  const password=document.getElementById('login-password')?.value||'';
-  if(!loginValue || !password) return;
-  const button=document.querySelector('#login-form button[type="submit"]');
-  const original=button?.innerHTML;
-  if(button){button.disabled=true;button.innerHTML='<i class="fa fa-spinner fa-spin"></i> Signing in...';}
-  try{
-    const db=await fetchBackendData(true);
-    let profileByLogin=(db.users||[]).map(normalizeUser).find(u=>
-      u.username.toLowerCase()===loginValue.toLowerCase() ||
-      u.email.toLowerCase()===loginValue.toLowerCase()
-    );
-    let authUser;
-    try{
-      authUser=await window.FirebaseBridge.signIn(loginValue,password);
-    }catch(firstErr){
-      if(profileByLogin?.email && profileByLogin.email.toLowerCase()!==loginValue.toLowerCase()){
-        authUser=await window.FirebaseBridge.signIn(profileByLogin.email,password);
-      }else throw firstErr;
-    }
-    let profile=null;
-    try{ profile=await window.FirebaseBridge.getUserProfile(authUser.uid); }catch(_e){}
-    if(!profile && profileByLogin){ profile={...profileByLogin,uid:authUser.uid,id:authUser.uid}; }
-    if(!profile){
-      await window.FirebaseBridge.signOut();
-      throw new Error('Firebase account is authenticated, but no MEKLITE user profile is connected to it.');
-    }
-    profile=normalizeUser({...profile,uid:authUser.uid,id:authUser.uid});
-    if(profile.status!=='Active'){
-      await window.FirebaseBridge.signOut();
-      throw new Error('Your MEKLITE account is disabled. Contact an administrator.');
-    }
-    currentUser=profile;
-    const stored=db.users.find(u=>String(u.uid||u.id)===String(profile.uid) || (profile.email && String(u.email||'').toLowerCase()===profile.email.toLowerCase()));
-    if(stored){
-      stored.lastLogin=today();
-      stored.uid=profile.uid;
-      stored.id=stored.id||profile.uid;
-      currentUser=normalizeUser({...stored,...profile,permissions:stored.permissions||profile.permissions});
-    }
-    try{ await window.FirebaseBridge.updateLastLogin(profile.uid); }catch(_e){}
-    await logActivity(currentUser.uid||currentUser.id,'Login',`User ${currentUser.username||currentUser.email} logged in.`);
-    document.getElementById('login-screen').classList.add('hidden');
-    document.getElementById('app-container').classList.remove('hidden');
-    initApp();
-    showToast('Welcome back, '+(currentUser.fullName||currentUser.email),'success');
-  }catch(err){
-    console.error('Login failed:',err);
-    showToast(window.FirebaseBridge?.authError?.(err)||err.message||'Login failed.','error');
-  }finally{
-    if(button){button.disabled=false;button.innerHTML=original;}
-  }
-}
-
-/* ---------- Permission-aware navigation ---------- */
-function navigate(page){
-  const adminPages=['groups','users','activity','backup'];
-  const permissionMap={
-    dashboard:'dashboard', analytics:'reports', 'add-candidate':'candidates_add',
-    'candidates-list':'candidates_view', contributions:'contributions_view',
-    groups:'groups_view', reports:'reports', users:'settings', activity:'backup', backup:'backup', settings:'settings'
-  };
-  if(adminPages.includes(page) && !isAdmin()){
-    showToast('Administrator permission required.','error'); return;
-  }
-  const perm=permissionMap[page];
-  if(perm && perm!=='dashboard' && !isAdmin() && !hasPermission(perm)){
-    showToast('You do not have permission to open this section.','error'); return;
-  }
-  activePage=page;
-  document.querySelectorAll('.sidebar-menu li[data-page]').forEach(li=>li.classList.remove('active'));
-  const target=document.querySelector(`.sidebar-menu li[data-page="${page}"]`);
-  if(target)target.classList.add('active');
-  const titles={dashboard:'Dashboard',analytics:'Money & Groups Directional Comparison','add-candidate':'Interactive A4 Form & Candidate Entry','candidates-list':'Candidates Directory',groups:'Group Management',contributions:'Contribution Records',reports:'Financial Reports',users:'User Management',activity:'System Activity Log',backup:'Backup & Restore',settings:'System Settings'};
-  document.getElementById('page-title').innerText=titles[page]||'Dashboard';
-  Promise.resolve(renderPage(page)).catch(err=>{console.error(err);showToast('The page could not be displayed.','error');});
-  document.getElementById('sidebar')?.classList.remove('open');
-}
-
-/* ---------- Complete page router ---------- */
-async function renderPage(page){
-  const container=document.getElementById('content-body');
-  if(!container)return;
-  container.innerHTML='<div class="card"><div class="card-body" style="text-align:center;padding:3rem"><i class="fa fa-spinner fa-spin"></i> Loading...</div></div>';
-  await fetchBackendData();
-  switch(page){
-    case 'dashboard': return renderDashboard(container);
-    case 'analytics': return renderAnalyticsPage(container);
-    case 'add-candidate': return renderFormIntegration(container);
-    case 'candidates-list': return renderCandidatesList(container);
-    case 'groups': return renderGroupsPage(container);
-    case 'contributions': return renderContributionsPage(container);
-    case 'reports': return renderReportsPage(container);
-    case 'users': return renderUsersPage(container);
-    case 'activity': return renderActivityPage(container);
-    case 'backup': return renderBackupPage(container);
-    case 'settings': return renderSettingsPage(container);
-    default: return renderDashboard(container);
-  }
-}
-
-/* ---------- Dashboard without repeated Firebase reads ---------- */
-async function renderDashboard(container){
-  const db=await fetchBackendData();
-  const totalCandidates=db.candidates.length;
-  const activeGroups=db.groups.filter(g=>g.status==='Active').length;
-  const totalContribution=getGrandTotal(db);
-  const totalGroupMoney=(db.groupFunds||[]).reduce((s,r)=>s+Number(r.amount||0),0);
-  const recent=(db.activityLog||[]).slice(0,8);
-  const ranked=db.groups.map(g=>({g,count:db.candidates.filter(c=>c.group===g.groupName).length,amount:(db.groupFunds||[]).filter(r=>Number(r.groupId)===Number(g.id)).reduce((s,r)=>s+Number(r.amount||0),0)})).sort((a,b)=>b.amount-a.amount);
-  container.innerHTML=`
-   <div class="stats-grid">
-    <div class="stat-card"><div><div class="stat-label">Total Candidates</div><div class="stat-value">${totalCandidates}</div></div><i class="fa fa-users"></i></div>
-    <div class="stat-card gold"><div><div class="stat-label">Active Groups</div><div class="stat-value">${activeGroups}</div></div><i class="fa fa-layer-group"></i></div>
-    <div class="stat-card success"><div><div class="stat-label">Candidate Contributions</div><div class="stat-value">${money(totalContribution)}</div></div><i class="fa fa-money-bill-wave"></i></div>
-    <div class="stat-card info"><div><div class="stat-label">Group Funds</div><div class="stat-value">${money(totalGroupMoney)}</div></div><i class="fa fa-coins"></i></div>
-   </div>
-   <div class="quick-actions">
-    <div class="quick-action" onclick="navigate('add-candidate')"><i class="fa fa-user-plus"></i><div><strong>Register Candidate</strong><small style="display:block;color:#667085">Open A4 registration form</small></div></div>
-    <div class="quick-action" onclick="navigate('analytics')"><i class="fa fa-chart-line"></i><div><strong>Money Analytics</strong><small style="display:block;color:#667085">Compare groups and candidates</small></div></div>
-    <div class="quick-action" onclick="navigate('candidates-list')"><i class="fa fa-address-book"></i><div><strong>Candidate Directory</strong><small style="display:block;color:#667085">Search and manage candidates</small></div></div>
-   </div>
-   <div class="grid-2">
-    <div class="card"><div class="card-header"><div class="card-title"><i class="fa fa-clock"></i> Recent Activity</div></div><div class="table-wrap"><table><thead><tr><th>Action</th><th>Description</th><th>Date</th></tr></thead><tbody>${recent.length?recent.map(l=>`<tr><td><b>${esc(l.action||'')}</b></td><td>${esc(l.description||'')}</td><td>${esc(l.dateTime||'')}</td></tr>`).join(''):`<tr><td colspan="3" class="empty">No activity.</td></tr>`}</tbody></table></div></div>
-    <div class="card"><div class="card-header"><div class="card-title"><i class="fa fa-layer-group"></i> Group Financial Ranking</div><button class="btn-sm btn-gold" onclick="navigate('analytics')">Comparative View</button></div><div class="table-wrap"><table><thead><tr><th>Rank</th><th>Group</th><th>Members</th><th>Group Money</th></tr></thead><tbody>${ranked.map((x,i)=>`<tr><td><span class="rank-badge ${i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':''}">${i+1}</span></td><td><b>${esc(x.g.groupName)}</b></td><td>${x.count}</td><td><strong>${money(x.amount)} ETB</strong></td></tr>`).join('')}</tbody></table></div></div>
-   </div>`;
-}
-
-/* ---------- Analytics fixes: cache + safe chart cleanup ---------- */
-const _mekliteOldAnalytics=renderAnalyticsPage;
-async function renderAnalyticsPage(container){
-  await _mekliteOldAnalytics(container);
-  setTimeout(()=>{
-    try{
-      if(window.Chart){
-        ['chart-groups-revenue','chart-channels-pie'].forEach(id=>{
-          const c=document.getElementById(id);
-          if(c){const existing=Chart.getChart?.(c); if(existing) existing.destroy();}
-        });
-        initAnalyticsCharts(getDB());
-      }
-    }catch(err){console.warn('Chart refresh warning',err);}
-  },80);
-}
-
-/* ---------- Contributions: explicit add/edit/delete controls ---------- */
-function contributionRowTotal(r){
-  return Number(r.monthlyBirr||0)+Number(r.monthlyCent||0)/100+Number(r.personalBirr||0)+Number(r.personalCent||0)/100+Number(r.giftBirr||0)+Number(r.giftCent||0)/100+Number(r.otherBirr||0)+Number(r.otherCent||0)/100;
-}
-
-async function renderContributionsPage(container){
-  const db=await fetchBackendData();
-  const rows=[];
-  db.candidates.forEach(c=>(c.contributions||[]).forEach((r,index)=>rows.push({c,r,index,total:contributionRowTotal(r)})));
-  rows.sort((a,b)=>String(b.r.date||'').localeCompare(String(a.r.date||'')));
-  container.innerHTML=`
-   <div class="card"><div class="card-header"><div class="card-title"><i class="fa fa-money-bill-wave"></i> Contribution Records</div><button onclick="navigate('add-candidate')"><i class="fa fa-plus"></i> Add Contribution</button></div>
-   <div class="card-body"><div class="toolbar"><input id="contribution-search" class="search" placeholder="Search candidate, group or date..." oninput="filterContributionRecords()"><button class="btn-outline" onclick="exportContributionCSV()"><i class="fa fa-file-csv"></i> Export CSV</button></div>
-   <div class="table-wrap"><table id="contribution-records-table"><thead><tr><th>Date</th><th>Candidate</th><th>Group</th><th>Monthly</th><th>Personal</th><th>Gift</th><th>Other</th><th>Total</th><th>Actions</th></tr></thead><tbody id="contribution-records-body">${contributionRecordRows(rows)}</tbody></table></div></div></div>`;
-}
-function contributionRecordRows(rows){
- if(!rows.length)return '<tr><td colspan="9" class="empty">No contribution records found.</td></tr>';
- return rows.map(x=>`<tr data-search="${esc([x.c.fullName,x.c.group,x.r.date].join(' ').toLowerCase())}"><td>${esc(x.r.date||'')}</td><td><b>${esc(x.c.fullName)}</b></td><td>${esc(x.c.group||'')}</td><td>${money(Number(x.r.monthlyBirr||0)+Number(x.r.monthlyCent||0)/100)}</td><td>${money(Number(x.r.personalBirr||0)+Number(x.r.personalCent||0)/100)}</td><td>${money(Number(x.r.giftBirr||0)+Number(x.r.giftCent||0)/100)}</td><td>${money(Number(x.r.otherBirr||0)+Number(x.r.otherCent||0)/100)}</td><td><b>${money(x.total)} ETB</b></td><td><button class="btn-sm btn-info" onclick="editContributionRow('${esc(x.c.id)}',${x.index})" title="Edit"><i class="fa fa-edit"></i></button> <button class="btn-sm btn-danger" onclick="deleteContributionRow('${esc(x.c.id)}',${x.index})" title="Delete"><i class="fa fa-trash"></i></button></td></tr>`).join('');
-}
-function filterContributionRecords(){
- const q=(document.getElementById('contribution-search')?.value||'').toLowerCase();
- document.querySelectorAll('#contribution-records-body tr[data-search]').forEach(tr=>tr.style.display=tr.dataset.search.includes(q)?'':'none');
-}
-function editContributionRow(candidateId,index){
- if(!requirePermission('contributions_edit'))return;
- editCandidate(candidateId);
- setTimeout(()=>{
-   const rows=document.querySelectorAll('#embedded-table-body tr');
-   const row=rows[index];
-   if(row){row.scrollIntoView({behavior:'smooth',block:'center'}); row.querySelector('input')?.focus(); row.style.outline='3px solid #d4af37'; setTimeout(()=>row.style.outline='',2500);}
- },350);
-}
-async function deleteContributionRow(candidateId,index){
- if(!requirePermission('contributions_delete'))return;
- const db=await fetchBackendData();
- const c=db.candidates.find(x=>String(x.id)===String(candidateId));
- if(!c || !c.contributions?.[index])return;
- const row=c.contributions[index];
- if(!confirmAction(`Delete this contribution row for ${c.fullName}?\n\nDate: ${row.date||'No date'}\nAmount: ${money(contributionRowTotal(row))} ETB`))return;
- c.contributions.splice(index,1);
- c.updatedDate=today();
- if(!await saveDB(db))return;
- await logActivity(currentUser.uid||currentUser.id,'Contribution Deleted',`Deleted a ${money(contributionRowTotal(row))} ETB contribution row from ${c.fullName}.`);
- await renderContributionsPage(document.getElementById('content-body'));
- showToast('Contribution row deleted.','success');
-}
-function exportContributionCSV(){
- const db=getDB(); let csv='Date,Candidate,Group,Monthly,Personal,Gift,Other,Total\n';
- db.candidates.forEach(c=>(c.contributions||[]).forEach(r=>{csv+=`"${c.id}","${String(c.fullName||'').replace(/"/g,'""')}","${String(c.group||'').replace(/"/g,'""')}","${(Number(r.monthlyBirr||0)+Number(r.monthlyCent||0)/100).toFixed(2)}","${(Number(r.personalBirr||0)+Number(r.personalCent||0)/100).toFixed(2)}","${(Number(r.giftBirr||0)+Number(r.giftCent||0)/100).toFixed(2)}","${(Number(r.otherBirr||0)+Number(r.otherCent||0)/100).toFixed(2)}","${contributionRowTotal(r).toFixed(2)}"\n`; }));
- downloadCSV(csv,`Meklite_Contributions_${today()}.csv`);
-}
-
-/* ---------- Candidate save validation + permission ---------- */
-const _mekliteOldSaveCandidateForm=saveCandidateForm;
-async function saveCandidateForm(){
-  if(editingCandidateId){if(!requirePermission('candidates_edit'))return;}
-  else if(!requirePermission('candidates_add'))return;
-  const inputs=document.querySelectorAll('#embedded-table-body .money-input');
-  for(const input of inputs){if(Number(input.value)<0){showToast('Negative contribution values are not allowed.','error');input.focus();return;}}
-  return _mekliteOldSaveCandidateForm();
-}
-const _mekliteOldDeleteCandidate=deleteCandidate;
-async function deleteCandidate(id){
-  if(!requirePermission('candidates_delete'))return;
-  return _mekliteOldDeleteCandidate(id);
-}
-
-/* ---------- Group money edit/delete ---------- */
-async function editGroupMoney(id){
-  if(!requirePermission('group_money_edit'))return;
-  const db=getDB(), row=db.groupFunds.find(x=>String(x.id)===String(id));
-  if(!row)return;
-  const groupOptions=db.groups.map(g=>`<option value="${g.id}" ${Number(g.id)===Number(row.groupId)?'selected':''}>${esc(g.groupName)}</option>`).join('');
-  openModal('Edit Group Money',`<div class="form-group"><label>Group</label><select id="group-money-group">${groupOptions}</select></div><div class="form-group"><label>Source</label><select id="group-money-source"><option>Donation</option><option>Fundraising</option><option>Event</option><option>Gift</option><option>Sponsorship</option><option>Church Contribution</option><option>Group Business</option><option>Sale / Fundraiser Item</option><option>Other</option></select></div><div class="form-group"><label>Amount (ETB)</label><input id="group-money-amount" type="number" min="0.01" step="0.01" value="${esc(row.amount)}"></div><div class="form-group"><label>Reason / Details</label><input id="group-money-reason" value="${esc(row.reason||'')}"></div><div class="form-group"><label>Description / Note</label><textarea id="group-money-description">${esc(row.description||'')}</textarea></div><div class="form-group"><label>Date</label><input id="group-money-date" type="date" value="${esc(row.date||today())}"></div>`, `<button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button><button class="btn-success" onclick="updateGroupMoney('${esc(id)}')"><i class="fa fa-save"></i> Save Changes</button>`);
-  const src=document.getElementById('group-money-source'); if(src)src.value=row.source||'Other';
-}
-async function updateGroupMoney(id){
- const db=await fetchBackendData(); const row=db.groupFunds.find(x=>String(x.id)===String(id)); if(!row)return;
- const amount=Number(document.getElementById('group-money-amount')?.value); const groupId=Number(document.getElementById('group-money-group')?.value); const source=document.getElementById('group-money-source')?.value; const reason=document.getElementById('group-money-reason')?.value.trim(); const date=document.getElementById('group-money-date')?.value;
- if(!groupId||!source||!Number.isFinite(amount)||amount<=0||!date){showToast('Please enter valid group money information.','error');return;}
- row.groupId=groupId; row.source=source; row.reason=reason||source; row.description=document.getElementById('group-money-description')?.value.trim()||''; row.amount=amount; row.date=date; row.updatedAt=nowDateTime();
- if(!await saveDB(db))return; await logActivity(currentUser.uid||currentUser.id,'Group Money Updated',`Updated ${money(amount)} ETB group money entry.`); closeModal('general-modal'); await renderGroupsPage(document.getElementById('content-body')); showToast('Group money entry updated.','success');
-}
-const _mekliteOldSaveGroupMoney=saveGroupMoney;
-async function saveGroupMoney(){if(!requirePermission('group_money_add'))return;return _mekliteOldSaveGroupMoney();}
-const _mekliteOldDeleteGroupMoney=deleteGroupMoney;
-async function deleteGroupMoney(id){if(!requirePermission('group_money_delete'))return;return _mekliteOldDeleteGroupMoney(id);}
-
-/* ---------- Groups permissions ---------- */
-const _mekliteOldSaveGroup=saveGroup;
-async function saveGroup(id){if(!requirePermission('groups_edit'))return;return _mekliteOldSaveGroup(id);}
-const _mekliteOldToggleGroupStatus=toggleGroupStatus;
-async function toggleGroupStatus(id){if(!requirePermission('groups_edit'))return;return _mekliteOldToggleGroupStatus(id);}
-const _mekliteOldDeleteGroup=deleteGroup;
-async function deleteGroup(id){if(!requirePermission('groups_edit'))return;return _mekliteOldDeleteGroup(id);}
-
-/* ---------- Users ---------- */
-function userPermissionCheckboxes(selected=[]){
- return Object.entries(MEKLITE_PERMISSIONS).map(([key,label])=>`<label style="display:flex;gap:.5rem;align-items:center;margin:.35rem 0"><input type="checkbox" class="user-permission" value="${key}" ${selected.includes(key)?'checked':''}> ${esc(label)}</label>`).join('');
-}
-async function renderUsersPage(container){
- if(!isAdmin()){container.innerHTML='<div class="card"><div class="card-body"><div class="empty">Administrator permission required.</div></div></div>';return;}
- const db=await fetchBackendData(); db.users=(db.users||[]).map(normalizeUser);
- container.innerHTML=`<div class="card"><div class="card-header"><div class="card-title"><i class="fa fa-user-shield"></i> User Management</div><button onclick="openUserModal()"><i class="fa fa-user-plus"></i> Add User Profile</button></div><div class="card-body"><div class="table-wrap"><table><thead><tr><th>Name</th><th>Username</th><th>Email</th><th>Role</th><th>Status</th><th>Last Login</th><th>Permissions</th><th>Actions</th></tr></thead><tbody>${db.users.length?db.users.map(u=>`<tr><td><b>${esc(u.fullName)}</b></td><td>${esc(u.username)}</td><td>${esc(u.email)}</td><td>${esc(u.role)}</td><td><span class="badge ${u.status==='Active'?'badge-success':'badge-danger'}">${esc(u.status)}</span></td><td>${esc(u.lastLogin||'Never')}</td><td>${esc((u.permissions||[]).length+' permissions')}</td><td><button class="btn-sm btn-info" onclick="openUserModal('${esc(u.id)}')"><i class="fa fa-edit"></i></button> <button class="btn-sm ${u.status==='Active'?'btn-danger':'btn-success'}" onclick="toggleUserStatus('${esc(u.id)}')">${u.status==='Active'?'<i class="fa fa-ban"></i>':'<i class="fa fa-check"></i>'}</button></td></tr>`).join(''):`<tr><td colspan="8" class="empty">No MEKLITE user profiles found. Create the first profile after creating the Firebase Authentication account.</td></tr>`}</tbody></table></div><div style="margin-top:1rem;padding:1rem;background:#fff7ed;border-left:4px solid #f59e0b;border-radius:6px">User profiles control MEKLITE permissions. Firebase Authentication remains responsible for passwords. Creating a profile here does not create a Firebase password account unless your Firebase bridge/server provides that capability.</div></div></div>`;
-}
-function openUserModal(id=null){
- if(!isAdmin())return;
- const db=getDB(); const u=id?normalizeUser(db.users.find(x=>String(x.id)===String(id))||{}):normalizeUser({id:generateId('USR')});
- openModal(id?'Edit User':'Add User Profile',`<div class="grid-2"><div class="form-group"><label>Full Name</label><input id="user-fullname" value="${esc(u.fullName)}" required></div><div class="form-group"><label>Username</label><input id="user-username" value="${esc(u.username)}" required></div><div class="form-group"><label>Email (must match Firebase Authentication)</label><input id="user-email" type="email" value="${esc(u.email)}" required></div><div class="form-group"><label>Firebase UID (recommended)</label><input id="user-uid" value="${esc(u.uid)}" placeholder="Paste Firebase Authentication UID"></div><div class="form-group"><label>Role</label><select id="user-role"><option value="Staff" ${u.role==='Staff'?'selected':''}>Staff / Limited</option><option value="Admin" ${u.role==='Admin'?'selected':''}>Admin</option></select></div><div class="form-group"><label>Status</label><select id="user-status"><option value="Active" ${u.status==='Active'?'selected':''}>Active</option><option value="Inactive" ${u.status==='Inactive'?'selected':''}>Inactive</option></select></div></div><div class="form-group"><label>Permissions</label><div style="columns:2;max-height:260px;overflow:auto;border:1px solid #d1d5db;padding:.75rem;border-radius:6px">${userPermissionCheckboxes(u.permissions)}</div></div>`, `<button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button><button onclick="saveUserProfile('${esc(id||u.id)}')"><i class="fa fa-save"></i> Save User</button>`);
-}
-async function saveUserProfile(id){
- if(!isAdmin())return; const db=await fetchBackendData(); db.users ||= [];
- const fullName=document.getElementById('user-fullname')?.value.trim(), username=document.getElementById('user-username')?.value.trim(), email=document.getElementById('user-email')?.value.trim().toLowerCase(), uid=document.getElementById('user-uid')?.value.trim(), role=document.getElementById('user-role')?.value, status=document.getElementById('user-status')?.value;
- const permissions=[...document.querySelectorAll('.user-permission:checked')].map(x=>x.value);
- if(!fullName||!username||!email){showToast('Full name, username and email are required.','error');return;}
- const duplicate=db.users.find(u=>String(u.id)!==String(id) && (String(u.username||'').toLowerCase()===username.toLowerCase() || String(u.email||'').toLowerCase()===email));
- if(duplicate){showToast('Username or email already exists.','error');return;}
- let u=db.users.find(x=>String(x.id)===String(id));
- if(!u){u={id:id||generateId('USR'),createdAt:nowDateTime()};db.users.push(u);}
- Object.assign(u,{fullName,username,email,uid:uid||u.uid||'',role,status,permissions,updatedAt:nowDateTime()});
- if(!u.uid && currentUser?.uid && email===currentUser.email)u.uid=currentUser.uid;
- if(!await saveDB(db))return; await logActivity(currentUser.uid||currentUser.id,'User Profile Saved',`Saved MEKLITE user profile ${username}.`); closeModal('general-modal'); await renderUsersPage(document.getElementById('content-body')); showToast('User profile saved.','success');
-}
-async function toggleUserStatus(id){
- if(!isAdmin())return; const db=await fetchBackendData(); const u=db.users.find(x=>String(x.id)===String(id)); if(!u)return;
- if(String(u.uid||u.id)===String(currentUser.uid||currentUser.id)){showToast('You cannot disable your own active administrator account.','error');return;}
- u.status=u.status==='Active'?'Inactive':'Active'; if(!await saveDB(db))return; await logActivity(currentUser.uid||currentUser.id,'User Status Changed',`${u.username} changed to ${u.status}.`); await renderUsersPage(document.getElementById('content-body')); showToast(`User ${u.status.toLowerCase()}.`,'success');
-}
-
-/* ---------- Reports ---------- */
-async function renderReportsPage(container){
- const db=await fetchBackendData(); const candidateTotal=getGrandTotal(db); const groupTotal=(db.groupFunds||[]).reduce((s,r)=>s+Number(r.amount||0),0);
- const ranked=db.candidates.map(c=>({c,total:getCandidateContribution(c)})).sort((a,b)=>b.total-a.total);
- container.innerHTML=`<div class="card"><div class="card-header"><div class="card-title"><i class="fa fa-file-invoice-dollar"></i> Financial Reports</div><div><button class="btn-outline" onclick="window.print()"><i class="fa fa-print"></i> Print</button> <button onclick="exportFullReportJSON()"><i class="fa fa-download"></i> JSON</button></div></div><div class="card-body"><div class="stats-grid"><div class="stat-card success"><div><div class="stat-label">Candidate Contributions</div><div class="stat-value">${money(candidateTotal)}</div></div></div><div class="stat-card gold"><div><div class="stat-label">Group Funds</div><div class="stat-value">${money(groupTotal)}</div></div></div><div class="stat-card info"><div><div class="stat-label">Candidates</div><div class="stat-value">${db.candidates.length}</div></div></div><div class="stat-card"><div><div class="stat-label">Groups</div><div class="stat-value">${db.groups.length}</div></div></div></div><h3 style="margin:1.5rem 0 .75rem">Top Candidate Contributions</h3><div class="table-wrap"><table><thead><tr><th>Rank</th><th>Candidate</th><th>Group</th><th>Total Candidate Contributions</th></tr></thead><tbody>${ranked.slice(0,20).map((x,i)=>`<tr><td>${i+1}</td><td><b>${esc(x.c.fullName)}</b></td><td>${esc(x.c.group)}</td><td><strong>${money(x.total)} ETB</strong></td></tr>`).join('')||'<tr><td colspan="4" class="empty">No candidates.</td></tr>'}</tbody></table></div><div style="margin-top:1rem;padding:1rem;background:#eef6ff;border-radius:8px"><b>Important:</b> Candidate Contributions and Group Funds are separate financial categories. They are not added together in the rankings above.</div></div></div>`;
-}
-function exportFullReportJSON(){
- const db=getDB(); const safeUsers=(db.users||[]).map(u=>{const x={...u};delete x.password;delete x.passwordHash;return x;});
- const payload={exportedAt:nowDateTime(),version:'MEKLITE-GOLDEN',settings:db.settings,groups:db.groups,candidates:db.candidates,groupFunds:db.groupFunds,users:safeUsers,activityLog:db.activityLog};
- downloadFile(JSON.stringify(payload,null,2),`Meklite_Report_${today()}.json`,'application/json');
-}
-function downloadFile(content,filename,type='application/octet-stream'){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-
-/* ---------- Activity log ---------- */
-async function renderActivityPage(container){
- const db=await fetchBackendData(); const logs=db.activityLog||[];
- container.innerHTML=`<div class="card"><div class="card-header"><div class="card-title"><i class="fa fa-history"></i> System Activity Log</div><button class="btn-outline" onclick="exportActivityCSV()"><i class="fa fa-file-csv"></i> Export CSV</button></div><div class="card-body"><div class="table-wrap"><table><thead><tr><th>Date</th><th>User</th><th>Action</th><th>Description</th></tr></thead><tbody>${logs.length?logs.map(l=>{const u=db.users.find(x=>String(x.id||x.uid)===String(l.userId));return `<tr><td>${esc(l.dateTime||'')}</td><td>${esc(u?.fullName||l.userId||'')}</td><td><b>${esc(l.action||'')}</b></td><td>${esc(l.description||'')}</td></tr>`}).join(''):`<tr><td colspan="4" class="empty">No activity recorded.</td></tr>`}</tbody></table></div></div></div>`;
-}
-function exportActivityCSV(){const db=getDB();let csv='Date,User,Action,Description\n';(db.activityLog||[]).forEach(l=>{const u=(db.users||[]).find(x=>String(x.id||x.uid)===String(l.userId));csv+=`"${String(l.dateTime||'').replace(/"/g,'""')}","${String(u?.fullName||l.userId||'').replace(/"/g,'""')}","${String(l.action||'').replace(/"/g,'""')}","${String(l.description||'').replace(/"/g,'""')}"\n`;});downloadCSV(csv,`Meklite_Activity_${today()}.csv`);}
-
-/* ---------- Backup / Restore ---------- */
-async function renderBackupPage(container){
- const db=await fetchBackendData();
- container.innerHTML=`<div class="card"><div class="card-header"><div class="card-title"><i class="fa fa-database"></i> Backup / Restore</div></div><div class="card-body"><p>Export a safe JSON backup of MEKLITE data. Passwords and Firebase Authentication secrets are never exported.</p><div style="display:flex;gap:.75rem;flex-wrap:wrap;margin:1rem 0"><button onclick="backupJSON()"><i class="fa fa-download"></i> Export Full JSON Backup</button><button class="btn-outline" onclick="backupCSV()"><i class="fa fa-file-csv"></i> Export Candidates CSV</button></div><hr><h3>Restore JSON Backup</h3><input id="restore-file" type="file" accept="application/json,.json"><div style="margin-top:.75rem;padding:1rem;background:#fff7ed;border-left:4px solid #f59e0b;border-radius:6px">Restore replaces the current application data. Make a backup first and confirm carefully.</div><button class="btn-danger" style="margin-top:1rem" onclick="restoreJSON()"><i class="fa fa-upload"></i> Restore Selected Backup</button></div></div>`;
-}
-function backupPayload(){const db=getDB();const users=(db.users||[]).map(u=>{const x={...u};delete x.password;delete x.passwordHash;return x;});return {backupVersion:1,exportedAt:nowDateTime(),settings:db.settings,users,groups:db.groups,candidates:db.candidates,groupFunds:db.groupFunds,activityLog:db.activityLog};}
-function backupJSON(){downloadFile(JSON.stringify(backupPayload(),null,2),`Meklite_Backup_${today()}.json`,'application/json');showToast('Backup exported.','success');}
-function backupCSV(){exportCandidatesCSV();}
-async function restoreJSON(){
- if(!isAdmin())return; const input=document.getElementById('restore-file'); const file=input?.files?.[0]; if(!file){showToast('Select a JSON backup file first.','error');return;}
- if(!confirmAction('RESTORE WARNING\n\nThis will replace current MEKLITE application data with the selected backup. Continue?'))return;
- try{const text=await file.text();const incoming=JSON.parse(text);if(!incoming||!Array.isArray(incoming.candidates)||!Array.isArray(incoming.groups))throw new Error('Invalid backup format.');const current=getDB();const safe={...current,...incoming,settings:incoming.settings||current.settings,users:incoming.users||current.users,groups:incoming.groups, candidates:incoming.candidates,groupFunds:incoming.groupFunds||[],activityLog:incoming.activityLog||[]};if(!await saveDB(safe))return;await logActivity(currentUser.uid||currentUser.id,'Database Restored',`Restored MEKLITE data from ${file.name}.`);showToast('Backup restored successfully.','success');await renderBackupPage(document.getElementById('content-body'));}catch(err){console.error(err);showToast('Could not restore the selected backup.','error');}
-}
-
-/* ---------- Settings ---------- */
-async function renderSettingsPage(container){
- const db=await fetchBackendData(); const s=db.settings||{};
- container.innerHTML=`<div class="card"><div class="card-header"><div class="card-title"><i class="fa fa-cog"></i> System Settings</div></div><div class="card-body"><div class="grid-2"><div class="form-group"><label>Church Name</label><input id="set-churchName" value="${esc(s.churchName||'')}"></div><div class="form-group"><label>Department</label><input id="set-department" value="${esc(s.department||'')}"></div><div class="form-group"><label>Form Title</label><input id="set-formTitle" value="${esc(s.formTitle||'')}"></div><div class="form-group"><label>Phone</label><input id="set-phone" value="${esc(s.phone||'')}"></div><div class="form-group"><label>Email</label><input id="set-email" type="email" value="${esc(s.email||'')}"></div><div class="form-group"><label>Address</label><input id="set-address" value="${esc(s.address||'')}"></div></div><div class="form-group"><label>Verse</label><textarea id="set-verse">${esc(s.verse||'')}</textarea></div><button onclick="saveSettings()"><i class="fa fa-save"></i> Save Settings</button></div></div>`;
-}
-async function saveSettings(){
- if(!requirePermission('settings'))return; const db=await fetchBackendData();db.settings={...(db.settings||{}),churchName:document.getElementById('set-churchName').value.trim(),department:document.getElementById('set-department').value.trim(),formTitle:document.getElementById('set-formTitle').value.trim(),phone:document.getElementById('set-phone').value.trim(),email:document.getElementById('set-email').value.trim(),address:document.getElementById('set-address').value.trim(),verse:document.getElementById('set-verse').value.trim()};if(!await saveDB(db))return;await logActivity(currentUser.uid||currentUser.id,'Settings Updated','Updated MEKLITE system settings.');showToast('Settings saved.','success');
-}
-
-/* ---------- Improved init: load once, then render from cache ---------- */
-function initApp(){
- if(!currentUser)return;
- currentUser=normalizeUser(currentUser);
- document.getElementById('topbar-username').innerText=currentUser.fullName||currentUser.username||currentUser.email||'User';
- document.getElementById('topbar-role').innerText=currentUser.role;
- document.getElementById('sidebar-role').innerText=currentUser.role==='Admin'?'Administrator':'Staff User';
- document.querySelectorAll('.admin-only').forEach(el=>el.style.display=isAdmin()?'':'none');
- navigate('dashboard');
-}
-
-/* Add action buttons to the existing group-money table without changing its data model. */
-const _mekliteOldRenderGroupsPage=renderGroupsPage;
-async function renderGroupsPage(container){
- await _mekliteOldRenderGroupsPage(container);
- document.querySelectorAll('.group-money-total').forEach(el=>{
-   const tr=el.closest('tr'); const del=tr?.querySelector('button[onclick^="deleteGroupMoney"]');
-   if(del){const m=(del.getAttribute('onclick')||'').match(/deleteGroupMoney\('([^']+)'\)/);if(m){const id=m[1];const wrap=del.parentElement;const edit=document.createElement('button');edit.className='btn-info btn-sm';edit.title='Edit';edit.innerHTML='<i class="fa fa-edit"></i>';edit.onclick=()=>editGroupMoney(id);wrap.insertBefore(edit,del);}}
  });
-}
-
-/* ---------- Keep candidate totals authoritative and group funds separate ---------- */
-window.MekliteGoldenFix={version:'2026.09.16-golden-fix',refresh:refreshMekliteData,hasPermission};
+});
 
 </script>
 </body>
