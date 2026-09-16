@@ -1309,17 +1309,10 @@ tr:hover td{background:#f9fafb}
 </div>
 
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script>
-const firebaseConfig={apiKey:"AIzaSyC-0EazLVdjgWkcTISVjNiTZoVQ4HNp4Nc",authDomain:"meklite-eb789.firebaseapp.com",projectId:"meklite-eb789",storageBucket:"meklite-eb789.firebasestorage.app",messagingSenderId:"1026124745064",appId:"1:1026124745064:web:75eb26af141764e7462edd"};
-firebase.initializeApp(firebaseConfig);
-const firebaseAuth=firebase.auth();
-</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script>
-const firebaseConfig = {
+const mekLiteFirebaseConfig = {
   apiKey: "AIzaSyC-0EazLVdjgWkcTISVjNiTZoVQ4HNp4Nc",
   authDomain: "meklite-eb789.firebaseapp.com",
   projectId: "meklite-eb789",
@@ -1327,8 +1320,9 @@ const firebaseConfig = {
   messagingSenderId: "1026124745064",
   appId: "1:1026124745064:web:75eb26af141764e7462edd"
 };
-if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-const mekLiteFirebaseAuth = firebase.auth();
+if (!firebase.apps.length) firebase.initializeApp(mekLiteFirebaseConfig);
+const firebaseAuth = firebase.auth();
+const mekLiteFirebaseAuth = firebaseAuth;
 </script>
 <script>
 /* ============================================================
@@ -1575,274 +1569,154 @@ async function logActivity(userId,action,description){
  return await saveDB(db);
 }
 
-
-let currentUser=null;
-
-let activePage="dashboard";
-let currentPhotoBase64="";
-let editingCandidateId=null;
-
-
-/* ============================================================
-   UTILITIES
-============================================================ */
-
-function esc(value){
- return String(value ?? "")
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
-}
-
-function today(){
- return new Date().toISOString().split("T")[0];
-}
-
-function nowDateTime(){
- return new Date()
-  .toISOString()
-  .replace("T"," ")
-  .split(".")[0];
-}
-
-function money(value){
- return Number(value || 0).toLocaleString(
-  "en-US",
-  {minimumFractionDigits:2,maximumFractionDigits:2}
-);
-}
-
-function generateId(prefix="ID"){
- return prefix+"-"+Math.floor(100000+Math.random()*900000);
-}
-
-function isAdmin(){
- return currentUser && currentUser.role==="Admin";
-}
-
-function confirmAction(message){
- return window.confirm(message);
-}
-
-function showToast(message,type="success"){
- const container=document.getElementById("toast-container");
-
- const toast=document.createElement("div");
-
- toast.className="toast "+type;
-
- const icon=
-  type==="success" ? "fa-check-circle" :
-  type==="error" ? "fa-exclamation-circle" :
-  type==="warning" ? "fa-exclamation-triangle" :
-  "fa-info-circle";
-
- toast.innerHTML=
-  `<i class="fa ${icon}"></i> ${esc(message)}`;
-
- container.appendChild(toast);
-
- setTimeout(()=>{
-  toast.remove();
- },4000);
-}
-
-function closeModal(id){
- document.getElementById(id).classList.add("hidden");
-}
-
-function openModal(title,body,footer=""){
- document.getElementById("modal-title").innerText=title;
- document.getElementById("modal-body").innerHTML=body;
- document.getElementById("modal-footer").innerHTML=footer;
- document.getElementById("general-modal").classList.remove("hidden");
-}
-
-function openChangePasswordModal(){
- document.getElementById("password-modal").classList.remove("hidden");
-}
-
-async function handleChangePassword(e){
- e.preventDefault();
- const curr = document.getElementById("current-password").value;
- const newP = document.getElementById("new-password").value;
- const confP = document.getElementById("confirm-password").value;
-
- if(btoa(curr) !== currentUser.passwordHash){
-  showToast("Current password incorrect.","error");
-  return;
- }
- if(newP !== confP){
-  showToast("New passwords do not match.","error");
-  return;
- }
- const db = await fetchBackendData();
- const u = db.users.find(x=>x.id===currentUser.id);
- if(u){
-  u.passwordHash = btoa(newP);
-  await saveDB(db);
-  currentUser.passwordHash = u.passwordHash;
-  showToast("Password updated successfully.","success");
-  closeModal("password-modal");
-  document.getElementById("change-password-form").reset();
- }
-}
-
-async function logActivity(userId,action,description){
- const db=getDB();
-
- db.activityLog.unshift({
-  logId:Date.now(),
-  userId,
-  action,
-  description,
-  dateTime:nowDateTime()
- });
-
- if(db.activityLog.length>1000){
-  db.activityLog=db.activityLog.slice(0,1000);
- }
-
- await saveDB(db);
-}
-
-
 /* ============================================================
    LOGIN
 ============================================================ */
 
 function toggleLoginPassword(){
  const input=document.getElementById("login-password");
-
- input.type=input.type==="password"
-  ? "text"
-  : "password";
+ const icon=document.querySelector("#login-form .password-toggle");
+ if(!input) return;
+ const showing=input.type === "text";
+ input.type=showing ? "password" : "text";
+ if(icon){
+   icon.className = showing
+     ? "fa fa-eye password-toggle"
+     : "fa fa-eye-slash password-toggle";
+   icon.title = showing ? "Show password" : "Hide password";
+ }
 }
 
 async function handleLogin(e){
-  e.preventDefault();
+ e.preventDefault();
 
-  const usernameEl=document.getElementById("login-username");
-  const passwordEl=document.getElementById("login-password");
-  const username=(usernameEl.value||"").trim();
-  const password=passwordEl.value||"";
+ const usernameEl=document.getElementById("login-username");
+ const passwordEl=document.getElementById("login-password");
+ const username=(usernameEl?.value||"").trim();
+ const password=passwordEl?.value||"";
 
-  if(!username || !password){
-    showToast("Please enter username and password.","error");
-    return;
-  }
+ if(!username || !password){
+   showToast("Please enter username and password.","error");
+   return;
+ }
 
-  const loginButton=document.querySelector('#login-form button[type="submit"]');
-  const oldButtonText=loginButton ? loginButton.innerHTML : "";
-  if(loginButton){
-    loginButton.disabled=true;
-    loginButton.innerHTML='<i class="fa fa-spinner fa-spin"></i> Signing in...';
-  }
+ const loginButton=document.querySelector('#login-form button[type="submit"]');
+ const oldButtonText=loginButton ? loginButton.innerHTML : "";
+ if(loginButton){
+   loginButton.disabled=true;
+   loginButton.innerHTML='<i class="fa fa-spinner fa-spin"></i> Signing in...';
+ }
 
-  try{
-    const emailMap={
-      "admin":"natinaelyonas28@gmail.com",
-      "natinaelyonas28@gmail.com":"natinaelyonas28@gmail.com"
-    };
+ try{
+   // MEKLITE username -> Firebase email.
+   const email = username.toLowerCase()==="admin"
+     ? "natinaelyonas28@gmail.com"
+     : username;
 
-    const email=emailMap[username.toLowerCase()] || username;
+   if(!email.includes("@")){
+     showToast("For the administrator account, use username: admin","error");
+     return;
+   }
 
-    if(!email.includes("@")){
-      showToast("Use the username: admin","error");
-      return;
-    }
+   // Firebase is the authentication source. This does NOT depend on Render.
+   const credential=await firebaseAuth.signInWithEmailAndPassword(email,password);
+   const firebaseUser=credential.user;
 
-    const credential=await mekLiteFirebaseAuth.signInWithEmailAndPassword(email,password);
-    const firebaseUser=credential.user;
+   // Start with the existing MEKLITE data structure so the existing UI is not changed.
+   let db;
+   try{
+     db=await fetchBackendData();
+   }catch(err){
+     console.warn("Remote application data unavailable:",err);
+   }
 
-    let db=null;
-    try{
-      db=await fetchBackendData();
-    }catch(err){
-      console.warn("Application database unavailable:",err);
-    }
+   if(!db){
+     db=structuredClone(defaultData);
+     currentDB=db;
+   }
 
-    if(!db){
-      db=structuredClone(defaultData);
-      currentDB=db;
-      showToast("Login successful. Application data server is unavailable right now.","warning");
-    }
+   let user=(db.users||[]).find(u=>
+     String(u.username||"").toLowerCase()===username.toLowerCase()
+   );
 
-    let user=db.users.find(u=>
-      String(u.username||"").toLowerCase()===username.toLowerCase()
-    );
+   if(!user && username.toLowerCase()==="admin"){
+     user=structuredClone(defaultData.users[0]);
+     user.email=firebaseUser.email || user.email;
+   }
 
-    if(!user && username.toLowerCase()==="admin"){
-      user=structuredClone(defaultData.users[0]);
-      user.email=firebaseUser.email || user.email;
-    }
+   if(!user){
+     user={
+       id:firebaseUser.uid,
+       fullName:firebaseUser.displayName || "Natnael Yonas",
+       username:username,
+       email:firebaseUser.email || "",
+       role:"Admin",
+       status:"Active",
+       createdDate:today(),
+       lastLogin:today()
+     };
+   }
 
-    if(!user){
-      await mekLiteFirebaseAuth.signOut();
-      showToast("Login succeeded, but no Meklite user profile was found.","error");
-      return;
-    }
+   if(user.status && user.status!=="Active"){
+     await firebaseAuth.signOut();
+     showToast("This Meklite account is disabled.","error");
+     return;
+   }
 
-    if(user.status && user.status!=="Active"){
-      await mekLiteFirebaseAuth.signOut();
-      showToast("This Meklite account is disabled.","error");
-      return;
-    }
+   user.lastLogin=today();
+   currentUser=user;
 
-    user.lastLogin=today();
-    currentUser=user;
+   document.getElementById("login-screen").classList.add("hidden");
+   document.getElementById("app-container").classList.remove("hidden");
 
-    document.getElementById("login-screen").classList.add("hidden");
-    document.getElementById("app-container").classList.remove("hidden");
-    initApp();
+   try{
+     initApp();
+   }catch(appErr){
+     console.error("Meklite app initialization error:",appErr);
+     showToast("Login succeeded, but the dashboard could not initialize.","error");
+     return;
+   }
 
-    try{
-      await logActivity(user.id,"Login",`User ${user.username} logged in.`);
-    }catch(err){
-      console.warn("Login activity could not be recorded:",err);
-    }
+   showToast("Welcome back, "+(user.fullName||username),"success");
 
-    showToast("Welcome back, "+user.fullName,"success");
+ }catch(err){
+   console.error("MEKLITE Firebase login error:",err);
+   let message="Login failed. Please check your username and password.";
 
-  }catch(err){
-    console.error("Firebase login error:",err);
+   switch(err?.code){
+     case "auth/invalid-credential":
+     case "auth/wrong-password":
+     case "auth/user-not-found":
+       message="Invalid username or password.";
+       break;
+     case "auth/invalid-email":
+       message="The login email is not configured correctly.";
+       break;
+     case "auth/user-disabled":
+       message="This Firebase account is disabled.";
+       break;
+     case "auth/too-many-requests":
+       message="Too many attempts. Please wait a few minutes and try again.";
+       break;
+     case "auth/network-request-failed":
+       message="Internet connection problem. Please check your internet.";
+       break;
+     case "auth/operation-not-allowed":
+       message="Firebase Email/Password sign-in is not enabled.";
+       break;
+   }
 
-    let message="Login failed. Please check your username and password.";
-
-    if(err && err.code){
-      switch(err.code){
-        case "auth/invalid-credential":
-        case "auth/wrong-password":
-        case "auth/user-not-found":
-          message="Invalid username or password.";
-          break;
-        case "auth/invalid-email":
-          message="Login email is not configured correctly.";
-          break;
-        case "auth/user-disabled":
-          message="This Firebase account is disabled.";
-          break;
-        case "auth/too-many-requests":
-          message="Too many attempts. Please wait and try again.";
-          break;
-        case "auth/network-request-failed":
-          message="Internet connection problem. Check your internet.";
-          break;
-      }
-    }
-
-    showToast(message,"error");
-    passwordEl.focus();
-    passwordEl.select();
-
-  }finally{
-    if(loginButton){
-      loginButton.disabled=false;
-      loginButton.innerHTML=oldButtonText;
-    }
-  }
+   showToast(message,"error");
+   if(passwordEl){
+     passwordEl.focus();
+     passwordEl.select();
+   }
+ }finally{
+   if(loginButton){
+     loginButton.disabled=false;
+     loginButton.innerHTML=oldButtonText;
+   }
+ }
 }
 
 async function logout(){
