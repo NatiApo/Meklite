@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- Chart.js Engine integration for dynamic directional charts -->
-<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=4byHyV85dFzfuylN4xUf5zT5YXWxg1bJC4xj0XLe9CQJtmh10CDgBj7Col3KSywAJUWSNTPb_0t5bHtcDV8SwiagOpBVDziIUNgGuwXxI9MONvnTa9tNBBxJc5HCs1XbWMeqYWleII26MRSbnlfSoMzz2aZOw2zfJE4gfbs8DNk6LaOtx3UQWb5sOefLDvth_LGzz9unQ0FjTld_SzPUGdrYhc5E_col2Th4mz3HmQBGrGmGezhhYSwdd6Ps72PufkFxiTt25lfRPXQ2rPQ0NYEuX7g3dxEjRNqN3jU7af60NaaNl1JAhHSQPEsxo_KAAo_90L9AmzYfi3I5hk6P2g" charset="UTF-8"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 :root{
@@ -1053,8 +1053,8 @@ tr:hover td{background:#f9fafb}
 
   <div style="margin-top:1.5rem;font-size:.73rem;color:#667085">
    Default Admin:
-   <strong>One God</strong> /
-   <strong>Jesus Christ</strong>
+   <strong>admin</strong> /
+   <strong>Admin@2026</strong>
   </div>
 
  </div>
@@ -1315,6 +1315,20 @@ tr:hover td{background:#f9fafb}
 const firebaseConfig={apiKey:"AIzaSyC-0EazLVdjgWkcTISVjNiTZoVQ4HNp4Nc",authDomain:"meklite-eb789.firebaseapp.com",projectId:"meklite-eb789",storageBucket:"meklite-eb789.firebasestorage.app",messagingSenderId:"1026124745064",appId:"1:1026124745064:web:75eb26af141764e7462edd"};
 firebase.initializeApp(firebaseConfig);
 const firebaseAuth=firebase.auth();
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyC-0EazLVdjgWkcTISVjNiTZoVQ4HNp4Nc",
+  authDomain: "meklite-eb789.firebaseapp.com",
+  projectId: "meklite-eb789",
+  storageBucket: "meklite-eb789.firebasestorage.app",
+  messagingSenderId: "1026124745064",
+  appId: "1:1026124745064:web:75eb26af141764e7462edd"
+};
+if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+const mekLiteFirebaseAuth = firebase.auth();
 </script>
 <script>
 /* ============================================================
@@ -1708,36 +1722,129 @@ function toggleLoginPassword(){
 }
 
 async function handleLogin(e){
- e.preventDefault();
- const username=document.getElementById("login-username").value.trim();
- const password=document.getElementById("login-password").value;
- if(!username||!password){showToast("Please enter your username and password.","error");return;}
- const email=username.toLowerCase()==="admin"?"natinaelyonas28@gmail.com":username;
- try{
-  const credential=await firebaseAuth.signInWithEmailAndPassword(email,password);
-  const fbUser=credential.user;
-  let db=null;
-  try{db=await fetchBackendData();}catch(err){}
-  let user=db&&Array.isArray(db.users)?db.users.find(u=>u.email===fbUser.email||u.username===username||u.username==="admin"):null;
-  if(!user){
-   user={id:fbUser.uid,fullName:fbUser.displayName||(fbUser.email==="natinaelyonas28@gmail.com"?"Natnael Yonas":fbUser.email),username:fbUser.email==="natinaelyonas28@gmail.com"?"admin":username,email:fbUser.email||"",role:"Admin",status:"Active",lastLogin:today()};
-  }else{user.lastLogin=today();if(!user.role)user.role="Admin";}
-  currentUser=user;
-  if(db){try{await saveDB(db);}catch(err){}}
-  try{await logActivity(user.id,"Login",`User ${user.username} logged in.`);}catch(err){}
-  document.getElementById("login-screen").classList.add("hidden");
-  document.getElementById("app-container").classList.remove("hidden");
-  initApp();
-  showToast("Welcome back, "+user.fullName,"success");
- }catch(err){
-  console.error("Firebase login failed:",err);
-  let message="Invalid username/password.";
-  if(err&&err.code==="auth/user-not-found")message="No Firebase account was found for this username.";
-  else if(err&&err.code==="auth/too-many-requests")message="Too many login attempts. Please wait and try again.";
-  else if(err&&err.code==="auth/invalid-email")message="Enter admin or a valid email address.";
-  showToast(message,"error");
- }
+  e.preventDefault();
+
+  const usernameEl=document.getElementById("login-username");
+  const passwordEl=document.getElementById("login-password");
+  const username=(usernameEl.value||"").trim();
+  const password=passwordEl.value||"";
+
+  if(!username || !password){
+    showToast("Please enter username and password.","error");
+    return;
+  }
+
+  const loginButton=document.querySelector('#login-form button[type="submit"]');
+  const oldButtonText=loginButton ? loginButton.innerHTML : "";
+  if(loginButton){
+    loginButton.disabled=true;
+    loginButton.innerHTML='<i class="fa fa-spinner fa-spin"></i> Signing in...';
+  }
+
+  try{
+    const emailMap={
+      "admin":"natinaelyonas28@gmail.com",
+      "natinaelyonas28@gmail.com":"natinaelyonas28@gmail.com"
+    };
+
+    const email=emailMap[username.toLowerCase()] || username;
+
+    if(!email.includes("@")){
+      showToast("Use the username: admin","error");
+      return;
+    }
+
+    const credential=await mekLiteFirebaseAuth.signInWithEmailAndPassword(email,password);
+    const firebaseUser=credential.user;
+
+    let db=null;
+    try{
+      db=await fetchBackendData();
+    }catch(err){
+      console.warn("Application database unavailable:",err);
+    }
+
+    if(!db){
+      db=structuredClone(defaultData);
+      currentDB=db;
+      showToast("Login successful. Application data server is unavailable right now.","warning");
+    }
+
+    let user=db.users.find(u=>
+      String(u.username||"").toLowerCase()===username.toLowerCase()
+    );
+
+    if(!user && username.toLowerCase()==="admin"){
+      user=structuredClone(defaultData.users[0]);
+      user.email=firebaseUser.email || user.email;
+    }
+
+    if(!user){
+      await mekLiteFirebaseAuth.signOut();
+      showToast("Login succeeded, but no Meklite user profile was found.","error");
+      return;
+    }
+
+    if(user.status && user.status!=="Active"){
+      await mekLiteFirebaseAuth.signOut();
+      showToast("This Meklite account is disabled.","error");
+      return;
+    }
+
+    user.lastLogin=today();
+    currentUser=user;
+
+    document.getElementById("login-screen").classList.add("hidden");
+    document.getElementById("app-container").classList.remove("hidden");
+    initApp();
+
+    try{
+      await logActivity(user.id,"Login",`User ${user.username} logged in.`);
+    }catch(err){
+      console.warn("Login activity could not be recorded:",err);
+    }
+
+    showToast("Welcome back, "+user.fullName,"success");
+
+  }catch(err){
+    console.error("Firebase login error:",err);
+
+    let message="Login failed. Please check your username and password.";
+
+    if(err && err.code){
+      switch(err.code){
+        case "auth/invalid-credential":
+        case "auth/wrong-password":
+        case "auth/user-not-found":
+          message="Invalid username or password.";
+          break;
+        case "auth/invalid-email":
+          message="Login email is not configured correctly.";
+          break;
+        case "auth/user-disabled":
+          message="This Firebase account is disabled.";
+          break;
+        case "auth/too-many-requests":
+          message="Too many attempts. Please wait and try again.";
+          break;
+        case "auth/network-request-failed":
+          message="Internet connection problem. Check your internet.";
+          break;
+      }
+    }
+
+    showToast(message,"error");
+    passwordEl.focus();
+    passwordEl.select();
+
+  }finally{
+    if(loginButton){
+      loginButton.disabled=false;
+      loginButton.innerHTML=oldButtonText;
+    }
+  }
 }
+
 async function logout(){
  if(currentUser){
   await logActivity(
