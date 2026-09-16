@@ -1,22 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#0b3c5d">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="MEKLITE">
-<meta name="application-name" content="MEKLITE">
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
 <title>Ethiopian Apostolic Church - Youth Meklit Service</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Chart.js Engine integration for dynamic directional charts -->
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=_qghTu8fvozjD14iedrjYErD7fxvAmp4bbinP1QccnharxsmLqS1s3M5oIT5vd5ry9_7ayyp9dG8B2fbfpAtgA0cvJj2KJcqZFCh4H92M0hx25LHIj8wYBmcnguexdPHg8cWa00gHhXseRBK4eEWg7iYNE_w67elO2_Im7HYoof6NN2TIbeInSZXtFhULkMACfnKa-8WrzyOuzxePueapcNUDoIoiHgQP5_uvcFTT_ZcejRM_CM_Xo4-1_GXTy9Y5Vq6xgEm4sRBFLIXlzQ4kRrokNf8ZC0WTxBI-Ns6ksdxjOk9JiNlo5FkMLJ_LCaUjb1MeCoq8Ide7OdTSKibEA" charset="UTF-8"></script><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=zaBaLXZvSOXSmZLtKYRxMjtzteIAZhQDPYxc2zeFJkPf_SJla190uEl_uXKT40AlVoP4Jefg6UFIpexQkJjPZ9JjwccJBaLet70OF6YG9Dv62Kr4DK3LGzcqMcSdKFFqHEKlN8Y-G903sYfLFj7zQB62XPZdnKJc-fSK5ijpy2872bZLuUdk30BJfH0wStr50emu-uyQMQh2bOvbmc1wUnlg8KWeIC7k5l8ao82f4z7pWP0vX_FF2jtw5IFikqIdDqNjqstflTrDbwT26KRVT7gn00_9JlQDoR8zAAAC62mGG2l2pTig-9BBdztZsLfVrcXb-NEe8-TGkP4RKPVVDmdqQDIzZhe5fTq2RMQCQ7A" charset="UTF-8"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 :root{
@@ -150,6 +143,7 @@ label{
 .w-full{width:100%}
 
 /* LOGIN */
+
 #login-screen{
  position:fixed;
  inset:0;
@@ -216,6 +210,7 @@ label{
 }
 
 /* APP */
+
 #app-container{
  display:flex;
  height:100vh;
@@ -354,6 +349,7 @@ main{
 }
 
 /* CARDS */
+
 .card{
  background:#fff;
  border-radius:9px;
@@ -424,6 +420,7 @@ main{
 }
 
 /* TABLE */
+
 .table-wrap{
  overflow-x:auto;
 }
@@ -489,6 +486,7 @@ tr:hover td{background:#f9fafb}
 }
 
 /* MODAL */
+
 .modal-backdrop{
  position:fixed;
  inset:0;
@@ -538,6 +536,7 @@ tr:hover td{background:#f9fafb}
 }
 
 /* TOAST */
+
 #toast-container{
  position:fixed;
  right:20px;
@@ -571,6 +570,7 @@ tr:hover td{background:#f9fafb}
 }
 
 /* A4 FORM */
+
 #form-print-area{
  background:#dfe4e8;
  padding:1rem;
@@ -846,33 +846,78 @@ tr:hover td{background:#f9fafb}
  font-style:italic;
 }
 
-/* PERMISSIONS UI */
-.permission-grid{
+/* DASHBOARD */
+
+.quick-actions{
  display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:.75rem;
- background:#f8fafc;
- border:1px solid var(--border-color);
- border-radius:8px;
- padding:1rem;
- margin-top:.5rem;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:.8rem;
+ margin-bottom:1.3rem;
 }
 
-.permission-item{
+.quick-action{
+ background:#fff;
+ padding:1rem;
+ border-radius:8px;
+ border:1px solid #edf0f3;
+ box-shadow:var(--shadow);
+ cursor:pointer;
  display:flex;
  align-items:center;
- gap:.5rem;
- font-size:.82rem;
- font-weight:600;
- cursor:pointer;
+ gap:.8rem;
+ transition:.2s;
 }
 
-.permission-item input[type="checkbox"]{
- width:auto;
- cursor:pointer;
+.quick-action:hover{
+ transform:translateY(-2px);
+ border-color:var(--accent-gold);
+}
+
+.quick-action i{
+ width:40px;
+ height:40px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ border-radius:8px;
+ background:#eef5fa;
+ color:var(--primary-blue);
+}
+
+/* INTERACTIVE ANALYTICS EXTENSIONS */
+.rank-badge{
+ display:inline-block;
+ width:24px;
+ height:24px;
+ line-height:24px;
+ text-align:center;
+ border-radius:50%;
+ font-weight:bold;
+ font-size:.75rem;
+ background:#e2e8f0;
+ color:#475569;
+}
+.rank-1{background:#fef08a;color:#854d0e;border:1px solid #eab308}
+.rank-2{background:#e2e8f0;color:#334155;border:1px solid #94a3b8}
+.rank-3{background:#ffedd5;color:#9a3412;border:1px solid #f97316}
+
+.compare-card{
+ border-top:4px solid var(--accent-gold);
+ background:#fff;
+ border-radius:8px;
+ padding:1rem;
+ box-shadow:var(--shadow);
+}
+.compare-title{
+ font-weight:800;
+ font-size:1.1rem;
+ color:var(--primary-blue);
+ margin-bottom:.5rem;
+ text-align:center;
 }
 
 /* MOBILE */
+
 .mobile-menu{
  display:none;
  background:none;
@@ -891,7 +936,9 @@ tr:hover td{background:#f9fafb}
  }
 
  aside.open{left:0}
+
  .mobile-menu{display:block}
+
  .grid-4{grid-template-columns:repeat(2,1fr)}
  .grid-3{grid-template-columns:1fr 1fr}
 }
@@ -903,6 +950,7 @@ tr:hover td{background:#f9fafb}
  .top-user div{display:none}
  .stats-grid{grid-template-columns:1fr 1fr}
  .stats-grid .stat-value{font-size:1.3rem}
+ .quick-actions{grid-template-columns:1fr}
 }
 
 @media print{
@@ -929,6 +977,28 @@ tr:hover td{background:#f9fafb}
   margin:0;
  }
 }
+
+/* ============================================================
+   SEPARATE GROUP FUNDS - DOES NOT TOUCH CANDIDATE MONEY
+============================================================ */
+.group-funds-panel{margin-top:1.25rem}
+.group-fund-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1rem}
+.group-fund-stat{background:linear-gradient(135deg,#fff,#f8fafc);border:1px solid #e5e7eb;border-radius:12px;padding:1rem;box-shadow:0 4px 14px rgba(15,23,42,.05)}
+.group-fund-stat .label{font-size:.78rem;color:#667085;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.group-fund-stat .value{margin-top:.35rem;font-size:1.35rem;font-weight:800;color:var(--primary-blue)}
+.group-fund-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.group-fund-card{border:1px solid #e5e7eb;border-radius:12px;padding:1rem;background:#fff;box-shadow:0 4px 16px rgba(15,23,42,.05)}
+.group-fund-card h4{margin:0 0 .35rem;color:var(--primary-blue)}
+.group-fund-balance{font-size:1.45rem;font-weight:900;color:#15803d}
+.group-fund-meta{font-size:.78rem;color:#667085;margin-top:.2rem}
+.group-members-list{max-height:420px;overflow:auto}
+.group-member-row{display:flex;align-items:center;gap:.8rem;padding:.75rem;border:1px solid #eef2f7;border-radius:10px;margin-bottom:.55rem;background:#fafcff}
+.group-member-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#eaf0f6;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--primary-blue)}
+.group-member-name{font-weight:800;color:#243b53}
+.group-member-meta{font-size:.78rem;color:#667085}
+@media(max-width:900px){.group-fund-summary{grid-template-columns:repeat(2,1fr)}.group-fund-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.group-fund-summary,.group-fund-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 
@@ -939,202 +1009,346 @@ tr:hover td{background:#f9fafb}
 <!-- LOGIN -->
 <div id="login-screen">
  <div class="login-card">
-  <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg" class="logo-large" alt="Church Logo">
+
+  <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg"
+       class="logo-large"
+       alt="Church Logo">
+
   <h1>Apostolic Church Youth Meklit</h1>
   <h2>Youth Meklit Service - Contribution Management</h2>
 
   <form id="login-form" onsubmit="handleLogin(event)" class="login-form">
+
    <div class="form-group">
-    <label>Username / Email</label>
-    <input id="login-username" autocomplete="username" placeholder="Enter username or email" required>
+    <label>Username</label>
+    <input id="login-username"
+           autocomplete="username"
+           placeholder="Enter username"
+           required>
    </div>
 
    <div class="form-group">
     <label>Password</label>
+
     <div class="password-wrapper">
-     <input id="login-password" type="password" autocomplete="current-password" placeholder="Enter password" required>
-     <i class="fa fa-eye password-toggle" onclick="toggleLoginPassword()"></i>
+     <input id="login-password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Enter password"
+            required>
+
+     <i class="fa fa-eye password-toggle"
+        onclick="toggleLoginPassword()"></i>
     </div>
    </div>
 
+   <label style="display:flex;align-items:center;gap:.45rem;cursor:pointer">
+    <input type="checkbox"
+           id="remember-login"
+           style="width:auto">
+    Remember login on this browser
+   </label>
+
    <button type="submit" class="w-full" style="margin-top:.8rem">
-    <i class="fa fa-sign-in-alt"></i> LOGIN
+    <i class="fa fa-sign-in-alt"></i>
+    LOGIN
    </button>
+
   </form>
 
   <div style="margin-top:1.5rem;font-size:.73rem;color:#667085">
-   Protected System with Firebase Auth & Granular Role Permissions
+   Default Admin:
+   <strong>admin</strong> /
+   <strong>Admin@2026</strong>
   </div>
+
  </div>
 </div>
 
+
 <!-- APPLICATION -->
 <div id="app-container" class="hidden">
+
  <aside id="sidebar">
+
   <div class="sidebar-header">
-   <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg" class="sidebar-logo">
+
+   <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg"
+        class="sidebar-logo">
+
    <div>
     <div class="sidebar-title">Youth Meklit</div>
     <div id="sidebar-role" class="sidebar-role">Administrator</div>
    </div>
+
   </div>
 
   <ul class="sidebar-menu">
-   <li class="perm-check" data-perm="VIEW_DASHBOARD" data-page="dashboard">
-    <a onclick="navigate('dashboard')"><i class="fa fa-chart-pie"></i> Dashboard</a>
+
+   <li class="active" data-page="dashboard">
+    <a onclick="navigate('dashboard')">
+     <i class="fa fa-chart-pie"></i>
+     Dashboard
+    </a>
    </li>
 
-   <li class="perm-check" data-perm="VIEW_RANKINGS" data-page="analytics">
-    <a onclick="navigate('analytics')"><i class="fa fa-chart-line"></i> Money Comparison</a>
+   <li data-page="analytics">
+    <a onclick="navigate('analytics')">
+     <i class="fa fa-chart-line"></i>
+     Money & Groups Comparison
+    </a>
    </li>
 
    <li onclick="toggleSubmenu(this)">
     <a>
-     <i class="fa fa-users"></i> Candidates
+     <i class="fa fa-users"></i>
+     Candidates
      <i class="fa fa-chevron-down" style="margin-left:auto;font-size:.65rem"></i>
     </a>
    </li>
 
    <ul class="submenu" id="candidate-submenu">
-    <li class="perm-check" data-perm="VIEW_A4">
-     <a onclick="navigate('add-candidate')"><i class="fa fa-file-circle-plus"></i> Interactive A4 Form</a>
+    <li>
+     <a onclick="navigate('add-candidate')">
+      <i class="fa fa-file-circle-plus"></i>
+      Interactive A4 Form
+     </a>
     </li>
-    <li class="perm-check" data-perm="VIEW_CANDIDATES">
-     <a onclick="navigate('candidates-list')"><i class="fa fa-address-book"></i> Candidates Directory</a>
+    <li>
+     <a onclick="navigate('candidates-list')">
+      <i class="fa fa-address-book"></i>
+      Candidates Directory
+     </a>
     </li>
    </ul>
 
-   <li class="perm-check" data-perm="MANAGE_GROUPS" data-page="groups">
-    <a onclick="navigate('groups')"><i class="fa fa-layer-group"></i> Manage Groups</a>
+   <li class="admin-only" data-page="groups">
+    <a onclick="navigate('groups')">
+     <i class="fa fa-layer-group"></i>
+     Manage Groups
+    </a>
    </li>
 
-   <li class="perm-check" data-perm="VIEW_REPORTS" data-page="reports">
-    <a onclick="navigate('reports')"><i class="fa fa-chart-column"></i> Reports</a>
+   <li data-page="contributions">
+    <a onclick="navigate('contributions')">
+     <i class="fa fa-hand-holding-dollar"></i>
+     Contributions
+    </a>
    </li>
 
-   <li class="perm-check" data-perm="MANAGE_USERS" data-page="users">
-    <a onclick="navigate('users')"><i class="fa fa-user-shield"></i> User Management</a>
+   <li data-page="reports">
+    <a onclick="navigate('reports')">
+     <i class="fa fa-chart-column"></i>
+     Reports
+    </a>
    </li>
 
-   <li class="perm-check" data-perm="MANAGE_USERS" data-page="activity">
-    <a onclick="navigate('activity')"><i class="fa fa-history"></i> Activity Log</a>
+   <li class="admin-only" data-page="users">
+    <a onclick="navigate('users')">
+     <i class="fa fa-user-shield"></i>
+     User Management
+    </a>
    </li>
 
-   <li class="perm-check" data-perm="ACCESS_SETTINGS" data-page="settings">
-    <a onclick="navigate('settings')"><i class="fa fa-cog"></i> Settings</a>
+   <li class="admin-only" data-page="activity">
+    <a onclick="navigate('activity')">
+     <i class="fa fa-history"></i>
+     Activity Log
+    </a>
+   </li>
+
+   <li class="admin-only" data-page="backup">
+    <a onclick="navigate('backup')">
+     <i class="fa fa-database"></i>
+     Backup / Restore
+    </a>
+   </li>
+
+   <li data-page="settings">
+    <a onclick="navigate('settings')">
+     <i class="fa fa-cog"></i>
+     Settings
+    </a>
    </li>
 
    <li>
-    <a onclick="openChangePasswordModal()"><i class="fa fa-key"></i> Change Password</a>
+    <a onclick="openChangePasswordModal()">
+     <i class="fa fa-key"></i>
+     Change Password
+    </a>
    </li>
 
    <li>
-    <a onclick="logout()" style="color:#fca5a5"><i class="fa fa-sign-out-alt"></i> Logout</a>
+    <a onclick="logout()" style="color:#fca5a5">
+     <i class="fa fa-sign-out-alt"></i>
+     Logout
+    </a>
    </li>
+
   </ul>
+
  </aside>
 
+
  <main>
+
   <header class="topbar no-print">
+
    <div style="display:flex;align-items:center;gap:.8rem">
-    <button class="mobile-menu" onclick="toggleMobileSidebar()"><i class="fa fa-bars"></i></button>
-    <h2 id="page-title" class="page-title">Dashboard</h2>
+
+    <button class="mobile-menu"
+            onclick="toggleMobileSidebar()">
+     <i class="fa fa-bars"></i>
+    </button>
+
+    <h2 id="page-title" class="page-title">
+     Dashboard
+    </h2>
+
    </div>
 
    <div class="top-user">
+
     <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg">
+
     <div>
-     <div id="topbar-username" class="top-user-name">User</div>
-     <div id="topbar-role" class="top-user-role">Role</div>
+     <div id="topbar-username" class="top-user-name">
+      Administrator
+     </div>
+
+     <div id="topbar-role" class="top-user-role">
+      Admin
+     </div>
     </div>
+
    </div>
+
   </header>
 
+
   <div id="content-body" class="content-body"></div>
+
  </main>
+
 </div>
+
 
 <!-- GENERAL MODAL -->
 <div id="general-modal" class="modal-backdrop hidden">
  <div class="modal">
+
   <div class="modal-header">
    <h3 id="modal-title">Modal</h3>
-   <i class="fa fa-times" style="cursor:pointer" onclick="closeModal('general-modal')"></i>
+   <i class="fa fa-times"
+      style="cursor:pointer"
+      onclick="closeModal('general-modal')"></i>
   </div>
+
   <div id="modal-body" class="modal-body"></div>
+
   <div id="modal-footer" class="modal-footer"></div>
+
  </div>
 </div>
+
 
 <!-- CHANGE PASSWORD -->
 <div id="password-modal" class="modal-backdrop hidden">
  <div class="modal">
+
   <div class="modal-header">
    <h3>Change Password</h3>
-   <i class="fa fa-times" onclick="closeModal('password-modal')" style="cursor:pointer"></i>
+   <i class="fa fa-times"
+      onclick="closeModal('password-modal')"
+      style="cursor:pointer"></i>
   </div>
+
   <div class="modal-body">
-   <form id="change-password-form" onsubmit="handleChangePassword(event)">
+
+   <form id="change-password-form"
+         onsubmit="handleChangePassword(event)">
+
     <div class="form-group">
      <label>Current Password</label>
-     <input id="current-password" type="password" required>
+     <input id="current-password"
+            type="password"
+            required>
     </div>
+
     <div class="form-group">
      <label>New Password</label>
-     <input id="new-password" type="password" minlength="6" required>
+     <input id="new-password"
+            type="password"
+            minlength="6"
+            required>
     </div>
+
     <div class="form-group">
      <label>Confirm New Password</label>
-     <input id="confirm-password" type="password" minlength="6" required>
+     <input id="confirm-password"
+            type="password"
+            minlength="6"
+            required>
     </div>
-    <div class="modal-footer" style="margin:1rem -1.25rem -1.25rem">
-     <button type="button" class="btn-outline" onclick="closeModal('password-modal')">Cancel</button>
-     <button type="submit"><i class="fa fa-key"></i> Update Password</button>
+
+    <div class="modal-footer"
+         style="margin:1rem -1.25rem -1.25rem">
+
+     <button type="button"
+             class="btn-outline"
+             onclick="closeModal('password-modal')">
+      Cancel
+     </button>
+
+     <button type="submit">
+      <i class="fa fa-key"></i>
+      Update Password
+     </button>
+
     </div>
+
    </form>
+
   </div>
  </div>
 </div>
 
-<script type="module" src="firebase-bridge.js"></script>
 
 <script>
-const DEFAULT_PERMISSIONS = {
- VIEW_DASHBOARD: true,
- VIEW_GROUPS: true,
- VIEW_CANDIDATES: true,
- VIEW_A4: true,
- ADD_CANDIDATE: true,
- EDIT_CANDIDATE_NAME: true,
- EDIT_CANDIDATE_INFO: true,
- ADD_MONEY: true,
- EDIT_MONEY: true,
- DELETE_MONEY: false,
- ADD_ROW: true,
- EDIT_ROW: true,
- DELETE_ROW: false,
- VIEW_GROUP_MONEY: true,
- ADD_GROUP_MONEY: false,
- EDIT_GROUP_MONEY: false,
- DELETE_GROUP_MONEY: false,
- VIEW_RANKINGS: true,
- VIEW_REPORTS: true,
- PRINT_A4: true,
- MANAGE_GROUPS: false,
- MANAGE_USERS: false,
- ACCESS_SETTINGS: false
-};
+/* ============================================================
+   DATABASE
+============================================================ */
 
-const defaultData = {
- settings: {
-  churchName: "ኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን",
-  department: "የወጣቶች መክሊት አገልግሎት ክፍል",
-  formTitle: "የአባላት ገንዘብ መሰብሰቢያ ቅጽ",
-  phone: "", email: "", address: "",
-  verse: "“መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።” ማቴ 6:21"
+const DB_KEY="EAC_YOUTH_MEKLIT_DB_V3";
+const SESSION_KEY="EAC_CURRENT_USER";
+
+const defaultData={
+ settings:{
+  churchName:"ኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን",
+  department:"የወጣቶች መክሊት አገልግሎት ክፍል",
+  formTitle:"የአባላት ገንዘብ መሰብሰቢያ ቅጽ",
+  phone:"",
+  email:"",
+  address:"",
+  verse:"“መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።” ማቴ 6:21"
  },
- users: [],
- groups: [
+
+ users:[
+  {
+   id:1,
+   fullName:"Natnael Yonas",
+   username:"admin",
+   passwordHash:btoa("Admin@2026"),
+   role:"Admin",
+   phone:"+251911000000",
+   email:"admin@eac.org",
+   status:"Active",
+   createdDate:"2026-02-01",
+   lastLogin:""
+  }
+ ],
+
+ groups:[
   {id:1,groupName:"Meklit 1",description:"Meklit Group 1",status:"Active"},
   {id:2,groupName:"Meklit 2",description:"Meklit Group 2",status:"Active"},
   {id:3,groupName:"Meklit 3",description:"Meklit Group 3",status:"Active"},
@@ -1142,543 +1356,460 @@ const defaultData = {
   {id:5,groupName:"Meklit 5",description:"Meklit Group 5",status:"Active"},
   {id:6,groupName:"Meklit 6",description:"Meklit Group 6",status:"Active"}
  ],
- groupFunds: [], candidates: [], activityLog: []
+
+ candidates:[],
+
+ activityLog:[
+  {
+   logId:1,
+   userId:1,
+   action:"System Init",
+   description:"Database initialized with 6 Meklit groups.",
+   dateTime:"2026-08-25 08:00:00"
+  }
+ ]
 };
 
-let currentDB = null;
-let currentUser = null;
-let activePage = "dashboard";
-let editingCandidateId = null;
-let currentPhotoBase64 = "";
+function getDB(){
+ let raw=localStorage.getItem(DB_KEY);
 
-async function fetchBackendData(){
+ if(!raw){
+  localStorage.setItem(DB_KEY,JSON.stringify(defaultData));
+  return structuredClone(defaultData);
+ }
+
  try{
-  currentDB = await window.FirebaseBridge.loadDB();
-  if(!currentDB) currentDB = structuredClone(defaultData);
-  currentDB.settings ||= structuredClone(defaultData.settings);
-  currentDB.users ||= [];
-  currentDB.groups ||= structuredClone(defaultData.groups);
-  currentDB.groupFunds ||= [];
-  currentDB.candidates ||= [];
-  currentDB.activityLog ||= [];
-  return currentDB;
- } catch(err){
-  console.error("Firebase data load failed", err);
-  if(!currentDB) currentDB = structuredClone(defaultData);
-  showToast("Could not load database.", "error");
-  return currentDB;
+  const db=JSON.parse(raw);
+
+  db.settings ||= structuredClone(defaultData.settings);
+  db.users ||= [];
+  db.groups ||= [];
+  db.candidates ||= [];
+  db.activityLog ||= [];
+
+  return db;
+ }catch(e){
+  localStorage.removeItem(DB_KEY);
+  localStorage.setItem(DB_KEY,JSON.stringify(defaultData));
+  return structuredClone(defaultData);
  }
 }
 
-function getDB(){ return currentDB || structuredClone(defaultData); }
-
-async function saveDB(db){
- currentDB = db;
- try{
-  await window.FirebaseBridge.saveDB(db);
-  return true;
- } catch(err){
-  console.error("Firebase save failed", err);
-  showToast("Could not save to Firebase.", "error");
-  return false;
- }
+function saveDB(db){
+ localStorage.setItem(DB_KEY,JSON.stringify(db));
 }
 
-async function logActivity(userId, action, description){
- try{
-  await window.FirebaseBridge.logActivity({
-   userId, action, description, dateTime: nowDateTime()
-  });
- } catch(err){ console.warn("Activity log failed", err); }
+let currentUser=
+ JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null");
+
+let activePage="dashboard";
+let currentPhotoBase64="";
+let editingCandidateId=null;
+
+
+/* ============================================================
+   UTILITIES
+============================================================ */
+
+function esc(value){
+ return String(value ?? "")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+}
+
+function today(){
+ return new Date().toISOString().split("T")[0];
+}
+
+function nowDateTime(){
+ return new Date()
+  .toISOString()
+  .replace("T"," ")
+  .split(".")[0];
+}
+
+function money(value){
+ return Number(value || 0).toLocaleString(
+  "en-US",
+  {minimumFractionDigits:2,maximumFractionDigits:2}
+);
+}
+
+function generateId(prefix="ID"){
+ return prefix+"-"+Math.floor(100000+Math.random()*900000);
 }
 
 function isAdmin(){
- return currentUser && currentUser.role === "Admin";
+ return currentUser && currentUser.role==="Admin";
 }
 
-function hasPermission(permissionKey){
- if(!currentUser) return false;
- if(currentUser.status !== "Active") return false;
- if(currentUser.role === "Admin") return true;
- return !!(currentUser.permissions && currentUser.permissions[permissionKey]);
+function confirmAction(message){
+ return window.confirm(message);
 }
 
-function requirePermission(permissionKey){
- if(!hasPermission(permissionKey)){
-  showToast(`Permission Denied: [${permissionKey}] required.`, "error");
-  return false;
- }
- return true;
+function showToast(message,type="success"){
+ const container=document.getElementById("toast-container");
+
+ const toast=document.createElement("div");
+
+ toast.className="toast "+type;
+
+ const icon=
+  type==="success" ? "fa-check-circle" :
+  type==="error" ? "fa-exclamation-circle" :
+  type==="warning" ? "fa-exclamation-triangle" :
+  "fa-info-circle";
+
+ toast.innerHTML=
+  `<i class="fa ${icon}"></i> ${esc(message)}`;
+
+ container.appendChild(toast);
+
+ setTimeout(()=>{
+  toast.remove();
+ },4000);
 }
 
-function toggleLoginPassword(){
- const input = document.getElementById("login-password");
- input.type = input.type === "password" ? "text" : "password";
+function closeModal(id){
+ document.getElementById(id).classList.add("hidden");
 }
 
-async function handleLogin(e){
- e.preventDefault();
- const loginValue = document.getElementById("login-username").value.trim();
- const password = document.getElementById("login-password").value;
- if(!loginValue || !password) return;
-
- const button = document.querySelector('#login-form button[type="submit"]');
- const original = button?.innerHTML;
- if(button){ button.disabled = true; button.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Signing in...'; }
-
- try{
-  const authUser = await window.FirebaseBridge.signIn(loginValue, password);
-  let profile = await window.FirebaseBridge.getUserProfile(authUser.uid);
-
-  if(!profile){
-   profile = {
-    uid: authUser.uid,
-    fullName: authUser.displayName || authUser.email.split('@')[0],
-    email: authUser.email,
-    username: authUser.email.split('@')[0],
-    role: "Admin",
-    status: "Active",
-    permissions: structuredClone(DEFAULT_PERMISSIONS)
-   };
-  }
-
-  if(profile.status !== "Active"){
-   await window.FirebaseBridge.signOut();
-   throw new Error("Your account has been disabled by an administrator.");
-  }
-
-  currentUser = profile;
-  await window.FirebaseBridge.updateLastLogin(profile.uid);
-  await logActivity(profile.uid, "Login", `User ${profile.fullName} logged in.`);
-
-  document.getElementById("login-screen").classList.add("hidden");
-  document.getElementById("app-container").classList.remove("hidden");
-  await fetchBackendData();
-  initApp();
-  showToast("Welcome back, " + profile.fullName, "success");
- } catch(err){
-  console.error("Login failed:", err);
-  showToast(window.FirebaseBridge?.authError?.(err) || err.message || "Login failed.", "error");
- } finally{
-  if(button){ button.disabled = false; button.innerHTML = original; }
- }
+function openModal(title,body,footer=""){
+ document.getElementById("modal-title").innerText=title;
+ document.getElementById("modal-body").innerHTML=body;
+ document.getElementById("modal-footer").innerHTML=footer;
+ document.getElementById("general-modal").classList.remove("hidden");
 }
 
-async function logout(){
- try{
-  if(currentUser) await logActivity(currentUser.uid || currentUser.id, "Logout", `User ${currentUser.fullName} logged out.`);
-  await window.FirebaseBridge.signOut();
- } catch(err){ console.warn("Logout error", err); }
- currentUser = null;
- document.getElementById("app-container").classList.add("hidden");
- document.getElementById("login-screen").classList.remove("hidden");
- document.getElementById("login-form").reset();
- showToast("Logged out successfully.", "success");
+function openChangePasswordModal(){
+ document.getElementById("password-modal").classList.remove("hidden");
 }
 
-async function handleChangePassword(e){
+function handleChangePassword(e){
  e.preventDefault();
  const curr = document.getElementById("current-password").value;
  const newP = document.getElementById("new-password").value;
  const confP = document.getElementById("confirm-password").value;
- if(newP.length < 6){ showToast("New password must contain at least 6 characters.", "error"); return; }
- if(newP !== confP){ showToast("New passwords do not match.", "error"); return; }
- try{
-  await window.FirebaseBridge.changePassword(curr, newP);
-  await logActivity(currentUser.uid, "Password Changed", "User updated account password.");
-  showToast("Password updated successfully.", "success");
+
+ if(btoa(curr) !== currentUser.passwordHash){
+  showToast("Current password incorrect.","error");
+  return;
+ }
+ if(newP !== confP){
+  showToast("New passwords do not match.","error");
+  return;
+ }
+ const db = getDB();
+ const u = db.users.find(x=>x.id===currentUser.id);
+ if(u){
+  u.passwordHash = btoa(newP);
+  saveDB(db);
+  currentUser.passwordHash = u.passwordHash;
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
+  showToast("Password updated successfully.","success");
   closeModal("password-modal");
   document.getElementById("change-password-form").reset();
- } catch(err){ showToast(window.FirebaseBridge?.authError?.(err) || "Could not change password.", "error"); }
-}
-
-window.addEventListener("DOMContentLoaded", async () => {
- try{
-  await window.FirebaseBridge.ready();
-  window.FirebaseBridge.onAuth(async authUser => {
-   if(!authUser) return;
-   try{
-    const profile = await window.FirebaseBridge.getUserProfile(authUser.uid);
-    if(profile && profile.status === "Active"){
-     currentUser = profile;
-     document.getElementById("login-screen").classList.add("hidden");
-     document.getElementById("app-container").classList.remove("hidden");
-     await fetchBackendData();
-     initApp();
-    }
-   } catch(err){ console.warn("Auth check failed", err); }
-  });
- } catch(err){
-  console.error("Firebase init failed", err);
-  showToast("Firebase initialization error.", "error");
  }
-});
-
-function esc(val){
- return String(val ?? "")
-  .replace(/&/g,"&amp;").replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
 
-function nowDateTime(){ return new Date().toISOString().replace("T"," ").split(".")[0]; }
-function money(v){ return Number(v || 0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function generateId(prefix="EAC"){ return prefix + "-" + Math.floor(100000 + Math.random()*900000); }
+function logActivity(userId,action,description){
+ const db=getDB();
 
-function showToast(msg, type="success"){
- const c = document.getElementById("toast-container");
- const t = document.createElement("div");
- t.className = "toast " + type;
- const icon = type==="success"?"fa-check-circle":type==="error"?"fa-exclamation-circle":type==="warning"?"fa-exclamation-triangle":"fa-info-circle";
- t.innerHTML = `<i class="fa ${icon}"></i> ${esc(msg)}`;
- c.appendChild(t);
- setTimeout(() => t.remove(), 4000);
+ db.activityLog.unshift({
+  logId:Date.now(),
+  userId,
+  action,
+  description,
+  dateTime:nowDateTime()
+ });
+
+ if(db.activityLog.length>1000){
+  db.activityLog=db.activityLog.slice(0,1000);
+ }
+
+ saveDB(db);
 }
 
-function closeModal(id){ document.getElementById(id).classList.add("hidden"); }
 
-function openModal(title, body, footer=""){
- document.getElementById("modal-title").innerText = title;
- document.getElementById("modal-body").innerHTML = body;
- document.getElementById("modal-footer").innerHTML = footer;
- document.getElementById("general-modal").classList.remove("hidden");
+/* ============================================================
+   LOGIN
+============================================================ */
+
+function toggleLoginPassword(){
+ const input=document.getElementById("login-password");
+
+ input.type=input.type==="password"
+  ? "text"
+  : "password";
 }
 
-function openChangePasswordModal(){ document.getElementById("password-modal").classList.remove("hidden"); }
+function handleLogin(e){
+ e.preventDefault();
+
+ const username=
+  document.getElementById("login-username").value.trim();
+
+ const password=
+  document.getElementById("login-password").value;
+
+ const db=getDB();
+
+ const user=db.users.find(u=>
+  u.username===username &&
+  u.passwordHash===btoa(password) &&
+  u.status==="Active"
+ );
+
+ if(!user){
+  showToast(
+   "Invalid username/password or account is disabled.",
+   "error"
+  );
+  return;
+ }
+
+ user.lastLogin=today();
+ saveDB(db);
+
+ currentUser=user;
+
+ sessionStorage.setItem(
+  SESSION_KEY,
+  JSON.stringify(user)
+ );
+
+ if(document.getElementById("remember-login").checked){
+  localStorage.setItem(
+   "EAC_REMEMBER_LOGIN",
+   JSON.stringify(user)
+  );
+ }
+
+ logActivity(
+  user.id,
+  "Login",
+  `User ${user.username} logged in.`
+ );
+
+ document
+  .getElementById("login-screen")
+  .classList.add("hidden");
+
+ document
+  .getElementById("app-container")
+  .classList.remove("hidden");
+
+ initApp();
+
+ showToast(
+  "Welcome back, "+user.fullName,
+  "success"
+ );
+}
+
+function logout(){
+ if(currentUser){
+  logActivity(
+   currentUser.id,
+   "Logout",
+   `User ${currentUser.username} logged out.`
+  );
+ }
+
+ sessionStorage.removeItem(SESSION_KEY);
+ localStorage.removeItem("EAC_REMEMBER_LOGIN");
+
+ currentUser=null;
+
+ document
+  .getElementById("app-container")
+  .classList.add("hidden");
+
+ document
+  .getElementById("login-screen")
+  .classList.remove("hidden");
+
+ document.getElementById("login-form").reset();
+
+ showToast("Logged out successfully.","success");
+}
+
+
+/* ============================================================
+   APP
+============================================================ */
 
 function initApp(){
- if(!currentUser) return;
- document.getElementById("topbar-username").innerText = currentUser.fullName;
- document.getElementById("topbar-role").innerText = currentUser.role;
- document.getElementById("sidebar-role").innerText = currentUser.role === "Admin" ? "Administrator" : "Staff User";
 
- document.querySelectorAll(".perm-check").forEach(el => {
-  const perm = el.getAttribute("data-perm");
-  if(perm && !hasPermission(perm)){
-   el.style.display = "none";
-  } else {
-   el.style.display = "";
-  }
- });
+ if(!currentUser)return;
+
+ document.getElementById("topbar-username").innerText=
+  currentUser.fullName;
+
+ document.getElementById("topbar-role").innerText=
+  currentUser.role;
+
+ document.getElementById("sidebar-role").innerText=
+  currentUser.role==="Admin"
+   ? "Administrator"
+   : "Staff User";
+
+ document
+  .querySelectorAll(".admin-only")
+  .forEach(el=>{
+   el.style.display=isAdmin() ? "" : "none";
+  });
 
  navigate("dashboard");
 }
 
-function toggleMobileSidebar(){ document.getElementById("sidebar").classList.toggle("open"); }
-function toggleSubmenu(el){ document.getElementById("candidate-submenu").classList.toggle("hidden"); }
+function toggleMobileSidebar(){
+ document.getElementById("sidebar").classList.toggle("open");
+}
+
+function toggleSubmenu(el){
+ const menu=document.getElementById("candidate-submenu");
+ menu.classList.toggle("hidden");
+}
 
 function navigate(page){
- const map = {
-  dashboard: "VIEW_DASHBOARD",
-  analytics: "VIEW_RANKINGS",
-  "add-candidate": "VIEW_A4",
-  "candidates-list": "VIEW_CANDIDATES",
-  groups: "MANAGE_GROUPS",
-  reports: "VIEW_REPORTS",
-  users: "MANAGE_USERS",
-  activity: "MANAGE_USERS",
-  settings: "ACCESS_SETTINGS"
- };
 
- const requiredPerm = map[page];
- if(requiredPerm && !hasPermission(requiredPerm)){
-  showToast("You do not have permission to access this feature.", "error");
+ if(
+  ["groups","users","activity","backup"].includes(page)
+  && !isAdmin()
+ ){
+  showToast(
+   "Administrator permission required.",
+   "error"
+  );
   return;
  }
 
- activePage = page;
- document.querySelectorAll(".sidebar-menu li[data-page]").forEach(li => li.classList.remove("active"));
- const target = document.querySelector(`.sidebar-menu li[data-page="${page}"]`);
- if(target) target.classList.add("active");
+ activePage=page;
 
- const titles = {
-  dashboard: "Dashboard",
-  analytics: "Money & Groups Directional Comparison",
-  "add-candidate": "Interactive A4 Form & Candidate Entry",
-  "candidates-list": "Candidates Directory",
-  groups: "Group Management",
-  reports: "Financial Reports",
-  users: "User Management & Permissions",
-  activity: "System Activity Log",
-  settings: "System Settings"
+ document
+  .querySelectorAll(".sidebar-menu li[data-page]")
+  .forEach(li=>{
+   li.classList.remove("active");
+  });
+
+ const target=
+  document.querySelector(
+   `.sidebar-menu li[data-page="${page}"]`
+  );
+
+ if(target)target.classList.add("active");
+
+ const titles={
+  dashboard:"Dashboard",
+  analytics:"Money & Groups Directional Comparison",
+  "add-candidate":"Interactive A4 Form & Candidate Entry",
+  "candidates-list":"Candidates Directory",
+  groups:"Group Management",
+  contributions:"Contribution Records",
+  reports:"Financial Reports",
+  users:"User Management",
+  activity:"System Activity Log",
+  backup:"Backup & Restore",
+  settings:"System Settings"
  };
 
- document.getElementById("page-title").innerText = titles[page] || "Dashboard";
+ document.getElementById("page-title").innerText=
+  titles[page] || "Dashboard";
+
  renderPage(page);
+
  document.getElementById("sidebar").classList.remove("open");
 }
 
-async function renderPage(page){
- const container = document.getElementById("content-body");
- container.innerHTML = "";
+function renderPage(page){
+
+ const container=
+  document.getElementById("content-body");
+
+ container.innerHTML="";
+
  switch(page){
-  case "dashboard": await renderDashboard(container); break;
-  case "analytics": await renderAnalyticsPage(container); break;
-  case "add-candidate": await renderFormIntegration(container); break;
-  case "candidates-list": await renderCandidatesList(container); break;
-  case "groups": await renderGroupsPage(container); break;
-  case "users": await renderUserManagement(container); break;
-  case "reports": await renderDashboard(container); break;
-  default: await renderDashboard(container);
+
+  case "dashboard":
+   renderDashboard(container);
+   break;
+
+  case "analytics":
+   renderAnalyticsPage(container);
+   break;
+
+  case "add-candidate":
+   renderFormIntegration(container);
+   break;
+
+  case "candidates-list":
+   renderCandidatesList(container);
+   break;
+
+  case "groups":
+   renderGroupsPage(container);
+   break;
+
+  case "contributions":
+   renderContributionsPage(container);
+   break;
+
+  case "reports":
+   renderReportsPage(container);
+   break;
+
+  case "users":
+   renderUsersPage(container);
+   break;
+
+  case "activity":
+   renderActivityPage(container);
+   break;
+
+  case "backup":
+   renderBackupPage(container);
+   break;
+
+  case "settings":
+   renderSettingsPage(container);
+   break;
+
+  default:
+   renderDashboard(container);
  }
 }
+
 
 /* ============================================================
-   USER MANAGEMENT
+   DASHBOARD
 ============================================================ */
 
-async function renderUserManagement(container){
- if(!requirePermission("MANAGE_USERS")) return;
- const db = await fetchBackendData();
+function getCandidateContribution(candidate){
 
- container.innerHTML = `
- <div class="card">
-  <div class="card-header">
-   <div class="card-title"><i class="fa fa-user-shield"></i> User Management System</div>
-   <button class="btn-gold" onclick="openAddUserModal()"><i class="fa fa-user-plus"></i> Add New User</button>
-  </div>
-  <div class="card-body">
-   <div class="table-wrap">
-    <table>
-     <thead>
-      <tr>
-       <th>Full Name</th>
-       <th>Username / Email</th>
-       <th>Role</th>
-       <th>Status</th>
-       <th>Actions</th>
-      </tr>
-     </thead>
-     <tbody>
-      ${
-       db.users.length ? db.users.map(u => `
-        <tr>
-         <td><b>${esc(u.fullName)}</b></td>
-         <td>${esc(u.email || u.username)}</td>
-         <td><span class="badge ${u.role==='Admin'?'badge-warning':'badge-info'}">${esc(u.role)}</span></td>
-         <td><span class="badge ${u.status==='Active'?'badge-success':'badge-danger'}">${esc(u.status)}</span></td>
-         <td class="actions">
-          <button class="btn-sm btn-outline" onclick="openEditUserModal('${esc(u.uid || u.id)}')"><i class="fa fa-edit"></i> Edit</button>
-          ${
-           u.role !== 'Admin' ? `
-            <button class="btn-sm ${u.status==='Active'?'btn-danger':'btn-success'}" onclick="toggleUserStatus('${esc(u.uid || u.id)}')">
-             ${u.status==='Active'?'Disable':'Enable'}
-            </button>
-           ` : ''
-          }
-         </td>
-        </tr>
-       `).join("") : `<tr><td colspan="5" class="empty">No users configured.</td></tr>`
-      }
-     </tbody>
-    </table>
-   </div>
-  </div>
- </div>
- `;
-}
+ let total=0;
 
-function openAddUserModal(){
- const body = `
-  <form id="add-user-form" onsubmit="saveNewUser(event)">
-   <div class="form-group">
-    <label>Full Name</label>
-    <input id="u-fullname" placeholder="e.g. Natnael Yonas" required>
-   </div>
-   <div class="grid-2">
-    <div class="form-group">
-     <label>Email / Account Username</label>
-     <input id="u-email" type="email" placeholder="user@meklite.local" required>
-    </div>
-    <div class="form-group">
-     <label>Temporary Password</label>
-     <input id="u-password" type="password" minlength="6" required>
-    </div>
-   </div>
-   <div class="grid-2">
-    <div class="form-group">
-     <label>Role</label>
-     <select id="u-role" onchange="togglePermDisplayInModal(this.value)">
-      <option value="Limited User">Limited User</option>
-      <option value="Admin">Admin</option>
-     </select>
-    </div>
-    <div class="form-group">
-     <label>Status</label>
-     <select id="u-status">
-      <option value="Active">Active</option>
-      <option value="Disabled">Disabled</option>
-     </select>
-    </div>
-   </div>
-
-   <div id="modal-perm-section">
-    <label>Granular User Permissions</label>
-    <div class="permission-grid">
-     ${Object.keys(DEFAULT_PERMISSIONS).map(key => `
-      <label class="permission-item">
-       <input type="checkbox" class="perm-cb" data-key="${key}" ${DEFAULT_PERMISSIONS[key] ? 'checked' : ''}>
-       ${key.replace(/_/g,' ')}
-      </label>
-     `).join("")}
-    </div>
-   </div>
-  </form>
- `;
-
- const footer = `
-  <button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
-  <button onclick="document.getElementById('add-user-form').requestSubmit()"><i class="fa fa-save"></i> Save User</button>
- `;
-
- openModal("Add New User", body, footer);
-}
-
-function togglePermDisplayInModal(role){
- const sec = document.getElementById("modal-perm-section");
- if(sec) sec.style.display = role === "Admin" ? "none" : "block";
-}
-
-async function saveNewUser(e){
- e.preventDefault();
- if(!requirePermission("MANAGE_USERS")) return;
-
- const fullName = document.getElementById("u-fullname").value.trim();
- const email = document.getElementById("u-email").value.trim();
- const role = document.getElementById("u-role").value;
- const status = document.getElementById("u-status").value;
-
- const permissions = {};
- if(role === "Admin"){
-  Object.keys(DEFAULT_PERMISSIONS).forEach(k => permissions[k] = true);
- } else {
-  document.querySelectorAll(".perm-cb").forEach(cb => {
-   permissions[cb.getAttribute("data-key")] = cb.checked;
-  });
- }
-
- const db = getDB();
- const newUid = generateId("USR");
- const newUser = { uid: newUid, id: newUid, fullName, email, role, status, permissions };
-
- db.users.push(newUser);
- await saveDB(db);
- await logActivity(currentUser.uid, "Created User", `Created account for ${fullName}`);
- showToast("User created successfully.", "success");
- closeModal("general-modal");
- renderUserManagement(document.getElementById("content-body"));
-}
-
-function openEditUserModal(userId){
- const db = getDB();
- const u = db.users.find(x => (x.uid === userId || x.id === userId));
- if(!u) return;
-
- const body = `
-  <form id="edit-user-form" onsubmit="updateUserProfile(event, '${userId}')">
-   <div class="form-group">
-    <label>Full Name</label>
-    <input id="u-edit-fullname" value="${esc(u.fullName)}" required>
-   </div>
-   <div class="grid-2">
-    <div class="form-group">
-     <label>Role</label>
-     <select id="u-edit-role" onchange="togglePermDisplayInModal(this.value)">
-      <option value="Limited User" ${u.role==='Limited User'?'selected':''}>Limited User</option>
-      <option value="Admin" ${u.role==='Admin'?'selected':''}>Admin</option>
-     </select>
-    </div>
-    <div class="form-group">
-     <label>Status</label>
-     <select id="u-edit-status">
-      <option value="Active" ${u.status==='Active'?'selected':''}>Active</option>
-      <option value="Disabled" ${u.status==='Disabled'?'selected':''}>Disabled</option>
-     </select>
-    </div>
-   </div>
-
-   <div id="modal-perm-section" style="${u.role==='Admin'?'display:none':''}">
-    <label>Granular User Permissions</label>
-    <div class="permission-grid">
-     ${Object.keys(DEFAULT_PERMISSIONS).map(key => {
-      const isChecked = u.permissions ? u.permissions[key] : DEFAULT_PERMISSIONS[key];
-      return `
-       <label class="permission-item">
-        <input type="checkbox" class="perm-cb" data-key="${key}" ${isChecked ? 'checked' : ''}>
-        ${key.replace(/_/g,' ')}
-       </label>
-      `;
-     }).join("")}
-    </div>
-   </div>
-  </form>
- `;
-
- const footer = `
-  <button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
-  <button onclick="document.getElementById('edit-user-form').requestSubmit()"><i class="fa fa-save"></i> Save Permissions</button>
- `;
-
- openModal("Edit User Permissions", body, footer);
-}
-
-async function updateUserProfile(e, userId){
- e.preventDefault();
- if(!requirePermission("MANAGE_USERS")) return;
-
- const db = getDB();
- const u = db.users.find(x => (x.uid === userId || x.id === userId));
- if(!u) return;
-
- u.fullName = document.getElementById("u-edit-fullname").value.trim();
- u.role = document.getElementById("u-edit-role").value;
- u.status = document.getElementById("u-edit-status").value;
-
- if(u.role === "Admin"){
-  Object.keys(DEFAULT_PERMISSIONS).forEach(k => u.permissions[k] = true);
- } else {
-  u.permissions ||= {};
-  document.querySelectorAll(".perm-cb").forEach(cb => {
-   u.permissions[cb.getAttribute("data-key")] = cb.checked;
-  });
- }
-
- await saveDB(db);
- await logActivity(currentUser.uid, "Updated Permissions", `Updated user settings for ${u.fullName}`);
- showToast("User permissions updated.", "success");
- closeModal("general-modal");
- renderUserManagement(document.getElementById("content-body"));
-}
-
-async function toggleUserStatus(userId){
- if(!requirePermission("MANAGE_USERS")) return;
- const db = getDB();
- const u = db.users.find(x => (x.uid === userId || x.id === userId));
- if(!u) return;
-
- u.status = u.status === "Active" ? "Disabled" : "Active";
- await saveDB(db);
- showToast(`User status changed to ${u.status}.`, "info");
- renderUserManagement(document.getElementById("content-body"));
-}
-
-/* ============================================================
-   A4 FORM & CANDIDATE REGISTRATION (PERMISSION-AWARE)
-============================================================ */
-
-function getCandidateContribution(c){
- let total = 0;
- (c.contributions||[]).forEach(r => {
-  total += Number(r.monthlyBirr||0) + Number(r.monthlyCent||0)/100 +
-           Number(r.personalBirr||0) + Number(r.personalCent||0)/100 +
-           Number(r.giftBirr||0) + Number(r.giftCent||0)/100 +
-           Number(r.otherBirr||0) + Number(r.otherCent||0)/100;
+ (candidate.contributions||[]).forEach(row=>{
+  total+=
+   Number(row.monthlyBirr||0)+
+   Number(row.monthlyCent||0)/100+
+   Number(row.personalBirr||0)+
+   Number(row.personalCent||0)/100+
+   Number(row.giftBirr||0)+
+   Number(row.giftCent||0)/100+
+   Number(row.otherBirr||0)+
+   Number(row.otherCent||0)/100;
  });
+
  return total;
 }
 
-function getCandidateBreakdown(c){
+function getCandidateBreakdown(candidate){
  let b = {monthly:0, personal:0, gift:0, other:0};
- (c.contributions||[]).forEach(r => {
+ (candidate.contributions||[]).forEach(r=>{
   b.monthly += Number(r.monthlyBirr||0) + Number(r.monthlyCent||0)/100;
   b.personal += Number(r.personalBirr||0) + Number(r.personalCent||0)/100;
   b.gift += Number(r.giftBirr||0) + Number(r.giftCent||0)/100;
@@ -1687,478 +1818,3726 @@ function getCandidateBreakdown(c){
  return b;
 }
 
-async function renderDashboard(container){
- const db = await fetchBackendData();
- const totalCandidates = db.candidates.length;
- const activeGroups = db.groups.filter(g=>g.status==="Active").length;
- const totalContribution = db.candidates.reduce((s,c)=>s+getCandidateContribution(c),0);
- const recent = db.activityLog.slice(0,8);
+function getGrandTotal(db){
+ return db.candidates.reduce(
+  (sum,c)=>sum+getCandidateContribution(c),
+  0
+ );
+}
 
- container.innerHTML = `
+function renderDashboard(container){
+
+ const db=getDB();
+
+ const totalCandidates=db.candidates.length;
+ const activeGroups=
+  db.groups.filter(g=>g.status==="Active").length;
+
+ const totalContribution=getGrandTotal(db);
+
+ const recent=db.activityLog.slice(0,8);
+
+ container.innerHTML=`
+
   <div class="stats-grid">
+
    <div class="stat-card">
-    <div><div class="stat-label">Total Candidates</div><div class="stat-value">${totalCandidates}</div></div>
+    <div>
+     <div class="stat-label">Total Candidates</div>
+     <div class="stat-value">${totalCandidates}</div>
+    </div>
     <i class="fa fa-users"></i>
    </div>
+
    <div class="stat-card gold">
-    <div><div class="stat-label">Active Groups</div><div class="stat-value">${activeGroups}</div></div>
+    <div>
+     <div class="stat-label">Active Groups</div>
+     <div class="stat-value">${activeGroups}</div>
+    </div>
     <i class="fa fa-layer-group"></i>
    </div>
+
    <div class="stat-card success">
-    <div><div class="stat-label">Total Contributions</div><div class="stat-value">${money(totalContribution)}</div></div>
+    <div>
+     <div class="stat-label">Total Contributions</div>
+     <div class="stat-value">${money(totalContribution)}</div>
+    </div>
     <i class="fa fa-money-bill-wave"></i>
    </div>
+
    <div class="stat-card info">
-    <div><div class="stat-label">System Users</div><div class="stat-value">${db.users.length}</div></div>
+    <div>
+     <div class="stat-label">System Users</div>
+     <div class="stat-value">${db.users.length}</div>
+    </div>
     <i class="fa fa-user-shield"></i>
    </div>
+
   </div>
 
   <div class="quick-actions">
-   ${hasPermission('VIEW_A4') ? `
-    <div class="quick-action" onclick="navigate('add-candidate')">
-     <i class="fa fa-user-plus"></i><div><strong>Register Candidate</strong><small style="display:block;color:#667085">Open A4 form</small></div>
-    </div>` : ''
-   }
-   ${hasPermission('VIEW_RANKINGS') ? `
-    <div class="quick-action" onclick="navigate('analytics')">
-     <i class="fa fa-chart-line"></i><div><strong>Money Analytics</strong><small style="display:block;color:#667085">Side-by-side comparison</small></div>
-    </div>` : ''
-   }
-   ${hasPermission('VIEW_CANDIDATES') ? `
-    <div class="quick-action" onclick="navigate('candidates-list')">
-     <i class="fa fa-address-book"></i><div><strong>Directory</strong><small style="display:block;color:#667085">Search candidates</small></div>
-    </div>` : ''
-   }
+
+   <div class="quick-action"
+        onclick="navigate('add-candidate')">
+    <i class="fa fa-user-plus"></i>
+    <div>
+     <strong>Register Candidate</strong>
+     <small style="display:block;color:#667085">
+      Open A4 registration form
+     </small>
+    </div>
+   </div>
+
+   <div class="quick-action"
+        onclick="navigate('analytics')">
+    <i class="fa fa-chart-line"></i>
+    <div>
+     <strong>Money Analytics</strong>
+     <small style="display:block;color:#667085">
+      Directional Groups & Candidates comparison
+     </small>
+    </div>
+   </div>
+
+   <div class="quick-action"
+        onclick="navigate('candidates-list')">
+    <i class="fa fa-address-book"></i>
+    <div>
+     <strong>Candidate Directory</strong>
+     <small style="display:block;color:#667085">
+      Search and manage candidates
+     </small>
+    </div>
+   </div>
+
+   <div class="quick-action"
+        onclick="navigate('contributions')">
+    <i class="fa fa-hand-holding-dollar"></i>
+    <div>
+     <strong>Contributions</strong>
+     <small style="display:block;color:#667085">
+      View financial records
+     </small>
+    </div>
+   </div>
+
   </div>
 
   <div class="grid-2">
+
    <div class="card">
-    <div class="card-header"><div class="card-title"><i class="fa fa-clock"></i> Recent Activity</div></div>
+    <div class="card-header">
+     <div class="card-title">
+      <i class="fa fa-clock"></i>
+      Recent Activity
+     </div>
+     <button class="btn-outline btn-sm"
+             onclick="navigate('activity')">
+      View All
+     </button>
+    </div>
+
     <div class="table-wrap">
      <table>
-      <thead><tr><th>Action</th><th>Description</th><th>Date</th></tr></thead>
+      <thead>
+       <tr>
+        <th>Action</th>
+        <th>Description</th>
+        <th>Date</th>
+       </tr>
+      </thead>
+
       <tbody>
-       ${recent.length ? recent.map(l => `<tr><td><b>${esc(l.action)}</b></td><td>${esc(l.description)}</td><td>${esc(l.dateTime||'')}</td></tr>`).join("") : '<tr><td colspan="3" class="empty">No activity.</td></tr>'}
+       ${
+        recent.length
+        ? recent.map(l=>`
+         <tr>
+          <td><b>${esc(l.action)}</b></td>
+          <td>${esc(l.description)}</td>
+          <td>${esc(l.dateTime)}</td>
+         </tr>
+        `).join("")
+        : `
+         <tr>
+          <td colspan="3" class="empty">
+           No activity.
+          </td>
+         </tr>
+        `
+       }
       </tbody>
      </table>
     </div>
    </div>
 
+
    <div class="card">
     <div class="card-header">
-     <div class="card-title"><i class="fa fa-layer-group"></i> Group Rankings</div>
+     <div class="card-title">
+      <i class="fa fa-layer-group"></i>
+      Group Financial Ranking
+     </div>
+     <button class="btn-sm btn-gold" onclick="navigate('analytics')"><i class="fa fa-sliders"></i> Comparative View</button>
     </div>
+
     <div class="table-wrap">
      <table>
-      <thead><tr><th>Group</th><th>Group Money</th></tr></thead>
+      <thead>
+       <tr>
+        <th>Rank</th>
+        <th>Group</th>
+        <th>Members</th>
+        <th>Contribution</th>
+       </tr>
+      </thead>
+
       <tbody>
-       ${db.groups.map(g => {
-        const amt = (db.groupFunds||[]).filter(r=>Number(r.groupId)===Number(g.id)).reduce((s,r)=>s+Number(r.amount||0),0);
-        return `<tr><td><b>${esc(g.groupName)}</b></td><td><strong>${money(amt)} ETB</strong></td></tr>`;
-       }).join("")}
+
+       ${
+        db.groups.map(g=>{
+         const members=db.candidates.filter(c=>c.group===g.groupName);
+         const amount=members.reduce((s,c)=>s+getCandidateContribution(c),0);
+         return {groupName: g.groupName, count: members.length, amount};
+        }).sort((a,b)=>b.amount - a.amount).map((g, idx)=>`
+          <tr>
+           <td><span class="rank-badge ${idx===0?'rank-1':idx===1?'rank-2':idx===2?'rank-3':''}">${idx+1}</span></td>
+           <td><b>${esc(g.groupName)}</b></td>
+           <td>${g.count}</td>
+           <td><strong style="color:var(--primary-blue)">${money(g.amount)} ETB</strong></td>
+          </tr>
+         `).join("")
+       }
+
       </tbody>
      </table>
     </div>
    </div>
+
   </div>
  `;
 }
 
-async function renderFormIntegration(container, candidateId=null){
- if(!requirePermission("VIEW_A4")) return;
- const db = await fetchBackendData();
- let candidate = candidateId ? db.candidates.find(c => c.id === candidateId) : null;
+/* ============================================================
+   DIRECTIONAL MONEY & GROUP COMPARISON ANALYTICS ENGINE
+============================================================ */
 
- editingCandidateId = candidate ? candidate.id : null;
- currentPhotoBase64 = candidate?.photo || "";
- const formNumber = candidate?.id || generateId("EAC");
-
- const canEditName = hasPermission("EDIT_CANDIDATE_NAME");
- const canEditMoney = hasPermission("EDIT_MONEY");
- const canAddRow = hasPermission("ADD_ROW");
- const canDeleteRow = hasPermission("DELETE_ROW");
- const canPrint = hasPermission("PRINT_A4");
+function renderAnalyticsPage(container){
+ const db = getDB();
 
  container.innerHTML = `
- <div class="card no-print" style="margin-bottom:1rem">
-  <div class="card-body">
-   <div class="toolbar">
-    <button onclick="saveCandidateForm()"><i class="fa fa-save"></i> ${candidate ? "Update Candidate" : "Save Candidate"}</button>
-    ${canAddRow ? `<button class="btn-gold" onclick="newCandidateForm()"><i class="fa fa-user-plus"></i> New Candidate</button>` : ''}
-    ${canPrint ? `<button class="btn-outline" onclick="window.print()"><i class="fa fa-print"></i> Print A4</button>` : ''}
-    <span id="form-save-status" style="margin-left:auto;color:#10b981;font-weight:700"></span>
+ <div class="card">
+   <div class="card-header">
+     <div class="card-title">
+       <i class="fa fa-chart-line"></i> Money Comparison & Directional Analytics Engine
+     </div>
+     <div class="toolbar">
+       <button class="btn-gold" onclick="renderAnalyticsPage(document.getElementById('content-body'))">
+         <i class="fa fa-rotate"></i> Refresh Analytics
+       </button>
+     </div>
    </div>
+   <div class="card-body">
+     <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.2rem">
+       Analyze money, contributions, and performance dynamically across candidate rankings, group leaderboards, financial breakdown channels, and side-by-side comparative views.
+     </p>
+
+     <div class="grid-2">
+       <!-- Dynamic Group Financial Leaderboard Chart -->
+       <div class="card">
+         <div class="card-header"><div class="card-title"><i class="fa fa-chart-bar"></i> Group Revenue Comparison</div></div>
+         <div class="card-body"><canvas id="chart-groups-revenue" style="max-height:280px"></canvas></div>
+       </div>
+
+       <!-- Financial Breakdown Distribution Chart -->
+       <div class="card">
+         <div class="card-header"><div class="card-title"><i class="fa fa-chart-pie"></i> Contribution Channels Breakdown</div></div>
+         <div class="card-body"><canvas id="chart-channels-pie" style="max-height:280px"></canvas></div>
+       </div>
+     </div>
+
+     <!-- Side-by-Side Candidates Comparison tool -->
+     <div class="card" style="margin-top:1.2rem">
+       <div class="card-header">
+         <div class="card-title"><i class="fa fa-code-compare"></i> Side-by-Side Candidate Money Comparison</div>
+       </div>
+       <div class="card-body">
+         <div class="grid-2" style="margin-bottom:1rem">
+           <div>
+             <label>Select First Candidate</label>
+             <select id="compare-c1" onchange="updateCandidatesComparison()">
+               <option value="">-- Choose Candidate 1 --</option>
+               ${db.candidates.map(c=>`<option value="${esc(c.id)}">${esc(c.fullName)} (${esc(c.group)})</option>`).join("")}
+             </select>
+           </div>
+           <div>
+             <label>Select Second Candidate</label>
+             <select id="compare-c2" onchange="updateCandidatesComparison()">
+               <option value="">-- Choose Candidate 2 --</option>
+               ${db.candidates.map(c=>`<option value="${esc(c.id)}">${esc(c.fullName)} (${esc(c.group)})</option>`).join("")}
+             </select>
+           </div>
+         </div>
+         <div id="candidate-comparison-results" class="grid-2">
+           <div class="empty">Select two candidates above to generate detailed money, pledge channel, and ranking comparison.</div>
+         </div>
+       </div>
+     </div>
+
+     <!-- Top Financial Donors Leaderboard Table -->
+     <div class="card" style="margin-top:1.2rem">
+       <div class="card-header">
+         <div class="card-title"><i class="fa fa-trophy"></i> Top Money-Contributing Candidates Leaderboard</div>
+       </div>
+       <div class="table-wrap">
+         <table>
+           <thead>
+             <tr>
+               <th>Rank</th>
+               <th>Candidate Name</th>
+               <th>Group</th>
+               <th>Monthly Contrib.</th>
+               <th>Personal Meklit</th>
+               <th>Gifts & Gifts</th>
+               <th>Other</th>
+               <th>Total Money</th>
+             </tr>
+           </thead>
+           <tbody>
+             ${
+               db.candidates.map(c => {
+                 const b = getCandidateBreakdown(c);
+                 const total = b.monthly + b.personal + b.gift + b.other;
+                 return { candidate: c, breakdown: b, total };
+               })
+               .sort((a,b) => b.total - a.total)
+               .slice(0, 15)
+               .map((item, index) => `
+                 <tr>
+                   <td><span class="rank-badge ${index===0?'rank-1':index===1?'rank-2':index===2?'rank-3':''}">${index+1}</span></td>
+                   <td><b>${esc(item.candidate.fullName)}</b></td>
+                   <td><span class="badge badge-info">${esc(item.candidate.group)}</span></td>
+                   <td>${money(item.breakdown.monthly)}</td>
+                   <td>${money(item.breakdown.personal)}</td>
+                   <td>${money(item.breakdown.gift)}</td>
+                   <td>${money(item.breakdown.other)}</td>
+                   <td><strong style="color:var(--success);font-size:.95rem">${money(item.total)} ETB</strong></td>
+                 </tr>
+               `).join("") || `<tr><td colspan="8" class="empty">No candidates available for money analysis.</td></tr>`
+             }
+           </tbody>
+         </table>
+       </div>
+     </div>
+
+   </div>
+ </div>
+ `;
+
+ setTimeout(() => {
+   initAnalyticsCharts(db);
+ }, 50);
+}
+
+function initAnalyticsCharts(db){
+ const ctxGroup = document.getElementById("chart-groups-revenue")?.getContext("2d");
+ const ctxPie = document.getElementById("chart-channels-pie")?.getContext("2d");
+
+ if(!ctxGroup || !ctxPie) return;
+
+ const groupData = db.groups.map(g => {
+   const members = db.candidates.filter(c=>c.group===g.groupName);
+   const total = members.reduce((s,c)=>s+getCandidateContribution(c),0);
+   return { name: g.groupName, total };
+ });
+
+ new Chart(ctxGroup, {
+   type: 'bar',
+   data: {
+     labels: groupData.map(g=>g.name),
+     datasets: [{
+       label: 'Total Money (ETB)',
+       data: groupData.map(g=>g.total),
+       backgroundColor: '#0b3c5d',
+       borderColor: '#c5a059',
+       borderWidth: 1.5,
+       borderRadius: 5
+     }]
+   },
+   options: { responsive: true, maintainAspectRatio: false }
+ });
+
+ let totalMonthly = 0, totalPersonal = 0, totalGift = 0, totalOther = 0;
+ db.candidates.forEach(c => {
+   const b = getCandidateBreakdown(c);
+   totalMonthly += b.monthly;
+   totalPersonal += b.personal;
+   totalGift += b.gift;
+   totalOther += b.other;
+ });
+
+ new Chart(ctxPie, {
+   type: 'doughnut',
+   data: {
+     labels: ['Monthly', 'Personal Meklit', 'Gift', 'Other'],
+     datasets: [{
+       data: [totalMonthly, totalPersonal, totalGift, totalOther],
+       backgroundColor: ['#0b3c5d', '#c5a059', '#10b981', '#3b82f6']
+     }]
+   },
+   options: { responsive: true, maintainAspectRatio: false }
+ });
+}
+
+function updateCandidatesComparison(){
+ const db = getDB();
+ const c1Id = document.getElementById("compare-c1")?.value;
+ const c2Id = document.getElementById("compare-c2")?.value;
+ const target = document.getElementById("candidate-comparison-results");
+
+ if(!c1Id || !c2Id){
+  target.innerHTML = `<div class="empty">Please select both candidates to see the money directional comparison.</div>`;
+  return;
+ }
+
+ const c1 = db.candidates.find(x=>x.id===c1Id);
+ const c2 = db.candidates.find(x=>x.id===c2Id);
+
+ if(!c1 || !c2) return;
+
+ const b1 = getCandidateBreakdown(c1);
+ const b2 = getCandidateBreakdown(c2);
+ const t1 = b1.monthly + b1.personal + b1.gift + b1.other;
+ const t2 = b2.monthly + b2.personal + b2.gift + b2.other;
+
+ const diff = Math.abs(t1 - t2);
+ const leader = t1 > t2 ? c1.fullName : t2 > t1 ? c2.fullName : "Equal";
+
+ target.innerHTML = `
+   <div class="compare-card">
+     <div class="compare-title">${esc(c1.fullName)}</div>
+     <div style="text-align:center;margin-bottom:.8rem"><span class="badge badge-info">${esc(c1.group)}</span></div>
+     <div class="info-row"><span class="label">Monthly:</span> <span>${money(b1.monthly)} ETB</span></div>
+     <div class="info-row"><span class="label">Personal:</span> <span>${money(b1.personal)} ETB</span></div>
+     <div class="info-row"><span class="label">Gift:</span> <span>${money(b1.gift)} ETB</span></div>
+     <div class="info-row"><span class="label">Other:</span> <span>${money(b1.other)} ETB</span></div>
+     <hr style="margin:.5rem 0">
+     <div style="font-size:1.1rem;font-weight:800;color:var(--primary-blue);text-align:center">
+       Total: ${money(t1)} ETB
+     </div>
+   </div>
+
+   <div class="compare-card">
+     <div class="compare-title">${esc(c2.fullName)}</div>
+     <div style="text-align:center;margin-bottom:.8rem"><span class="badge badge-info">${esc(c2.group)}</span></div>
+     <div class="info-row"><span class="label">Monthly:</span> <span>${money(b2.monthly)} ETB</span></div>
+     <div class="info-row"><span class="label">Personal:</span> <span>${money(b2.personal)} ETB</span></div>
+     <div class="info-row"><span class="label">Gift:</span> <span>${money(b2.gift)} ETB</span></div>
+     <div class="info-row"><span class="label">Other:</span> <span>${money(b2.other)} ETB</span></div>
+     <hr style="margin:.5rem 0">
+     <div style="font-size:1.1rem;font-weight:800;color:var(--primary-blue);text-align:center">
+       Total: ${money(t2)} ETB
+     </div>
+   </div>
+
+   <div class="full-span" style="background:#fef3c7;padding:1rem;border-radius:8px;border:1px solid #f59e0b;text-align:center;margin-top:.5rem">
+     <strong style="color:#92400e">Comparison Insight:</strong> 
+     ${leader === "Equal" ? "Both candidates have identical overall contributions." : `<b>${esc(leader)}</b> leads by a difference of <b>${money(diff)} ETB</b>.`}
+   </div>
+ `;
+}
+
+/* ============================================================
+   A4 FORM
+============================================================ */
+
+function renderFormIntegration(container,candidateId=null){
+
+ const db=getDB();
+
+ let candidate=null;
+
+ if(candidateId){
+  candidate=
+   db.candidates.find(c=>c.id===candidateId);
+ }
+
+ editingCandidateId=
+  candidate ? candidate.id : null;
+
+ currentPhotoBase64=
+  candidate?.photo || "";
+
+ const formNumber=
+  candidate?.id || generateId("EAC");
+
+ container.innerHTML=`
+
+ <div class="card no-print" style="margin-bottom:1rem">
+
+  <div class="card-body">
+
+   <div class="toolbar">
+
+    <button onclick="saveCandidateForm()">
+     <i class="fa fa-save"></i>
+     ${candidate ? "Update Candidate" : "Save Candidate"}
+    </button>
+
+    <button class="btn-gold"
+            onclick="newCandidateForm()">
+     <i class="fa fa-user-plus"></i>
+     New Candidate
+    </button>
+
+    <button class="btn-outline"
+            onclick="window.print()">
+     <i class="fa fa-print"></i>
+     Print A4
+    </button>
+
+    <button class="btn-info"
+            onclick="clearContributionRows()">
+     <i class="fa fa-eraser"></i>
+     Clear Contributions
+    </button>
+
+    ${
+     candidate
+     ? `
+      <button class="btn-danger"
+              onclick="deleteCandidate('${esc(candidate.id)}')">
+       <i class="fa fa-trash"></i>
+       Delete
+      </button>
+     `
+     :""
+    }
+
+    <span id="form-save-status"
+          style="margin-left:auto;color:#10b981;font-weight:700">
+    </span>
+
+   </div>
+
   </div>
  </div>
 
+
  <div id="form-print-area">
+
   <div class="sheet">
+
    <div class="header-container">
-    <div class="logo-frame"><img src="https://i.ibb.co/FbfRp88t/apostolic.jpg"></div>
-    <div class="header-titles">
-     <h1>በኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን</h1>
-     <h2>የወጣቶች መክሊት አገልግሎት ክፍል</h2>
-     <h3>የአባላት ገንዘብ መሰብሰቢያ ቅጽ</h3>
+
+    <div class="logo-frame">
+     <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg">
     </div>
+
+    <div class="header-titles">
+
+     <h1>
+      በኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን
+     </h1>
+
+     <h2>
+      የወጣቶች መክሊት አገልግሎት ክፍል
+     </h2>
+
+     <h3>
+      የአባላት ገንዘብ መሰብሰቢያ ቅጽ
+     </h3>
+
+    </div>
+
     <div style="width:25mm;text-align:right">
      <div style="font-size:8px;font-weight:800;color:#173e65;border-bottom:.35mm solid #173e65;padding-bottom:1mm">
-      ቁጥር፡ <span id="lbl-form-no">${esc(formNumber)}</span>
+      ቁጥር፡
+      <span id="lbl-form-no">${esc(formNumber)}</span>
      </div>
     </div>
+
    </div>
+
 
    <div class="info-box">
+
     <div class="info-grid">
+
      <div class="info-row full-span">
+
       <span class="label">የ</span>
-      <input id="inp-church-branch" class="write-line-short" value="${esc(candidate?.branch||"")}" placeholder="ሰበካ">
-      <span class="label">ቅርንጫፍ ሰበካ በ</span>
-      <input id="inp-sub-branch" class="write-line-short" value="${esc(candidate?.subBranch||"")}" placeholder="ንኡስ ሰበካ">
-      <span class="label">ንኡስ ሰበካ የ</span>
-      <input id="inp-assembly" class="write-line-short" value="${esc(candidate?.assembly||"")}" placeholder="አጥቢያ">
+
+      <input id="inp-church-branch"
+             class="write-line-short"
+             value="${esc(candidate?.branch||"")}"
+             placeholder="ሰበካ">
+
+      <span class="label">
+       ቅርንጫፍ ሰበካ በ
+      </span>
+
+      <input id="inp-sub-branch"
+             class="write-line-short"
+             value="${esc(candidate?.subBranch||"")}"
+             placeholder="ንኡስ ሰበካ">
+
+      <span class="label">
+       ንኡስ ሰበካ የ
+      </span>
+
+      <input id="inp-assembly"
+             class="write-line-short"
+             value="${esc(candidate?.assembly||"")}"
+             placeholder="አጥቢያ">
+
       <span class="label">አጥቢያ</span>
+
      </div>
 
+
      <div class="info-row">
+
       <span class="label">ስም፡</span>
-      <input id="inp-fullname" class="write-line" value="${esc(candidate?.fullName||"")}" ${!canEditName?'readonly':''} placeholder="ሙሉ ስም ያስገቡ">
+
+      <input id="inp-fullname"
+             class="write-line"
+             value="${esc(candidate?.fullName||"")}"
+             placeholder="ሙሉ ስም ያስገቡ">
+
      </div>
 
+
      <div class="info-row">
+
       <span class="label">መክሊት ቡድን፡</span>
-      <select id="inp-group" class="write-line" style="height:4.5mm;padding:0;font-size:8.2px">
+
+      <select id="inp-group"
+              class="write-line"
+              style="height:4.5mm;padding:0;font-size:8.2px">
+
        <option value="">-- ቡድን --</option>
-       ${db.groups.filter(g=>g.status==="Active").map(g=>`
-        <option value="${esc(g.groupName)}" ${candidate?.group===g.groupName?"selected":""}>${esc(g.groupName)}</option>
-       `).join("")}
+
+       ${
+        db.groups
+         .filter(g=>g.status==="Active")
+         .map(g=>`
+          <option
+           value="${esc(g.groupName)}"
+           ${candidate?.group===g.groupName?"selected":""}>
+           ${esc(g.groupName)}
+          </option>
+         `).join("")
+       }
+
       </select>
+
      </div>
 
+
      <div class="info-row">
+
       <span class="label">አድራሻ-ቀበሌ፡</span>
-      <input id="inp-address" class="write-line" value="${esc(candidate?.address||"")}" placeholder="አድራሻ / ቀበሌ">
+
+      <input id="inp-address"
+             class="write-line"
+             value="${esc(candidate?.address||"")}"
+             placeholder="አድራሻ / ቀበሌ">
+
      </div>
+
 
      <div class="info-row">
+
       <span class="label">ስልክ ቁጥር፡</span>
-      <input id="inp-phone" class="write-line" value="${esc(candidate?.phone||"")}" placeholder="09xxxxxxxx">
+
+      <input id="inp-phone"
+             class="write-line"
+             value="${esc(candidate?.phone||"")}"
+             placeholder="09xxxxxxxx">
+
      </div>
+
     </div>
 
-    <div class="photo-btn-container">
-     <span id="photo-text" class="${candidate?.photo?"hidden":""}">ፎቶ<br>ይጫኑ</span>
-     <img id="photo-preview" class="${candidate?.photo?"":"hidden"}" src="${candidate?.photo||""}">
-     <input type="file" accept="image/*" onchange="handlePhotoUpload(event)">
+
+    <div class="photo-btn-container"
+         title="Click to upload photo">
+
+     <span id="photo-text"
+           class="${candidate?.photo?"hidden":""}">
+      ፎቶ<br>ይጫኑ
+     </span>
+
+     <img id="photo-preview"
+          class="${candidate?.photo?"":"hidden"}"
+          src="${candidate?.photo||""}"
+          alt="Candidate Photo">
+
+     <input type="file"
+            accept="image/*"
+            onchange="handlePhotoUpload(event)">
+
     </div>
+
    </div>
 
+
    <div class="embedded-table-area">
+
     <table>
+
+     <colgroup>
+      <col style="width:11%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:11%">
+     </colgroup>
+
      <thead>
+
       <tr>
+
        <th rowspan="2">ቀን</th>
+
        <th colspan="2">ወርሃዊ መዋጮ</th>
        <th colspan="2">የግል መክሊት</th>
        <th colspan="2">ስጦታ</th>
        <th colspan="2">ልዪ ልዪ</th>
        <th colspan="2">ጠቅላላ ድምር</th>
+
        <th rowspan="2">ፊርማ</th>
+
       </tr>
+
       <tr>
-       <th class="sub-th">ብር</th><th class="sub-th">ሳ</th>
-       <th class="sub-th">ብር</th><th class="sub-th">ሳ</th>
-       <th class="sub-th">ብር</th><th class="sub-th">ሳ</th>
-       <th class="sub-th">ብር</th><th class="sub-th">ሳ</th>
-       <th class="sub-th">ብር</th><th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
       </tr>
+
      </thead>
+
      <tbody id="embedded-table-body"></tbody>
+
     </table>
-    <div class="no-print" style="display:flex;justify-content:center;gap:1rem;margin-top:.8rem">
-     ${canAddRow ? `<button class="btn-sm btn-gold" onclick="addA4Row()"><i class="fa fa-plus"></i> Add Row</button>` : ''}
-     ${canDeleteRow ? `<button class="btn-sm btn-danger" onclick="removeA4Row()"><i class="fa fa-minus"></i> Remove Row</button>` : ''}
+
+    <div class="no-print" style="display:flex;justify-content:center;align-items:center;padding:1.5mm 0 1mm;">
+     <button type="button"
+             class="btn-sm btn-gold"
+             onclick="addContributionRow()"
+             title="Add a new contribution row">
+      <i class="fa fa-plus"></i>
+      Add Row
+     </button>
     </div>
+
    </div>
 
+
    <div class="sheet-footer">
-    <div class="verse">${esc(db.settings.verse)}</div>
+
+    <div style="width:100%;height:.4mm;background:#d4af37;margin-bottom:1mm"></div>
+
+    <div class="verse">
+     “መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።”
+     <span style="font-weight:900;margin-left:1mm;color:#246b9a">
+      ማቴ 6:21
+     </span>
+    </div>
+
    </div>
+
   </div>
+
  </div>
  `;
 
- populateA4Table(candidate?.contributions || []);
-}
+ const tbody=document.getElementById("embedded-table-body");
 
-function populateA4Table(rows){
- const tbody = document.getElementById("embedded-table-body");
- if(!tbody) return;
- tbody.innerHTML = "";
+ const rows=
+  candidate?.contributions || [];
 
- const rowCount = Math.max(12, rows.length);
- const canEditMoney = hasPermission("EDIT_MONEY");
+ for(let i=0;i<28;i++){
 
- for(let i=0; i<rowCount; i++){
-  const r = rows[i] || {};
-  const tr = document.createElement("tr");
-  tr.className = "data-row";
-  tr.innerHTML = `
-   <td><input class="date-input" value="${esc(r.date||"")}"></td>
-   <td><input class="money-input m-birr" value="${esc(r.monthlyBirr||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
-   <td><input class="money-input m-cent" value="${esc(r.monthlyCent||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
-   <td><input class="money-input p-birr" value="${esc(r.personalBirr||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
-   <td><input class="money-input p-cent" value="${esc(r.personalCent||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
-   <td><input class="money-input g-birr" value="${esc(r.giftBirr||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
-   <td><input class="money-input g-cent" value="${esc(r.giftCent||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
-   <td><input class="money-input o-birr" value="${esc(r.otherBirr||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
-   <td><input class="money-input o-cent" value="${esc(r.otherCent||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
-   <td><input class="total-input t-birr" value="${esc(r.totalBirr||"")}" readonly></td>
-   <td><input class="total-input t-cent" value="${esc(r.totalCent||"")}" readonly></td>
-   <td><input class="text-input" value="${esc(r.sig||"")}"></td>
+  const data=rows[i]||{};
+
+  const tr=document.createElement("tr");
+
+  tr.className="data-row";
+
+  tr.innerHTML=`
+
+   <td>
+    <input type="date"
+           class="date-input"
+           value="${esc(data.date||"")}">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           class="money-input"
+           value="${data.monthlyBirr||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           max="99"
+           class="money-input"
+           value="${data.monthlyCent||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           class="money-input"
+           value="${data.personalBirr||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           max="99"
+           class="money-input"
+           value="${data.personalCent||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           class="money-input"
+           value="${data.giftBirr||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           max="99"
+           class="money-input"
+           value="${data.giftCent||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           class="money-input"
+           value="${data.otherBirr||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           max="99"
+           class="money-input"
+           value="${data.otherCent||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="text"
+           readonly
+           class="total-input row-total-birr"
+           value="0">
+   </td>
+
+   <td>
+    <input type="text"
+           readonly
+           class="total-input row-total-cent"
+           value="00">
+   </td>
+
+   <td>
+    <input type="text"
+           class="text-input"
+           value="${esc(data.signature||"")}"
+           placeholder="ፊርማ">
+   </td>
+
   `;
+
   tbody.appendChild(tr);
+
+  calculateRowTotals(
+   tr.querySelector(".money-input")
+  );
  }
 }
 
-function calcA4Row(input){
- const tr = input.closest("tr");
- const mb = Number(tr.querySelector(".m-birr").value||0);
- const mc = Number(tr.querySelector(".m-cent").value||0);
- const pb = Number(tr.querySelector(".p-birr").value||0);
- const pc = Number(tr.querySelector(".p-cent").value||0);
- const gb = Number(tr.querySelector(".g-birr").value||0);
- const gc = Number(tr.querySelector(".g-cent").value||0);
- const ob = Number(tr.querySelector(".o-birr").value||0);
- const oc = Number(tr.querySelector(".o-cent").value||0);
+function addContributionRow(){
 
- const totalCents = (mb*100 + mc) + (pb*100 + pc) + (gb*100 + gc) + (ob*100 + oc);
- tr.querySelector(".t-birr").value = Math.floor(totalCents/100) || "";
- tr.querySelector(".t-cent").value = (totalCents%100) || "";
-}
+ const tbody=document.getElementById("embedded-table-body");
 
-function addA4Row(){
- if(!requirePermission("ADD_ROW")) return;
- const tbody = document.getElementById("embedded-table-body");
- const tr = document.createElement("tr");
- tr.className = "data-row";
- tr.innerHTML = `
-  <td><input class="date-input"></td>
-  <td><input class="money-input m-birr" oninput="calcA4Row(this)"></td>
-  <td><input class="money-input m-cent" oninput="calcA4Row(this)"></td>
-  <td><input class="money-input p-birr" oninput="calcA4Row(this)"></td>
-  <td><input class="money-input p-cent" oninput="calcA4Row(this)"></td>
-  <td><input class="money-input g-birr" oninput="calcA4Row(this)"></td>
-  <td><input class="money-input g-cent" oninput="calcA4Row(this)"></td>
-  <td><input class="money-input o-birr" oninput="calcA4Row(this)"></td>
-  <td><input class="money-input o-cent" oninput="calcA4Row(this)"></td>
-  <td><input class="total-input t-birr" readonly></td>
-  <td><input class="total-input t-cent" readonly></td>
-  <td><input class="text-input"></td>
- `;
- tbody.appendChild(tr);
-}
+ if(!tbody)return;
 
-function removeA4Row(){
- if(!requirePermission("DELETE_ROW")) return;
- const tbody = document.getElementById("embedded-table-body");
- if(tbody.children.length > 1){
-  tbody.removeChild(tbody.lastChild);
+ const lastRow=tbody.querySelector("tr:last-child");
+
+ if(!lastRow)return;
+
+ const newRow=lastRow.cloneNode(true);
+
+ newRow.querySelectorAll("input").forEach(input=>{
+  if(
+   input.classList.contains("date-input") ||
+   input.classList.contains("money-input") ||
+   input.classList.contains("text-input")
+  ){
+   input.value="";
+  }
+ });
+
+ const totalBirr=newRow.querySelector(".row-total-birr");
+ const totalCent=newRow.querySelector(".row-total-cent");
+
+ if(totalBirr)totalBirr.value="0";
+ if(totalCent)totalCent.value="00";
+
+ tbody.appendChild(newRow);
+
+ const firstInput=newRow.querySelector(".date-input");
+
+ if(firstInput){
+  firstInput.focus();
  }
+
+ newRow.scrollIntoView({
+  behavior:"smooth",
+  block:"nearest"
+ });
 }
 
-function handlePhotoUpload(e){
- const file = e.target.files[0];
- if(!file) return;
- const reader = new FileReader();
- reader.onload = function(evt){
-  currentPhotoBase64 = evt.target.result;
-  document.getElementById("photo-preview").src = currentPhotoBase64;
-  document.getElementById("photo-preview").classList.remove("hidden");
-  document.getElementById("photo-text").classList.add("hidden");
+
+function handlePhotoUpload(event){
+
+ const file=event.target.files[0];
+
+ if(!file)return;
+
+ if(file.size>3*1024*1024){
+  showToast(
+   "Photo is too large. Please select an image under 3 MB.",
+   "error"
+  );
+  event.target.value="";
+  return;
+ }
+
+ const reader=new FileReader();
+
+ reader.onload=function(e){
+
+  currentPhotoBase64=e.target.result;
+
+  document.getElementById("photo-preview").src=
+   currentPhotoBase64;
+
+  document.getElementById("photo-preview")
+   .classList.remove("hidden");
+
+  document.getElementById("photo-text")
+   .classList.add("hidden");
  };
+
  reader.readAsDataURL(file);
 }
 
-async function saveCandidateForm(){
- const fullName = document.getElementById("inp-fullname").value.trim();
- if(!fullName){ showToast("Candidate full name is required.","error"); return; }
+function calculateRowTotals(input){
 
- const db = getDB();
- const id = editingCandidateId || document.getElementById("lbl-form-no").innerText.trim();
+ if(!input)return;
 
- const rows = [];
- document.querySelectorAll("#embedded-table-body tr").forEach(tr => {
-  rows.push({
-   date: tr.querySelector(".date-input").value,
-   monthlyBirr: tr.querySelector(".m-birr").value,
-   monthlyCent: tr.querySelector(".m-cent").value,
-   personalBirr: tr.querySelector(".p-birr").value,
-   personalCent: tr.querySelector(".p-cent").value,
-   giftBirr: tr.querySelector(".g-birr").value,
-   giftCent: tr.querySelector(".g-cent").value,
-   otherBirr: tr.querySelector(".o-birr").value,
-   otherCent: tr.querySelector(".o-cent").value,
-   totalBirr: tr.querySelector(".t-birr").value,
-   totalCent: tr.querySelector(".t-cent").value,
-   sig: tr.querySelector(".text-input").value
-  });
- });
+ const row=input.closest("tr");
 
- const candidateData = {
-  id, fullName,
-  group: document.getElementById("inp-group").value,
-  branch: document.getElementById("inp-church-branch").value,
-  subBranch: document.getElementById("inp-sub-branch").value,
-  assembly: document.getElementById("inp-assembly").value,
-  address: document.getElementById("inp-address").value,
-  phone: document.getElementById("inp-phone").value,
-  photo: currentPhotoBase64,
-  contributions: rows
- };
+ const inputs=
+  row.querySelectorAll(".money-input");
 
- const idx = db.candidates.findIndex(c => c.id === id);
- if(idx >= 0){
-  db.candidates[idx] = candidateData;
- } else {
-  db.candidates.push(candidateData);
+ let birr=0;
+ let cents=0;
+
+ for(let i=0;i<inputs.length;i+=2){
+
+  birr+=Number(inputs[i].value||0);
+  cents+=Number(inputs[i+1].value||0);
  }
 
- await saveDB(db);
- await logActivity(currentUser.uid, "Saved Candidate", `Saved record for ${fullName}`);
- showToast("Candidate form saved successfully.", "success");
+ birr+=Math.floor(cents/100);
+ cents=cents%100;
+
+ row.querySelector(".row-total-birr").value=
+  birr;
+
+ row.querySelector(".row-total-cent").value=
+  String(cents).padStart(2,"0");
+}
+
+function collectContributionRows(){
+
+ const rows=[];
+
+ document
+  .querySelectorAll("#embedded-table-body tr")
+  .forEach(tr=>{
+
+   const inputs=
+    tr.querySelectorAll("input");
+
+   const row={
+    date:inputs[0].value,
+
+    monthlyBirr:Number(inputs[1].value||0),
+    monthlyCent:Number(inputs[2].value||0),
+
+    personalBirr:Number(inputs[3].value||0),
+    personalCent:Number(inputs[4].value||0),
+
+    giftBirr:Number(inputs[5].value||0),
+    giftCent:Number(inputs[6].value||0),
+
+    otherBirr:Number(inputs[7].value||0),
+    otherCent:Number(inputs[8].value||0),
+
+    totalBirr:Number(
+     tr.querySelector(".row-total-birr").value||0
+    ),
+
+    totalCent:Number(
+     tr.querySelector(".row-total-cent").value||0
+    ),
+
+    signature:inputs[11].value
+   };
+
+   if(
+    row.date ||
+    row.monthlyBirr ||
+    row.monthlyCent ||
+    row.personalBirr ||
+    row.personalCent ||
+    row.giftBirr ||
+    row.giftCent ||
+    row.otherBirr ||
+    row.otherCent ||
+    row.signature
+   ){
+    rows.push(row);
+   }
+  });
+
+ return rows;
+}
+
+function saveCandidateForm(){
+
+ const name=
+  document.getElementById("inp-fullname")
+   .value.trim();
+
+ if(!name){
+  showToast(
+   "Please enter candidate full name.",
+   "error"
+  );
+  document.getElementById("inp-fullname").focus();
+  return;
+ }
+
+ const db=getDB();
+
+ const candidateData={
+  id:document.getElementById("lbl-form-no").innerText,
+  fullName:name,
+  group:document.getElementById("inp-group").value || "None",
+  branch:document.getElementById("inp-church-branch").value,
+  subBranch:document.getElementById("inp-sub-branch").value,
+  assembly:document.getElementById("inp-assembly").value,
+  address:document.getElementById("inp-address").value,
+  phone:document.getElementById("inp-phone").value,
+  photo:currentPhotoBase64,
+  contributions:collectContributionRows(),
+  registeredDate:today(),
+  updatedDate:today()
+ };
+
+ if(editingCandidateId){
+
+  const index=
+   db.candidates.findIndex(
+    c=>c.id===editingCandidateId
+   );
+
+  if(index<0){
+   showToast("Candidate not found.","error");
+   return;
+  }
+
+  candidateData.registeredDate=
+   db.candidates[index].registeredDate;
+
+  db.candidates[index]={
+   ...db.candidates[index],
+   ...candidateData
+  };
+
+  logActivity(
+   currentUser.id,
+   "Candidate Updated",
+   `Updated candidate ${name}.`
+  );
+
+  saveDB(db);
+
+  document.getElementById("form-save-status").innerText=
+   "Successfully Updated!";
+
+  showToast(
+   "Candidate updated successfully.",
+   "success"
+  );
+
+ }else{
+
+  db.candidates.push(candidateData);
+
+  saveDB(db);
+
+  logActivity(
+   currentUser.id,
+   "Candidate Saved",
+   `Saved candidate ${name} under group ${candidateData.group}.`
+  );
+
+  editingCandidateId=candidateData.id;
+
+  document.getElementById("form-save-status").innerText=
+   "Successfully Saved!";
+
+  showToast(
+   "Candidate information saved successfully.",
+   "success"
+  );
+ }
 }
 
 function newCandidateForm(){
- editingCandidateId = null;
- currentPhotoBase64 = "";
- renderFormIntegration(document.getElementById("content-body"));
+
+ editingCandidateId=null;
+ currentPhotoBase64="";
+
+ renderFormIntegration(
+  document.getElementById("content-body")
+ );
 }
 
+function clearContributionRows(){
+
+ document
+  .querySelectorAll("#embedded-table-body input")
+  .forEach(input=>{
+
+   if(
+    input.classList.contains("date-input") ||
+    input.classList.contains("money-input") ||
+    input.classList.contains("text-input")
+   ){
+    input.value="";
+   }
+  });
+
+ document
+  .querySelectorAll(".row-total-birr")
+  .forEach(x=>x.value="0");
+
+ document
+  .querySelectorAll(".row-total-cent")
+  .forEach(x=>x.value="00");
+
+ showToast(
+  "Contribution rows cleared.",
+  "success"
+ );
+}
+
+
 /* ============================================================
-   DIRECTORY & GROUPS
+   CANDIDATES
 ============================================================ */
 
-async function renderCandidatesList(container){
- if(!requirePermission("VIEW_CANDIDATES")) return;
- const db = await fetchBackendData();
+function renderCandidatesList(container){
 
- container.innerHTML = `
+ const db=getDB();
+
+ container.innerHTML=`
+
  <div class="card">
+
   <div class="card-header">
-   <div class="card-title"><i class="fa fa-address-book"></i> Candidates Directory</div>
-   <div class="toolbar">
-    <input id="search-cand" class="search" placeholder="Search candidate by name..." oninput="filterCandidatesTable()">
+
+   <div class="card-title">
+    <i class="fa fa-address-book"></i>
+    Candidates Directory
    </div>
+
+   <button onclick="navigate('add-candidate')">
+    <i class="fa fa-plus"></i>
+    Add Candidate
+   </button>
+
   </div>
+
   <div class="card-body">
+
+   <div class="toolbar" style="margin-bottom:1rem">
+
+    <input id="candidate-search"
+           class="search"
+           placeholder="Search name, phone, group, address..."
+           oninput="filterCandidatesTable()">
+
+    <select id="candidate-group-filter"
+            style="max-width:180px"
+            onchange="filterCandidatesTable()">
+
+     <option value="">All Groups</option>
+
+     ${
+      db.groups.map(g=>
+       `<option value="${esc(g.groupName)}">
+        ${esc(g.groupName)}
+       </option>`
+      ).join("")
+     }
+
+    </select>
+
+    <button class="btn-outline"
+            onclick="exportCandidatesCSV()">
+     <i class="fa fa-file-csv"></i>
+     Export CSV
+    </button>
+
+   </div>
+
    <div class="table-wrap">
-    <table>
+
+    <table id="candidates-table">
+
      <thead>
+
       <tr>
        <th>Form ID</th>
-       <th>Candidate Name</th>
+       <th>Full Name</th>
        <th>Group</th>
        <th>Phone</th>
-       <th>Total Contribution</th>
+       <th>Address</th>
+       <th>Contribution</th>
+       <th>Registered</th>
        <th>Actions</th>
       </tr>
+
      </thead>
+
      <tbody id="candidates-tbody">
-      ${
-       db.candidates.map(c => `
-        <tr>
-         <td><b>${esc(c.id)}</b></td>
-         <td>${esc(c.fullName)}</td>
-         <td><span class="badge badge-info">${esc(c.group)}</span></td>
-         <td>${esc(c.phone)}</td>
-         <td><strong style="color:var(--success)">${money(getCandidateContribution(c))} ETB</strong></td>
-         <td class="actions">
-          <button class="btn-sm btn-outline" onclick="renderFormIntegration(document.getElementById('content-body'), '${esc(c.id)}')"><i class="fa fa-folder-open"></i> Open Form</button>
-         </td>
-        </tr>
-       `).join("") || '<tr><td colspan="6" class="empty">No candidate records found.</td></tr>'
-      }
+
+      ${candidateRows(db.candidates)}
+
      </tbody>
+
     </table>
+
    </div>
+
   </div>
+
  </div>
  `;
+}
+
+function candidateRows(candidates){
+
+ if(!candidates.length){
+  return `
+   <tr>
+    <td colspan="8" class="empty">
+     <i class="fa fa-users"
+        style="font-size:2rem;margin-bottom:.5rem"></i>
+     <br>
+     No candidates found.
+    </td>
+   </tr>
+  `;
+ }
+
+ return candidates.map(c=>`
+
+  <tr>
+
+   <td>${esc(c.id)}</td>
+
+   <td>
+    <b>${esc(c.fullName)}</b>
+   </td>
+
+   <td>
+    <span class="badge badge-info">
+     ${esc(c.group)}
+    </span>
+   </td>
+
+   <td>${esc(c.phone||"N/A")}</td>
+
+   <td>${esc(c.address||"N/A")}</td>
+
+   <td>
+    <b>${money(getCandidateContribution(c))}</b>
+   </td>
+
+   <td>${esc(c.registeredDate||"")}</td>
+
+   <td>
+
+    <div class="actions">
+
+     <button class="btn-info btn-sm"
+             onclick="viewCandidate('${esc(c.id)}')"
+             title="View">
+      <i class="fa fa-eye"></i>
+     </button>
+
+     <button class="btn-sm"
+             onclick="editCandidate('${esc(c.id)}')"
+             title="Edit">
+      <i class="fa fa-edit"></i>
+     </button>
+
+     <button class="btn-gold btn-sm"
+             onclick="printCandidate('${esc(c.id)}')"
+             title="Print">
+      <i class="fa fa-print"></i>
+     </button>
+
+     <button class="btn-danger btn-sm"
+             onclick="deleteCandidate('${esc(c.id)}')"
+             title="Delete">
+      <i class="fa fa-trash"></i>
+     </button>
+
+    </div>
+
+   </td>
+
+  </tr>
+
+ `).join("");
 }
 
 function filterCandidatesTable(){
- const q = document.getElementById("search-cand")?.value.toLowerCase() || "";
- document.querySelectorAll("#candidates-tbody tr").forEach(tr => {
-  const text = tr.innerText.toLowerCase();
-  tr.style.display = text.includes(q) ? "" : "none";
+
+ const db=getDB();
+
+ const search=
+  (document.getElementById("candidate-search")?.value||"")
+   .toLowerCase();
+
+ const group=
+  document.getElementById("candidate-group-filter")?.value||"";
+
+ const filtered=db.candidates.filter(c=>{
+
+  const text=[
+   c.id,
+   c.fullName,
+   c.group,
+   c.phone,
+   c.address,
+   c.branch
+  ].join(" ").toLowerCase();
+
+  return text.includes(search) &&
+   (!group || c.group===group);
  });
+
+ document.getElementById("candidates-tbody").innerHTML=
+  candidateRows(filtered);
 }
 
-async function renderGroupsPage(container){
- if(!requirePermission("MANAGE_GROUPS")) return;
- const db = await fetchBackendData();
+function viewCandidate(id){
 
- container.innerHTML = `
- <div class="card">
-  <div class="card-header">
-   <div class="card-title"><i class="fa fa-layer-group"></i> Separate Group Funds Management</div>
-  </div>
-  <div class="card-body">
-   <div class="grid-3">
-    ${db.groups.map(g => {
-     const totalFund = (db.groupFunds||[]).filter(r=>Number(r.groupId)===Number(g.id)).reduce((s,r)=>s+Number(r.amount||0),0);
-     return `
-      <div class="card" style="padding:1rem;border-top:3px solid var(--accent-gold)">
-       <h4>${esc(g.groupName)}</h4>
-       <div style="font-size:1.4rem;font-weight:900;color:var(--primary-blue);margin:.5rem 0">${money(totalFund)} ETB</div>
-       <button class="btn-sm btn-gold" onclick="openAddGroupFundModal('${g.id}')"><i class="fa fa-plus"></i> Add Group Money</button>
+ const db=getDB();
+
+ const c=db.candidates.find(x=>x.id===id);
+
+ if(!c)return;
+
+ openModal(
+  "Candidate Details",
+  `
+
+   <div style="display:flex;gap:1.2rem;align-items:flex-start">
+
+    <div style="width:130px">
+
+     ${
+      c.photo
+      ? `
+       <img src="${c.photo}"
+            style="width:120px;height:145px;object-fit:cover;border:3px solid #d4af37;border-radius:6px">
+      `
+      : `
+       <div style="width:120px;height:145px;background:#f1f5f8;border:1px solid #d1d5db;display:flex;align-items:center;justify-content:center;color:#667085">
+        No Photo
+       </div>
+      `
+     }
+
+    </div>
+
+    <div style="flex:1">
+
+     <h2 style="color:#173e65;margin-bottom:.8rem">
+      ${esc(c.fullName)}
+     </h2>
+
+     <div class="grid-2">
+
+      <div>
+       <label>Form ID</label>
+       <div>${esc(c.id)}</div>
       </div>
-     `;
-    }).join("")}
+
+      <div>
+       <label>Group</label>
+       <div>${esc(c.group)}</div>
+      </div>
+
+      <div>
+       <label>Phone</label>
+       <div>${esc(c.phone||"N/A")}</div>
+      </div>
+
+      <div>
+       <label>Address</label>
+       <div>${esc(c.address||"N/A")}</div>
+      </div>
+
+      <div>
+       <label>Branch</label>
+       <div>${esc(c.branch||"N/A")}</div>
+      </div>
+
+      <div>
+       <label>Assembly</label>
+       <div>${esc(c.assembly||"N/A")}</div>
+      </div>
+
+      <div>
+       <label>Registered</label>
+       <div>${esc(c.registeredDate)}</div>
+      </div>
+
+      <div>
+       <label>Total Contribution</label>
+       <div>
+        <strong style="color:#047857;font-size:1.1rem">
+         ${money(getCandidateContribution(c))}
+        </strong>
+       </div>
+      </div>
+
+     </div>
+
+    </div>
+
    </div>
+
+   <hr style="margin:1.2rem 0;border:0;border-top:1px solid #d1d5db">
+
+   <h3 style="color:#173e65;margin-bottom:.7rem">
+    Contribution Summary
+   </h3>
+
+   ${contributionSummary(c)}
+
+  `,
+  `
+   <button class="btn-outline"
+           onclick="closeModal('general-modal')">
+    Close
+   </button>
+
+   <button onclick="editCandidate('${esc(c.id)}');closeModal('general-modal')">
+    <i class="fa fa-edit"></i>
+    Edit
+   </button>
+  `
+ );
+}
+
+function contributionSummary(c){
+
+ const rows=c.contributions||[];
+
+ if(!rows.length){
+  return `<div class="empty">No contribution records.</div>`;
+ }
+
+ return `
+  <div class="table-wrap">
+   <table>
+
+    <thead>
+     <tr>
+      <th>Date</th>
+      <th>Monthly</th>
+      <th>Personal</th>
+      <th>Gift</th>
+      <th>Other</th>
+      <th>Total</th>
+     </tr>
+    </thead>
+
+    <tbody>
+
+     ${
+      rows.map(r=>{
+
+       const monthly=
+        Number(r.monthlyBirr||0)+
+        Number(r.monthlyCent||0)/100;
+
+       const personal=
+        Number(r.personalBirr||0)+
+        Number(r.personalCent||0)/100;
+
+       const gift=
+        Number(r.giftBirr||0)+
+        Number(r.giftCent||0)/100;
+
+       const other=
+        Number(r.otherBirr||0)+
+        Number(r.otherCent||0)/100;
+
+       return `
+        <tr>
+         <td>${esc(r.date||"")}</td>
+         <td>${money(monthly)}</td>
+         <td>${money(personal)}</td>
+         <td>${money(gift)}</td>
+         <td>${money(other)}</td>
+         <td><b>${money(r.totalBirr+Number(r.totalCent||0)/100)}</b></td>
+        </tr>
+       `;
+
+      }).join("")
+     }
+
+    </tbody>
+
+   </table>
   </div>
+ `;
+}
+
+function editCandidate(id){
+
+ closeModal("general-modal");
+
+ navigate("add-candidate");
+
+ setTimeout(()=>{
+  renderFormIntegration(
+   document.getElementById("content-body"),
+   id
+  );
+ },50);
+}
+
+function deleteCandidate(id){
+
+ const db=getDB();
+
+ const c=db.candidates.find(x=>x.id===id);
+
+ if(!c)return;
+
+ if(!confirmAction(
+  `Delete candidate "${c.fullName}"?\n\nThis will also remove their contribution records.`
+ ))return;
+
+ db.candidates=
+  db.candidates.filter(x=>x.id!==id);
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "Candidate Deleted",
+  `Deleted candidate ${c.fullName}.`
+ );
+
+ if(activePage==="candidates-list"){
+  renderCandidatesList(
+   document.getElementById("content-body")
+  );
+ }
+
+ showToast(
+  "Candidate deleted successfully.",
+  "success"
+ );
+}
+
+function printCandidate(id){
+
+ editCandidate(id);
+
+ setTimeout(()=>{
+  window.print();
+ },300);
+}
+
+function exportCandidatesCSV(){
+ const db = getDB();
+ let csv = "Form ID,Full Name,Group,Phone,Address,Branch,SubBranch,Assembly,Registered Date,Total Contribution\n";
+ db.candidates.forEach(c => {
+  const total = getCandidateContribution(c);
+  csv += `"${c.id}","${c.fullName}","${c.group}","${c.phone||""}","${c.address||""}","${c.branch||""}","${c.subBranch||""}","${c.assembly||""}","${c.registeredDate||""}","${total}"\n`;
+ });
+ downloadCSV(csv, `EAC_Candidates_${today()}.csv`);
+}
+
+function exportContributionsCSV(){
+ const db = getDB();
+ let csv = "Date,Candidate ID,Candidate Name,Group,Monthly,Personal,Gift,Other,Total\n";
+ db.candidates.forEach(c => {
+  (c.contributions||[]).forEach(r => {
+   const m = Number(r.monthlyBirr||0)+Number(r.monthlyCent||0)/100;
+   const p = Number(r.personalBirr||0)+Number(r.personalCent||0)/100;
+   const g = Number(r.giftBirr||0)+Number(r.giftCent||0)/100;
+   const o = Number(r.otherBirr||0)+Number(r.otherCent||0)/100;
+   const t = Number(r.totalBirr||0)+Number(r.totalCent||0)/100;
+   csv += `"${r.date||""}","${c.id}","${c.fullName}","${c.group}","${m}","${p}","${g}","${o}","${t}"\n`;
+  });
+ });
+ downloadCSV(csv, `EAC_Contributions_${today()}.csv`);
+}
+
+function downloadCSV(csv, filename){
+ const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement("a");
+ a.href = url;
+ a.download = filename;
+ a.click();
+ URL.revokeObjectURL(url);
+ showToast("CSV file exported successfully.", "success");
+}
+
+/* ============================================================
+   GROUP MANAGEMENT
+============================================================ */
+
+function renderGroupsPage(container){
+
+ const db=getDB();
+
+ container.innerHTML=`
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-layer-group"></i>
+    Meklit Groups
+   </div>
+
+   <button onclick="openGroupModal()">
+    <i class="fa fa-plus"></i>
+    Add Group
+   </button>
+
+  </div>
+
+  <div class="card-body">
+
+   <div class="table-wrap">
+
+    <table>
+
+     <thead>
+      <tr>
+       <th>ID</th>
+       <th>Group Name</th>
+       <th>Description</th>
+       <th>Members</th>
+       <th>Status</th>
+       <th>Actions</th>
+      </tr>
+     </thead>
+
+     <tbody>
+
+      ${
+       db.groups.map(g=>{
+
+        const members=
+         db.candidates.filter(
+          c=>c.group===g.groupName
+         ).length;
+
+        return `
+         <tr>
+
+          <td>${g.id}</td>
+
+          <td>
+           <b>
+            <i class="fa fa-layer-group"
+               style="color:#c5a059"></i>
+            ${esc(g.groupName)}
+           </b>
+          </td>
+
+          <td>${esc(g.description)}</td>
+
+          <td>${members}</td>
+
+          <td>
+           <span class="badge ${
+            g.status==="Active"
+             ?"badge-success"
+             :"badge-danger"
+           }">
+            ${esc(g.status)}
+           </span>
+          </td>
+
+          <td>
+
+           <div class="actions">
+
+            <button class="btn-sm"
+                    onclick="openGroupModal(${g.id})">
+             <i class="fa fa-edit"></i>
+            </button>
+
+            <button class="btn-sm btn-info"
+                    onclick="openGroupMembersModal(${g.id})"
+                    title="Show group members">
+             <i class="fa fa-users"></i>
+            </button>
+
+            <button class="btn-warning btn-sm"
+                    onclick="toggleGroupStatus(${g.id})">
+             <i class="fa fa-power-off"></i>
+            </button>
+
+            <button class="btn-danger btn-sm"
+                    onclick="deleteGroup(${g.id})">
+             <i class="fa fa-trash"></i>
+            </button>
+
+           </div>
+
+          </td>
+
+         </tr>
+        `;
+
+       }).join("")
+      }
+
+     </tbody>
+
+    </table>
+
+   </div>
+
+  </div>
+
  </div>
  `;
 }
 
-function openAddGroupFundModal(groupId){
- const body = `
-  <form id="group-fund-form" onsubmit="saveGroupMoney(event, '${groupId}')">
+function openGroupModal(id=null){
+
+ const db=getDB();
+
+ const g=
+  id
+  ? db.groups.find(x=>x.id===id)
+  : null;
+
+ openModal(
+  g ? "Edit Group" : "Add Meklit Group",
+
+  `
+
    <div class="form-group">
-    <label>Amount (ETB)</label>
-    <input id="gf-amount" type="number" step="0.01" required>
+    <label>Group Name</label>
+    <input id="group-name"
+           value="${esc(g?.groupName||"")}"
+           placeholder="e.g. Meklit 7">
    </div>
+
    <div class="form-group">
-    <label>Deposit Purpose / Note</label>
-    <input id="gf-note" placeholder="Group Fund Contribution">
+    <label>Description</label>
+    <textarea id="group-description"
+              placeholder="Group description">${esc(g?.description||"")}</textarea>
    </div>
-  </form>
- `;
- const footer = `
-  <button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
-  <button onclick="document.getElementById('group-fund-form').requestSubmit()"><i class="fa fa-save"></i> Save Fund</button>
- `;
- openModal("Add Group Money (Isolated)", body, footer);
+
+   <div class="form-group">
+    <label>Status</label>
+    <select id="group-status">
+     <option value="Active"
+      ${g?.status==="Active"?"selected":""}>
+      Active
+     </option>
+     <option value="Inactive"
+      ${g?.status==="Inactive"?"selected":""}>
+      Inactive
+     </option>
+    </select>
+   </div>
+
+  `,
+
+  `
+
+   <button class="btn-outline"
+           onclick="closeModal('general-modal')">
+    Cancel
+   </button>
+
+   <button onclick="saveGroup(${id||"null"})">
+    <i class="fa fa-save"></i>
+    Save Group
+   </button>
+
+  `
+ );
 }
 
-async function saveGroupMoney(e, groupId){
- e.preventDefault();
- const db = getDB();
- const amount = Number(document.getElementById("gf-amount").value||0);
- const note = document.getElementById("gf-note").value.trim();
+function saveGroup(id){
 
- db.groupFunds ||= [];
- db.groupFunds.push({
-  id: generateId("GRP-FUND"),
-  groupId, amount, note, date: nowDateTime()
+ const name=
+  document.getElementById("group-name")
+   .value.trim();
+
+ const description=
+  document.getElementById("group-description")
+   .value.trim();
+
+ const status=
+  document.getElementById("group-status").value;
+
+ if(!name){
+  showToast("Group name is required.","error");
+  return;
+ }
+
+ const db=getDB();
+
+ const duplicate=
+  db.groups.find(
+   g=>g.groupName.toLowerCase()===name.toLowerCase()
+    && g.id!==id
+  );
+
+ if(duplicate){
+  showToast("A group with this name already exists.","error");
+  return;
+ }
+
+ if(id){
+
+  const g=db.groups.find(x=>x.id===id);
+
+  if(!g)return;
+
+  const oldName=g.groupName;
+
+  g.groupName=name;
+  g.description=description;
+  g.status=status;
+
+  db.candidates.forEach(c=>{
+   if(c.group===oldName)c.group=name;
+  });
+
+  logActivity(
+   currentUser.id,
+   "Group Updated",
+   `Updated group ${name}.`
+  );
+
+  showToast("Group updated.","success");
+
+ }else{
+
+  const newGroup={
+   id:db.groups.length
+    ? Math.max(...db.groups.map(g=>g.id))+1
+    : 1,
+   groupName:name,
+   description,
+   status
+  };
+
+  db.groups.push(newGroup);
+
+  logActivity(
+   currentUser.id,
+   "Group Created",
+   `Created group ${name}.`
+  );
+
+  showToast("Group created.","success");
+ }
+
+ saveDB(db);
+ closeModal("general-modal");
+
+ renderGroupsPage(
+  document.getElementById("content-body")
+ );
+}
+
+function toggleGroupStatus(id){
+
+ const db=getDB();
+
+ const g=db.groups.find(x=>x.id===id);
+
+ if(!g)return;
+
+ g.status=
+  g.status==="Active"
+   ?"Inactive"
+   :"Active";
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "Group Status Changed",
+  `${g.groupName} changed to ${g.status}.`
+ );
+
+ renderGroupsPage(
+  document.getElementById("content-body")
+ );
+
+ showToast(
+  `${g.groupName} is now ${g.status}.`,
+  "success"
+ );
+}
+
+function deleteGroup(id){
+
+ const db=getDB();
+
+ const g=db.groups.find(x=>x.id===id);
+
+ if(!g)return;
+
+ const members=
+  db.candidates.filter(
+   c=>c.group===g.groupName
+  ).length;
+
+ if(members>0){
+  showToast(
+   "Cannot delete a group that has candidates. Deactivate it instead.",
+   "error"
+  );
+  return;
+ }
+
+ if(!confirmAction(
+  `Delete group "${g.groupName}"?`
+ ))return;
+
+ db.groups=
+  db.groups.filter(x=>x.id!==id);
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "Group Deleted",
+  `Deleted group ${g.groupName}.`
+ );
+
+ renderGroupsPage(
+  document.getElementById("content-body")
+ );
+
+ showToast("Group deleted.","success");
+}
+
+
+/* ============================================================
+   CONTRIBUTIONS
+============================================================ */
+
+function renderContributionsPage(container){
+
+ const db=getDB();
+
+ const total=getGrandTotal(db);
+
+ const rows=[];
+
+ db.candidates.forEach(c=>{
+
+  (c.contributions||[]).forEach(r=>{
+
+   const amount=
+    Number(r.totalBirr||0)+
+    Number(r.totalCent||0)/100;
+
+   rows.push({
+    candidate:c,
+    row:r,
+    amount
+   });
+
+  });
+
  });
 
- await saveDB(db);
- showToast("Group money added successfully.", "success");
- closeModal("general-modal");
- renderGroupsPage(document.getElementById("content-body"));
+ rows.sort((a,b)=>
+  String(b.row.date||"")
+   .localeCompare(String(a.row.date||""))
+ );
+
+ container.innerHTML=`
+
+ <div class="stats-grid">
+
+  <div class="stat-card success">
+   <div>
+    <div class="stat-label">
+     Total Contributions
+    </div>
+    <div class="stat-value">
+     ${money(total)}
+    </div>
+   </div>
+   <i class="fa fa-money-bill-wave"></i>
+  </div>
+
+  <div class="stat-card">
+   <div>
+    <div class="stat-label">
+     Contribution Entries
+    </div>
+    <div class="stat-value">
+     ${rows.length}
+    </div>
+   </div>
+   <i class="fa fa-receipt"></i>
+  </div>
+
+  <div class="stat-card gold">
+   <div>
+    <div class="stat-label">
+     Candidates With Contributions
+    </div>
+    <div class="stat-value">
+     ${
+      db.candidates.filter(
+       c=>getCandidateContribution(c)>0
+      ).length
+     }
+    </div>
+   </div>
+   <i class="fa fa-users"></i>
+  </div>
+
+ </div>
+
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-hand-holding-dollar"></i>
+    Contribution Records
+   </div>
+
+   <div class="toolbar">
+
+    <input id="contribution-search"
+           placeholder="Search candidate/group..."
+           oninput="filterContributionRows()"
+           style="max-width:230px">
+
+    <button class="btn-outline"
+            onclick="exportContributionsCSV()">
+     <i class="fa fa-file-csv"></i>
+     Export CSV
+    </button>
+
+   </div>
+
+  </div>
+
+  <div class="table-wrap">
+
+   <table>
+
+    <thead>
+     <tr>
+      <th>Date</th>
+      <th>Candidate</th>
+      <th>Group</th>
+      <th>Monthly</th>
+      <th>Personal</th>
+      <th>Gift</th>
+      <th>Other</th>
+      <th>Total</th>
+     </tr>
+    </thead>
+
+    <tbody id="contributions-tbody">
+
+     ${contributionTableRows(rows)}
+
+    </tbody>
+
+   </table>
+
+  </div>
+
+ </div>
+ `;
 }
+
+function contributionTableRows(rows){
+
+ if(!rows.length){
+  return `
+   <tr>
+    <td colspan="8" class="empty">
+     No contribution records found.
+    </td>
+   </tr>
+  `;
+ }
+
+ return rows.map(x=>{
+
+  const r=x.row;
+
+  const monthly=
+   Number(r.monthlyBirr||0)+
+   Number(r.monthlyCent||0)/100;
+
+  const personal=
+   Number(r.personalBirr||0)+
+   Number(r.personalCent||0)/100;
+
+  const gift=
+   Number(r.giftBirr||0)+
+   Number(r.giftCent||0)/100;
+
+  const other=
+   Number(r.otherBirr||0)+
+   Number(r.otherCent||0)/100;
+
+  return `
+   <tr
+    data-search="${esc(
+     `${x.candidate.fullName} ${x.candidate.group}`
+    ).toLowerCase()}">
+
+    <td>${esc(r.date||"")}</td>
+    <td><b>${esc(x.candidate.fullName)}</b></td>
+    <td>${esc(x.candidate.group)}</td>
+    <td>${money(monthly)}</td>
+    <td>${money(personal)}</td>
+    <td>${money(gift)}</td>
+    <td>${money(other)}</td>
+    <td>
+     <strong style="color:#047857">
+      ${money(x.amount)}
+     </strong>
+    </td>
+
+   </tr>
+  `;
+ }).join("");
+}
+
+function filterContributionRows(){
+
+ const search=
+  document.getElementById("contribution-search")
+   .value.toLowerCase();
+
+ document
+  .querySelectorAll("#contributions-tbody tr[data-search]")
+  .forEach(row=>{
+   row.style.display=
+    row.dataset.search.includes(search)
+     ? ""
+     : "none";
+  });
+}
+
+
+/* ============================================================
+   REPORTS
+============================================================ */
+
+function renderReportsPage(container){
+
+ const db=getDB();
+
+ container.innerHTML=`
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-chart-column"></i>
+    Financial Reports
+   </div>
+
+   <div class="toolbar">
+
+    <button onclick="generateReport()">
+     <i class="fa fa-chart-pie"></i>
+     Generate Report
+    </button>
+
+    <button class="btn-outline"
+            onclick="printReport()">
+     <i class="fa fa-print"></i>
+     Print
+    </button>
+
+    <button class="btn-success"
+            onclick="exportReportCSV()">
+     <i class="fa fa-file-csv"></i>
+     Export CSV
+    </button>
+
+   </div>
+
+  </div>
+
+  <div class="card-body">
+
+   <div class="grid-4">
+
+    <div>
+     <label>From Date</label>
+     <input type="date" id="report-from">
+    </div>
+
+    <div>
+     <label>To Date</label>
+     <input type="date" id="report-to">
+    </div>
+
+    <div>
+     <label>Group</label>
+     <select id="report-group">
+
+      <option value="">All Groups</option>
+
+      ${
+       db.groups.map(g=>`
+        <option value="${esc(g.groupName)}">
+         ${esc(g.groupName)}
+        </option>
+       `).join("")
+      }
+
+     </select>
+    </div>
+
+    <div>
+     <label>Candidate</label>
+     <select id="report-candidate">
+
+      <option value="">All Candidates</option>
+
+      ${
+       db.candidates.map(c=>`
+        <option value="${esc(c.id)}">
+         ${esc(c.fullName)}
+        </option>
+       `).join("")
+      }
+
+     </select>
+    </div>
+
+   </div>
+
+  </div>
+
+ </div>
+
+
+ <div id="report-result"
+      style="margin-top:1rem"></div>
+ `;
+}
+
+function getFilteredReportData(){
+
+ const db=getDB();
+
+ const from=
+  document.getElementById("report-from")?.value||"";
+
+ const to=
+  document.getElementById("report-to")?.value||"";
+
+ const group=
+  document.getElementById("report-group")?.value||"";
+
+ const candidateId=
+  document.getElementById("report-candidate")?.value||"";
+
+ const data=[];
+
+ db.candidates.forEach(c=>{
+
+  if(group && c.group!==group)return;
+
+  if(candidateId && c.id!==candidateId)return;
+
+  (c.contributions||[]).forEach(r=>{
+
+   if(from && r.date<from)return;
+
+   if(to && r.date>to)return;
+
+   data.push({
+    candidate:c,
+    row:r
+   });
+
+  });
+
+ });
+
+ return data;
+}
+
+function generateReport(){
+
+ const data=getFilteredReportData();
+
+ let monthly=0;
+ let personal=0;
+ let gift=0;
+ let other=0;
+ let total=0;
+
+ data.forEach(x=>{
+
+  const r=x.row;
+
+  monthly+=
+   Number(r.monthlyBirr||0)+
+   Number(r.monthlyCent||0)/100;
+
+  personal+=
+   Number(r.personalBirr||0)+
+   Number(r.personalCent||0)/100;
+
+  gift+=
+   Number(r.giftBirr||0)+
+   Number(r.giftCent||0)/100;
+
+  other+=
+   Number(r.otherBirr||0)+
+   Number(r.otherCent||0)/100;
+
+ });
+
+ total=monthly+personal+gift+other;
+
+ const groups={};
+
+ data.forEach(x=>{
+
+  const g=x.candidate.group;
+
+  groups[g] ||= {
+   candidates:new Set(),
+   amount:0
+  };
+
+  groups[g].candidates.add(x.candidate.id);
+
+  groups[g].amount+=
+   Number(x.row.totalBirr||0)+
+   Number(x.row.totalCent||0)/100;
+ });
+
+ document.getElementById("report-result").innerHTML=`
+
+ <div class="card" id="printable-report">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    Financial Summary Report
+   </div>
+
+   <div style="font-size:.75rem;color:#667085">
+    Generated: ${nowDateTime()}
+   </div>
+
+  </div>
+
+  <div class="card-body">
+
+   <div class="stats-grid">
+
+    <div class="stat-card">
+     <div>
+      <div class="stat-label">Monthly</div>
+      <div class="stat-value">${money(monthly)}</div>
+     </div>
+    </div>
+
+    <div class="stat-card gold">
+     <div>
+      <div class="stat-label">Personal Meklit</div>
+      <div class="stat-value">${money(personal)}</div>
+     </div>
+    </div>
+
+    <div class="stat-card warning">
+     <div>
+      <div class="stat-label">Gift</div>
+      <div class="stat-value">${money(gift)}</div>
+     </div>
+    </div>
+
+    <div class="stat-card success">
+     <div>
+      <div class="stat-label">Grand Total</div>
+      <div class="stat-value">${money(total)}</div>
+     </div>
+    </div>
+
+   </div>
+
+
+   <h3 style="margin:1.5rem 0 .7rem;color:#173e65">
+    Group Summary
+   </h3>
+
+   <div class="table-wrap">
+
+    <table>
+
+     <thead>
+      <tr>
+       <th>Group</th>
+       <th>Candidates</th>
+       <th>Contribution</th>
+      </tr>
+     </thead>
+
+     <tbody>
+
+      ${
+       Object.keys(groups).length
+       ? Object.entries(groups).map(([name,v])=>`
+        <tr>
+         <td><b>${esc(name)}</b></td>
+         <td>${v.candidates.size}</td>
+         <td>
+          <strong>
+           ${money(v.amount)}
+          </strong>
+         </td>
+        </tr>
+       `).join("")
+       : `
+        <tr>
+         <td colspan="3" class="empty">
+          No records match the selected filters.
+         </td>
+        </tr>
+       `
+      }
+
+     </tbody>
+
+    </table>
+
+   </div>
+
+
+   <h3 style="margin:1.5rem 0 .7rem;color:#173e65">
+    Detailed Records
+   </h3>
+
+   <div class="table-wrap">
+
+    <table>
+
+     <thead>
+      <tr>
+       <th>Date</th>
+       <th>Candidate</th>
+       <th>Group</th>
+       <th>Total</th>
+      </tr>
+     </thead>
+
+     <tbody>
+
+      ${
+       data.map(x=>`
+        <tr>
+         <td>${esc(x.row.date||"")}</td>
+         <td>${esc(x.candidate.fullName)}</td>
+         <td>${esc(x.candidate.group)}</td>
+         <td>
+          ${money(
+           Number(x.row.totalBirr||0)+
+           Number(x.row.totalCent||0)/100
+          )}
+         </td>
+        </tr>
+       `).join("")
+      }
+
+     </tbody>
+
+    </table>
+
+   </div>
+
+  </div>
+
+ </div>
+ `;
+
+ logActivity(
+  currentUser.id,
+  "Report Generated",
+  `Generated financial report containing ${data.length} contribution entries.`
+ );
+}
+
+function printReport(){
+
+ if(!document.getElementById("printable-report")){
+  generateReport();
+ }
+
+ setTimeout(()=>{
+  window.print();
+ },200);
+}
+
+function exportReportCSV(){
+ const data = getFilteredReportData();
+ let csv = "Date,Candidate,Group,Monthly,Personal,Gift,Other,Total\n";
+ data.forEach(x => {
+  const r = x.row;
+  const m = Number(r.monthlyBirr||0)+Number(r.monthlyCent||0)/100;
+  const p = Number(r.personalBirr||0)+Number(r.personalCent||0)/100;
+  const g = Number(r.giftBirr||0)+Number(r.giftCent||0)/100;
+  const o = Number(r.otherBirr||0)+Number(r.otherCent||0)/100;
+  const t = Number(r.totalBirr||0)+Number(r.totalCent||0)/100;
+  csv += `"${r.date||""}","${x.candidate.fullName}","${x.candidate.group}","${m}","${p}","${g}","${o}","${t}"\n`;
+ });
+ downloadCSV(csv, `EAC_Filtered_Report_${today()}.csv`);
+}
+
+
+/* ============================================================
+   USERS
+============================================================ */
+
+function renderUsersPage(container){
+
+ const db=getDB();
+
+ container.innerHTML=`
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-user-shield"></i>
+    User Management
+   </div>
+
+   <button onclick="openUserModal()">
+    <i class="fa fa-user-plus"></i>
+    Add User
+   </button>
+
+  </div>
+
+  <div class="table-wrap">
+
+   <table>
+
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Status</th>
+      <th>Last Login</th>
+      <th>Actions</th>
+     </tr>
+    </thead>
+
+    <tbody>
+
+     ${
+      db.users.map(u=>`
+
+       <tr>
+
+        <td><b>${esc(u.fullName)}</b></td>
+
+        <td>${esc(u.username)}</td>
+
+        <td>
+         <span class="badge ${
+          u.role==="Admin"
+           ?"badge-info"
+           :"badge-gray"
+         }">
+          ${esc(u.role)}
+         </span>
+        </td>
+
+        <td>${esc(u.phone||"")}</td>
+
+        <td>${esc(u.email||"")}</td>
+
+        <td>
+         <span class="badge ${
+          u.status==="Active"
+           ?"badge-success"
+           :"badge-danger"
+         }">
+          ${esc(u.status)}
+         </span>
+        </td>
+
+        <td>${esc(u.lastLogin||"Never")}</td>
+
+        <td>
+
+         <div class="actions">
+
+          <button class="btn-sm"
+                  onclick="openUserModal(${u.id})">
+           <i class="fa fa-edit"></i>
+          </button>
+
+          <button class="btn-warning btn-sm"
+                  onclick="toggleUserStatus(${u.id})">
+           <i class="fa fa-power-off"></i>
+          </button>
+
+          <button class="btn-danger btn-sm"
+                  onclick="deleteUser(${u.id})">
+           <i class="fa fa-trash"></i>
+          </button>
+
+         </div>
+
+        </td>
+
+       </tr>
+
+      `).join("")
+     }
+
+    </tbody>
+
+   </table>
+
+  </div>
+
+ </div>
+ `;
+}
+
+function openUserModal(id=null){
+
+ const db=getDB();
+
+ const u=
+  id
+   ? db.users.find(x=>x.id===id)
+   : null;
+
+ openModal(
+  u?"Edit User":"Create User",
+
+  `
+
+   <div class="grid-2">
+
+    <div class="form-group">
+     <label>Full Name</label>
+     <input id="user-full-name"
+            value="${esc(u?.fullName||"")}"
+            required>
+    </div>
+
+    <div class="form-group">
+     <label>Username</label>
+     <input id="user-username"
+            value="${esc(u?.username||"")}"
+            ${u?"disabled":""}
+            required>
+    </div>
+
+    <div class="form-group">
+     <label>Phone</label>
+     <input id="user-phone"
+            value="${esc(u?.phone||"")}"
+            placeholder="+251...">
+    </div>
+
+    <div class="form-group">
+     <label>Email</label>
+     <input type="email"
+            id="user-email"
+            value="${esc(u?.email||"")}">
+    </div>
+
+    <div class="form-group">
+     <label>Role</label>
+     <select id="user-role">
+      <option value="Staff"
+       ${u?.role==="Staff"?"selected":""}>
+       Staff
+      </option>
+      <option value="Admin"
+       ${u?.role==="Admin"?"selected":""}>
+       Admin
+      </option>
+     </select>
+    </div>
+
+    <div class="form-group">
+     <label>Status</label>
+     <select id="user-status">
+      <option value="Active"
+       ${u?.status==="Active"?"selected":""}>
+       Active
+      </option>
+      <option value="Inactive"
+       ${u?.status==="Inactive"?"selected":""}>
+       Inactive
+      </option>
+     </select>
+    </div>
+
+   </div>
+
+   ${
+    !u
+    ? `
+     <div class="form-group">
+      <label>Temporary Password</label>
+      <input id="user-password"
+             type="password"
+             minlength="6"
+             placeholder="Minimum 6 characters">
+     </div>
+    `
+    :""
+   }
+
+  `,
+
+  `
+
+   <button class="btn-outline"
+           onclick="closeModal('general-modal')">
+    Cancel
+   </button>
+
+   <button onclick="saveUser(${id||"null"})">
+    <i class="fa fa-save"></i>
+    Save User
+   </button>
+
+  `
+ );
+}
+
+function saveUser(id){
+
+ const db=getDB();
+
+ const fullName=
+  document.getElementById("user-full-name")
+   .value.trim();
+
+ const username=
+  document.getElementById("user-username")
+   .value.trim();
+
+ const phone=
+  document.getElementById("user-phone")
+   .value.trim();
+
+ const email=
+  document.getElementById("user-email")
+   .value.trim();
+
+ const role=
+  document.getElementById("user-role").value;
+
+ const status=
+  document.getElementById("user-status").value;
+
+ if(!fullName || !username){
+  showToast("Full name and username are required.","error");
+  return;
+ }
+
+ if(id){
+
+  const u=db.users.find(x=>x.id===id);
+
+  if(!u)return;
+
+  u.fullName=fullName;
+  u.phone=phone;
+  u.email=email;
+  u.role=role;
+  u.status=status;
+
+  if(
+   currentUser &&
+   currentUser.id===id
+  ){
+   currentUser={...u};
+
+   sessionStorage.setItem(
+    SESSION_KEY,
+    JSON.stringify(currentUser)
+   );
+  }
+
+  logActivity(
+   currentUser.id,
+   "User Updated",
+   `Updated user ${username}.`
+  );
+
+  showToast("User updated.","success");
+
+ }else{
+
+  const password=
+   document.getElementById("user-password")
+    .value;
+
+  if(password.length<6){
+   showToast(
+    "Password must contain at least 6 characters.",
+    "error"
+   );
+   return;
+  }
+
+  if(
+   db.users.some(
+    x=>x.username.toLowerCase()===username.toLowerCase()
+   )
+  ){
+   showToast(
+    "Username already exists.",
+    "error"
+   );
+   return;
+  }
+
+  const u={
+   id:Date.now(),
+   fullName,
+   username,
+   passwordHash:btoa(password),
+   role,
+   phone,
+   email,
+   status,
+   createdDate:today(),
+   lastLogin:""
+  };
+
+  db.users.push(u);
+
+  logActivity(
+   currentUser.id,
+   "User Created",
+   `Created user ${username}.`
+  );
+
+  showToast("User created.","success");
+ }
+
+ saveDB(db);
+ closeModal("general-modal");
+
+ initApp();
+ navigate("users");
+}
+
+function toggleUserStatus(id){
+
+ const db=getDB();
+
+ const u=db.users.find(x=>x.id===id);
+
+ if(!u)return;
+
+ if(
+  currentUser.id===u.id &&
+  u.status==="Active"
+ ){
+  showToast(
+   "You cannot disable your own active account.",
+   "error"
+  );
+  return;
+ }
+
+ u.status=
+  u.status==="Active"
+   ?"Inactive"
+   :"Active";
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "User Status Changed",
+  `${u.username} changed to ${u.status}.`
+ );
+
+ renderUsersPage(
+  document.getElementById("content-body")
+ );
+
+ showToast("User status updated.","success");
+}
+
+function deleteUser(id){
+
+ const db=getDB();
+
+ const u=db.users.find(x=>x.id===id);
+
+ if(!u)return;
+
+ if(u.id===currentUser.id){
+  showToast(
+   "You cannot delete your own account.",
+   "error"
+  );
+  return;
+ }
+
+ if(!confirmAction(
+  `Delete user "${u.username}"?`
+ ))return;
+
+ db.users=
+  db.users.filter(x=>x.id!==id);
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "User Deleted",
+  `Deleted user ${u.username}.`
+ );
+
+ renderUsersPage(
+  document.getElementById("content-body")
+ );
+
+ showToast("User deleted.","success");
+}
+
+
+/* ============================================================
+   ACTIVITY
+============================================================ */
+
+function renderActivityPage(container){
+
+ const db=getDB();
+
+ container.innerHTML=`
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-history"></i>
+    System Activity Log
+   </div>
+
+   <div class="toolbar">
+
+    <input id="activity-search"
+           placeholder="Search activity..."
+           oninput="filterActivity()"
+           style="max-width:250px">
+
+    <button class="btn-danger btn-sm"
+            onclick="clearActivityLog()">
+     <i class="fa fa-trash"></i>
+     Clear Log
+    </button>
+
+   </div>
+
+  </div>
+
+  <div class="table-wrap">
+
+   <table>
+
+    <thead>
+     <tr>
+      <th>Date / Time</th>
+      <th>User</th>
+      <th>Action</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+
+    <tbody id="activity-tbody">
+
+     ${activityRows(db)}
+
+    </tbody>
+
+   </table>
+
+  </div>
+
+ </div>
+ `;
+}
+
+function activityRows(db){
+
+ return db.activityLog.map(l=>{
+
+  const u=
+   db.users.find(x=>x.id===l.userId);
+
+  return `
+   <tr data-activity="${esc(
+    `${l.action} ${l.description} ${u?.username||""}`
+   ).toLowerCase()}">
+
+    <td>${esc(l.dateTime)}</td>
+    <td>${esc(u?.username||"System")}</td>
+    <td><b>${esc(l.action)}</b></td>
+    <td>${esc(l.description)}</td>
+
+   </tr>
+  `;
+
+ }).join("");
+}
+
+function filterActivity(){
+
+ const q=
+  document.getElementById("activity-search")
+   .value.toLowerCase();
+
+ document
+  .querySelectorAll("#activity-tbody tr[data-activity]")
+  .forEach(row=>{
+   row.style.display=
+    row.dataset.activity.includes(q)
+     ? ""
+     : "none";
+  });
+}
+
+function clearActivityLog(){
+
+ if(!confirmAction(
+  "Clear the complete activity log?"
+ ))return;
+
+ const db=getDB();
+
+ db.activityLog=[];
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "Activity Log Cleared",
+  "The activity log was cleared."
+ );
+
+ renderActivityPage(
+  document.getElementById("content-body")
+ );
+
+ showToast("Activity log cleared.","success");
+}
+
+
+/* ============================================================
+   BACKUP / RESTORE
+============================================================ */
+
+function renderBackupPage(container){
+
+ container.innerHTML=`
+
+ <div class="grid-2">
+
+  <div class="card">
+
+   <div class="card-header">
+    <div class="card-title">
+     <i class="fa fa-download"></i>
+     Database Backup
+    </div>
+   </div>
+
+   <div class="card-body">
+
+    <p style="color:#667085;margin-bottom:1rem">
+     Download a complete JSON backup containing
+     candidates, contribution records, groups,
+     users, settings and activity history.
+    </p>
+
+    <button onclick="downloadBackup()">
+     <i class="fa fa-download"></i>
+     Download JSON Backup
+    </button>
+
+   </div>
+
+  </div>
+
+
+  <div class="card">
+
+   <div class="card-header">
+    <div class="card-title">
+     <i class="fa fa-upload"></i>
+     Restore Database
+    </div>
+   </div>
+
+   <div class="card-body">
+
+    <p style="color:#667085;margin-bottom:1rem">
+     Restore a previously downloaded JSON backup.
+     Existing browser data will be replaced.
+    </p>
+
+    <input type="file"
+           id="restore-file"
+           accept=".json,application/json">
+
+    <button class="btn-warning"
+            style="margin-top:.8rem"
+            onclick="restoreBackup()">
+     <i class="fa fa-upload"></i>
+     Restore Backup
+    </button>
+
+   </div>
+
+  </div>
+
+
+  <div class="card">
+
+   <div class="card-header">
+    <div class="card-title">
+     <i class="fa fa-file-csv"></i>
+     Export Data
+    </div>
+   </div>
+
+   <div class="card-body">
+
+    <div class="toolbar">
+
+     <button onclick="exportCandidatesCSV()">
+      Candidates CSV
+     </button>
+
+     <button onclick="exportContributionsCSV()">
+      Contributions CSV
+     </button>
+
+     <button onclick="exportReportCSV()">
+      Report CSV
+     </button>
+
+    </div>
+
+   </div>
+
+  </div>
+
+
+  <div class="card">
+
+   <div class="card-header">
+    <div class="card-title">
+     <i class="fa fa-triangle-exclamation"></i>
+     Danger Zone
+    </div>
+   </div>
+
+   <div class="card-body">
+
+    <p style="color:#b91c1c;margin-bottom:1rem">
+     This permanently removes all application
+     data from this browser.
+    </p>
+
+    <button class="btn-danger"
+            onclick="resetDatabase()">
+     <i class="fa fa-trash"></i>
+     Reset Application Database
+    </button>
+
+   </div>
+
+  </div>
+
+ </div>
+ `;
+}
+
+function downloadBackup(){
+
+ const db=getDB();
+
+ const backup={
+  application:"EAC Youth Meklit",
+  version:"3.0",
+  exportedAt:nowDateTime(),
+  data:db
+ };
+
+ const blob=new Blob(
+  [JSON.stringify(backup,null,2)],
+  {type:"application/json"}
+ );
+
+ const url=URL.createObjectURL(blob);
+
+ const a=document.createElement("a");
+
+ a.href=url;
+ a.download=
+  `EAC_Youth_Meklit_Backup_${today()}.json`;
+
+ a.click();
+
+ URL.revokeObjectURL(url);
+
+ logActivity(
+  currentUser.id,
+  "Database Backup",
+  "Downloaded database backup."
+ );
+
+ showToast(
+  "Backup downloaded successfully.",
+  "success"
+ );
+}
+
+function restoreBackup(){
+
+ const file=
+  document.getElementById("restore-file")
+   .files[0];
+
+ if(!file){
+  showToast(
+   "Please select a JSON backup file.",
+   "error"
+  );
+  return;
+ }
+
+ if(!confirmAction(
+  "Restore this backup?\n\nCurrent local database will be replaced."
+ ))return;
+
+ const reader=new FileReader();
+
+ reader.onload=function(e){
+
+  try{
+
+   const backup=JSON.parse(e.target.result);
+
+   const data=
+    backup.data || backup;
+
+   if(
+    !data.users ||
+    !data.groups ||
+    !data.candidates
+   ){
+    throw new Error("Invalid backup");
+   }
+
+   localStorage.setItem(
+    DB_KEY,
+    JSON.stringify(data)
+   );
+
+   showToast(
+    "Backup restored. Reloading application...",
+    "success"
+   );
+
+   setTimeout(()=>{
+    location.reload();
+   },1000);
+
+  }catch(err){
+
+   showToast(
+    "Invalid backup file.",
+    "error"
+   );
+
+  }
+ };
+
+ reader.readAsText(file);
+}
+
+function resetDatabase(){
+
+ if(!confirmAction(
+  "WARNING!\n\nThis will permanently delete all candidates, contributions, users, groups and activity data from this browser.\n\nContinue?"
+ ))return;
+
+ if(!confirmAction(
+  "Are you absolutely sure?"
+ ))return;
+
+ localStorage.removeItem(DB_KEY);
+ sessionStorage.removeItem(SESSION_KEY);
+
+ location.reload();
+}
+
+
+/* ============================================================
+   SETTINGS
+============================================================ */
+
+function renderSettingsPage(container){
+
+ const db=getDB();
+
+ const s=db.settings;
+
+ container.innerHTML=`
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-cog"></i>
+    System Settings
+   </div>
+
+   <button onclick="saveSettings()">
+    <i class="fa fa-save"></i>
+    Save Settings
+   </button>
+
+  </div>
+
+  <div class="card-body">
+
+   <div class="form-group">
+    <label>Church / Organization Name</label>
+    <input id="set-church" value="${esc(s.churchName||"")}">
+   </div>
+
+   <div class="form-group">
+    <label>Department Name</label>
+    <input id="set-department" value="${esc(s.department||"")}">
+   </div>
+
+   <div class="form-group">
+    <label>Form Document Title</label>
+    <input id="set-form-title" value="${esc(s.formTitle||"")}">
+   </div>
+
+   <div class="form-group">
+    <label>Bible Verse Text</label>
+    <input id="set-verse" value="${esc(s.verse||"")}">
+   </div>
+
+   <div class="grid-3">
+
+    <div class="form-group">
+     <label>Phone Number</label>
+     <input id="set-phone" value="${esc(s.phone||"")}">
+    </div>
+
+    <div class="form-group">
+     <label>Email Address</label>
+     <input id="set-email" value="${esc(s.email||"")}">
+    </div>
+
+    <div class="form-group">
+     <label>Address / Location</label>
+     <input id="set-address" value="${esc(s.address||"")}">
+    </div>
+
+   </div>
+
+  </div>
+
+ </div>
+ `;
+}
+
+function saveSettings(){
+
+ const db=getDB();
+
+ db.settings={
+  churchName:document.getElementById("set-church").value,
+  department:document.getElementById("set-department").value,
+  formTitle:document.getElementById("set-form-title").value,
+  verse:document.getElementById("set-verse").value,
+  phone:document.getElementById("set-phone").value,
+  email:document.getElementById("set-email").value,
+  address:document.getElementById("set-address").value
+ };
+
+ saveDB(db);
+
+ logActivity(
+  currentUser.id,
+  "Settings Saved",
+  "Updated system settings."
+ );
+
+ showToast("Settings updated successfully.","success");
+}
+
+/* ============================================================
+   SEPARATE GROUP MONEY MANAGEMENT
+   IMPORTANT: This ledger is intentionally independent from
+   EAC_YOUTH_MEKLIT_DB_V3. It never changes candidate money,
+   candidate contributions, candidate rankings, or balances.
+============================================================ */
+const GROUP_FUNDS_KEY = "EAC_YOUTH_MEKLIT_GROUP_FUNDS_V1";
+
+function getGroupFunds(){
+ try{
+  const raw=localStorage.getItem(GROUP_FUNDS_KEY);
+  if(!raw) return [];
+  const data=JSON.parse(raw);
+  return Array.isArray(data) ? data : [];
+ }catch(e){
+  return [];
+ }
+}
+
+function saveGroupFunds(funds){
+ localStorage.setItem(GROUP_FUNDS_KEY, JSON.stringify(funds));
+}
+
+function groupFundTotal(groupName){
+ return getGroupFunds()
+  .filter(x=>x.groupName===groupName)
+  .reduce((sum,x)=>sum+Number(x.amount||0),0);
+}
+
+function openGroupMembersModal(groupId){
+ const db=getDB();
+ const group=db.groups.find(g=>g.id===groupId);
+ if(!group){ showToast("Group not found.","error"); return; }
+
+ const members=db.candidates.filter(c=>c.group===group.groupName);
+ const memberRows=members.length ? members.map((c,i)=>{
+  const initials=String(c.fullName||"?").trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
+  return `<div class="group-member-row">
+    ${c.photo ? `<img class="group-member-avatar" src="${esc(c.photo)}" alt="">` : `<div class="group-member-avatar">${esc(initials||"?")}</div>`}
+    <div>
+      <div class="group-member-name">${esc(c.fullName||"Unnamed Candidate")}</div>
+      <div class="group-member-meta">${esc(c.phone||c.phoneNumber||"No phone number")} ${c.id ? ` • ID: ${esc(c.id)}` : ""}</div>
+    </div>
+  </div>`;
+ }).join("") : `<div class="empty">No candidates are assigned to ${esc(group.groupName)}.</div>`;
+
+ openModal(
+  `${group.groupName} — Members`,
+  `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <div><strong>${members.length}</strong> candidate${members.length===1?'':'s'} belong to this group.</div>
+    <span class="badge badge-info">${esc(group.status)}</span>
+  </div>
+  <div class="group-members-list">${memberRows}</div>`,
+  `<button class="btn-outline" onclick="closeModal('general-modal')">Close</button>`
+ );
+}
+
+function openGroupFundModal(groupId=null){
+ const db=getDB();
+ const groups=db.groups||[];
+ const selected=groupId ? groups.find(g=>g.id===groupId) : null;
+ if(!groups.length){ showToast("No groups are available.","error"); return; }
+
+ const options=groups.map(g=>`<option value="${esc(g.groupName)}" ${selected&&selected.id===g.id?'selected':''}>${esc(g.groupName)}</option>`).join("");
+ const activities=[
+  "",
+  "Worship Service",
+  "Prayer Meeting",
+  "Youth Program",
+  "Evangelism",
+  "Church Conference",
+  "Outreach",
+  "Choir / Worship Ministry",
+  "Sunday School",
+  "Community Service",
+  "Fundraising",
+  "Church Project",
+  "Other"
+ ];
+
+ openModal(
+  "Add Money to Group",
+  `<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:.8rem;margin-bottom:1rem;color:#1e3a8a">
+    <i class="fa fa-circle-info"></i>
+    <strong>Separate group funds:</strong> this money belongs to the group and will never be added to any candidate's contribution.
+  </div>
+  <div class="form-group">
+   <label>Group</label>
+   <select id="group-fund-group">${options}</select>
+  </div>
+  <div class="form-group">
+   <label>Amount (ETB)</label>
+   <input id="group-fund-amount" type="number" min="0.01" step="0.01" placeholder="Enter group money amount" required>
+  </div>
+  <div class="form-group">
+   <label>Date</label>
+   <input id="group-fund-date" type="date" value="${today()}">
+  </div>
+  <div class="form-group">
+   <label>Church Activity <span style="font-weight:400;color:#667085">(optional)</span></label>
+   <select id="group-fund-activity">${activities.map(a=>`<option value="${esc(a)}">${a?esc(a):"— Select activity —"}</option>`).join("")}</select>
+  </div>
+  <div class="form-group">
+   <label>Description <span style="font-weight:400;color:#667085">(optional)</span></label>
+   <textarea id="group-fund-description" placeholder="What is this group money for?"></textarea>
+  </div>`,
+  `<button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
+   <button class="btn-gold" onclick="saveGroupFund()"><i class="fa fa-vault"></i> Save Group Money</button>`
+ );
+}
+
+function saveGroupFund(){
+ const groupName=document.getElementById("group-fund-group")?.value||"";
+ const amount=Number(document.getElementById("group-fund-amount")?.value||0);
+ const date=document.getElementById("group-fund-date")?.value||today();
+ const activity=document.getElementById("group-fund-activity")?.value||"";
+ const description=document.getElementById("group-fund-description")?.value.trim()||"";
+
+ if(!groupName){showToast("Please select a group.","error");return;}
+ if(!(amount>0)){showToast("Enter a valid amount greater than zero.","error");return;}
+
+ const db=getDB();
+ if(!db.groups.some(g=>g.groupName===groupName)){
+  showToast("Selected group no longer exists.","error");return;
+ }
+
+ const funds=getGroupFunds();
+ funds.unshift({
+  id:"GF-"+Date.now()+"-"+Math.floor(Math.random()*1000),
+  groupName,
+  amount:Number(amount.toFixed(2)),
+  date,
+  activity,
+  description,
+  createdBy:currentUser?.username||currentUser?.fullName||"System",
+  createdAt:nowDateTime()
+ });
+ saveGroupFunds(funds);
+
+ closeModal("general-modal");
+ logActivity(currentUser.id,"Group Money Added",`Added ${money(amount)} ETB to ${groupName} group funds. Candidate contributions were not changed.`);
+ renderGroupsPage(document.getElementById("content-body"));
+ showToast(`${money(amount)} ETB added to ${groupName} group funds.`,`success`);
+}
+
+function deleteGroupFund(id){
+ if(!confirmAction("Delete this group-money entry? This will only affect the separate group-fund ledger."))return;
+ const funds=getGroupFunds();
+ const next=funds.filter(x=>String(x.id)!==String(id));
+ if(next.length===funds.length)return;
+ saveGroupFunds(next);
+ logActivity(currentUser.id,"Group Money Deleted","Deleted a separate group-fund entry.");
+ renderGroupsPage(document.getElementById("content-body"));
+ showToast("Group-money entry deleted.","success");
+}
+
+function exportGroupFundsCSV(){
+ const funds=getGroupFunds();
+ if(!funds.length){showToast("There are no group-money records to export.","warning");return;}
+ const rows=[
+  ["Date","Group","Amount (ETB)","Church Activity","Description","Added By","Created At"],
+  ...funds.map(x=>[x.date,x.groupName,Number(x.amount||0).toFixed(2),x.activity||"",x.description||"",x.createdBy||"",x.createdAt||""])
+ ];
+ const csv=rows.map(row=>row.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\n");
+ const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);
+ a.download=`Meklit_Group_Funds_${today()}.csv`;
+ a.click();
+ URL.revokeObjectURL(a.href);
+}
+
+function renderGroupFundsSection(db){
+ const groups=db.groups||[];
+ const funds=getGroupFunds();
+ const total=funds.reduce((s,x)=>s+Number(x.amount||0),0);
+ const groupsWithFunds=groups.filter(g=>groupFundTotal(g.groupName)>0).length;
+
+ return `<div class="group-funds-panel">
+  <div class="card">
+   <div class="card-header">
+    <div>
+     <div class="card-title"><i class="fa fa-vault"></i> Group Money Management</div>
+     <div style="font-size:.78rem;color:#667085;margin-top:.25rem">Independent group funds — candidate contributions and candidate rankings are not affected.</div>
+    </div>
+    <div class="toolbar">
+     <button class="btn-gold" onclick="openGroupFundModal()"><i class="fa fa-plus"></i> Add Money to Group</button>
+     <button class="btn-outline" onclick="exportGroupFundsCSV()"><i class="fa fa-file-csv"></i> Export</button>
+    </div>
+   </div>
+   <div class="card-body">
+    <div class="group-fund-summary">
+     <div class="group-fund-stat"><div class="label">Total Group Funds</div><div class="value">${money(total)} ETB</div></div>
+     <div class="group-fund-stat"><div class="label">Fund Entries</div><div class="value">${funds.length}</div></div>
+     <div class="group-fund-stat"><div class="label">Groups With Funds</div><div class="value">${groupsWithFunds}</div></div>
+     <div class="group-fund-stat"><div class="label">Groups</div><div class="value">${groups.length}</div></div>
+    </div>
+    <div class="group-fund-grid">
+     ${groups.map(g=>`<div class="group-fund-card">
+       <h4><i class="fa fa-layer-group"></i> ${esc(g.groupName)}</h4>
+       <div class="group-fund-balance">${money(groupFundTotal(g.groupName))} ETB</div>
+       <div class="group-fund-meta">Separate group money</div>
+       <div style="margin-top:.8rem;display:flex;gap:.45rem;flex-wrap:wrap">
+        <button class="btn-sm btn-gold" onclick="openGroupFundModal(${g.id})"><i class="fa fa-plus"></i> Add</button>
+        <button class="btn-sm" onclick="openGroupMembersModal(${g.id})"><i class="fa fa-users"></i> Members (${db.candidates.filter(c=>c.group===g.groupName).length})</button>
+       </div>
+      </div>`).join("")}
+    </div>
+   </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+   <div class="card-header">
+    <div class="card-title"><i class="fa fa-receipt"></i> Group Money History</div>
+   </div>
+   <div class="card-body">
+    ${funds.length?`<div class="table-wrap"><table><thead><tr><th>Date</th><th>Group</th><th>Amount</th><th>Church Activity</th><th>Description</th><th>Added By</th><th>Action</th></tr></thead><tbody>
+     ${funds.map(x=>`<tr><td>${esc(x.date||"")}</td><td><b>${esc(x.groupName||"")}</b></td><td><strong>${money(x.amount)} ETB</strong></td><td>${esc(x.activity||"—")}</td><td>${esc(x.description||"—")}</td><td>${esc(x.createdBy||"—")}</td><td><button class="btn-danger btn-sm" onclick="deleteGroupFund('${esc(x.id)}')"><i class="fa fa-trash"></i></button></td></tr>`).join("")}
+    </tbody></table></div>`:`<div class="empty"><i class="fa fa-vault" style="font-size:2rem;opacity:.35"></i><div style="margin-top:.5rem">No group money recorded yet.</div><div style="font-size:.8rem;color:#667085;margin-top:.25rem">This ledger is completely separate from candidate contributions.</div></div>`}
+   </div>
+  </div>
+ </div>`;
+}
+
+/* Add the separate section after the original group-management table.
+   The original DB is read only here; no candidate/group records are changed. */
+const _originalRenderGroupsPage = renderGroupsPage;
+renderGroupsPage = function(container){
+ _originalRenderGroupsPage(container);
+ container.insertAdjacentHTML("beforeend", renderGroupFundsSection(getDB()));
+};
+
+/* Check remembered login on page boot */
+(function autoLogin(){
+ const remembered = localStorage.getItem("EAC_REMEMBER_LOGIN");
+ if(remembered){
+  try{
+   currentUser = JSON.parse(remembered);
+   sessionStorage.setItem(SESSION_KEY, remembered);
+  }catch(e){}
+ }
+ if(currentUser){
+  document.getElementById("login-screen").classList.add("hidden");
+  document.getElementById("app-container").classList.remove("hidden");
+  initApp();
+ }
+})();
 </script>
+
 </body>
 </html>
