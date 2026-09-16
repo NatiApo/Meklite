@@ -16,7 +16,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- Chart.js Engine integration for dynamic directional charts -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
@@ -151,7 +150,6 @@ label{
 .w-full{width:100%}
 
 /* LOGIN */
-
 #login-screen{
  position:fixed;
  inset:0;
@@ -218,7 +216,6 @@ label{
 }
 
 /* APP */
-
 #app-container{
  display:flex;
  height:100vh;
@@ -357,7 +354,6 @@ main{
 }
 
 /* CARDS */
-
 .card{
  background:#fff;
  border-radius:9px;
@@ -428,7 +424,6 @@ main{
 }
 
 /* TABLE */
-
 .table-wrap{
  overflow-x:auto;
 }
@@ -494,7 +489,6 @@ tr:hover td{background:#f9fafb}
 }
 
 /* MODAL */
-
 .modal-backdrop{
  position:fixed;
  inset:0;
@@ -544,7 +538,6 @@ tr:hover td{background:#f9fafb}
 }
 
 /* TOAST */
-
 #toast-container{
  position:fixed;
  right:20px;
@@ -578,7 +571,6 @@ tr:hover td{background:#f9fafb}
 }
 
 /* A4 FORM */
-
 #form-print-area{
  background:#dfe4e8;
  padding:1rem;
@@ -854,78 +846,33 @@ tr:hover td{background:#f9fafb}
  font-style:italic;
 }
 
-/* DASHBOARD */
-
-.quick-actions{
+/* PERMISSIONS UI */
+.permission-grid{
  display:grid;
- grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
- gap:.8rem;
- margin-bottom:1.3rem;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:.75rem;
+ background:#f8fafc;
+ border:1px solid var(--border-color);
+ border-radius:8px;
+ padding:1rem;
+ margin-top:.5rem;
 }
 
-.quick-action{
- background:#fff;
- padding:1rem;
- border-radius:8px;
- border:1px solid #edf0f3;
- box-shadow:var(--shadow);
+.permission-item{
+ display:flex;
+ align-items:center;
+ gap:.5rem;
+ font-size:.82rem;
+ font-weight:600;
  cursor:pointer;
- display:flex;
- align-items:center;
- gap:.8rem;
- transition:.2s;
 }
 
-.quick-action:hover{
- transform:translateY(-2px);
- border-color:var(--accent-gold);
-}
-
-.quick-action i{
- width:40px;
- height:40px;
- display:flex;
- align-items:center;
- justify-content:center;
- border-radius:8px;
- background:#eef5fa;
- color:var(--primary-blue);
-}
-
-/* INTERACTIVE ANALYTICS EXTENSIONS */
-.rank-badge{
- display:inline-block;
- width:24px;
- height:24px;
- line-height:24px;
- text-align:center;
- border-radius:50%;
- font-weight:bold;
- font-size:.75rem;
- background:#e2e8f0;
- color:#475569;
-}
-.rank-1{background:#fef08a;color:#854d0e;border:1px solid #eab308}
-.rank-2{background:#e2e8f0;color:#334155;border:1px solid #94a3b8}
-.rank-3{background:#ffedd5;color:#9a3412;border:1px solid #f97316}
-
-.compare-card{
- border-top:4px solid var(--accent-gold);
- background:#fff;
- border-radius:8px;
- padding:1rem;
- box-shadow:var(--shadow);
-}
-.compare-title{
- font-weight:800;
- font-size:1.1rem;
- color:var(--primary-blue);
- margin-bottom:.5rem;
- text-align:center;
+.permission-item input[type="checkbox"]{
+ width:auto;
+ cursor:pointer;
 }
 
 /* MOBILE */
-
 .mobile-menu{
  display:none;
  background:none;
@@ -944,9 +891,7 @@ tr:hover td{background:#f9fafb}
  }
 
  aside.open{left:0}
-
  .mobile-menu{display:block}
-
  .grid-4{grid-template-columns:repeat(2,1fr)}
  .grid-3{grid-template-columns:1fr 1fr}
 }
@@ -958,7 +903,6 @@ tr:hover td{background:#f9fafb}
  .top-user div{display:none}
  .stats-grid{grid-template-columns:1fr 1fr}
  .stats-grid .stat-value{font-size:1.3rem}
- .quick-actions{grid-template-columns:1fr}
 }
 
 @media print{
@@ -985,32 +929,6 @@ tr:hover td{background:#f9fafb}
   margin:0;
  }
 }
-
-/* ============================================================
-   SEPARATE GROUP FUNDS - DOES NOT TOUCH CANDIDATE MONEY
-============================================================ */
-.group-funds-panel{margin-top:1.25rem}
-.group-fund-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1rem}
-.group-fund-stat{background:linear-gradient(135deg,#fff,#f8fafc);border:1px solid #e5e7eb;border-radius:12px;padding:1rem;box-shadow:0 4px 14px rgba(15,23,42,.05)}
-.group-fund-stat .label{font-size:.78rem;color:#667085;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
-.group-fund-stat .value{margin-top:.35rem;font-size:1.35rem;font-weight:800;color:var(--primary-blue)}
-.group-fund-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.group-fund-card{border:1px solid #e5e7eb;border-radius:12px;padding:1rem;background:#fff;box-shadow:0 4px 16px rgba(15,23,42,.05)}
-.group-fund-card h4{margin:0 0 .35rem;color:var(--primary-blue)}
-.group-fund-balance{font-size:1.45rem;font-weight:900;color:#15803d}
-.group-fund-meta{font-size:.78rem;color:#667085;margin-top:.2rem}
-.group-members-list{max-height:420px;overflow:auto}
-.group-member-row{display:flex;align-items:center;gap:.8rem;padding:.75rem;border:1px solid #eef2f7;border-radius:10px;margin-bottom:.55rem;background:#fafcff}
-.group-member-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#eaf0f6;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--primary-blue)}
-.group-member-name{font-weight:800;color:#243b53}
-.group-member-meta{font-size:.78rem;color:#667085}
-@media(max-width:900px){.group-fund-summary{grid-template-columns:repeat(2,1fr)}.group-fund-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:650px){.group-fund-summary,.group-fund-grid{grid-template-columns:1fr}}
-.group-money-section{margin-top:1.25rem}
-.group-money-table td,.group-money-table th{vertical-align:middle}
-.group-money-total{font-size:1.05rem;font-weight:900;color:#15803d}
-
-
 </style>
 </head>
 
@@ -1021,322 +939,202 @@ tr:hover td{background:#f9fafb}
 <!-- LOGIN -->
 <div id="login-screen">
  <div class="login-card">
-
-  <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg"
-       class="logo-large"
-       alt="Church Logo">
-
+  <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg" class="logo-large" alt="Church Logo">
   <h1>Apostolic Church Youth Meklit</h1>
   <h2>Youth Meklit Service - Contribution Management</h2>
 
   <form id="login-form" onsubmit="handleLogin(event)" class="login-form">
-
    <div class="form-group">
-    <label>Username</label>
-    <input id="login-username"
-           autocomplete="username"
-           placeholder="Enter username"
-           required>
+    <label>Username / Email</label>
+    <input id="login-username" autocomplete="username" placeholder="Enter username or email" required>
    </div>
 
    <div class="form-group">
     <label>Password</label>
-
     <div class="password-wrapper">
-     <input id="login-password"
-            type="password"
-            autocomplete="current-password"
-            placeholder="Enter password"
-            required>
-
-     <i class="fa fa-eye password-toggle"
-        onclick="toggleLoginPassword()"></i>
+     <input id="login-password" type="password" autocomplete="current-password" placeholder="Enter password" required>
+     <i class="fa fa-eye password-toggle" onclick="toggleLoginPassword()"></i>
     </div>
    </div>
-<button type="submit" class="w-full" style="margin-top:.8rem">
-    <i class="fa fa-sign-in-alt"></i>
-    LOGIN
-   </button>
 
+   <button type="submit" class="w-full" style="margin-top:.8rem">
+    <i class="fa fa-sign-in-alt"></i> LOGIN
+   </button>
   </form>
 
   <div style="margin-top:1.5rem;font-size:.73rem;color:#667085">
-   Default Admin:
-   <strong>admin</strong> /
-   <strong>Admin@2026</strong>
+   Protected System with Firebase Auth & Granular Role Permissions
   </div>
-
  </div>
 </div>
 
-
 <!-- APPLICATION -->
 <div id="app-container" class="hidden">
-
  <aside id="sidebar">
-
   <div class="sidebar-header">
-
-   <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg"
-        class="sidebar-logo">
-
+   <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg" class="sidebar-logo">
    <div>
     <div class="sidebar-title">Youth Meklit</div>
     <div id="sidebar-role" class="sidebar-role">Administrator</div>
    </div>
-
   </div>
 
   <ul class="sidebar-menu">
-
-   <li class="active" data-page="dashboard">
-    <a onclick="navigate('dashboard')">
-     <i class="fa fa-chart-pie"></i>
-     Dashboard
-    </a>
+   <li class="perm-check" data-perm="VIEW_DASHBOARD" data-page="dashboard">
+    <a onclick="navigate('dashboard')"><i class="fa fa-chart-pie"></i> Dashboard</a>
    </li>
 
-   <li data-page="analytics">
-    <a onclick="navigate('analytics')">
-     <i class="fa fa-chart-line"></i>
-     Money & Groups Comparison
-    </a>
+   <li class="perm-check" data-perm="VIEW_RANKINGS" data-page="analytics">
+    <a onclick="navigate('analytics')"><i class="fa fa-chart-line"></i> Money Comparison</a>
    </li>
 
    <li onclick="toggleSubmenu(this)">
     <a>
-     <i class="fa fa-users"></i>
-     Candidates
+     <i class="fa fa-users"></i> Candidates
      <i class="fa fa-chevron-down" style="margin-left:auto;font-size:.65rem"></i>
     </a>
    </li>
 
    <ul class="submenu" id="candidate-submenu">
-    <li>
-     <a onclick="navigate('add-candidate')">
-      <i class="fa fa-file-circle-plus"></i>
-      Interactive A4 Form
-     </a>
+    <li class="perm-check" data-perm="VIEW_A4">
+     <a onclick="navigate('add-candidate')"><i class="fa fa-file-circle-plus"></i> Interactive A4 Form</a>
     </li>
-    <li>
-     <a onclick="navigate('candidates-list')">
-      <i class="fa fa-address-book"></i>
-      Candidates Directory
-     </a>
+    <li class="perm-check" data-perm="VIEW_CANDIDATES">
+     <a onclick="navigate('candidates-list')"><i class="fa fa-address-book"></i> Candidates Directory</a>
     </li>
    </ul>
 
-   <li class="admin-only" data-page="groups">
-    <a onclick="navigate('groups')">
-     <i class="fa fa-layer-group"></i>
-     Manage Groups
-    </a>
+   <li class="perm-check" data-perm="MANAGE_GROUPS" data-page="groups">
+    <a onclick="navigate('groups')"><i class="fa fa-layer-group"></i> Manage Groups</a>
    </li>
 
-   <li data-page="contributions">
-    <a onclick="navigate('contributions')">
-     <i class="fa fa-hand-holding-dollar"></i>
-     Contributions
-    </a>
+   <li class="perm-check" data-perm="VIEW_REPORTS" data-page="reports">
+    <a onclick="navigate('reports')"><i class="fa fa-chart-column"></i> Reports</a>
    </li>
 
-   <li data-page="reports">
-    <a onclick="navigate('reports')">
-     <i class="fa fa-chart-column"></i>
-     Reports
-    </a>
+   <li class="perm-check" data-perm="MANAGE_USERS" data-page="users">
+    <a onclick="navigate('users')"><i class="fa fa-user-shield"></i> User Management</a>
    </li>
 
-   <li class="admin-only" data-page="users">
-    <a onclick="navigate('users')">
-     <i class="fa fa-user-shield"></i>
-     User Management
-    </a>
+   <li class="perm-check" data-perm="MANAGE_USERS" data-page="activity">
+    <a onclick="navigate('activity')"><i class="fa fa-history"></i> Activity Log</a>
    </li>
 
-   <li class="admin-only" data-page="activity">
-    <a onclick="navigate('activity')">
-     <i class="fa fa-history"></i>
-     Activity Log
-    </a>
-   </li>
-
-   <li class="admin-only" data-page="backup">
-    <a onclick="navigate('backup')">
-     <i class="fa fa-database"></i>
-     Backup / Restore
-    </a>
-   </li>
-
-   <li data-page="settings">
-    <a onclick="navigate('settings')">
-     <i class="fa fa-cog"></i>
-     Settings
-    </a>
+   <li class="perm-check" data-perm="ACCESS_SETTINGS" data-page="settings">
+    <a onclick="navigate('settings')"><i class="fa fa-cog"></i> Settings</a>
    </li>
 
    <li>
-    <a onclick="openChangePasswordModal()">
-     <i class="fa fa-key"></i>
-     Change Password
-    </a>
+    <a onclick="openChangePasswordModal()"><i class="fa fa-key"></i> Change Password</a>
    </li>
 
    <li>
-    <a onclick="logout()" style="color:#fca5a5">
-     <i class="fa fa-sign-out-alt"></i>
-     Logout
-    </a>
+    <a onclick="logout()" style="color:#fca5a5"><i class="fa fa-sign-out-alt"></i> Logout</a>
    </li>
-
   </ul>
-
  </aside>
 
-
  <main>
-
   <header class="topbar no-print">
-
    <div style="display:flex;align-items:center;gap:.8rem">
-
-    <button class="mobile-menu"
-            onclick="toggleMobileSidebar()">
-     <i class="fa fa-bars"></i>
-    </button>
-
-    <h2 id="page-title" class="page-title">
-     Dashboard
-    </h2>
-
+    <button class="mobile-menu" onclick="toggleMobileSidebar()"><i class="fa fa-bars"></i></button>
+    <h2 id="page-title" class="page-title">Dashboard</h2>
    </div>
 
    <div class="top-user">
-
     <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg">
-
     <div>
-     <div id="topbar-username" class="top-user-name">
-      Administrator
-     </div>
-
-     <div id="topbar-role" class="top-user-role">
-      Admin
-     </div>
+     <div id="topbar-username" class="top-user-name">User</div>
+     <div id="topbar-role" class="top-user-role">Role</div>
     </div>
-
    </div>
-
   </header>
 
-
   <div id="content-body" class="content-body"></div>
-
  </main>
-
 </div>
-
 
 <!-- GENERAL MODAL -->
 <div id="general-modal" class="modal-backdrop hidden">
  <div class="modal">
-
   <div class="modal-header">
    <h3 id="modal-title">Modal</h3>
-   <i class="fa fa-times"
-      style="cursor:pointer"
-      onclick="closeModal('general-modal')"></i>
+   <i class="fa fa-times" style="cursor:pointer" onclick="closeModal('general-modal')"></i>
   </div>
-
   <div id="modal-body" class="modal-body"></div>
-
   <div id="modal-footer" class="modal-footer"></div>
-
  </div>
 </div>
-
 
 <!-- CHANGE PASSWORD -->
 <div id="password-modal" class="modal-backdrop hidden">
  <div class="modal">
-
   <div class="modal-header">
    <h3>Change Password</h3>
-   <i class="fa fa-times"
-      onclick="closeModal('password-modal')"
-      style="cursor:pointer"></i>
+   <i class="fa fa-times" onclick="closeModal('password-modal')" style="cursor:pointer"></i>
   </div>
-
   <div class="modal-body">
-
-   <form id="change-password-form"
-         onsubmit="handleChangePassword(event)">
-
+   <form id="change-password-form" onsubmit="handleChangePassword(event)">
     <div class="form-group">
      <label>Current Password</label>
-     <input id="current-password"
-            type="password"
-            required>
+     <input id="current-password" type="password" required>
     </div>
-
     <div class="form-group">
      <label>New Password</label>
-     <input id="new-password"
-            type="password"
-            minlength="6"
-            required>
+     <input id="new-password" type="password" minlength="6" required>
     </div>
-
     <div class="form-group">
      <label>Confirm New Password</label>
-     <input id="confirm-password"
-            type="password"
-            minlength="6"
-            required>
+     <input id="confirm-password" type="password" minlength="6" required>
     </div>
-
-    <div class="modal-footer"
-         style="margin:1rem -1.25rem -1.25rem">
-
-     <button type="button"
-             class="btn-outline"
-             onclick="closeModal('password-modal')">
-      Cancel
-     </button>
-
-     <button type="submit">
-      <i class="fa fa-key"></i>
-      Update Password
-     </button>
-
+    <div class="modal-footer" style="margin:1rem -1.25rem -1.25rem">
+     <button type="button" class="btn-outline" onclick="closeModal('password-modal')">Cancel</button>
+     <button type="submit"><i class="fa fa-key"></i> Update Password</button>
     </div>
-
    </form>
-
   </div>
  </div>
 </div>
 
-
 <script type="module" src="firebase-bridge.js"></script>
 
 <script>
-/* ============================================================
-   FIREBASE AUTHENTICATION + FIRESTORE DATA LAYER
-   Firebase Authentication handles passwords. Firestore is the
-   authoritative MEKLITE database. No Render/localStorage login.
-============================================================ */
+const DEFAULT_PERMISSIONS = {
+ VIEW_DASHBOARD: true,
+ VIEW_GROUPS: true,
+ VIEW_CANDIDATES: true,
+ VIEW_A4: true,
+ ADD_CANDIDATE: true,
+ EDIT_CANDIDATE_NAME: true,
+ EDIT_CANDIDATE_INFO: true,
+ ADD_MONEY: true,
+ EDIT_MONEY: true,
+ DELETE_MONEY: false,
+ ADD_ROW: true,
+ EDIT_ROW: true,
+ DELETE_ROW: false,
+ VIEW_GROUP_MONEY: true,
+ ADD_GROUP_MONEY: false,
+ EDIT_GROUP_MONEY: false,
+ DELETE_GROUP_MONEY: false,
+ VIEW_RANKINGS: true,
+ VIEW_REPORTS: true,
+ PRINT_A4: true,
+ MANAGE_GROUPS: false,
+ MANAGE_USERS: false,
+ ACCESS_SETTINGS: false
+};
 
-const defaultData={
- settings:{
-  churchName:"ኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን",
-  department:"የወጣቶች መክሊት አገልግሎት ክፍል",
-  formTitle:"የአባላት ገንዘብ መሰብሰቢያ ቅጽ",
-  phone:"", email:"", address:"",
-  verse:"“መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።” ማቴ 6:21"
+const defaultData = {
+ settings: {
+  churchName: "ኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን",
+  department: "የወጣቶች መክሊት አገልግሎት ክፍል",
+  formTitle: "የአባላት ገንዘብ መሰብሰቢያ ቅጽ",
+  phone: "", email: "", address: "",
+  verse: "“መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።” ማቴ 6:21"
  },
- users:[],
- groups:[
+ users: [],
+ groups: [
   {id:1,groupName:"Meklit 1",description:"Meklit Group 1",status:"Active"},
   {id:2,groupName:"Meklit 2",description:"Meklit Group 2",status:"Active"},
   {id:3,groupName:"Meklit 3",description:"Meklit Group 3",status:"Active"},
@@ -1344,16 +1142,19 @@ const defaultData={
   {id:5,groupName:"Meklit 5",description:"Meklit Group 5",status:"Active"},
   {id:6,groupName:"Meklit 6",description:"Meklit Group 6",status:"Active"}
  ],
- groupFunds:[], candidates:[], activityLog:[]
+ groupFunds: [], candidates: [], activityLog: []
 };
 
-let currentDB=null;
-let currentUser=null;
-let activePage="dashboard";
+let currentDB = null;
+let currentUser = null;
+let activePage = "dashboard";
+let editingCandidateId = null;
+let currentPhotoBase64 = "";
 
 async function fetchBackendData(){
  try{
-  currentDB=await window.FirebaseBridge.loadDB();
+  currentDB = await window.FirebaseBridge.loadDB();
+  if(!currentDB) currentDB = structuredClone(defaultData);
   currentDB.settings ||= structuredClone(defaultData.settings);
   currentDB.users ||= [];
   currentDB.groups ||= structuredClone(defaultData.groups);
@@ -1361,10 +1162,10 @@ async function fetchBackendData(){
   currentDB.candidates ||= [];
   currentDB.activityLog ||= [];
   return currentDB;
- }catch(err){
-  console.error("Firebase data load failed",err);
-  if(!currentDB) currentDB=structuredClone(defaultData);
-  showToast(window.FirebaseBridge?.authError?.(err) || "Could not load Firebase data.","error");
+ } catch(err){
+  console.error("Firebase data load failed", err);
+  if(!currentDB) currentDB = structuredClone(defaultData);
+  showToast("Could not load database.", "error");
   return currentDB;
  }
 }
@@ -1372,353 +1173,512 @@ async function fetchBackendData(){
 function getDB(){ return currentDB || structuredClone(defaultData); }
 
 async function saveDB(db){
- currentDB=db;
+ currentDB = db;
  try{
   await window.FirebaseBridge.saveDB(db);
   return true;
- }catch(err){
-  console.error("Firebase save failed",err);
-  showToast(window.FirebaseBridge?.authError?.(err) || "Could not save to Firebase.","error");
+ } catch(err){
+  console.error("Firebase save failed", err);
+  showToast("Could not save to Firebase.", "error");
   return false;
  }
 }
 
-async function logActivity(userId,action,description){
+async function logActivity(userId, action, description){
  try{
-  await window.FirebaseBridge.logActivity({userId,action,description});
- }catch(err){ console.warn("Activity log failed",err); }
+  await window.FirebaseBridge.logActivity({
+   userId, action, description, dateTime: nowDateTime()
+  });
+ } catch(err){ console.warn("Activity log failed", err); }
+}
+
+function isAdmin(){
+ return currentUser && currentUser.role === "Admin";
+}
+
+function hasPermission(permissionKey){
+ if(!currentUser) return false;
+ if(currentUser.status !== "Active") return false;
+ if(currentUser.role === "Admin") return true;
+ return !!(currentUser.permissions && currentUser.permissions[permissionKey]);
+}
+
+function requirePermission(permissionKey){
+ if(!hasPermission(permissionKey)){
+  showToast(`Permission Denied: [${permissionKey}] required.`, "error");
+  return false;
+ }
+ return true;
 }
 
 function toggleLoginPassword(){
- const input=document.getElementById("login-password");
- input.type=input.type==="password" ? "text" : "password";
+ const input = document.getElementById("login-password");
+ input.type = input.type === "password" ? "text" : "password";
 }
 
 async function handleLogin(e){
  e.preventDefault();
- const loginValue=document.getElementById("login-username").value.trim();
- const password=document.getElementById("login-password").value;
- if(!loginValue || !password)return;
+ const loginValue = document.getElementById("login-username").value.trim();
+ const password = document.getElementById("login-password").value;
+ if(!loginValue || !password) return;
 
- const button=document.querySelector('#login-form button[type="submit"]');
- const original=button?.innerHTML;
- if(button){button.disabled=true;button.innerHTML='<i class="fa fa-spinner fa-spin"></i> Signing in...';}
+ const button = document.querySelector('#login-form button[type="submit"]');
+ const original = button?.innerHTML;
+ if(button){ button.disabled = true; button.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Signing in...'; }
 
  try{
-  const authUser=await window.FirebaseBridge.signIn(loginValue,password);
-  const profile=await window.FirebaseBridge.getUserProfile(authUser.uid);
+  const authUser = await window.FirebaseBridge.signIn(loginValue, password);
+  let profile = await window.FirebaseBridge.getUserProfile(authUser.uid);
 
   if(!profile){
-   await window.FirebaseBridge.signOut();
-   throw new Error("Your Firebase account is not connected to a MEKLITE user profile. Create users/"+authUser.uid+" in Firestore.");
+   profile = {
+    uid: authUser.uid,
+    fullName: authUser.displayName || authUser.email.split('@')[0],
+    email: authUser.email,
+    username: authUser.email.split('@')[0],
+    role: "Admin",
+    status: "Active",
+    permissions: structuredClone(DEFAULT_PERMISSIONS)
+   };
   }
 
-  if(profile.status!=="Active"){
+  if(profile.status !== "Active"){
    await window.FirebaseBridge.signOut();
-   throw new Error("Your MEKLITE account is disabled. Contact an administrator.");
+   throw new Error("Your account has been disabled by an administrator.");
   }
 
-  currentUser=profile;
+  currentUser = profile;
   await window.FirebaseBridge.updateLastLogin(profile.uid);
-  await logActivity(profile.uid,"Login",`User ${profile.username || profile.email} logged in.`);
+  await logActivity(profile.uid, "Login", `User ${profile.fullName} logged in.`);
 
   document.getElementById("login-screen").classList.add("hidden");
   document.getElementById("app-container").classList.remove("hidden");
   await fetchBackendData();
   initApp();
-  showToast("Welcome back, "+(profile.fullName || profile.displayName || profile.email),"success");
- }catch(err){
-  console.error("Login failed:",err);
-  showToast(window.FirebaseBridge?.authError?.(err) || err.message || "Login failed.","error");
- }finally{
-  if(button){button.disabled=false;button.innerHTML=original;}
+  showToast("Welcome back, " + profile.fullName, "success");
+ } catch(err){
+  console.error("Login failed:", err);
+  showToast(window.FirebaseBridge?.authError?.(err) || err.message || "Login failed.", "error");
+ } finally{
+  if(button){ button.disabled = false; button.innerHTML = original; }
  }
 }
 
 async function logout(){
  try{
-  if(currentUser) await logActivity(currentUser.uid || currentUser.id,"Logout",`User ${currentUser.username || currentUser.email} logged out.`);
+  if(currentUser) await logActivity(currentUser.uid || currentUser.id, "Logout", `User ${currentUser.fullName} logged out.`);
   await window.FirebaseBridge.signOut();
- }catch(err){ console.warn("Logout error",err); }
- currentUser=null;
+ } catch(err){ console.warn("Logout error", err); }
+ currentUser = null;
  document.getElementById("app-container").classList.add("hidden");
  document.getElementById("login-screen").classList.remove("hidden");
  document.getElementById("login-form").reset();
- showToast("Logged out successfully.","success");
+ showToast("Logged out successfully.", "success");
 }
 
 async function handleChangePassword(e){
  e.preventDefault();
- const curr=document.getElementById("current-password").value;
- const newP=document.getElementById("new-password").value;
- const confP=document.getElementById("confirm-password").value;
- if(newP.length<6){showToast("New password must contain at least 6 characters.","error");return;}
- if(newP!==confP){showToast("New passwords do not match.","error");return;}
+ const curr = document.getElementById("current-password").value;
+ const newP = document.getElementById("new-password").value;
+ const confP = document.getElementById("confirm-password").value;
+ if(newP.length < 6){ showToast("New password must contain at least 6 characters.", "error"); return; }
+ if(newP !== confP){ showToast("New passwords do not match.", "error"); return; }
  try{
-  await window.FirebaseBridge.changePassword(curr,newP);
-  await logActivity(currentUser.uid || currentUser.id,"Password Changed","User changed their password.");
-  showToast("Password updated successfully.","success");
+  await window.FirebaseBridge.changePassword(curr, newP);
+  await logActivity(currentUser.uid, "Password Changed", "User updated account password.");
+  showToast("Password updated successfully.", "success");
   closeModal("password-modal");
   document.getElementById("change-password-form").reset();
- }catch(err){showToast(window.FirebaseBridge?.authError?.(err) || "Could not change password.","error");}
+ } catch(err){ showToast(window.FirebaseBridge?.authError?.(err) || "Could not change password.", "error"); }
 }
 
-window.addEventListener("DOMContentLoaded",async()=>{
+window.addEventListener("DOMContentLoaded", async () => {
  try{
   await window.FirebaseBridge.ready();
-  window.FirebaseBridge.onAuth(async authUser=>{
-   if(!authUser){return;}
+  window.FirebaseBridge.onAuth(async authUser => {
+   if(!authUser) return;
    try{
-    const profile=await window.FirebaseBridge.getUserProfile(authUser.uid);
-    if(profile && profile.status==="Active"){
-     currentUser=profile;
+    const profile = await window.FirebaseBridge.getUserProfile(authUser.uid);
+    if(profile && profile.status === "Active"){
+     currentUser = profile;
      document.getElementById("login-screen").classList.add("hidden");
      document.getElementById("app-container").classList.remove("hidden");
      await fetchBackendData();
      initApp();
     }
-   }catch(err){console.warn("Auth state profile check failed",err);}
+   } catch(err){ console.warn("Auth check failed", err); }
   });
- }catch(err){
-  console.error("Firebase initialization failed",err);
-  showToast("Firebase could not be initialized. Check firebase-config.js and your internet connection.","error");
+ } catch(err){
+  console.error("Firebase init failed", err);
+  showToast("Firebase initialization error.", "error");
  }
 });
 
-
-/* ============================================================
-   UTILITIES
-============================================================ */
-
-function esc(value){
- return String(value ?? "")
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
+function esc(val){
+ return String(val ?? "")
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
 
-function today(){
- return new Date().toISOString().split("T")[0];
+function nowDateTime(){ return new Date().toISOString().replace("T"," ").split(".")[0]; }
+function money(v){ return Number(v || 0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function generateId(prefix="EAC"){ return prefix + "-" + Math.floor(100000 + Math.random()*900000); }
+
+function showToast(msg, type="success"){
+ const c = document.getElementById("toast-container");
+ const t = document.createElement("div");
+ t.className = "toast " + type;
+ const icon = type==="success"?"fa-check-circle":type==="error"?"fa-exclamation-circle":type==="warning"?"fa-exclamation-triangle":"fa-info-circle";
+ t.innerHTML = `<i class="fa ${icon}"></i> ${esc(msg)}`;
+ c.appendChild(t);
+ setTimeout(() => t.remove(), 4000);
 }
 
-function nowDateTime(){
- return new Date()
-  .toISOString()
-  .replace("T"," ")
-  .split(".")[0];
-}
+function closeModal(id){ document.getElementById(id).classList.add("hidden"); }
 
-function money(value){
- return Number(value || 0).toLocaleString(
-  "en-US",
-  {minimumFractionDigits:2,maximumFractionDigits:2}
-);
-}
-
-function generateId(prefix="ID"){
- return prefix+"-"+Math.floor(100000+Math.random()*900000);
-}
-
-function isAdmin(){
- return currentUser && currentUser.role==="Admin";
-}
-
-function confirmAction(message){
- return window.confirm(message);
-}
-
-function showToast(message,type="success"){
- const container=document.getElementById("toast-container");
-
- const toast=document.createElement("div");
-
- toast.className="toast "+type;
-
- const icon=
-  type==="success" ? "fa-check-circle" :
-  type==="error" ? "fa-exclamation-circle" :
-  type==="warning" ? "fa-exclamation-triangle" :
-  "fa-info-circle";
-
- toast.innerHTML=
-  `<i class="fa ${icon}"></i> ${esc(message)}`;
-
- container.appendChild(toast);
-
- setTimeout(()=>{
-  toast.remove();
- },4000);
-}
-
-function closeModal(id){
- document.getElementById(id).classList.add("hidden");
-}
-
-function openModal(title,body,footer=""){
- document.getElementById("modal-title").innerText=title;
- document.getElementById("modal-body").innerHTML=body;
- document.getElementById("modal-footer").innerHTML=footer;
+function openModal(title, body, footer=""){
+ document.getElementById("modal-title").innerText = title;
+ document.getElementById("modal-body").innerHTML = body;
+ document.getElementById("modal-footer").innerHTML = footer;
  document.getElementById("general-modal").classList.remove("hidden");
 }
 
-function openChangePasswordModal(){
- document.getElementById("password-modal").classList.remove("hidden");
-}
-
-/* ============================================================
-   APP
-============================================================ */
+function openChangePasswordModal(){ document.getElementById("password-modal").classList.remove("hidden"); }
 
 function initApp(){
+ if(!currentUser) return;
+ document.getElementById("topbar-username").innerText = currentUser.fullName;
+ document.getElementById("topbar-role").innerText = currentUser.role;
+ document.getElementById("sidebar-role").innerText = currentUser.role === "Admin" ? "Administrator" : "Staff User";
 
- if(!currentUser)return;
-
- document.getElementById("topbar-username").innerText=
-  currentUser.fullName;
-
- document.getElementById("topbar-role").innerText=
-  currentUser.role;
-
- document.getElementById("sidebar-role").innerText=
-  currentUser.role==="Admin"
-   ? "Administrator"
-   : "Staff User";
-
- document
-  .querySelectorAll(".admin-only")
-  .forEach(el=>{
-   el.style.display=isAdmin() ? "" : "none";
-  });
+ document.querySelectorAll(".perm-check").forEach(el => {
+  const perm = el.getAttribute("data-perm");
+  if(perm && !hasPermission(perm)){
+   el.style.display = "none";
+  } else {
+   el.style.display = "";
+  }
+ });
 
  navigate("dashboard");
 }
 
-function toggleMobileSidebar(){
- document.getElementById("sidebar").classList.toggle("open");
-}
-
-function toggleSubmenu(el){
- const menu=document.getElementById("candidate-submenu");
- menu.classList.toggle("hidden");
-}
+function toggleMobileSidebar(){ document.getElementById("sidebar").classList.toggle("open"); }
+function toggleSubmenu(el){ document.getElementById("candidate-submenu").classList.toggle("hidden"); }
 
 function navigate(page){
+ const map = {
+  dashboard: "VIEW_DASHBOARD",
+  analytics: "VIEW_RANKINGS",
+  "add-candidate": "VIEW_A4",
+  "candidates-list": "VIEW_CANDIDATES",
+  groups: "MANAGE_GROUPS",
+  reports: "VIEW_REPORTS",
+  users: "MANAGE_USERS",
+  activity: "MANAGE_USERS",
+  settings: "ACCESS_SETTINGS"
+ };
 
- if(
-  ["groups","users","activity","backup"].includes(page)
-  && !isAdmin()
- ){
-  showToast(
-   "Administrator permission required.",
-   "error"
-  );
+ const requiredPerm = map[page];
+ if(requiredPerm && !hasPermission(requiredPerm)){
+  showToast("You do not have permission to access this feature.", "error");
   return;
  }
 
- activePage=page;
+ activePage = page;
+ document.querySelectorAll(".sidebar-menu li[data-page]").forEach(li => li.classList.remove("active"));
+ const target = document.querySelector(`.sidebar-menu li[data-page="${page}"]`);
+ if(target) target.classList.add("active");
 
- document
-  .querySelectorAll(".sidebar-menu li[data-page]")
-  .forEach(li=>{
-   li.classList.remove("active");
-  });
-
- const target=
-  document.querySelector(
-   `.sidebar-menu li[data-page="${page}"]`
-  );
-
- if(target)target.classList.add("active");
-
- const titles={
-  dashboard:"Dashboard",
-  analytics:"Money & Groups Directional Comparison",
-  "add-candidate":"Interactive A4 Form & Candidate Entry",
-  "candidates-list":"Candidates Directory",
-  groups:"Group Management",
-  contributions:"Contribution Records",
-  reports:"Financial Reports",
-  users:"User Management",
-  activity:"System Activity Log",
-  backup:"Backup & Restore",
-  settings:"System Settings"
+ const titles = {
+  dashboard: "Dashboard",
+  analytics: "Money & Groups Directional Comparison",
+  "add-candidate": "Interactive A4 Form & Candidate Entry",
+  "candidates-list": "Candidates Directory",
+  groups: "Group Management",
+  reports: "Financial Reports",
+  users: "User Management & Permissions",
+  activity: "System Activity Log",
+  settings: "System Settings"
  };
 
- document.getElementById("page-title").innerText=
-  titles[page] || "Dashboard";
-
+ document.getElementById("page-title").innerText = titles[page] || "Dashboard";
  renderPage(page);
-
  document.getElementById("sidebar").classList.remove("open");
 }
 
 async function renderPage(page){
-
- const container=
-  document.getElementById("content-body");
-
- container.innerHTML="";
-
+ const container = document.getElementById("content-body");
+ container.innerHTML = "";
  switch(page){
-
-  case "dashboard":
-   await renderDashboard(container);
-   break;
-
-  case "analytics":
-   await renderAnalyticsPage(container);
-   break;
-
-  case "add-candidate":
-   await renderFormIntegration(container);
-   break;
-
-  case "candidates-list":
-   await renderCandidatesList(container);
-   break;
-
-  case "groups":
-   await renderGroupsPage(container);
-   break;
-
-  case "contributions":
-   await renderDashboard(container);
-   break;
-
-  default:
-   await renderDashboard(container);
+  case "dashboard": await renderDashboard(container); break;
+  case "analytics": await renderAnalyticsPage(container); break;
+  case "add-candidate": await renderFormIntegration(container); break;
+  case "candidates-list": await renderCandidatesList(container); break;
+  case "groups": await renderGroupsPage(container); break;
+  case "users": await renderUserManagement(container); break;
+  case "reports": await renderDashboard(container); break;
+  default: await renderDashboard(container);
  }
 }
 
-
 /* ============================================================
-   DASHBOARD
+   USER MANAGEMENT
 ============================================================ */
 
-function getCandidateContribution(candidate){
+async function renderUserManagement(container){
+ if(!requirePermission("MANAGE_USERS")) return;
+ const db = await fetchBackendData();
 
- let total=0;
+ container.innerHTML = `
+ <div class="card">
+  <div class="card-header">
+   <div class="card-title"><i class="fa fa-user-shield"></i> User Management System</div>
+   <button class="btn-gold" onclick="openAddUserModal()"><i class="fa fa-user-plus"></i> Add New User</button>
+  </div>
+  <div class="card-body">
+   <div class="table-wrap">
+    <table>
+     <thead>
+      <tr>
+       <th>Full Name</th>
+       <th>Username / Email</th>
+       <th>Role</th>
+       <th>Status</th>
+       <th>Actions</th>
+      </tr>
+     </thead>
+     <tbody>
+      ${
+       db.users.length ? db.users.map(u => `
+        <tr>
+         <td><b>${esc(u.fullName)}</b></td>
+         <td>${esc(u.email || u.username)}</td>
+         <td><span class="badge ${u.role==='Admin'?'badge-warning':'badge-info'}">${esc(u.role)}</span></td>
+         <td><span class="badge ${u.status==='Active'?'badge-success':'badge-danger'}">${esc(u.status)}</span></td>
+         <td class="actions">
+          <button class="btn-sm btn-outline" onclick="openEditUserModal('${esc(u.uid || u.id)}')"><i class="fa fa-edit"></i> Edit</button>
+          ${
+           u.role !== 'Admin' ? `
+            <button class="btn-sm ${u.status==='Active'?'btn-danger':'btn-success'}" onclick="toggleUserStatus('${esc(u.uid || u.id)}')">
+             ${u.status==='Active'?'Disable':'Enable'}
+            </button>
+           ` : ''
+          }
+         </td>
+        </tr>
+       `).join("") : `<tr><td colspan="5" class="empty">No users configured.</td></tr>`
+      }
+     </tbody>
+    </table>
+   </div>
+  </div>
+ </div>
+ `;
+}
 
- (candidate.contributions||[]).forEach(row=>{
-  total+=
-   Number(row.monthlyBirr||0)+
-   Number(row.monthlyCent||0)/100+
-   Number(row.personalBirr||0)+
-   Number(row.personalCent||0)/100+
-   Number(row.giftBirr||0)+
-   Number(row.giftCent||0)/100+
-   Number(row.otherBirr||0)+
-   Number(row.otherCent||0)/100;
+function openAddUserModal(){
+ const body = `
+  <form id="add-user-form" onsubmit="saveNewUser(event)">
+   <div class="form-group">
+    <label>Full Name</label>
+    <input id="u-fullname" placeholder="e.g. Natnael Yonas" required>
+   </div>
+   <div class="grid-2">
+    <div class="form-group">
+     <label>Email / Account Username</label>
+     <input id="u-email" type="email" placeholder="user@meklite.local" required>
+    </div>
+    <div class="form-group">
+     <label>Temporary Password</label>
+     <input id="u-password" type="password" minlength="6" required>
+    </div>
+   </div>
+   <div class="grid-2">
+    <div class="form-group">
+     <label>Role</label>
+     <select id="u-role" onchange="togglePermDisplayInModal(this.value)">
+      <option value="Limited User">Limited User</option>
+      <option value="Admin">Admin</option>
+     </select>
+    </div>
+    <div class="form-group">
+     <label>Status</label>
+     <select id="u-status">
+      <option value="Active">Active</option>
+      <option value="Disabled">Disabled</option>
+     </select>
+    </div>
+   </div>
+
+   <div id="modal-perm-section">
+    <label>Granular User Permissions</label>
+    <div class="permission-grid">
+     ${Object.keys(DEFAULT_PERMISSIONS).map(key => `
+      <label class="permission-item">
+       <input type="checkbox" class="perm-cb" data-key="${key}" ${DEFAULT_PERMISSIONS[key] ? 'checked' : ''}>
+       ${key.replace(/_/g,' ')}
+      </label>
+     `).join("")}
+    </div>
+   </div>
+  </form>
+ `;
+
+ const footer = `
+  <button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
+  <button onclick="document.getElementById('add-user-form').requestSubmit()"><i class="fa fa-save"></i> Save User</button>
+ `;
+
+ openModal("Add New User", body, footer);
+}
+
+function togglePermDisplayInModal(role){
+ const sec = document.getElementById("modal-perm-section");
+ if(sec) sec.style.display = role === "Admin" ? "none" : "block";
+}
+
+async function saveNewUser(e){
+ e.preventDefault();
+ if(!requirePermission("MANAGE_USERS")) return;
+
+ const fullName = document.getElementById("u-fullname").value.trim();
+ const email = document.getElementById("u-email").value.trim();
+ const role = document.getElementById("u-role").value;
+ const status = document.getElementById("u-status").value;
+
+ const permissions = {};
+ if(role === "Admin"){
+  Object.keys(DEFAULT_PERMISSIONS).forEach(k => permissions[k] = true);
+ } else {
+  document.querySelectorAll(".perm-cb").forEach(cb => {
+   permissions[cb.getAttribute("data-key")] = cb.checked;
+  });
+ }
+
+ const db = getDB();
+ const newUid = generateId("USR");
+ const newUser = { uid: newUid, id: newUid, fullName, email, role, status, permissions };
+
+ db.users.push(newUser);
+ await saveDB(db);
+ await logActivity(currentUser.uid, "Created User", `Created account for ${fullName}`);
+ showToast("User created successfully.", "success");
+ closeModal("general-modal");
+ renderUserManagement(document.getElementById("content-body"));
+}
+
+function openEditUserModal(userId){
+ const db = getDB();
+ const u = db.users.find(x => (x.uid === userId || x.id === userId));
+ if(!u) return;
+
+ const body = `
+  <form id="edit-user-form" onsubmit="updateUserProfile(event, '${userId}')">
+   <div class="form-group">
+    <label>Full Name</label>
+    <input id="u-edit-fullname" value="${esc(u.fullName)}" required>
+   </div>
+   <div class="grid-2">
+    <div class="form-group">
+     <label>Role</label>
+     <select id="u-edit-role" onchange="togglePermDisplayInModal(this.value)">
+      <option value="Limited User" ${u.role==='Limited User'?'selected':''}>Limited User</option>
+      <option value="Admin" ${u.role==='Admin'?'selected':''}>Admin</option>
+     </select>
+    </div>
+    <div class="form-group">
+     <label>Status</label>
+     <select id="u-edit-status">
+      <option value="Active" ${u.status==='Active'?'selected':''}>Active</option>
+      <option value="Disabled" ${u.status==='Disabled'?'selected':''}>Disabled</option>
+     </select>
+    </div>
+   </div>
+
+   <div id="modal-perm-section" style="${u.role==='Admin'?'display:none':''}">
+    <label>Granular User Permissions</label>
+    <div class="permission-grid">
+     ${Object.keys(DEFAULT_PERMISSIONS).map(key => {
+      const isChecked = u.permissions ? u.permissions[key] : DEFAULT_PERMISSIONS[key];
+      return `
+       <label class="permission-item">
+        <input type="checkbox" class="perm-cb" data-key="${key}" ${isChecked ? 'checked' : ''}>
+        ${key.replace(/_/g,' ')}
+       </label>
+      `;
+     }).join("")}
+    </div>
+   </div>
+  </form>
+ `;
+
+ const footer = `
+  <button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
+  <button onclick="document.getElementById('edit-user-form').requestSubmit()"><i class="fa fa-save"></i> Save Permissions</button>
+ `;
+
+ openModal("Edit User Permissions", body, footer);
+}
+
+async function updateUserProfile(e, userId){
+ e.preventDefault();
+ if(!requirePermission("MANAGE_USERS")) return;
+
+ const db = getDB();
+ const u = db.users.find(x => (x.uid === userId || x.id === userId));
+ if(!u) return;
+
+ u.fullName = document.getElementById("u-edit-fullname").value.trim();
+ u.role = document.getElementById("u-edit-role").value;
+ u.status = document.getElementById("u-edit-status").value;
+
+ if(u.role === "Admin"){
+  Object.keys(DEFAULT_PERMISSIONS).forEach(k => u.permissions[k] = true);
+ } else {
+  u.permissions ||= {};
+  document.querySelectorAll(".perm-cb").forEach(cb => {
+   u.permissions[cb.getAttribute("data-key")] = cb.checked;
+  });
+ }
+
+ await saveDB(db);
+ await logActivity(currentUser.uid, "Updated Permissions", `Updated user settings for ${u.fullName}`);
+ showToast("User permissions updated.", "success");
+ closeModal("general-modal");
+ renderUserManagement(document.getElementById("content-body"));
+}
+
+async function toggleUserStatus(userId){
+ if(!requirePermission("MANAGE_USERS")) return;
+ const db = getDB();
+ const u = db.users.find(x => (x.uid === userId || x.id === userId));
+ if(!u) return;
+
+ u.status = u.status === "Active" ? "Disabled" : "Active";
+ await saveDB(db);
+ showToast(`User status changed to ${u.status}.`, "info");
+ renderUserManagement(document.getElementById("content-body"));
+}
+
+/* ============================================================
+   A4 FORM & CANDIDATE REGISTRATION (PERMISSION-AWARE)
+============================================================ */
+
+function getCandidateContribution(c){
+ let total = 0;
+ (c.contributions||[]).forEach(r => {
+  total += Number(r.monthlyBirr||0) + Number(r.monthlyCent||0)/100 +
+           Number(r.personalBirr||0) + Number(r.personalCent||0)/100 +
+           Number(r.giftBirr||0) + Number(r.giftCent||0)/100 +
+           Number(r.otherBirr||0) + Number(r.otherCent||0)/100;
  });
-
  return total;
 }
 
-function getCandidateBreakdown(candidate){
+function getCandidateBreakdown(c){
  let b = {monthly:0, personal:0, gift:0, other:0};
- (candidate.contributions||[]).forEach(r=>{
+ (c.contributions||[]).forEach(r => {
   b.monthly += Number(r.monthlyBirr||0) + Number(r.monthlyCent||0)/100;
   b.personal += Number(r.personalBirr||0) + Number(r.personalCent||0)/100;
   b.gift += Number(r.giftBirr||0) + Number(r.giftCent||0)/100;
@@ -1727,2348 +1687,478 @@ function getCandidateBreakdown(candidate){
  return b;
 }
 
-function getGrandTotal(db){
- return db.candidates.reduce(
-  (sum,c)=>sum+getCandidateContribution(c),
-  0
- );
-}
-
 async function renderDashboard(container){
-
  const db = await fetchBackendData();
+ const totalCandidates = db.candidates.length;
+ const activeGroups = db.groups.filter(g=>g.status==="Active").length;
+ const totalContribution = db.candidates.reduce((s,c)=>s+getCandidateContribution(c),0);
+ const recent = db.activityLog.slice(0,8);
 
- const totalCandidates=db.candidates.length;
- const activeGroups=
-  db.groups.filter(g=>g.status==="Active").length;
-
- const totalContribution=getGrandTotal(db);
-
- const recent=db.activityLog.slice(0,8);
-
- container.innerHTML=`
-
+ container.innerHTML = `
   <div class="stats-grid">
-
    <div class="stat-card">
-    <div>
-     <div class="stat-label">Total Candidates</div>
-     <div class="stat-value">${totalCandidates}</div>
-    </div>
+    <div><div class="stat-label">Total Candidates</div><div class="stat-value">${totalCandidates}</div></div>
     <i class="fa fa-users"></i>
    </div>
-
    <div class="stat-card gold">
-    <div>
-     <div class="stat-label">Active Groups</div>
-     <div class="stat-value">${activeGroups}</div>
-    </div>
+    <div><div class="stat-label">Active Groups</div><div class="stat-value">${activeGroups}</div></div>
     <i class="fa fa-layer-group"></i>
    </div>
-
    <div class="stat-card success">
-    <div>
-     <div class="stat-label">Total Contributions</div>
-     <div class="stat-value">${money(totalContribution)}</div>
-    </div>
+    <div><div class="stat-label">Total Contributions</div><div class="stat-value">${money(totalContribution)}</div></div>
     <i class="fa fa-money-bill-wave"></i>
    </div>
-
    <div class="stat-card info">
-    <div>
-     <div class="stat-label">System Users</div>
-     <div class="stat-value">${db.users.length}</div>
-    </div>
+    <div><div class="stat-label">System Users</div><div class="stat-value">${db.users.length}</div></div>
     <i class="fa fa-user-shield"></i>
    </div>
-
   </div>
 
   <div class="quick-actions">
-
-   <div class="quick-action"
-        onclick="navigate('add-candidate')">
-    <i class="fa fa-user-plus"></i>
-    <div>
-     <strong>Register Candidate</strong>
-     <small style="display:block;color:#667085">
-      Open A4 registration form
-     </small>
-    </div>
-   </div>
-
-   <div class="quick-action"
-        onclick="navigate('analytics')">
-    <i class="fa fa-chart-line"></i>
-    <div>
-     <strong>Money Analytics</strong>
-     <small style="display:block;color:#667085">
-      Directional Groups & Candidates comparison
-     </small>
-    </div>
-   </div>
-
-   <div class="quick-action"
-        onclick="navigate('candidates-list')">
-    <i class="fa fa-address-book"></i>
-    <div>
-     <strong>Candidate Directory</strong>
-     <small style="display:block;color:#667085">
-      Search and manage candidates
-     </small>
-    </div>
-   </div>
-
+   ${hasPermission('VIEW_A4') ? `
+    <div class="quick-action" onclick="navigate('add-candidate')">
+     <i class="fa fa-user-plus"></i><div><strong>Register Candidate</strong><small style="display:block;color:#667085">Open A4 form</small></div>
+    </div>` : ''
+   }
+   ${hasPermission('VIEW_RANKINGS') ? `
+    <div class="quick-action" onclick="navigate('analytics')">
+     <i class="fa fa-chart-line"></i><div><strong>Money Analytics</strong><small style="display:block;color:#667085">Side-by-side comparison</small></div>
+    </div>` : ''
+   }
+   ${hasPermission('VIEW_CANDIDATES') ? `
+    <div class="quick-action" onclick="navigate('candidates-list')">
+     <i class="fa fa-address-book"></i><div><strong>Directory</strong><small style="display:block;color:#667085">Search candidates</small></div>
+    </div>` : ''
+   }
   </div>
 
   <div class="grid-2">
-
    <div class="card">
-    <div class="card-header">
-     <div class="card-title">
-      <i class="fa fa-clock"></i>
-      Recent Activity
-     </div>
-    </div>
-
+    <div class="card-header"><div class="card-title"><i class="fa fa-clock"></i> Recent Activity</div></div>
     <div class="table-wrap">
      <table>
-      <thead>
-       <tr>
-        <th>Action</th>
-        <th>Description</th>
-        <th>Date</th>
-       </tr>
-      </thead>
-
+      <thead><tr><th>Action</th><th>Description</th><th>Date</th></tr></thead>
       <tbody>
-       ${
-        recent.length
-        ? recent.map(l=>`
-         <tr>
-          <td><b>${esc(l.action)}</b></td>
-          <td>${esc(l.description)}</td>
-          <td>${esc(l.dateTime)}</td>
-         </tr>
-        `).join("")
-        : `
-         <tr>
-          <td colspan="3" class="empty">
-           No activity.
-          </td>
-         </tr>
-        `
-       }
+       ${recent.length ? recent.map(l => `<tr><td><b>${esc(l.action)}</b></td><td>${esc(l.description)}</td><td>${esc(l.dateTime||'')}</td></tr>`).join("") : '<tr><td colspan="3" class="empty">No activity.</td></tr>'}
       </tbody>
      </table>
     </div>
    </div>
 
-
    <div class="card">
     <div class="card-header">
-     <div class="card-title">
-      <i class="fa fa-layer-group"></i>
-      Group Financial Ranking
-     </div>
-     <button class="btn-sm btn-gold" onclick="navigate('analytics')"><i class="fa fa-sliders"></i> Comparative View</button>
+     <div class="card-title"><i class="fa fa-layer-group"></i> Group Rankings</div>
     </div>
-
     <div class="table-wrap">
      <table>
-      <thead>
-       <tr>
-        <th>Rank</th>
-        <th>Group</th>
-        <th>Members</th>
-        <th>Group Money</th>
-       </tr>
-      </thead>
-
+      <thead><tr><th>Group</th><th>Group Money</th></tr></thead>
       <tbody>
-
-       ${
-        db.groups.map(g=>{
-         const amount=(db.groupFunds||[])
-          .filter(row=>Number(row.groupId)===Number(g.id))
-          .reduce((s,row)=>s+Number(row.amount||0),0);
-         const count=db.candidates.filter(c=>c.group===g.groupName).length;
-         return {groupName: g.groupName, count, amount};
-        }).sort((a,b)=>b.amount - a.amount).map((g, idx)=>`
-          <tr>
-           <td><span class="rank-badge ${idx===0?'rank-1':idx===1?'rank-2':idx===2?'rank-3':''}">${idx+1}</span></td>
-           <td><b>${esc(g.groupName)}</b></td>
-           <td>${g.count}</td>
-           <td><strong style="color:var(--primary-blue)">${money(g.amount)} ETB</strong></td>
-          </tr>
-         `).join("")
-       }
-
+       ${db.groups.map(g => {
+        const amt = (db.groupFunds||[]).filter(r=>Number(r.groupId)===Number(g.id)).reduce((s,r)=>s+Number(r.amount||0),0);
+        return `<tr><td><b>${esc(g.groupName)}</b></td><td><strong>${money(amt)} ETB</strong></td></tr>`;
+       }).join("")}
       </tbody>
      </table>
     </div>
    </div>
-
   </div>
  `;
 }
 
-/* ============================================================
-   DIRECTIONAL MONEY & GROUP COMPARISON ANALYTICS ENGINE
-============================================================ */
-
-async function renderAnalyticsPage(container){
+async function renderFormIntegration(container, candidateId=null){
+ if(!requirePermission("VIEW_A4")) return;
  const db = await fetchBackendData();
+ let candidate = candidateId ? db.candidates.find(c => c.id === candidateId) : null;
+
+ editingCandidateId = candidate ? candidate.id : null;
+ currentPhotoBase64 = candidate?.photo || "";
+ const formNumber = candidate?.id || generateId("EAC");
+
+ const canEditName = hasPermission("EDIT_CANDIDATE_NAME");
+ const canEditMoney = hasPermission("EDIT_MONEY");
+ const canAddRow = hasPermission("ADD_ROW");
+ const canDeleteRow = hasPermission("DELETE_ROW");
+ const canPrint = hasPermission("PRINT_A4");
 
  container.innerHTML = `
- <div class="card">
-   <div class="card-header">
-     <div class="card-title">
-       <i class="fa fa-chart-line"></i> Money Comparison & Directional Analytics Engine
-     </div>
-     <div class="toolbar">
-       <button class="btn-gold" onclick="renderAnalyticsPage(document.getElementById('content-body'))">
-         <i class="fa fa-rotate"></i> Refresh Analytics
-       </button>
-     </div>
-   </div>
-   <div class="card-body">
-     <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.2rem">
-       Analyze group funds and candidate contributions separately. Group Money never includes individual candidate contributions.
-     </p>
-
-     <div class="grid-2">
-       <div class="card">
-         <div class="card-header"><div class="card-title"><i class="fa fa-chart-bar"></i> Group Money Comparison</div></div>
-         <div class="card-body"><canvas id="chart-groups-revenue" style="max-height:280px"></canvas></div>
-       </div>
-
-       <div class="card">
-         <div class="card-header"><div class="card-title"><i class="fa fa-chart-pie"></i> Contribution Channels Breakdown</div></div>
-         <div class="card-body"><canvas id="chart-channels-pie" style="max-height:280px"></canvas></div>
-       </div>
-     </div>
-
-     <div class="card" style="margin-top:1.2rem">
-       <div class="card-header">
-         <div class="card-title"><i class="fa fa-code-compare"></i> Side-by-Side Candidate Money Comparison</div>
-       </div>
-       <div class="card-body">
-         <div class="grid-2" style="margin-bottom:1rem">
-           <div>
-             <label>Select First Candidate</label>
-             <select id="compare-c1" onchange="updateCandidatesComparison()">
-               <option value="">-- Choose Candidate 1 --</option>
-               ${db.candidates.map(c=>`<option value="${esc(c.id)}">${esc(c.fullName)} (${esc(c.group)})</option>`).join("")}
-             </select>
-           </div>
-           <div>
-             <label>Select Second Candidate</label>
-             <select id="compare-c2" onchange="updateCandidatesComparison()">
-               <option value="">-- Choose Candidate 2 --</option>
-               ${db.candidates.map(c=>`<option value="${esc(c.id)}">${esc(c.fullName)} (${esc(c.group)})</option>`).join("")}
-             </select>
-           </div>
-         </div>
-         <div id="candidate-comparison-results" class="grid-2">
-           <div class="empty">Select two candidates above to generate detailed money, pledge channel, and ranking comparison.</div>
-         </div>
-       </div>
-     </div>
-
-     <div class="card" style="margin-top:1.2rem">
-       <div class="card-header">
-         <div class="card-title"><i class="fa fa-trophy"></i> Top Money-Contributing Candidates Leaderboard</div>
-       </div>
-       <div class="table-wrap">
-         <table>
-           <thead>
-             <tr>
-               <th>Rank</th>
-               <th>Candidate Name</th>
-               <th>Group</th>
-               <th>Monthly Contrib.</th>
-               <th>Personal Meklit</th>
-               <th>Gifts & Gifts</th>
-               <th>Other</th>
-               <th>Total Money</th>
-             </tr>
-           </thead>
-           <tbody>
-             ${
-               db.candidates.map(c => {
-                 const b = getCandidateBreakdown(c);
-                 const total = b.monthly + b.personal + b.gift + b.other;
-                 return { candidate: c, breakdown: b, total };
-               })
-               .sort((a,b) => b.total - a.total)
-               .slice(0, 15)
-               .map((item, index) => `
-                 <tr>
-                   <td><span class="rank-badge ${index===0?'rank-1':index===1?'rank-2':index===2?'rank-3':''}">${index+1}</span></td>
-                   <td><b>${esc(item.candidate.fullName)}</b></td>
-                   <td><span class="badge badge-info">${esc(item.candidate.group)}</span></td>
-                   <td>${money(item.breakdown.monthly)}</td>
-                   <td>${money(item.breakdown.personal)}</td>
-                   <td>${money(item.breakdown.gift)}</td>
-                   <td>${money(item.breakdown.other)}</td>
-                   <td><strong style="color:var(--success);font-size:.95rem">${money(item.total)} ETB</strong></td>
-                 </tr>
-               `).join("") || `<tr><td colspan="8" class="empty">No candidates available for money analysis.</td></tr>`
-             }
-           </tbody>
-         </table>
-       </div>
-     </div>
-
-   </div>
- </div>
- `;
-
- setTimeout(() => {
-   initAnalyticsCharts(db);
- }, 50);
-}
-
-function initAnalyticsCharts(db){
- const ctxGroup = document.getElementById("chart-groups-revenue")?.getContext("2d");
- const ctxPie = document.getElementById("chart-channels-pie")?.getContext("2d");
-
- if(!ctxGroup || !ctxPie) return;
-
- const groupData = db.groups.map(g => {
-   const total = (db.groupFunds||[])
-    .filter(row=>Number(row.groupId)===Number(g.id))
-    .reduce((s,row)=>s+Number(row.amount||0),0);
-   return { name: g.groupName, total };
- });
-
- new Chart(ctxGroup, {
-   type: 'bar',
-   data: {
-     labels: groupData.map(g=>g.name),
-     datasets: [{
-       label: 'Group Money (ETB)',
-       data: groupData.map(g=>g.total),
-       backgroundColor: '#0b3c5d',
-       borderColor: '#c5a059',
-       borderWidth: 1.5,
-       borderRadius: 5
-     }]
-   },
-   options: { responsive: true, maintainAspectRatio: false }
- });
-
- let totalMonthly = 0, totalPersonal = 0, totalGift = 0, totalOther = 0;
- db.candidates.forEach(c => {
-   const b = getCandidateBreakdown(c);
-   totalMonthly += b.monthly;
-   totalPersonal += b.personal;
-   totalGift += b.gift;
-   totalOther += b.other;
- });
-
- new Chart(ctxPie, {
-   type: 'doughnut',
-   data: {
-     labels: ['Monthly', 'Personal Meklit', 'Gift', 'Other'],
-     datasets: [{
-       data: [totalMonthly, totalPersonal, totalGift, totalOther],
-       backgroundColor: ['#0b3c5d', '#c5a059', '#10b981', '#3b82f6']
-     }]
-   },
-   options: { responsive: true, maintainAspectRatio: false }
- });
-}
-
-function updateCandidatesComparison(){
- const db = getDB();
- const c1Id = document.getElementById("compare-c1")?.value;
- const c2Id = document.getElementById("compare-c2")?.value;
- const target = document.getElementById("candidate-comparison-results");
-
- if(!c1Id || !c2Id){
-  target.innerHTML = `<div class="empty">Please select both candidates to see the money directional comparison.</div>`;
-  return;
- }
-
- const c1 = db.candidates.find(x=>x.id===c1Id);
- const c2 = db.candidates.find(x=>x.id===c2Id);
-
- if(!c1 || !c2) return;
-
- const b1 = getCandidateBreakdown(c1);
- const b2 = getCandidateBreakdown(c2);
- const t1 = b1.monthly + b1.personal + b1.gift + b1.other;
- const t2 = b2.monthly + b2.personal + b2.gift + b2.other;
-
- const diff = Math.abs(t1 - t2);
- const leader = t1 > t2 ? c1.fullName : t2 > t1 ? c2.fullName : "Equal";
-
- target.innerHTML = `
-   <div class="compare-card">
-     <div class="compare-title">${esc(c1.fullName)}</div>
-     <div style="text-align:center;margin-bottom:.8rem"><span class="badge badge-info">${esc(c1.group)}</span></div>
-     <div class="info-row"><span class="label">Monthly:</span> <span>${money(b1.monthly)} ETB</span></div>
-     <div class="info-row"><span class="label">Personal:</span> <span>${money(b1.personal)} ETB</span></div>
-     <div class="info-row"><span class="label">Gift:</span> <span>${money(b1.gift)} ETB</span></div>
-     <div class="info-row"><span class="label">Other:</span> <span>${money(b1.other)} ETB</span></div>
-     <hr style="margin:.5rem 0">
-     <div style="font-size:1.1rem;font-weight:800;color:var(--primary-blue);text-align:center">
-       Total: ${money(t1)} ETB
-     </div>
-   </div>
-
-   <div class="compare-card">
-     <div class="compare-title">${esc(c2.fullName)}</div>
-     <div style="text-align:center;margin-bottom:.8rem"><span class="badge badge-info">${esc(c2.group)}</span></div>
-     <div class="info-row"><span class="label">Monthly:</span> <span>${money(b2.monthly)} ETB</span></div>
-     <div class="info-row"><span class="label">Personal:</span> <span>${money(b2.personal)} ETB</span></div>
-     <div class="info-row"><span class="label">Gift:</span> <span>${money(b2.gift)} ETB</span></div>
-     <div class="info-row"><span class="label">Other:</span> <span>${money(b2.other)} ETB</span></div>
-     <hr style="margin:.5rem 0">
-     <div style="font-size:1.1rem;font-weight:800;color:var(--primary-blue);text-align:center">
-       Total: ${money(t2)} ETB
-     </div>
-   </div>
-
-   <div class="full-span" style="background:#fef3c7;padding:1rem;border-radius:8px;border:1px solid #f59e0b;text-align:center;margin-top:.5rem">
-     <strong style="color:#92400e">Comparison Insight:</strong> 
-     ${leader === "Equal" ? "Both candidates have identical overall contributions." : `<b>${esc(leader)}</b> leads by a difference of <b>${money(diff)} ETB</b>.`}
-   </div>
- `;
-}
-
-/* ============================================================
-   A4 FORM & CANDIDATE REGISTRATION
-============================================================ */
-
-async function renderFormIntegration(container,candidateId=null){
-
- const db = await fetchBackendData();
-
- let candidate=null;
-
- if(candidateId){
-  candidate=
-   db.candidates.find(c=>c.id===candidateId);
- }
-
- editingCandidateId=
-  candidate ? candidate.id : null;
-
- currentPhotoBase64=
-  candidate?.photo || "";
-
- const formNumber=
-  candidate?.id || generateId("EAC");
-
- container.innerHTML=`
-
  <div class="card no-print" style="margin-bottom:1rem">
-
   <div class="card-body">
-
    <div class="toolbar">
-
-    <button onclick="saveCandidateForm()">
-     <i class="fa fa-save"></i>
-     ${candidate ? "Update Candidate" : "Save Candidate"}
-    </button>
-
-    <button class="btn-gold"
-            onclick="newCandidateForm()">
-     <i class="fa fa-user-plus"></i>
-     New Candidate
-    </button>
-
-    <button class="btn-outline"
-            onclick="window.print()">
-     <i class="fa fa-print"></i>
-     Print A4
-    </button>
-
-    <button class="btn-info"
-            onclick="clearContributionRows()">
-     <i class="fa fa-eraser"></i>
-     Clear Contributions
-    </button>
-
-    ${
-     candidate
-     ? `
-      <button class="btn-danger"
-              onclick="deleteCandidate('${esc(candidate.id)}')">
-       <i class="fa fa-trash"></i>
-       Delete
-      </button>
-     `
-     :""
-    }
-
-    <span id="form-save-status"
-          style="margin-left:auto;color:#10b981;font-weight:700">
-    </span>
-
+    <button onclick="saveCandidateForm()"><i class="fa fa-save"></i> ${candidate ? "Update Candidate" : "Save Candidate"}</button>
+    ${canAddRow ? `<button class="btn-gold" onclick="newCandidateForm()"><i class="fa fa-user-plus"></i> New Candidate</button>` : ''}
+    ${canPrint ? `<button class="btn-outline" onclick="window.print()"><i class="fa fa-print"></i> Print A4</button>` : ''}
+    <span id="form-save-status" style="margin-left:auto;color:#10b981;font-weight:700"></span>
    </div>
-
   </div>
  </div>
 
-
  <div id="form-print-area">
-
   <div class="sheet">
-
    <div class="header-container">
-
-    <div class="logo-frame">
-     <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg">
-    </div>
-
+    <div class="logo-frame"><img src="https://i.ibb.co/FbfRp88t/apostolic.jpg"></div>
     <div class="header-titles">
-
-     <h1>
-      በኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን
-     </h1>
-
-     <h2>
-      የወጣቶች መክሊት አገልግሎት ክፍል
-     </h2>
-
-     <h3>
-      የአባላት ገንዘብ መሰብሰቢያ ቅጽ
-     </h3>
-
+     <h1>በኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን</h1>
+     <h2>የወጣቶች መክሊት አገልግሎት ክፍል</h2>
+     <h3>የአባላት ገንዘብ መሰብሰቢያ ቅጽ</h3>
     </div>
-
     <div style="width:25mm;text-align:right">
      <div style="font-size:8px;font-weight:800;color:#173e65;border-bottom:.35mm solid #173e65;padding-bottom:1mm">
-      ቁጥር፡
-      <span id="lbl-form-no">${esc(formNumber)}</span>
+      ቁጥር፡ <span id="lbl-form-no">${esc(formNumber)}</span>
      </div>
     </div>
-
    </div>
-
 
    <div class="info-box">
-
     <div class="info-grid">
-
      <div class="info-row full-span">
-
       <span class="label">የ</span>
-
-      <input id="inp-church-branch"
-             class="write-line-short"
-             value="${esc(candidate?.branch||"")}"
-             placeholder="ሰበካ">
-
-      <span class="label">
-       ቅርንጫፍ ሰበካ በ
-      </span>
-
-      <input id="inp-sub-branch"
-             class="write-line-short"
-             value="${esc(candidate?.subBranch||"")}"
-             placeholder="ንኡስ ሰበካ">
-
-      <span class="label">
-       ንኡስ ሰበካ የ
-      </span>
-
-      <input id="inp-assembly"
-             class="write-line-short"
-             value="${esc(candidate?.assembly||"")}"
-             placeholder="አጥቢያ">
-
+      <input id="inp-church-branch" class="write-line-short" value="${esc(candidate?.branch||"")}" placeholder="ሰበካ">
+      <span class="label">ቅርንጫፍ ሰበካ በ</span>
+      <input id="inp-sub-branch" class="write-line-short" value="${esc(candidate?.subBranch||"")}" placeholder="ንኡስ ሰበካ">
+      <span class="label">ንኡስ ሰበካ የ</span>
+      <input id="inp-assembly" class="write-line-short" value="${esc(candidate?.assembly||"")}" placeholder="አጥቢያ">
       <span class="label">አጥቢያ</span>
-
      </div>
 
-
      <div class="info-row">
-
       <span class="label">ስም፡</span>
-
-      <input id="inp-fullname"
-             class="write-line"
-             value="${esc(candidate?.fullName||"")}"
-             placeholder="ሙሉ ስም ያስገቡ">
-
+      <input id="inp-fullname" class="write-line" value="${esc(candidate?.fullName||"")}" ${!canEditName?'readonly':''} placeholder="ሙሉ ስም ያስገቡ">
      </div>
 
-
      <div class="info-row">
-
       <span class="label">መክሊት ቡድን፡</span>
-
-      <select id="inp-group"
-              class="write-line"
-              style="height:4.5mm;padding:0;font-size:8.2px">
-
+      <select id="inp-group" class="write-line" style="height:4.5mm;padding:0;font-size:8.2px">
        <option value="">-- ቡድን --</option>
-
-       ${
-        db.groups
-         .filter(g=>g.status==="Active")
-         .map(g=>`
-          <option
-           value="${esc(g.groupName)}"
-           ${candidate?.group===g.groupName?"selected":""}>
-           ${esc(g.groupName)}
-          </option>
-         `).join("")
-       }
-
+       ${db.groups.filter(g=>g.status==="Active").map(g=>`
+        <option value="${esc(g.groupName)}" ${candidate?.group===g.groupName?"selected":""}>${esc(g.groupName)}</option>
+       `).join("")}
       </select>
-
      </div>
 
-
      <div class="info-row">
-
       <span class="label">አድራሻ-ቀበሌ፡</span>
-
-      <input id="inp-address"
-             class="write-line"
-             value="${esc(candidate?.address||"")}"
-             placeholder="አድራሻ / ቀበሌ">
-
+      <input id="inp-address" class="write-line" value="${esc(candidate?.address||"")}" placeholder="አድራሻ / ቀበሌ">
      </div>
-
 
      <div class="info-row">
-
       <span class="label">ስልክ ቁጥር፡</span>
-
-      <input id="inp-phone"
-             class="write-line"
-             value="${esc(candidate?.phone||"")}"
-             placeholder="09xxxxxxxx">
-
+      <input id="inp-phone" class="write-line" value="${esc(candidate?.phone||"")}" placeholder="09xxxxxxxx">
      </div>
-
     </div>
 
-
-    <div class="photo-btn-container"
-         title="Click to upload photo">
-
-     <span id="photo-text"
-           class="${candidate?.photo?"hidden":""}">
-      ፎቶ<br>ይጫኑ
-     </span>
-
-     <img id="photo-preview"
-          class="${candidate?.photo?"":"hidden"}"
-          src="${candidate?.photo||""}"
-          alt="Candidate Photo">
-
-     <input type="file"
-            accept="image/*"
-            onchange="handlePhotoUpload(event)">
-
+    <div class="photo-btn-container">
+     <span id="photo-text" class="${candidate?.photo?"hidden":""}">ፎቶ<br>ይጫኑ</span>
+     <img id="photo-preview" class="${candidate?.photo?"":"hidden"}" src="${candidate?.photo||""}">
+     <input type="file" accept="image/*" onchange="handlePhotoUpload(event)">
     </div>
-
    </div>
 
-
    <div class="embedded-table-area">
-
     <table>
-
-     <colgroup>
-      <col style="width:11%">
-      <col style="width:6.8%"><col style="width:6.8%">
-      <col style="width:6.8%"><col style="width:6.8%">
-      <col style="width:6.8%"><col style="width:6.8%">
-      <col style="width:6.8%"><col style="width:6.8%">
-      <col style="width:6.8%"><col style="width:6.8%">
-      <col style="width:11%">
-     </colgroup>
-
      <thead>
-
       <tr>
-
        <th rowspan="2">ቀን</th>
-
        <th colspan="2">ወርሃዊ መዋጮ</th>
        <th colspan="2">የግል መክሊት</th>
        <th colspan="2">ስጦታ</th>
        <th colspan="2">ልዪ ልዪ</th>
        <th colspan="2">ጠቅላላ ድምር</th>
-
        <th rowspan="2">ፊርማ</th>
-
       </tr>
-
       <tr>
-
-       <th class="sub-th">ብር</th>
-       <th class="sub-th">ሳ</th>
-
-       <th class="sub-th">ብር</th>
-       <th class="sub-th">ሳ</th>
-
-       <th class="sub-th">ብር</th>
-       <th class="sub-th">ሳ</th>
-
-       <th class="sub-th">ብር</th>
-       <th class="sub-th">ሳ</th>
-
-       <th class="sub-th">ብር</th>
-       <th class="sub-th">ሳ</th>
-
+       <th class="sub-th">ብር</th><th class="sub-th">ሳ</th>
+       <th class="sub-th">ብር</th><th class="sub-th">ሳ</th>
+       <th class="sub-th">ብር</th><th class="sub-th">ሳ</th>
+       <th class="sub-th">ብር</th><th class="sub-th">ሳ</th>
+       <th class="sub-th">ብር</th><th class="sub-th">ሳ</th>
       </tr>
-
      </thead>
-
      <tbody id="embedded-table-body"></tbody>
-
     </table>
-
-    <div class="no-print" style="display:flex;justify-content:center;align-items:center;padding:1.5mm 0 1mm;">
-     <button type="button"
-             class="btn-sm btn-gold"
-             onclick="addContributionRow()"
-             title="Add a new contribution row">
-      <i class="fa fa-plus"></i>
-      Add Row
-     </button>
+    <div class="no-print" style="display:flex;justify-content:center;gap:1rem;margin-top:.8rem">
+     ${canAddRow ? `<button class="btn-sm btn-gold" onclick="addA4Row()"><i class="fa fa-plus"></i> Add Row</button>` : ''}
+     ${canDeleteRow ? `<button class="btn-sm btn-danger" onclick="removeA4Row()"><i class="fa fa-minus"></i> Remove Row</button>` : ''}
     </div>
-
    </div>
-
 
    <div class="sheet-footer">
-
-    <div style="width:100%;height:.4mm;background:#d4af37;margin-bottom:1mm"></div>
-
-    <div class="verse">
-     “መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።”
-     <span style="font-weight:900;margin-left:1mm;color:#246b9a">
-      ማቴ 6:21
-     </span>
-    </div>
-
+    <div class="verse">${esc(db.settings.verse)}</div>
    </div>
-
   </div>
-
  </div>
  `;
 
- const tbody=document.getElementById("embedded-table-body");
+ populateA4Table(candidate?.contributions || []);
+}
 
- const rows=
-  candidate?.contributions || [];
+function populateA4Table(rows){
+ const tbody = document.getElementById("embedded-table-body");
+ if(!tbody) return;
+ tbody.innerHTML = "";
 
- for(let i=0;i<28;i++){
+ const rowCount = Math.max(12, rows.length);
+ const canEditMoney = hasPermission("EDIT_MONEY");
 
-  const data=rows[i]||{};
-
-  const tr=document.createElement("tr");
-
-  tr.className="data-row";
-
-  tr.innerHTML=`
-
-   <td>
-    <input type="date"
-           class="date-input"
-           value="${esc(data.date||"")}">
-   </td>
-
-   <td>
-    <input type="number"
-           min="0"
-           class="money-input"
-           value="${data.monthlyBirr||""}"
-           oninput="calculateRowTotals(this)">
-   </td>
-
-   <td>
-    <input type="number"
-           min="0"
-           max="99"
-           class="money-input"
-           value="${data.monthlyCent||""}"
-           oninput="calculateRowTotals(this)">
-   </td>
-
-   <td>
-    <input type="number"
-           min="0"
-           class="money-input"
-           value="${data.personalBirr||""}"
-           oninput="calculateRowTotals(this)">
-   </td>
-
-   <td>
-    <input type="number"
-           min="0"
-           max="99"
-           class="money-input"
-           value="${data.personalCent||""}"
-           oninput="calculateRowTotals(this)">
-   </td>
-
-   <td>
-    <input type="number"
-           min="0"
-           class="money-input"
-           value="${data.giftBirr||""}"
-           oninput="calculateRowTotals(this)">
-   </td>
-
-   <td>
-    <input type="number"
-           min="0"
-           max="99"
-           class="money-input"
-           value="${data.giftCent||""}"
-           oninput="calculateRowTotals(this)">
-   </td>
-
-   <td>
-    <input type="number"
-           min="0"
-           class="money-input"
-           value="${data.otherBirr||""}"
-           oninput="calculateRowTotals(this)">
-   </td>
-
-   <td>
-    <input type="number"
-           min="0"
-           max="99"
-           class="money-input"
-           value="${data.otherCent||""}"
-           oninput="calculateRowTotals(this)">
-   </td>
-
-   <td>
-    <input type="text"
-           readonly
-           class="total-input row-total-birr"
-           value="0">
-   </td>
-
-   <td>
-    <input type="text"
-           readonly
-           class="total-input row-total-cent"
-           value="00">
-   </td>
-
-   <td>
-    <input type="text"
-           class="text-input"
-           value="${esc(data.signature||"")}"
-           placeholder="ፊርማ">
-   </td>
-
+ for(let i=0; i<rowCount; i++){
+  const r = rows[i] || {};
+  const tr = document.createElement("tr");
+  tr.className = "data-row";
+  tr.innerHTML = `
+   <td><input class="date-input" value="${esc(r.date||"")}"></td>
+   <td><input class="money-input m-birr" value="${esc(r.monthlyBirr||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
+   <td><input class="money-input m-cent" value="${esc(r.monthlyCent||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
+   <td><input class="money-input p-birr" value="${esc(r.personalBirr||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
+   <td><input class="money-input p-cent" value="${esc(r.personalCent||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
+   <td><input class="money-input g-birr" value="${esc(r.giftBirr||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
+   <td><input class="money-input g-cent" value="${esc(r.giftCent||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
+   <td><input class="money-input o-birr" value="${esc(r.otherBirr||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
+   <td><input class="money-input o-cent" value="${esc(r.otherCent||"")}" ${!canEditMoney?'readonly':''} oninput="calcA4Row(this)"></td>
+   <td><input class="total-input t-birr" value="${esc(r.totalBirr||"")}" readonly></td>
+   <td><input class="total-input t-cent" value="${esc(r.totalCent||"")}" readonly></td>
+   <td><input class="text-input" value="${esc(r.sig||"")}"></td>
   `;
-
   tbody.appendChild(tr);
-
-  calculateRowTotals(
-   tr.querySelector(".money-input")
-  );
  }
 }
 
-function addContributionRow(){
+function calcA4Row(input){
+ const tr = input.closest("tr");
+ const mb = Number(tr.querySelector(".m-birr").value||0);
+ const mc = Number(tr.querySelector(".m-cent").value||0);
+ const pb = Number(tr.querySelector(".p-birr").value||0);
+ const pc = Number(tr.querySelector(".p-cent").value||0);
+ const gb = Number(tr.querySelector(".g-birr").value||0);
+ const gc = Number(tr.querySelector(".g-cent").value||0);
+ const ob = Number(tr.querySelector(".o-birr").value||0);
+ const oc = Number(tr.querySelector(".o-cent").value||0);
 
- const tbody=document.getElementById("embedded-table-body");
-
- if(!tbody)return;
-
- const lastRow=tbody.querySelector("tr:last-child");
-
- if(!lastRow)return;
-
- const newRow=lastRow.cloneNode(true);
-
- newRow.querySelectorAll("input").forEach(input=>{
-  if(
-   input.classList.contains("date-input") ||
-   input.classList.contains("money-input") ||
-   input.classList.contains("text-input")
-  ){
-   input.value="";
-  }
- });
-
- const totalBirr=newRow.querySelector(".row-total-birr");
- const totalCent=newRow.querySelector(".row-total-cent");
-
- if(totalBirr)totalBirr.value="0";
- if(totalCent)totalCent.value="00";
-
- tbody.appendChild(newRow);
-
- const firstInput=newRow.querySelector(".date-input");
-
- if(firstInput){
-  firstInput.focus();
- }
-
- newRow.scrollIntoView({
-  behavior:"smooth",
-  block:"nearest"
- });
+ const totalCents = (mb*100 + mc) + (pb*100 + pc) + (gb*100 + gc) + (ob*100 + oc);
+ tr.querySelector(".t-birr").value = Math.floor(totalCents/100) || "";
+ tr.querySelector(".t-cent").value = (totalCents%100) || "";
 }
 
-function handlePhotoUpload(event){
+function addA4Row(){
+ if(!requirePermission("ADD_ROW")) return;
+ const tbody = document.getElementById("embedded-table-body");
+ const tr = document.createElement("tr");
+ tr.className = "data-row";
+ tr.innerHTML = `
+  <td><input class="date-input"></td>
+  <td><input class="money-input m-birr" oninput="calcA4Row(this)"></td>
+  <td><input class="money-input m-cent" oninput="calcA4Row(this)"></td>
+  <td><input class="money-input p-birr" oninput="calcA4Row(this)"></td>
+  <td><input class="money-input p-cent" oninput="calcA4Row(this)"></td>
+  <td><input class="money-input g-birr" oninput="calcA4Row(this)"></td>
+  <td><input class="money-input g-cent" oninput="calcA4Row(this)"></td>
+  <td><input class="money-input o-birr" oninput="calcA4Row(this)"></td>
+  <td><input class="money-input o-cent" oninput="calcA4Row(this)"></td>
+  <td><input class="total-input t-birr" readonly></td>
+  <td><input class="total-input t-cent" readonly></td>
+  <td><input class="text-input"></td>
+ `;
+ tbody.appendChild(tr);
+}
 
- const file=event.target.files[0];
-
- if(!file)return;
-
- if(file.size>3*1024*1024){
-  showToast(
-   "Photo is too large. Please select an image under 3 MB.",
-   "error"
-  );
-  event.target.value="";
-  return;
+function removeA4Row(){
+ if(!requirePermission("DELETE_ROW")) return;
+ const tbody = document.getElementById("embedded-table-body");
+ if(tbody.children.length > 1){
+  tbody.removeChild(tbody.lastChild);
  }
+}
 
- const reader=new FileReader();
-
- reader.onload=function(e){
-
-  currentPhotoBase64=e.target.result;
-
-  document.getElementById("photo-preview").src=
-   currentPhotoBase64;
-
-  document.getElementById("photo-preview")
-   .classList.remove("hidden");
-
-  document.getElementById("photo-text")
-   .classList.add("hidden");
+function handlePhotoUpload(e){
+ const file = e.target.files[0];
+ if(!file) return;
+ const reader = new FileReader();
+ reader.onload = function(evt){
+  currentPhotoBase64 = evt.target.result;
+  document.getElementById("photo-preview").src = currentPhotoBase64;
+  document.getElementById("photo-preview").classList.remove("hidden");
+  document.getElementById("photo-text").classList.add("hidden");
  };
-
  reader.readAsDataURL(file);
 }
 
-function calculateRowTotals(input){
-
- if(!input)return;
-
- const row=input.closest("tr");
-
- const inputs=
-  row.querySelectorAll(".money-input");
-
- let birr=0;
- let cents=0;
-
- for(let i=0;i<inputs.length;i+=2){
-
-  birr+=Number(inputs[i].value||0);
-  cents+=Number(inputs[i+1].value||0);
- }
-
- birr+=Math.floor(cents/100);
- cents=cents%100;
-
- row.querySelector(".row-total-birr").value=
-  birr;
-
- row.querySelector(".row-total-cent").value=
-  String(cents).padStart(2,"0");
-}
-
-function collectContributionRows(){
-
- const rows=[];
-
- document
-  .querySelectorAll("#embedded-table-body tr")
-  .forEach(tr=>{
-
-   const inputs=
-    tr.querySelectorAll("input");
-
-   const row={
-    date:inputs[0].value,
-
-    monthlyBirr:Number(inputs[1].value||0),
-    monthlyCent:Number(inputs[2].value||0),
-
-    personalBirr:Number(inputs[3].value||0),
-    personalCent:Number(inputs[4].value||0),
-
-    giftBirr:Number(inputs[5].value||0),
-    giftCent:Number(inputs[6].value||0),
-
-    otherBirr:Number(inputs[7].value||0),
-    otherCent:Number(inputs[8].value||0),
-
-    totalBirr:Number(
-     tr.querySelector(".row-total-birr").value||0
-    ),
-
-    totalCent:Number(
-     tr.querySelector(".row-total-cent").value||0
-    ),
-
-    signature:inputs[11].value
-   };
-
-   if(
-    row.date ||
-    row.monthlyBirr ||
-    row.monthlyCent ||
-    row.personalBirr ||
-    row.personalCent ||
-    row.giftBirr ||
-    row.giftCent ||
-    row.otherBirr ||
-    row.otherCent ||
-    row.signature
-   ){
-    rows.push(row);
-   }
-  });
-
- return rows;
-}
-
 async function saveCandidateForm(){
+ const fullName = document.getElementById("inp-fullname").value.trim();
+ if(!fullName){ showToast("Candidate full name is required.","error"); return; }
 
- const name=
-  document.getElementById("inp-fullname")
-   .value.trim();
+ const db = getDB();
+ const id = editingCandidateId || document.getElementById("lbl-form-no").innerText.trim();
 
- if(!name){
-  showToast(
-   "Please enter candidate full name.",
-   "error"
-  );
-  document.getElementById("inp-fullname").focus();
-  return;
- }
+ const rows = [];
+ document.querySelectorAll("#embedded-table-body tr").forEach(tr => {
+  rows.push({
+   date: tr.querySelector(".date-input").value,
+   monthlyBirr: tr.querySelector(".m-birr").value,
+   monthlyCent: tr.querySelector(".m-cent").value,
+   personalBirr: tr.querySelector(".p-birr").value,
+   personalCent: tr.querySelector(".p-cent").value,
+   giftBirr: tr.querySelector(".g-birr").value,
+   giftCent: tr.querySelector(".g-cent").value,
+   otherBirr: tr.querySelector(".o-birr").value,
+   otherCent: tr.querySelector(".o-cent").value,
+   totalBirr: tr.querySelector(".t-birr").value,
+   totalCent: tr.querySelector(".t-cent").value,
+   sig: tr.querySelector(".text-input").value
+  });
+ });
 
- const db = await fetchBackendData();
-
- const candidateData={
-  id:document.getElementById("lbl-form-no").innerText,
-  fullName:name,
-  group:document.getElementById("inp-group").value || "None",
-  branch:document.getElementById("inp-church-branch").value,
-  subBranch:document.getElementById("inp-sub-branch").value,
-  assembly:document.getElementById("inp-assembly").value,
-  address:document.getElementById("inp-address").value,
-  phone:document.getElementById("inp-phone").value,
-  photo:currentPhotoBase64,
-  contributions:collectContributionRows(),
-  registeredDate:today(),
-  updatedDate:today()
+ const candidateData = {
+  id, fullName,
+  group: document.getElementById("inp-group").value,
+  branch: document.getElementById("inp-church-branch").value,
+  subBranch: document.getElementById("inp-sub-branch").value,
+  assembly: document.getElementById("inp-assembly").value,
+  address: document.getElementById("inp-address").value,
+  phone: document.getElementById("inp-phone").value,
+  photo: currentPhotoBase64,
+  contributions: rows
  };
 
- if(editingCandidateId){
-
-  const index=
-   db.candidates.findIndex(
-    c=>c.id===editingCandidateId
-   );
-
-  if(index<0){
-   showToast("Candidate not found.","error");
-   return;
-  }
-
-  candidateData.registeredDate=
-   db.candidates[index].registeredDate;
-
-  db.candidates[index]={
-   ...db.candidates[index],
-   ...candidateData
-  };
-
-  await logActivity(
-   currentUser.id,
-   "Candidate Updated",
-   `Updated candidate ${name}.`
-  );
-
-  await saveDB(db);
-
-  document.getElementById("form-save-status").innerText=
-   "Successfully Updated!";
-
-  showToast(
-   "Candidate updated successfully.",
-   "success"
-  );
-
- }else{
-
+ const idx = db.candidates.findIndex(c => c.id === id);
+ if(idx >= 0){
+  db.candidates[idx] = candidateData;
+ } else {
   db.candidates.push(candidateData);
-
-  await saveDB(db);
-
-  await logActivity(
-   currentUser.id,
-   "Candidate Saved",
-   `Saved candidate ${name} under group ${candidateData.group}.`
-  );
-
-  editingCandidateId=candidateData.id;
-
-  document.getElementById("form-save-status").innerText=
-   "Successfully Saved!";
-
-  showToast(
-   "Candidate information saved successfully.",
-   "success"
-  );
  }
+
+ await saveDB(db);
+ await logActivity(currentUser.uid, "Saved Candidate", `Saved record for ${fullName}`);
+ showToast("Candidate form saved successfully.", "success");
 }
 
 function newCandidateForm(){
-
- editingCandidateId=null;
- currentPhotoBase64="";
-
- renderFormIntegration(
-  document.getElementById("content-body")
- );
+ editingCandidateId = null;
+ currentPhotoBase64 = "";
+ renderFormIntegration(document.getElementById("content-body"));
 }
-
-function clearContributionRows(){
-
- document
-  .querySelectorAll("#embedded-table-body input")
-  .forEach(input=>{
-
-   if(
-    input.classList.contains("date-input") ||
-    input.classList.contains("money-input") ||
-    input.classList.contains("text-input")
-   ){
-    input.value="";
-   }
-  });
-
- document
-  .querySelectorAll(".row-total-birr")
-  .forEach(x=>x.value="0");
-
- document
-  .querySelectorAll(".row-total-cent")
-  .forEach(x=>x.value="00");
-
- showToast(
-  "Contribution rows cleared.",
-  "success"
- );
-}
-
 
 /* ============================================================
-   CANDIDATES DIRECTORY
+   DIRECTORY & GROUPS
 ============================================================ */
 
 async function renderCandidatesList(container){
-
+ if(!requirePermission("VIEW_CANDIDATES")) return;
  const db = await fetchBackendData();
 
- container.innerHTML=`
-
+ container.innerHTML = `
  <div class="card">
-
   <div class="card-header">
-
-   <div class="card-title">
-    <i class="fa fa-address-book"></i>
-    Candidates Directory
+   <div class="card-title"><i class="fa fa-address-book"></i> Candidates Directory</div>
+   <div class="toolbar">
+    <input id="search-cand" class="search" placeholder="Search candidate by name..." oninput="filterCandidatesTable()">
    </div>
-
-   <button onclick="navigate('add-candidate')">
-    <i class="fa fa-plus"></i>
-    Add Candidate
-   </button>
-
   </div>
-
   <div class="card-body">
-
-   <div class="toolbar" style="margin-bottom:1rem">
-
-    <input id="candidate-search"
-           class="search"
-           placeholder="Search name, phone, group, address..."
-           oninput="filterCandidatesTable()">
-
-    <select id="candidate-group-filter"
-            style="max-width:180px"
-            onchange="filterCandidatesTable()">
-
-     <option value="">All Groups</option>
-
-     ${
-      db.groups.map(g=>
-       `<option value="${esc(g.groupName)}">
-        ${esc(g.groupName)}
-       </option>`
-      ).join("")
-     }
-
-    </select>
-
-    <button class="btn-outline"
-            onclick="exportCandidatesCSV()">
-     <i class="fa fa-file-csv"></i>
-     Export CSV
-    </button>
-
-   </div>
-
-   <div class="table-wrap">
-
-    <table id="candidates-table">
-
-     <thead>
-
-      <tr>
-       <th>Form ID</th>
-       <th>Full Name</th>
-       <th>Group</th>
-       <th>Phone</th>
-       <th>Address</th>
-       <th>Contribution</th>
-       <th>Registered</th>
-       <th>Actions</th>
-      </tr>
-
-     </thead>
-
-     <tbody id="candidates-tbody">
-
-      ${candidateRows(db.candidates)}
-
-     </tbody>
-
-    </table>
-
-   </div>
-
-  </div>
-
- </div>
- `;
-}
-
-function candidateRows(candidates){
-
- if(!candidates.length){
-  return `
-   <tr>
-    <td colspan="8" class="empty">
-     <i class="fa fa-users"
-        style="font-size:2rem;margin-bottom:.5rem"></i>
-     <br>
-     No candidates found.
-    </td>
-   </tr>
-  `;
- }
-
- return candidates.map(c=>`
-
-  <tr>
-
-   <td>${esc(c.id)}</td>
-
-   <td>
-    <b>${esc(c.fullName)}</b>
-   </td>
-
-   <td>
-    <span class="badge badge-info">
-     ${esc(c.group)}
-    </span>
-   </td>
-
-   <td>${esc(c.phone||"N/A")}</td>
-
-   <td>${esc(c.address||"N/A")}</td>
-
-   <td>
-    <b>${money(getCandidateContribution(c))}</b>
-   </td>
-
-   <td>${esc(c.registeredDate||"")}</td>
-
-   <td>
-
-    <div class="actions">
-
-     <button class="btn-info btn-sm"
-             onclick="viewCandidate('${esc(c.id)}')"
-             title="View">
-      <i class="fa fa-eye"></i>
-     </button>
-
-     <button class="btn-sm"
-             onclick="editCandidate('${esc(c.id)}')"
-             title="Edit">
-      <i class="fa fa-edit"></i>
-     </button>
-
-     <button class="btn-gold btn-sm"
-             onclick="printCandidate('${esc(c.id)}')"
-             title="Print">
-      <i class="fa fa-print"></i>
-     </button>
-
-     <button class="btn-danger btn-sm"
-             onclick="deleteCandidate('${esc(c.id)}')"
-             title="Delete">
-      <i class="fa fa-trash"></i>
-     </button>
-
-    </div>
-
-   </td>
-
-  </tr>
-
- `).join("");
-}
-
-function filterCandidatesTable(){
-
- const db=getDB();
-
- const search=
-  (document.getElementById("candidate-search")?.value||"")
-   .toLowerCase();
-
- const group=
-  document.getElementById("candidate-group-filter")?.value||"";
-
- const filtered=db.candidates.filter(c=>{
-
-  const text=[
-   c.id,
-   c.fullName,
-   c.group,
-   c.phone,
-   c.address,
-   c.branch
-  ].join(" ").toLowerCase();
-
-  return text.includes(search) &&
-   (!group || c.group===group);
- });
-
- document.getElementById("candidates-tbody").innerHTML=
-  candidateRows(filtered);
-}
-
-function viewCandidate(id){
-
- const db=getDB();
-
- const c=db.candidates.find(x=>x.id===id);
-
- if(!c)return;
-
- openModal(
-  "Candidate Details",
-  `
-
-   <div style="display:flex;gap:1.2rem;align-items:flex-start">
-
-    <div style="width:130px">
-
-     ${
-      c.photo
-      ? `
-       <img src="${c.photo}"
-            style="width:120px;height:145px;object-fit:cover;border:3px solid #d4af37;border-radius:6px">
-      `
-      : `
-       <div style="width:120px;height:145px;background:#f1f5f8;border:1px solid #d1d5db;display:flex;align-items:center;justify-content:center;color:#667085">
-        No Photo
-       </div>
-      `
-     }
-
-    </div>
-
-    <div style="flex:1">
-
-     <h2 style="color:#173e65;margin-bottom:.8rem">
-      ${esc(c.fullName)}
-     </h2>
-
-     <div class="grid-2">
-
-      <div>
-       <label>Form ID</label>
-       <div>${esc(c.id)}</div>
-      </div>
-
-      <div>
-       <label>Group</label>
-       <div>${esc(c.group)}</div>
-      </div>
-
-      <div>
-       <label>Phone</label>
-       <div>${esc(c.phone||"N/A")}</div>
-      </div>
-
-      <div>
-       <label>Address</label>
-       <div>${esc(c.address||"N/A")}</div>
-      </div>
-
-      <div>
-       <label>Branch</label>
-       <div>${esc(c.branch||"N/A")}</div>
-      </div>
-
-      <div>
-       <label>Assembly</label>
-       <div>${esc(c.assembly||"N/A")}</div>
-      </div>
-
-      <div>
-       <label>Registered</label>
-       <div>${esc(c.registeredDate)}</div>
-      </div>
-
-      <div>
-       <label>Total Contribution</label>
-       <div>
-        <strong style="color:#047857;font-size:1.1rem">
-         ${money(getCandidateContribution(c))}
-        </strong>
-       </div>
-      </div>
-
-     </div>
-
-    </div>
-
-   </div>
-
-   <hr style="margin:1.2rem 0;border:0;border-top:1px solid #d1d5db">
-
-   <h3 style="color:#173e65;margin-bottom:.7rem">
-    Contribution Summary
-   </h3>
-
-   ${contributionSummary(c)}
-
-  `,
-  `
-   <button class="btn-outline"
-           onclick="closeModal('general-modal')">
-    Close
-   </button>
-
-   <button onclick="editCandidate('${esc(c.id)}');closeModal('general-modal')">
-    <i class="fa fa-edit"></i>
-    Edit
-   </button>
-  `
- );
-}
-
-function contributionSummary(c){
-
- const rows=c.contributions||[];
-
- if(!rows.length){
-  return `<div class="empty">No contribution records.</div>`;
- }
-
- return `
-  <div class="table-wrap">
-   <table>
-
-    <thead>
-     <tr>
-      <th>Date</th>
-      <th>Monthly</th>
-      <th>Personal</th>
-      <th>Gift</th>
-      <th>Other</th>
-      <th>Total</th>
-     </tr>
-    </thead>
-
-    <tbody>
-
-     ${
-      rows.map(r=>{
-
-       const monthly=
-        Number(r.monthlyBirr||0)+
-        Number(r.monthlyCent||0)/100;
-
-       const personal=
-        Number(r.personalBirr||0)+
-        Number(r.personalCent||0)/100;
-
-       const gift=
-        Number(r.giftBirr||0)+
-        Number(r.giftCent||0)/100;
-
-       const other=
-        Number(r.otherBirr||0)+
-        Number(r.otherCent||0)/100;
-
-       return `
-        <tr>
-         <td>${esc(r.date||"")}</td>
-         <td>${money(monthly)}</td>
-         <td>${money(personal)}</td>
-         <td>${money(gift)}</td>
-         <td>${money(other)}</td>
-         <td><b>${money(r.totalBirr+Number(r.totalCent||0)/100)}</b></td>
-        </tr>
-       `;
-
-      }).join("")
-     }
-
-    </tbody>
-
-   </table>
-  </div>
- `;
-}
-
-function editCandidate(id){
-
- closeModal("general-modal");
-
- navigate("add-candidate");
-
- setTimeout(()=>{
-  renderFormIntegration(
-   document.getElementById("content-body"),
-   id
-  );
- },50);
-}
-
-async function deleteCandidate(id){
-
- const db = await fetchBackendData();
-
- const c=db.candidates.find(x=>x.id===id);
-
- if(!c)return;
-
- if(!confirmAction(
-  `Delete candidate "${c.fullName}"?\n\nThis will also remove their contribution records.`
- ))return;
-
- db.candidates=
-  db.candidates.filter(x=>x.id!==id);
-
- await saveDB(db);
-
- await logActivity(
-  currentUser.id,
-  "Candidate Deleted",
-  `Deleted candidate ${c.fullName}.`
- );
-
- if(activePage==="candidates-list"){
-  await renderCandidatesList(
-   document.getElementById("content-body")
-  );
- }
-
- showToast(
-  "Candidate deleted successfully.",
-  "success"
- );
-}
-
-function printCandidate(id){
-
- editCandidate(id);
-
- setTimeout(()=>{
-  window.print();
- },300);
-}
-
-function exportCandidatesCSV(){
- const db = getDB();
- let csv = "Form ID,Full Name,Group,Phone,Address,Branch,SubBranch,Assembly,Registered Date,Total Contribution\n";
- db.candidates.forEach(c => {
-  const total = getCandidateContribution(c);
-  csv += `"${c.id}","${c.fullName}","${c.group}","${c.phone||""}","${c.address||""}","${c.branch||""}","${c.subBranch||""}","${c.assembly||""}","${c.registeredDate||""}","${total}"\n`;
- });
- downloadCSV(csv, `EAC_Candidates_${today()}.csv`);
-}
-
-function downloadCSV(csv, filename){
- const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
- const url = URL.createObjectURL(blob);
- const a = document.createElement("a");
- a.href = url;
- a.download = filename;
- a.click();
- URL.revokeObjectURL(url);
- showToast("CSV file exported successfully.", "success");
-}
-
-/* ============================================================
-   GROUP MANAGEMENT
-============================================================ */
-
-async function renderGroupsPage(container){
-
- const db = await fetchBackendData();
- db.groupFunds ||= [];
-
- const totalGroupMoney = db.groupFunds.reduce(
-  (sum,row)=>sum + Number(row.amount||0),0
- );
-
- const groupTotals = {};
- db.groups.forEach(g=>{
-  groupTotals[g.id]=db.groupFunds
-   .filter(row=>Number(row.groupId)===Number(g.id))
-   .reduce((sum,row)=>sum+Number(row.amount||0),0);
- });
-
- container.innerHTML=`
-
- <div class="card">
-
-  <div class="card-header">
-   <div class="card-title">
-    <i class="fa fa-layer-group"></i>
-    Meklit Groups
-   </div>
-
-   <button onclick="openGroupModal()">
-    <i class="fa fa-plus"></i>
-    Add Group
-   </button>
-  </div>
-
-  <div class="card-body">
-
-   <div class="stats-grid">
-    <div class="stat-card gold">
-     <div>
-      <div class="stat-label">Total Group Money</div>
-      <div class="stat-value">${money(totalGroupMoney)} ETB</div>
-     </div>
-     <i class="fa fa-wallet"></i>
-    </div>
-
-    <div class="stat-card">
-     <div>
-      <div class="stat-label">Group Fund Entries</div>
-      <div class="stat-value">${db.groupFunds.length}</div>
-     </div>
-     <i class="fa fa-receipt"></i>
-    </div>
-
-    <div class="stat-card info">
-     <div>
-      <div class="stat-label">Candidate Money</div>
-      <div class="stat-value">Separate</div>
-     </div>
-     <i class="fa fa-user"></i>
-    </div>
-   </div>
-
    <div class="table-wrap">
     <table>
      <thead>
       <tr>
-       <th>ID</th>
-       <th>Group Name</th>
-       <th>Description</th>
-       <th>Members</th>
-       <th>Group Money</th>
-       <th>Status</th>
+       <th>Form ID</th>
+       <th>Candidate Name</th>
+       <th>Group</th>
+       <th>Phone</th>
+       <th>Total Contribution</th>
        <th>Actions</th>
       </tr>
      </thead>
-
-     <tbody>
+     <tbody id="candidates-tbody">
       ${
-       db.groups.map(g=>{
-
-        const members=db.candidates.filter(
-         c=>c.group===g.groupName
-        ).length;
-
-        return `
-         <tr>
-          <td>${g.id}</td>
-
-          <td>
-           <b>
-            <i class="fa fa-layer-group"
-               style="color:#c5a059"></i>
-            ${esc(g.groupName)}
-           </b>
-          </td>
-
-          <td>${esc(g.description)}</td>
-
-          <td>${members}</td>
-
-          <td>
-           <strong class="group-money-total">
-            ${money(groupTotals[g.id]||0)} ETB
-           </strong>
-          </td>
-
-          <td>
-           <span class="badge ${
-            g.status==="Active"
-             ?"badge-success"
-             :"badge-danger"
-           }">
-            ${esc(g.status)}
-           </span>
-          </td>
-
-          <td>
-           <div class="actions">
-
-            <button class="btn-success btn-sm"
-                    title="Add group money"
-                    onclick="openGroupMoneyModal(${g.id})">
-             <i class="fa fa-money-bill-transfer"></i>
-            </button>
-
-            <button class="btn-sm"
-                    onclick="openGroupModal(${g.id})">
-             <i class="fa fa-edit"></i>
-            </button>
-
-            <button class="btn-warning btn-sm"
-                    onclick="toggleGroupStatus(${g.id})">
-             <i class="fa fa-power-off"></i>
-            </button>
-
-            <button class="btn-danger btn-sm"
-                    onclick="deleteGroup(${g.id})">
-             <i class="fa fa-trash"></i>
-            </button>
-
-           </div>
-          </td>
-
-         </tr>
-        `;
-
-       }).join("")
-      }
-     </tbody>
-    </table>
-   </div>
-
-  </div>
- </div>
-
-
- <div class="card group-money-section">
-
-  <div class="card-header">
-   <div class="card-title">
-    <i class="fa fa-coins"></i>
-    Group Money — Separate Fund
-   </div>
-
-   <button class="btn-gold"
-           onclick="openGroupMoneyModal()">
-    <i class="fa fa-plus"></i>
-    Add Group Money
-   </button>
-  </div>
-
-  <div class="card-body">
-
-   <div style="padding:.8rem 1rem;margin-bottom:1rem;background:#eef5fa;border-left:4px solid var(--primary-blue);border-radius:6px;font-size:.82rem">
-    <strong>Important:</strong>
-    Group Money is recorded independently.
-    Money paid by individual candidates is
-    <strong>NOT</strong> added to this Group Money total.
-   </div>
-
-   <div class="table-wrap">
-    <table class="group-money-table">
-     <thead>
-      <tr>
-       <th>Date</th>
-       <th>Group</th>
-       <th>How the Group Got the Money</th>
-       <th>Reason / Details</th>
-       <th>Amount</th>
-       <th>Recorded By</th>
-       <th>Action</th>
-      </tr>
-     </thead>
-
-     <tbody>
-      ${
-       db.groupFunds.length
-       ? [...db.groupFunds]
-          .sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")))
-          .map(row=>{
-
-           const group=db.groups.find(
-            g=>Number(g.id)===Number(row.groupId)
-           );
-
-           return `
-            <tr>
-             <td>${esc(row.date||"")}</td>
-
-             <td>
-              <span class="badge badge-info">
-               ${esc(group?.groupName||"Unknown Group")}
-              </span>
-             </td>
-
-             <td><b>${esc(row.source||"")}</b></td>
-
-             <td>${esc(row.reason||"")}</td>
-
-             <td>
-              <strong class="group-money-total">
-               ${money(row.amount)} ETB
-              </strong>
-             </td>
-
-             <td>${esc(row.recordedBy||"")}</td>
-
-             <td>
-              <button class="btn-danger btn-sm"
-                      onclick="deleteGroupMoney('${esc(row.id)}')">
-               <i class="fa fa-trash"></i>
-              </button>
-             </td>
-            </tr>
-           `;
-
-          }).join("")
-       : `
+       db.candidates.map(c => `
         <tr>
-         <td colspan="7" class="empty">
-          No group money has been recorded yet.
+         <td><b>${esc(c.id)}</b></td>
+         <td>${esc(c.fullName)}</td>
+         <td><span class="badge badge-info">${esc(c.group)}</span></td>
+         <td>${esc(c.phone)}</td>
+         <td><strong style="color:var(--success)">${money(getCandidateContribution(c))} ETB</strong></td>
+         <td class="actions">
+          <button class="btn-sm btn-outline" onclick="renderFormIntegration(document.getElementById('content-body'), '${esc(c.id)}')"><i class="fa fa-folder-open"></i> Open Form</button>
          </td>
         </tr>
-       `
+       `).join("") || '<tr><td colspan="6" class="empty">No candidate records found.</td></tr>'
       }
      </tbody>
     </table>
    </div>
-
   </div>
  </div>
-
  `;
 }
 
-function openGroupMoneyModal(preselectedGroupId=null){
-
- const db=getDB();
-
- if(!db.groups.length){
-  showToast("Create a group first.","warning");
-  return;
- }
-
- const groupOptions=db.groups.map(g=>`
-  <option value="${g.id}"
-   ${Number(preselectedGroupId)===Number(g.id)?"selected":""}>
-   ${esc(g.groupName)}
-  </option>
- `).join("");
-
- openModal(
-  "Add Group Money",
-  `
-   <div class="form-group">
-    <label>Group</label>
-    <select id="group-money-group" required>
-     ${groupOptions}
-    </select>
-   </div>
-
-   <div class="form-group">
-    <label>How did the group get the money?</label>
-    <select id="group-money-source"
-            onchange="toggleGroupMoneyOtherReason()"
-            required>
-     <option value="">-- Select Source --</option>
-     <option value="Donation">Donation</option>
-     <option value="Fundraising">Fundraising</option>
-     <option value="Event">Event / Program</option>
-     <option value="Gift">Gift</option>
-     <option value="Sponsorship">Sponsorship</option>
-     <option value="Church Contribution">Church Contribution</option>
-     <option value="Group Business">Group Business</option>
-     <option value="Sale / Fundraiser Item">Sale / Fundraiser Item</option>
-     <option value="Other">Other</option>
-    </select>
-   </div>
-
-   <div class="form-group">
-    <label>Amount (ETB)</label>
-    <input id="group-money-amount"
-           type="number"
-           min="0.01"
-           step="0.01"
-           placeholder="Enter group money amount"
-           required>
-   </div>
-
-   <div class="form-group">
-    <label>Reason / Details</label>
-    <input id="group-money-reason"
-           placeholder="Example: Fundraising from New Year program">
-   </div>
-
-   <div class="form-group">
-    <label>Description / Note (Optional)</label>
-    <textarea id="group-money-description"
-              placeholder="Add more information about how the group received this money"></textarea>
-   </div>
-
-   <div class="form-group">
-    <label>Date</label>
-    <input id="group-money-date"
-           type="date"
-           value="${today()}"
-           required>
-   </div>
-
-   <div style="padding:.75rem 1rem;background:#fff7ed;border-left:4px solid var(--warning);border-radius:6px;font-size:.8rem">
-    This entry belongs to the <strong>group fund only</strong>.
-    It will not change any candidate's contribution.
-   </div>
-  `,
-  `
-   <button class="btn-outline"
-           onclick="closeModal('general-modal')">
-    Cancel
-   </button>
-
-   <button class="btn-success"
-           onclick="saveGroupMoney()">
-    <i class="fa fa-save"></i>
-    Save Group Money
-   </button>
-  `
- );
-}
-
-function toggleGroupMoneyOtherReason(){
-
- const source=document.getElementById("group-money-source");
- const reason=document.getElementById("group-money-reason");
-
- if(!source || !reason)return;
-
- if(source.value==="Other"){
-  reason.placeholder="Write the reason";
-  reason.focus();
- }else if(!reason.value){
-  reason.placeholder="Example: Fundraising from New Year program";
- }
-}
-
-async function saveGroupMoney(){
-
- const groupId=Number(
-  document.getElementById("group-money-group")?.value
- );
-
- const source=
-  document.getElementById("group-money-source")?.value.trim();
-
- const amount=Number(
-  document.getElementById("group-money-amount")?.value
- );
-
- const reason=
-  document.getElementById("group-money-reason")?.value.trim();
-
- const date=
-  document.getElementById("group-money-date")?.value;
-
- if(!groupId){
-  showToast("Please select a group.","error");
-  return;
- }
-
- if(!source){
-  showToast("Please select how the group got the money.","error");
-  return;
- }
-
- if(!Number.isFinite(amount) || amount<=0){
-  showToast("Enter a valid group money amount.","error");
-  return;
- }
-
- if(!date){
-  showToast("Please select the date.","error");
-  return;
- }
-
- if(source==="Other" && !reason){
-  showToast("Please write the reason.","error");
-  return;
- }
-
- const db=await fetchBackendData();
- db.groupFunds ||= [];
-
- const group=db.groups.find(
-  g=>Number(g.id)===groupId
- );
-
- if(!group){
-  showToast("Selected group was not found.","error");
-  return;
- }
-
- const entry={
-  id:generateId("GF"),
-  groupId:group.id,
-  source,
-  reason:reason || source,
-  amount,
-  date,
-  recordedBy:currentUser?.fullName || currentUser?.username || "Unknown",
-  createdAt:nowDateTime()
- };
-
- db.groupFunds.push(entry);
-
- const saved=await saveDB(db);
- if(!saved)return;
-
- await logActivity(
-  currentUser.id,
-  "Group Money Added",
-  `Added ${money(amount)} ETB to ${group.groupName} group fund from ${source}.`
- );
-
- closeModal("general-modal");
-
- await renderGroupsPage(
-  document.getElementById("content-body")
- );
-
- showToast(
-  `${money(amount)} ETB added to ${group.groupName} group money.`,
-  "success"
- );
-}
-
-async function deleteGroupMoney(id){
-
- if(!confirmAction("Delete this group money entry?"))return;
-
- const db=await fetchBackendData();
- db.groupFunds ||= [];
-
- const row=db.groupFunds.find(
-  x=>String(x.id)===String(id)
- );
-
- if(!row)return;
-
- const group=db.groups.find(
-  g=>Number(g.id)===Number(row.groupId)
- );
-
- db.groupFunds=db.groupFunds.filter(
-  x=>String(x.id)!==String(id)
- );
-
- const saved=await saveDB(db);
- if(!saved)return;
-
- await logActivity(
-  currentUser.id,
-  "Group Money Deleted",
-  `Deleted ${money(row.amount)} ETB group money entry from ${group?.groupName||"Unknown Group"}.`
- );
-
- await renderGroupsPage(
-  document.getElementById("content-body")
- );
-
- showToast("Group money entry deleted.","success");
-}
-
-function openGroupModal(id=null){
-
- const db=getDB();
-
- const g=
-  id
-  ? db.groups.find(x=>x.id===id)
-  : null;
-
- openModal(
-  g ? "Edit Group" : "Add Meklit Group",
-
-  `
-
-   <div class="form-group">
-    <label>Group Name</label>
-    <input id="group-name"
-           value="${esc(g?.groupName||"")}"
-           placeholder="e.g. Meklit 7">
-   </div>
-
-   <div class="form-group">
-    <label>Description</label>
-    <textarea id="group-description"
-              placeholder="Group description">${esc(g?.description||"")}</textarea>
-   </div>
-
-   <div class="form-group">
-    <label>Status</label>
-    <select id="group-status">
-     <option value="Active"
-      ${g?.status==="Active"?"selected":""}>
-      Active
-     </option>
-     <option value="Inactive"
-      ${g?.status==="Inactive"?"selected":""}>
-      Inactive
-     </option>
-    </select>
-   </div>
-
-  `,
-
-  `
-
-   <button class="btn-outline"
-           onclick="closeModal('general-modal')">
-    Cancel
-   </button>
-
-   <button onclick="saveGroup(${id||"null"})">
-    <i class="fa fa-save"></i>
-    Save Group
-   </button>
-
-  `
- );
-}
-
-async function saveGroup(id){
-
- const name=
-  document.getElementById("group-name")
-   .value.trim();
-
- const description=
-  document.getElementById("group-description")
-   .value.trim();
-
- const status=
-  document.getElementById("group-status").value;
-
- if(!name){
-  showToast("Group name is required.","error");
-  return;
- }
-
- const db = await fetchBackendData();
-
- const duplicate=
-  db.groups.find(
-   g=>g.groupName.toLowerCase()===name.toLowerCase()
-    && g.id!==id
-  );
-
- if(duplicate){
-  showToast("A group with this name already exists.","error");
-  return;
- }
-
- if(id){
-
-  const g=db.groups.find(x=>x.id===id);
-
-  if(!g)return;
-
-  const oldName=g.groupName;
-
-  g.groupName=name;
-  g.description=description;
-  g.status=status;
-
-  db.candidates.forEach(c=>{
-   if(c.group===oldName)c.group=name;
-  });
-
-  await logActivity(
-   currentUser.id,
-   "Group Updated",
-   `Updated group ${name}.`
-  );
-
-  showToast("Group updated.","success");
-
- }else{
-
-  const newGroup={
-   id:db.groups.length
-    ? Math.max(...db.groups.map(g=>g.id))+1
-    : 1,
-   groupName:name,
-   description,
-   status
-  };
-
-  db.groups.push(newGroup);
-
-  await logActivity(
-   currentUser.id,
-   "Group Created",
-   `Created group ${name}.`
-  );
-
-  showToast("Group created.","success");
- }
-
- await saveDB(db);
- closeModal("general-modal");
-
- await renderGroupsPage(
-  document.getElementById("content-body")
- );
-}
-
-async function toggleGroupStatus(id){
-
- const db = await fetchBackendData();
-
- const g=db.groups.find(x=>x.id===id);
-
- if(!g)return;
-
- g.status=
-  g.status==="Active"
-   ?"Inactive"
-   :"Active";
-
- await saveDB(db);
-
- await logActivity(
-  currentUser.id,
-  "Group Status Changed",
-  `${g.groupName} changed to ${g.status}.`
- );
-
- await renderGroupsPage(
-  document.getElementById("content-body")
- );
-
- showToast(
-  `${g.groupName} is now ${g.status}.`,
-  "success"
- );
-}
-
-async function deleteGroup(id){
-
- const db = await fetchBackendData();
-
- const g=db.groups.find(x=>x.id===id);
-
- if(!g)return;
-
- const members=
-  db.candidates.filter(
-   c=>c.group===g.groupName
-  ).length;
-
- if(members>0){
-  showToast(
-   "Cannot delete a group that has candidates. Deactivate it instead.",
-   "error"
-  );
-  return;
- }
-
- if(!confirmAction(
-  `Delete group "${g.groupName}"?`
- ))return;
-
- db.groups=
-  db.groups.filter(x=>x.id!==id);
-
- await saveDB(db);
-
- await logActivity(
-  currentUser.id,
-  "Group Deleted",
-  `Deleted group ${g.groupName}.`
- );
-
- await renderGroupsPage(
-  document.getElementById("content-body")
- );
-
- showToast("Group deleted.","success");
-}
-
-// Initializing application state on load
-window.addEventListener('DOMContentLoaded', async () => {
- await fetchBackendData();
-
- if(currentUser){
-  const db=getDB();
-  const freshUser=db.users.find(u=>u.id===currentUser.id);
-
-  if(freshUser && freshUser.status==="Active"){
-   currentUser=freshUser;
-   document.getElementById("login-screen").classList.add("hidden");
-   document.getElementById("app-container").classList.remove("hidden");
-   initApp();
-  }else{
-   currentUser=null;
-   }
- }
-});
-
-// MEKLITE PWA service worker registration
-if ('serviceWorker' in navigator) {
- window.addEventListener('load', () => {
-  navigator.serviceWorker.register('./sw.js', { scope: './' })
-   .catch(error => console.warn('MEKLITE service worker registration failed:', error));
+function filterCandidatesTable(){
+ const q = document.getElementById("search-cand")?.value.toLowerCase() || "";
+ document.querySelectorAll("#candidates-tbody tr").forEach(tr => {
+  const text = tr.innerText.toLowerCase();
+  tr.style.display = text.includes(q) ? "" : "none";
  });
 }
 
+async function renderGroupsPage(container){
+ if(!requirePermission("MANAGE_GROUPS")) return;
+ const db = await fetchBackendData();
+
+ container.innerHTML = `
+ <div class="card">
+  <div class="card-header">
+   <div class="card-title"><i class="fa fa-layer-group"></i> Separate Group Funds Management</div>
+  </div>
+  <div class="card-body">
+   <div class="grid-3">
+    ${db.groups.map(g => {
+     const totalFund = (db.groupFunds||[]).filter(r=>Number(r.groupId)===Number(g.id)).reduce((s,r)=>s+Number(r.amount||0),0);
+     return `
+      <div class="card" style="padding:1rem;border-top:3px solid var(--accent-gold)">
+       <h4>${esc(g.groupName)}</h4>
+       <div style="font-size:1.4rem;font-weight:900;color:var(--primary-blue);margin:.5rem 0">${money(totalFund)} ETB</div>
+       <button class="btn-sm btn-gold" onclick="openAddGroupFundModal('${g.id}')"><i class="fa fa-plus"></i> Add Group Money</button>
+      </div>
+     `;
+    }).join("")}
+   </div>
+  </div>
+ </div>
+ `;
+}
+
+function openAddGroupFundModal(groupId){
+ const body = `
+  <form id="group-fund-form" onsubmit="saveGroupMoney(event, '${groupId}')">
+   <div class="form-group">
+    <label>Amount (ETB)</label>
+    <input id="gf-amount" type="number" step="0.01" required>
+   </div>
+   <div class="form-group">
+    <label>Deposit Purpose / Note</label>
+    <input id="gf-note" placeholder="Group Fund Contribution">
+   </div>
+  </form>
+ `;
+ const footer = `
+  <button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
+  <button onclick="document.getElementById('group-fund-form').requestSubmit()"><i class="fa fa-save"></i> Save Fund</button>
+ `;
+ openModal("Add Group Money (Isolated)", body, footer);
+}
+
+async function saveGroupMoney(e, groupId){
+ e.preventDefault();
+ const db = getDB();
+ const amount = Number(document.getElementById("gf-amount").value||0);
+ const note = document.getElementById("gf-note").value.trim();
+
+ db.groupFunds ||= [];
+ db.groupFunds.push({
+  id: generateId("GRP-FUND"),
+  groupId, amount, note, date: nowDateTime()
+ });
+
+ await saveDB(db);
+ showToast("Group money added successfully.", "success");
+ closeModal("general-modal");
+ renderGroupsPage(document.getElementById("content-body"));
+}
 </script>
 </body>
 </html>
