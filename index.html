@@ -1,335 +1,3603 @@
 <!DOCTYPE html>
-<html lang="am" class="h-full bg-slate-950 text-slate-100">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>የኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን - የመክሊት አገልግሎት</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;600;700;900&display=swap');
-        * { font-family: 'Noto Sans Ethiopic', system-ui, sans-serif; }
-        .glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        @media print {
-            .no-print { display: none !important; }
-            body { background: white !important; color: black !important; }
-            .print-a4 {
-                background: white !important;
-                color: black !important;
-                box-shadow: none !important;
-                border: none !important;
-                padding: 0 !important;
-                width: 100% !important;
-            }
-            th, td { border: 1px solid #000 !important; color: black !important; padding: 6px 10px !important; }
-            th { background-color: #f1f5f9 !important; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0b3c5d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MEKLITE">
+<meta name="application-name" content="MEKLITE">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<title>Ethiopian Apostolic Church - Youth Meklit Service</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Chart.js Engine integration for dynamic directional charts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root{
+ --primary-blue:#0b3c5d;
+ --secondary-blue:#1d2731;
+ --blue2:#173e65;
+ --blue3:#246b9a;
+ --accent-gold:#c5a059;
+ --gold:#d4af37;
+ --accent-gold-light:#f4ebd0;
+ --bg-color:#f4f6f9;
+ --card-bg:#fff;
+ --text-main:#333;
+ --text-muted:#667085;
+ --border-color:#d1d5db;
+ --success:#10b981;
+ --danger:#ef4444;
+ --warning:#f59e0b;
+ --info:#3b82f6;
+ --sidebar-width:260px;
+ --shadow:0 4px 16px rgba(0,0,0,.08);
+ --shadow-3d:0 10px 25px rgba(11,60,93,.15);
+ --transition-speed:.25s;
+}
+
+*{
+ box-sizing:border-box;
+ margin:0;
+ padding:0;
+ font-family:'Inter','Noto Sans Ethiopic',sans-serif;
+}
+
+body{
+ background:var(--bg-color);
+ color:var(--text-main);
+ min-height:100vh;
+ transition:background var(--transition-speed) ease;
+}
+
+button,.btn{
+ border:0;
+ background:var(--primary-blue);
+ color:#fff;
+ padding:.65rem 1rem;
+ border-radius:8px;
+ font-weight:600;
+ cursor:pointer;
+ transition:transform .18s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .18s ease, background .18s ease;
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ gap:.45rem;
+ font-size:.88rem;
+ box-shadow:0 2px 5px rgba(0,0,0,0.1);
+ perspective:1000px;
+ transform-style:preserve-3d;
+}
+
+button:hover,.btn:hover{
+ background:#082d45;
+ transform:translateY(-2px) translateZ(5px);
+ box-shadow:0 6px 15px rgba(11,60,93,0.25);
+}
+
+button:active,.btn:active{
+ transform:translateY(0) scale(.97);
+ box-shadow:0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-gold{background:var(--accent-gold);color:#17202a}
+.btn-gold:hover{background:#ad8742;box-shadow:0 6px 15px rgba(197,160,89,0.35)}
+
+.btn-success{background:var(--success)}
+.btn-success:hover{background:#059669;box-shadow:0 6px 15px rgba(16,185,129,0.35)}
+
+.btn-danger{background:var(--danger)}
+.btn-danger:hover{background:#dc2626;box-shadow:0 6px 15px rgba(239,68,68,0.35)}
+
+.btn-warning{background:var(--warning);color:#17202a}
+.btn-warning:hover{background:#d97706}
+
+.btn-info{background:var(--info)}
+.btn-info:hover{background:#2563eb}
+
+.btn-outline{
+ background:#fff;
+ color:var(--text-main);
+ border:1px solid var(--border-color);
+}
+
+.btn-outline:hover{
+ background:#f3f4f6;
+ border-color:#9ca3af;
+}
+
+.btn-sm{
+ padding:.4rem .65rem;
+ font-size:.78rem;
+ border-radius:6px;
+}
+
+.hidden{display:none!important}
+
+input,select,textarea{
+ width:100%;
+ padding:.65rem .75rem;
+ border:1px solid var(--border-color);
+ border-radius:8px;
+ font-size:.9rem;
+ background:#fff;
+ outline:none;
+ transition:border-color .2s ease, box-shadow .2s ease;
+}
+
+input:focus,select:focus,textarea:focus{
+ border-color:var(--primary-blue);
+ box-shadow:0 0 0 3px rgba(11,60,93,.15);
+}
+
+textarea{resize:vertical;min-height:90px}
+
+label{
+ display:block;
+ font-size:.82rem;
+ font-weight:700;
+ color:var(--secondary-blue);
+ margin-bottom:.35rem;
+}
+
+.form-group{margin-bottom:1rem}
+
+.grid-2{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:1rem;
+}
+
+.grid-3{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:1rem;
+}
+
+.grid-4{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:1rem;
+}
+
+.w-full{width:100%}
+
+/* LOGIN */
+
+#login-screen{
+ position:fixed;
+ inset:0;
+ z-index:9999;
+ background:radial-gradient(circle at 50% 50%, #173e65 0%, #0b3c5d 50%, #1d2731 100%);
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ padding:1rem;
+ perspective:1000px;
+}
+
+.login-card{
+ background:rgba(255,255,255,0.98);
+ backdrop-filter:blur(10px);
+ width:100%;
+ max-width:430px;
+ padding:2.3rem 2rem;
+ border-radius:18px;
+ box-shadow:0 25px 60px rgba(0,0,0,.4), inset 0 1px 1px rgba(255,255,255,0.8);
+ border-top:5px solid var(--accent-gold);
+ text-align:center;
+ transform-style:preserve-3d;
+ transition:transform .3s ease;
+}
+
+.login-card:hover{
+ transform:translateY(-3px) rotateX(1deg);
+}
+
+.logo-large{
+ width:95px;
+ height:95px;
+ border-radius:50%;
+ object-fit:contain;
+ border:3px solid var(--accent-gold);
+ margin-bottom:1rem;
+ box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+.login-card h1{
+ font-size:1.2rem;
+ color:var(--primary-blue);
+ margin-bottom:.35rem;
+ font-weight:800;
+}
+
+.login-card h2{
+ font-size:.86rem;
+ color:var(--text-muted);
+ margin-bottom:1.5rem;
+ font-weight:500;
+}
+
+.login-form{
+ text-align:left;
+}
+
+.password-wrapper{
+ position:relative;
+}
+
+.password-wrapper input{
+ padding-right:42px;
+}
+
+.password-toggle{
+ position:absolute;
+ right:12px;
+ top:50%;
+ transform:translateY(-50%);
+ color:#667085;
+ cursor:pointer;
+ transition:color .2s;
+}
+
+.password-toggle:hover{
+ color:var(--primary-blue);
+}
+
+/* APP */
+
+#app-container{
+ display:flex;
+ height:100vh;
+ overflow:hidden;
+}
+
+aside{
+ width:var(--sidebar-width);
+ background:linear-gradient(180deg, #1d2731 0%, #0b3c5d 100%);
+ color:#fff;
+ display:flex;
+ flex-direction:column;
+ flex-shrink:0;
+ box-shadow:3px 0 15px rgba(0,0,0,0.15);
+ z-index:100;
+}
+
+.sidebar-header{
+ padding:1.2rem 1rem;
+ display:flex;
+ align-items:center;
+ gap:.7rem;
+ background:rgba(0,0,0,.22);
+ border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.sidebar-logo{
+ width:48px;
+ height:48px;
+ border-radius:50%;
+ object-fit:contain;
+ background:#fff;
+ border:2px solid var(--accent-gold);
+ box-shadow:0 4px 10px rgba(0,0,0,0.3);
+}
+
+.sidebar-title{
+ font-weight:800;
+ font-size:.88rem;
+ letter-spacing:.02em;
+}
+
+.sidebar-role{
+ color:var(--accent-gold);
+ font-size:.7rem;
+ margin-top:2px;
+ font-weight:600;
+}
+
+.sidebar-menu{
+ list-style:none;
+ padding:.7rem 0;
+ overflow-y:auto;
+ flex:1;
+}
+
+.sidebar-menu li a{
+ color:#cbd5e1;
+ text-decoration:none;
+ display:flex;
+ align-items:center;
+ gap:.7rem;
+ padding:.72rem 1.15rem;
+ cursor:pointer;
+ font-size:.87rem;
+ transition:all .2s ease;
+ border-left:4px solid transparent;
+}
+
+.sidebar-menu li a:hover,
+.sidebar-menu li.active>a{
+ background:rgba(255,255,255,0.08);
+ color:#fff;
+ border-left-color:var(--accent-gold);
+ padding-left:1.35rem;
+}
+
+.sidebar-menu li a i:first-child{
+ width:18px;
+ text-align:center;
+}
+
+.submenu{
+ list-style:none;
+ background:rgba(0,0,0,.18);
+ border-left:2px solid rgba(197,160,89,0.3);
+ margin-left:1.2rem;
+}
+
+.submenu a{
+ padding-left:1.8rem!important;
+ font-size:.8rem!important;
+}
+
+main{
+ flex:1;
+ display:flex;
+ flex-direction:column;
+ min-width:0;
+ background:#f4f6f9;
+}
+
+.topbar{
+ height:70px;
+ background:#fff;
+ border-bottom:1px solid var(--border-color);
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 1.7rem;
+ flex-shrink:0;
+ box-shadow:0 2px 10px rgba(0,0,0,0.03);
+}
+
+.page-title{
+ color:var(--primary-blue);
+ font-size:1.25rem;
+ font-weight:800;
+ letter-spacing:-0.01em;
+}
+
+.top-user{
+ display:flex;
+ align-items:center;
+ gap:.7rem;
+}
+
+.top-user img{
+ width:38px;
+ height:38px;
+ border-radius:50%;
+ object-fit:contain;
+ border:2px solid var(--accent-gold);
+ box-shadow:0 2px 6px rgba(0,0,0,0.12);
+}
+
+.top-user-name{
+ font-weight:700;
+ font-size:.85rem;
+}
+
+.top-user-role{
+ color:var(--text-muted);
+ font-size:.72rem;
+}
+
+.content-body{
+ flex:1;
+ overflow-y:auto;
+ padding:1.7rem;
+}
+
+/* CARDS */
+
+.card{
+ background:#fff;
+ border-radius:12px;
+ box-shadow:var(--shadow);
+ border:1px solid #e5e7eb;
+ margin-bottom:1.2rem;
+ transition:transform .2s ease, box-shadow .2s ease;
+ overflow:hidden;
+}
+
+.card:hover{
+ box-shadow:0 8px 24px rgba(0,0,0,.08);
+}
+
+.card-header{
+ padding:1rem 1.25rem;
+ border-bottom:1px solid #f1f5f9;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:1rem;
+ background:#fafbfc;
+}
+
+.card-title{
+ font-size:.95rem;
+ font-weight:800;
+ color:var(--secondary-blue);
+ display:flex;
+ align-items:center;
+ gap:.5rem;
+}
+
+.card-body{
+ padding:1.25rem;
+}
+
+.stats-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+ gap:1.1rem;
+ margin-bottom:1.3rem;
+ perspective:1000px;
+}
+
+.stat-card{
+ background:#fff;
+ border-radius:12px;
+ padding:1.25rem;
+ box-shadow:var(--shadow);
+ border-left:5px solid var(--primary-blue);
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ transition:transform .25s ease, box-shadow .25s ease;
+ transform-style:preserve-3d;
+ border-top:1px solid #f1f5f9;
+ border-right:1px solid #f1f5f9;
+ border-bottom:1px solid #f1f5f9;
+}
+
+.stat-card:hover{
+ transform:translateY(-4px) translateZ(8px);
+ box-shadow:var(--shadow-3d);
+}
+
+.stat-card.gold{border-left-color:var(--accent-gold)}
+.stat-card.success{border-left-color:var(--success)}
+.stat-card.warning{border-left-color:var(--warning)}
+.stat-card.info{border-left-color:var(--info)}
+
+.stat-label{
+ color:var(--text-muted);
+ font-size:.72rem;
+ font-weight:800;
+ text-transform:uppercase;
+ letter-spacing:.04em;
+ margin-bottom:.3rem;
+}
+
+.stat-value{
+ color:var(--secondary-blue);
+ font-size:1.65rem;
+ font-weight:800;
+}
+
+.stat-card i{
+ color:#d7dde3;
+ font-size:2.1rem;
+ transition:color .2s;
+}
+
+.stat-card:hover i{
+ color:var(--primary-blue);
+}
+
+.stat-card.gold:hover i{color:var(--accent-gold)}
+.stat-card.success:hover i{color:var(--success)}
+.stat-card.info:hover i{color:var(--info)}
+
+/* TABLE */
+
+.table-wrap{
+ overflow-x:auto;
+}
+
+table{
+ width:100%;
+ border-collapse:collapse;
+ font-size:.82rem;
+}
+
+th,td{
+ padding:.75rem .85rem;
+ border-bottom:1px solid #f1f5f9;
+ text-align:left;
+ white-space:nowrap;
+}
+
+th{
+ background:#f8fafc;
+ color:var(--secondary-blue);
+ font-weight:800;
+ text-transform:uppercase;
+ font-size:.72rem;
+ letter-spacing:.03em;
+}
+
+tr:hover td{background:#f8fafc}
+
+.actions{
+ display:flex;
+ gap:.35rem;
+ align-items:center;
+}
+
+.badge{
+ display:inline-flex;
+ align-items:center;
+ padding:.25rem .6rem;
+ border-radius:20px;
+ font-size:.7rem;
+ font-weight:800;
+ letter-spacing:.02em;
+}
+
+.badge-success{background:#d1fae5;color:#047857}
+.badge-danger{background:#fee2e2;color:#b91c1c}
+.badge-warning{background:#fef3c7;color:#92400e}
+.badge-info{background:#dbeafe;color:#1d4ed8}
+.badge-gray{background:#e5e7eb;color:#374151}
+
+.empty{
+ text-align:center;
+ color:var(--text-muted);
+ padding:2.5rem 1rem;
+}
+
+.toolbar{
+ display:flex;
+ flex-wrap:wrap;
+ gap:.6rem;
+ align-items:center;
+}
+
+.toolbar .search{
+ flex:1;
+ min-width:200px;
+}
+
+/* MODAL */
+
+.modal-backdrop{
+ position:fixed;
+ inset:0;
+ background:rgba(15,23,42,.65);
+ backdrop-filter:blur(4px);
+ z-index:5000;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:1rem;
+ animation:fadeIn .2s ease;
+}
+
+@keyframes fadeIn{
+ from{opacity:0}
+ to{opacity:1}
+}
+
+.modal{
+ width:100%;
+ max-width:720px;
+ max-height:92vh;
+ background:#fff;
+ border-radius:14px;
+ overflow:hidden;
+ box-shadow:0 25px 70px rgba(0,0,0,.35);
+ display:flex;
+ flex-direction:column;
+ transform:scale(0.98);
+ animation:modalPop .2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes modalPop{
+ to{transform:scale(1)}
+}
+
+.modal-lg{max-width:1000px}
+
+.modal-header{
+ background:linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+ color:#fff;
+ padding:1.1rem 1.35rem;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+}
+
+.modal-body{
+ padding:1.35rem;
+ overflow-y:auto;
+}
+
+.modal-footer{
+ padding:1rem 1.35rem;
+ background:#f8fafc;
+ border-top:1px solid var(--border-color);
+ display:flex;
+ justify-content:flex-end;
+ gap:.5rem;
+}
+
+/* TOAST */
+
+#toast-container{
+ position:fixed;
+ right:20px;
+ top:20px;
+ z-index:10000;
+ display:flex;
+ flex-direction:column;
+ gap:8px;
+}
+
+.toast{
+ min-width:280px;
+ max-width:420px;
+ padding:.85rem 1.1rem;
+ border-radius:10px;
+ background:#1d2731;
+ color:#fff;
+ box-shadow:0 12px 30px rgba(0,0,0,.25);
+ border-left:5px solid var(--success);
+ animation:toastIn .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+ font-size:.85rem;
+ font-weight:500;
+ display:flex;
+ align-items:center;
+ gap:.6rem;
+}
+
+.toast.error{border-left-color:var(--danger)}
+.toast.warning{border-left-color:var(--warning)}
+.toast.info{border-left-color:var(--info)}
+
+@keyframes toastIn{
+ from{transform:translateX(100%) scale(0.9);opacity:0}
+ to{transform:translateX(0) scale(1);opacity:1}
+}
+
+/* A4 FORM */
+
+#form-print-area{
+ background:#dfe4e8;
+ padding:1.2rem;
+ overflow:auto;
+ display:flex;
+ justify-content:center;
+}
+
+.sheet{
+ width:210mm;
+ min-height:297mm;
+ margin:0 auto;
+ background:linear-gradient(135deg,#fff,#fbfdff,#fff);
+ padding:4mm 5mm 3mm;
+ position:relative;
+ display:flex;
+ flex-direction:column;
+ overflow:hidden;
+ border:1.1mm solid #173e65;
+ box-shadow:0 12px 40px rgba(0,0,0,.22);
+}
+
+.sheet:before{
+ content:"";
+ position:absolute;
+ inset:1.8mm;
+ border:.25mm solid #d4af37;
+ pointer-events:none;
+}
+
+.header-container{
+ position:relative;
+ z-index:2;
+ display:flex;
+ align-items:center;
+ min-height:20mm;
+ padding:1mm;
+ margin-bottom:1mm;
+ border-bottom:.65mm solid #173e65;
+ background:linear-gradient(90deg,#f5f9fc,#fff,#f5f9fc);
+}
+
+.logo-frame{
+ width:19mm;
+ height:19mm;
+ flex-shrink:0;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:#fff;
+ border:.55mm solid #d4af37;
+ padding:1mm;
+ border-radius:4px;
+ box-shadow:0 2px 6px rgba(0,0,0,0.08);
+}
+
+.logo-frame img{
+ width:100%;
+ height:100%;
+ object-fit:contain;
+}
+
+.header-titles{
+ flex:1;
+ text-align:center;
+ padding:0 4mm;
+}
+
+.header-titles h1{
+ font-size:14px;
+ font-weight:900;
+ color:#173e65;
+ line-height:1.15;
+ margin-bottom:.8mm;
+}
+
+.header-titles h2{
+ font-size:10px;
+ font-weight:800;
+ color:#246b9a;
+ margin-bottom:1.2mm;
+}
+
+.header-titles h3{
+ display:inline-block;
+ font-size:10px;
+ font-weight:900;
+ color:#fff;
+ background:linear-gradient(90deg,#173e65,#246b9a,#173e65);
+ padding:1.1mm 5mm;
+ border:.3mm solid #d4af37;
+ border-radius:1mm;
+ text-shadow:0 1px 2px rgba(0,0,0,0.2);
+}
+
+.info-box{
+ position:relative;
+ z-index:2;
+ min-height:26mm;
+ display:grid;
+ grid-template-columns:1fr 21mm;
+ gap:3mm;
+ align-items:center;
+ padding:2mm 3mm;
+ margin-bottom:1mm;
+ background:linear-gradient(135deg,#edf5fa,#fff,#edf5fa);
+ border:.5mm solid #173e65;
+ border-radius:4px;
+}
+
+.info-grid{
+ width:100%;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ column-gap:5mm;
+ row-gap:2mm;
+}
+
+.full-span{grid-column:span 2}
+
+.info-row{
+ display:flex;
+ align-items:baseline;
+ gap:2mm;
+ font-size:8.2px;
+ min-height:3.8mm;
+}
+
+.info-row .label{
+ font-weight:800;
+ color:#173e65;
+ white-space:nowrap;
+}
+
+.write-line{
+ flex:1;
+ min-width:15mm;
+ min-height:4mm;
+ border:none;
+ border-bottom:.35mm dotted #246b9a;
+ background:transparent;
+ font-size:8.2px;
+ padding:0 2mm;
+ color:#173e65;
+ outline:none;
+ transition:border-color .2s;
+}
+
+.write-line:focus{
+ border-bottom-color:#d4af37;
+}
+
+.write-line-short{
+ display:inline-block;
+ width:16mm;
+ min-height:4mm;
+ border:none;
+ border-bottom:.35mm dotted #246b9a;
+ background:transparent;
+ font-size:8.2px;
+ text-align:center;
+ color:#173e65;
+ outline:none;
+}
+
+.photo-btn-container{
+ width:20mm;
+ height:24mm;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ background:#f1f5f8;
+ border:.55mm solid #173e65;
+ border-radius:3px;
+ font-size:7.2px;
+ font-weight:900;
+ text-align:center;
+ cursor:pointer;
+ position:relative;
+ overflow:hidden;
+ transition:border-color .2s;
+}
+
+.photo-btn-container:hover{
+ border-color:#d4af37;
+}
+
+.photo-btn-container img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ position:absolute;
+ inset:0;
+}
+
+.photo-btn-container input{
+ position:absolute;
+ inset:0;
+ opacity:0;
+ cursor:pointer;
+}
+
+.embedded-table-area{
+ flex:1;
+ display:flex;
+ flex-direction:column;
+ position:relative;
+ z-index:2;
+}
+
+.embedded-table-area table{
+ width:100%;
+ border-collapse:collapse;
+ table-layout:fixed;
+ border:.65mm solid #173e65;
+ background:#fff;
+}
+
+.embedded-table-area th,
+.embedded-table-area td{
+ border:.25mm solid #246b9a;
+ text-align:center;
+ vertical-align:middle;
+ padding:.4mm .2mm;
+ font-size:7px;
+ line-height:1;
+ overflow:hidden;
+}
+
+.embedded-table-area thead tr:first-child th{
+ background:linear-gradient(180deg,#214f78,#173e65);
+ color:#fff;
+ font-weight:900;
+ font-size:7.2px;
+ height:8mm;
+}
+
+.sub-th{
+ background:linear-gradient(180deg,#2d7ba8,#246b9a)!important;
+ color:#fff!important;
+ font-size:6.8px!important;
+ font-weight:800;
+ height:5mm;
+}
+
+.data-row{height:5.4mm}
+.data-row td{
+ height:5.4mm;
+ background:#fff;
+ border-color:#8eafc4;
+}
+
+.data-row:nth-child(even) td{background:#f1f7fb}
+
+.date-input,
+.money-input,
+.total-input,
+.text-input{
+ width:100%;
+ height:100%;
+ min-height:4.5mm;
+ border:none;
+ outline:none;
+ background:transparent;
+ text-align:center;
+ font-size:6.8px;
+ color:#173e65;
+ padding:0;
+}
+
+.total-input{
+ font-weight:bold;
+ background:#fdfae7;
+}
+
+.sheet-footer{
+ position:relative;
+ z-index:5;
+ text-align:center;
+ margin-top:1mm;
+ padding-top:1.2mm;
+ background:#fff;
+}
+
+.verse{
+ font-size:8.2px;
+ color:#173e65;
+ font-weight:800;
+ font-style:italic;
+}
+
+/* DASHBOARD */
+
+.quick-actions{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:.9rem;
+ margin-bottom:1.3rem;
+ perspective:1000px;
+}
+
+.quick-action{
+ background:#fff;
+ padding:1rem;
+ border-radius:10px;
+ border:1px solid #e5e7eb;
+ box-shadow:var(--shadow);
+ cursor:pointer;
+ display:flex;
+ align-items:center;
+ gap:.8rem;
+ transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+ transform-style:preserve-3d;
+}
+
+.quick-action:hover{
+ transform:translateY(-3px) translateZ(5px);
+ border-color:var(--accent-gold);
+ box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.quick-action i{
+ width:42px;
+ height:42px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ border-radius:10px;
+ background:#eef5fa;
+ color:var(--primary-blue);
+ font-size:1.1rem;
+ transition:background .2s, color .2s;
+}
+
+.quick-action:hover i{
+ background:var(--primary-blue);
+ color:#fff;
+}
+
+/* INTERACTIVE ANALYTICS EXTENSIONS */
+.rank-badge{
+ display:inline-block;
+ width:24px;
+ height:24px;
+ line-height:24px;
+ text-align:center;
+ border-radius:50%;
+ font-weight:bold;
+ font-size:.75rem;
+ background:#e2e8f0;
+ color:#475569;
+}
+.rank-1{background:#fef08a;color:#854d0e;border:1px solid #eab308;box-shadow:0 2px 5px rgba(234,179,8,0.3)}
+.rank-2{background:#e2e8f0;color:#334155;border:1px solid #94a3b8}
+.rank-3{background:#ffedd5;color:#9a3412;border:1px solid #f97316}
+
+.compare-card{
+ border-top:4px solid var(--accent-gold);
+ background:#fff;
+ border-radius:10px;
+ padding:1.1rem;
+ box-shadow:var(--shadow);
+ transition:transform .2s;
+}
+
+.compare-card:hover{
+ transform:translateY(-2px);
+}
+
+.compare-title{
+ font-weight:800;
+ font-size:1.1rem;
+ color:var(--primary-blue);
+ margin-bottom:.5rem;
+ text-align:center;
+}
+
+/* MOBILE */
+
+.mobile-menu{
+ display:none;
+ background:none;
+ color:var(--primary-blue);
+ padding:.2rem;
+ font-size:1.2rem;
+}
+
+@media(max-width:900px){
+ aside{
+  position:fixed;
+  left:-270px;
+  top:0;
+  bottom:0;
+  z-index:4000;
+  transition:left .25s ease;
+ }
+
+ aside.open{left:0}
+
+ .mobile-menu{display:block}
+
+ .grid-4{grid-template-columns:repeat(2,1fr)}
+ .grid-3{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:650px){
+ .content-body{padding:1rem}
+ .topbar{padding:0 1rem}
+ .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+ .top-user div{display:none}
+ .stats-grid{grid-template-columns:1fr 1fr}
+ .stats-grid .stat-value{font-size:1.3rem}
+ .quick-actions{grid-template-columns:1fr}
+}
+
+@media print{
+ body{background:#fff}
+ body *{visibility:hidden}
+ #form-print-area,#form-print-area *{
+  visibility:visible;
+ }
+ #form-print-area{
+  position:absolute;
+  left:0;
+  top:0;
+  padding:0;
+  background:#fff;
+  width:100%;
+ }
+ .sheet{
+  margin:0;
+  box-shadow:none;
+ }
+ .no-print{display:none!important}
+ @page{
+  size:A4 portrait;
+  margin:0;
+ }
+}
+
+/* ============================================================
+   SEPARATE GROUP FUNDS - DOES NOT TOUCH CANDIDATE MONEY
+============================================================ */
+.group-funds-panel{margin-top:1.25rem}
+.group-fund-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1rem}
+.group-fund-stat{background:linear-gradient(135deg,#fff,#f8fafc);border:1px solid #e5e7eb;border-radius:12px;padding:1rem;box-shadow:0 4px 14px rgba(15,23,42,.05)}
+.group-fund-stat .label{font-size:.78rem;color:#667085;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.group-fund-stat .value{margin-top:.35rem;font-size:1.35rem;font-weight:800;color:var(--primary-blue)}
+.group-fund-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.group-fund-card{border:1px solid #e5e7eb;border-radius:12px;padding:1rem;background:#fff;box-shadow:0 4px 16px rgba(15,23,42,.05)}
+.group-fund-card h4{margin:0 0 .35rem;color:var(--primary-blue)}
+.group-fund-balance{font-size:1.45rem;font-weight:900;color:#15803d}
+.group-fund-meta{font-size:.78rem;color:#667085;margin-top:.2rem}
+.group-members-list{max-height:420px;overflow:auto}
+.group-member-row{display:flex;align-items:center;gap:.8rem;padding:.75rem;border:1px solid #eef2f7;border-radius:10px;margin-bottom:.55rem;background:#fafcff}
+.group-member-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#eaf0f6;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--primary-blue)}
+.group-member-name{font-weight:800;color:#243b53}
+.group-member-meta{font-size:.78rem;color:#667085}
+@media(max-width:900px){.group-fund-summary{grid-template-columns:repeat(2,1fr)}.group-fund-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.group-fund-summary,.group-fund-grid{grid-template-columns:1fr}}
+.group-money-section{margin-top:1.25rem}
+.group-money-table td,.group-money-table th{vertical-align:middle}
+.group-money-total{font-size:1.05rem;font-weight:900;color:#15803d}
+
+</style>
 </head>
-<body class="min-h-full flex flex-col antialiased selection:bg-indigo-500 selection:text-white"
-      x-data="appState()"
-      x-init="initApp()">
 
-    <!-- Sticky Navigation -->
-    <header class="sticky top-0 z-40 w-full glass-card border-b border-slate-800/80 no-print">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <div class="p-2.5 bg-gradient-to-tr from-indigo-600 to-violet-500 rounded-xl shadow-lg shadow-indigo-500/30">
-                    <i data-lucide="church" class="w-6 h-6 text-white"></i>
-                </div>
-                <div>
-                    <h1 class="text-lg font-extrabold bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-                        የመክሊት አገልግሎት
-                    </h1>
-                    <p class="text-xs text-slate-400 hidden sm:block">የኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን የወጣቶች መክሊት አስተዳደር</p>
-                </div>
-            </div>
+<body>
 
-            <div class="flex items-center gap-2 sm:gap-3">
-                <button @click="openModal()" 
-                        class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 active:scale-95 transition-all duration-200 text-white font-semibold text-sm rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-600/25">
-                    <i data-lucide="user-plus" class="w-4 h-4"></i>
-                    <span class="hidden sm:inline">አዲስ ዕጩ</span>
-                </button>
-                <button onclick="window.print()" 
-                        class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 active:scale-95 transition-all duration-200 text-slate-200 font-semibold text-sm rounded-xl border border-slate-700 flex items-center gap-2">
-                    <i data-lucide="printer" class="w-4 h-4"></i>
-                    <span class="hidden sm:inline">A4 አትም</span>
-                </button>
-            </div>
-        </div>
-    </header>
+<div id="toast-container"></div>
 
-    <!-- Main Container -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+<!-- LOGIN -->
+<div id="login-screen">
+ <div class="login-card">
 
-        <!-- Stat Cards -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-5 no-print">
-            <div class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-indigo-500/50 transition-all duration-300">
-                <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <i data-lucide="users" class="w-32 h-32 text-indigo-400"></i>
-                </div>
-                <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">ጠቅላላ ዕጩዎች</div>
-                <div class="text-3xl font-black text-white mt-2" x-text="candidates.length">0</div>
-                <div class="mt-2 text-xs text-indigo-400 font-medium">የተመዘገቡ ተሳታፊዎች</div>
-            </div>
+  <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg"
+       class="logo-large"
+       alt="Church Logo">
 
-            <div class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/50 transition-all duration-300">
-                <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <i data-lucide="wallet" class="w-32 h-32 text-emerald-400"></i>
-                </div>
-                <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">የዕጩዎች ጠቅላላ መዋጮ</div>
-                <div class="text-3xl font-black text-emerald-400 mt-2" x-text="formatCurrency(totalContributions)">0 ETB</div>
-                <div class="mt-2 text-xs text-emerald-500 font-medium">የተሰበሰበ ጠቅላላ ገቢ</div>
-            </div>
+  <h1>Apostolic Church Youth Meklit</h1>
+  <h2>Youth Meklit Service - Contribution Management</h2>
 
-            <div class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-amber-500/50 transition-all duration-300">
-                <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <i data-lucide="piggy-bank" class="w-32 h-32 text-amber-400"></i>
-                </div>
-                <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">የቡድን ፈንድ (Group Fund)</div>
-                <div class="text-3xl font-black text-amber-400 mt-2" x-text="formatCurrency(groupFund)">0 ETB</div>
-                <div class="mt-2 text-xs text-amber-500 font-medium">የተለየ የቡድን ሂሳብ</div>
-            </div>
-        </section>
+  <form id="login-form" onsubmit="handleLogin(event)" class="login-form">
 
-        <!-- Main Form & Table Card -->
-        <section class="glass-card rounded-2xl p-6 sm:p-8 print-a4 space-y-6">
-            <!-- Printable Header -->
-            <div class="text-center border-b border-slate-800 pb-6 print:border-black">
-                <h2 class="text-xl sm:text-2xl font-black tracking-tight text-white print:text-black">
-                    የኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን የወጣቶች መክሊት አገልግሎት
-                </h2>
-                <p class="text-sm text-slate-400 mt-1 print:text-gray-700">
-                    የዕጩዎች ምዝገባ እና የመዋጮ መከታተያ ቅጽ (A4 Printable Form)
-                </p>
-            </div>
+   <div class="form-group">
+    <label>Username</label>
+    <input id="login-username"
+           autocomplete="username"
+           placeholder="Enter username"
+           required>
+   </div>
 
-            <!-- Table Controls -->
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
-                <div class="relative w-full sm:w-80">
-                    <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" 
-                           x-model="searchQuery" 
-                           placeholder="በስም ወይም በስልክ ፈልግ..." 
-                           class="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors">
-                </div>
-                <div class="text-xs text-slate-400 font-medium">
-                    ጠቅላላ የተገኙ: <span class="text-indigo-400 font-bold" x-text="filteredCandidates.length"></span>
-                </div>
-            </div>
+   <div class="form-group">
+    <label>Password</label>
 
-            <!-- Responsive Table Wrapper -->
-            <div class="overflow-x-auto rounded-xl border border-slate-800/80 print:border-black">
-                <table class="w-full text-left text-sm text-slate-300">
-                    <thead class="bg-slate-900/80 text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 print:bg-gray-100 print:text-black print:border-black">
-                        <tr>
-                            <th class="py-3.5 px-4">#</th>
-                            <th class="py-3.5 px-4">ሙሉ ስም</th>
-                            <th class="py-3.5 px-4">ስልክ ቁጥር</th>
-                            <th class="py-3.5 px-4">ክፍለ ከተማ / አድራሻ</th>
-                            <th class="py-3.5 px-4 text-right">የተገባው መዋጮ</th>
-                            <th class="py-3.5 px-4 text-center no-print">እርምጃዎች</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-800/60 print:divide-black">
-                        <template x-for="(candidate, index) in filteredCandidates" :key="candidate.id">
-                            <tr class="hover:bg-slate-800/30 transition-colors">
-                                <td class="py-3.5 px-4 font-mono text-slate-500 print:text-black" x-text="index + 1"></td>
-                                <td class="py-3.5 px-4 font-semibold text-white print:text-black" x-text="candidate.fullName"></td>
-                                <td class="py-3.5 px-4 font-mono text-slate-400 print:text-black" x-text="candidate.phone"></td>
-                                <td class="py-3.5 px-4 text-slate-400 print:text-black" x-text="candidate.location"></td>
-                                <td class="py-3.5 px-4 text-right font-bold text-emerald-400 print:text-black" x-text="formatCurrency(candidate.contribution)"></td>
-                                <td class="py-3.5 px-4 text-center no-print">
-                                    <div class="flex items-center justify-center gap-2">
-                                        <button @click="editModal(candidate)" 
-                                                class="p-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg transition-colors" title="አስተካክል">
-                                            <i data-lucide="pencil" class="w-4 h-4"></i>
-                                        </button>
-                                        <button @click="deleteItem(candidate.id)" 
-                                                class="p-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-lg transition-colors" title="አጥፋ">
-                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </template>
-                        <template x-if="filteredCandidates.length === 0">
-                            <tr>
-                                <td colspan="6" class="py-12 text-center text-slate-500">
-                                    <i data-lucide="inbox" class="w-10 h-10 mx-auto mb-2 opacity-40"></i>
-                                    <p>ምንም የተመዘገበ ዕጩ አልተገኘም</p>
-                                </td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </main>
+    <div class="password-wrapper">
+     <input id="login-password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Enter password"
+            required>
 
-    <!-- Modal Dialog for Add / Edit -->
-    <div x-show="isModalOpen" 
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0 scale-95"
-         x-transition:enter-end="opacity-100 scale-100"
-         x-transition:leave="transition ease-in duration-150"
-         x-transition:leave-start="opacity-100 scale-100"
-         x-transition:leave-end="opacity-0 scale-95"
-         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md no-print"
-         style="display: none;">
+     <i class="fa fa-eye password-toggle"
+        onclick="toggleLoginPassword()"></i>
+    </div>
+   </div>
 
-        <div @click.away="closeModal()" class="glass-card w-full max-w-lg rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl border border-slate-700/80">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                    <i data-lucide="user-cog" class="w-5 h-5 text-indigo-400"></i>
-                    <span x-text="form.id ? 'የዕጩ እና የመዋጮ መረጃ አስተካክል' : 'አዲስ ዕጩ መዝግብ'"></span>
-                </h3>
-                <button @click="closeModal()" class="text-slate-400 hover:text-white transition-colors">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
+   <button type="submit" class="w-full" style="margin-top:.8rem">
+    <i class="fa fa-sign-in-alt"></i>
+    LOGIN
+   </button>
 
-            <form @submit.prevent="saveCandidate()" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">ሙሉ ስም</label>
-                    <input type="text" x-model="form.fullName" required placeholder="ምሳሌ፡ አበበ ከበደ" 
-                           class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition-colors">
-                </div>
+  </form>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1">ስልክ ቁጥር</label>
-                        <input type="tel" x-model="form.phone" required placeholder="0911......" 
-                               class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition-colors">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1">ክፍለ ከተማ / አድራሻ</label>
-                        <input type="text" x-model="form.location" required placeholder="ምሳሌ፡ አዳማ" 
-                               class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition-colors">
-                    </div>
-                </div>
+  <div style="margin-top:1.5rem;font-size:.73rem;color:#667085">
+   ☝️:
+   <strong>ONE GOD</strong> /
+   <strong>JESUS CHRIST</strong>
+  </div>
 
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">የመዋጮ መጠን (ETB)</label>
-                    <input type="number" step="any" min="0" x-model.number="form.contribution" required placeholder="0.00" 
-                           class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-emerald-400 font-bold placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition-colors">
-                </div>
+ </div>
+</div>
 
-                <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
-                    <button type="button" @click="closeModal()" class="px-4 py-2.5 text-slate-400 hover:text-white text-sm font-semibold transition-colors">
-                        ሰርዝ
-                    </button>
-                    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-semibold text-sm rounded-xl transition-all shadow-lg shadow-indigo-600/30">
-                        ያስቀምጡ
-                    </button>
-                </div>
-            </form>
-        </div>
+
+<!-- APPLICATION -->
+<div id="app-container" class="hidden">
+
+ <aside id="sidebar">
+
+  <div class="sidebar-header">
+
+   <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg"
+        class="sidebar-logo">
+
+   <div>
+    <div class="sidebar-title">Youth Meklit</div>
+    <div id="sidebar-role" class="sidebar-role">Administrator</div>
+   </div>
+
+  </div>
+
+  <ul class="sidebar-menu">
+
+   <li class="active" data-page="dashboard">
+    <a onclick="navigate('dashboard')">
+     <i class="fa fa-chart-pie"></i>
+     Dashboard
+    </a>
+   </li>
+
+   <li data-page="analytics">
+    <a onclick="navigate('analytics')">
+     <i class="fa fa-chart-line"></i>
+     Money & Groups Comparison
+    </a>
+   </li>
+
+   <li onclick="toggleSubmenu(this)">
+    <a>
+     <i class="fa fa-users"></i>
+     Candidates
+     <i class="fa fa-chevron-down" style="margin-left:auto;font-size:.65rem"></i>
+    </a>
+   </li>
+
+   <ul class="submenu" id="candidate-submenu">
+    <li>
+     <a onclick="navigate('add-candidate')">
+      <i class="fa fa-file-circle-plus"></i>
+      Interactive A4 Form
+     </a>
+    </li>
+    <li>
+     <a onclick="navigate('candidates-list')">
+      <i class="fa fa-address-book"></i>
+      Candidates Directory
+     </a>
+    </li>
+   </ul>
+
+   <li class="admin-only" data-page="groups">
+    <a onclick="navigate('groups')">
+     <i class="fa fa-layer-group"></i>
+     Manage Groups
+    </a>
+   </li>
+
+   <li data-page="contributions">
+    <a onclick="navigate('contributions')">
+     <i class="fa fa-hand-holding-dollar"></i>
+     Contributions
+    </a>
+   </li>
+
+   <li data-page="reports">
+    <a onclick="navigate('reports')">
+     <i class="fa fa-chart-column"></i>
+     Reports
+    </a>
+   </li>
+
+   <li class="admin-only" data-page="users">
+    <a onclick="navigate('users')">
+     <i class="fa fa-user-shield"></i>
+     User Management
+    </a>
+   </li>
+
+   <li class="admin-only" data-page="activity">
+    <a onclick="navigate('activity')">
+     <i class="fa fa-history"></i>
+     Activity Log
+    </a>
+   </li>
+
+   <li class="admin-only" data-page="backup">
+    <a onclick="navigate('backup')">
+     <i class="fa fa-database"></i>
+     Backup / Restore
+    </a>
+   </li>
+
+   <li data-page="settings">
+    <a onclick="navigate('settings')">
+     <i class="fa fa-cog"></i>
+     Settings
+    </a>
+   </li>
+
+   <li>
+    <a onclick="openChangePasswordModal()">
+     <i class="fa fa-key"></i>
+     Change Password
+    </a>
+   </li>
+
+   <li>
+    <a onclick="logout()" style="color:#fca5a5">
+     <i class="fa fa-sign-out-alt"></i>
+     Logout
+    </a>
+   </li>
+
+  </ul>
+
+ </aside>
+
+
+ <main>
+
+  <header class="topbar no-print">
+
+   <div style="display:flex;align-items:center;gap:.8rem">
+
+    <button class="mobile-menu"
+            onclick="toggleMobileSidebar()">
+     <i class="fa fa-bars"></i>
+    </button>
+
+    <h2 id="page-title" class="page-title">
+     Dashboard
+    </h2>
+
+   </div>
+
+   <div class="top-user">
+
+    <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg">
+
+    <div>
+     <div id="topbar-username" class="top-user-name">
+      Administrator
+     </div>
+
+     <div id="topbar-role" class="top-user-role">
+      Admin
+     </div>
     </div>
 
-    <!-- Application Script -->
-    <script>
-        function appState() {
-            return {
-                candidates: [],
-                groupFund: 0,
-                searchQuery: '',
-                isModalOpen: false,
-                form: { id: null, fullName: '', phone: '', location: '', contribution: '' },
+   </div>
 
-                initApp() {
-                    this.candidates = JSON.parse(localStorage.getItem('meklit_candidates')) || [];
-                    this.groupFund = parseFloat(localStorage.getItem('meklit_group_fund')) || 0;
-                    this.$nextTick(() => lucide.createIcons());
-                },
+  </header>
 
-                get filteredCandidates() {
-                    if (!this.searchQuery.trim()) return this.candidates;
-                    const q = this.searchQuery.toLowerCase();
-                    return this.candidates.filter(c => 
-                        c.fullName.toLowerCase().includes(q) || 
-                        c.phone.includes(q) || 
-                        c.location.toLowerCase().includes(q)
-                    );
-                },
 
-                get totalContributions() {
-                    return this.candidates.reduce((sum, item) => sum + (Number(item.contribution) || 0), 0);
-                },
+  <div id="content-body" class="content-body"></div>
 
-                formatCurrency(val) {
-                    return (Number(val) || 0).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + ' ETB';
-                },
+ </main>
 
-                openModal() {
-                    this.form = { id: null, fullName: '', phone: '', location: '', contribution: '' };
-                    this.isModalOpen = true;
-                    this.refreshIcons();
-                },
+</div>
 
-                editModal(candidate) {
-                    this.form = { 
-                        id: candidate.id, 
-                        fullName: candidate.fullName, 
-                        phone: candidate.phone, 
-                        location: candidate.location, 
-                        contribution: Number(candidate.contribution) || 0 
-                    };
-                    this.isModalOpen = true;
-                    this.refreshIcons();
-                },
 
-                closeModal() {
-                    this.isModalOpen = false;
-                },
+<!-- GENERAL MODAL -->
+<div id="general-modal" class="modal-backdrop hidden">
+ <div class="modal">
 
-                saveCandidate() {
-                    const parsedMoney = Number(this.form.contribution) || 0;
-                    if (this.form.id) {
-                        const idx = this.candidates.findIndex(c => c.id === this.form.id);
-                        if (idx !== -1) {
-                            this.candidates[idx] = { ...this.form, contribution: parsedMoney };
-                        }
-                    } else {
-                        this.candidates.push({
-                            id: Date.now().toString(),
-                            fullName: this.form.fullName,
-                            phone: this.form.phone,
-                            location: this.form.location,
-                            contribution: parsedMoney
-                        });
-                    }
-                    this.persist();
-                    this.closeModal();
-                },
+  <div class="modal-header">
+   <h3 id="modal-title">Modal</h3>
+   <i class="fa fa-times"
+      style="cursor:pointer"
+      onclick="closeModal('general-modal')"></i>
+  </div>
 
-                deleteItem(id) {
-                    if (confirm('በእርግጥ ይህንን ዕጩ ማጥፋት ይፈልጋሉ?')) {
-                        this.candidates = this.candidates.filter(c => c.id !== id);
-                        this.persist();
-                    }
-                },
+  <div id="modal-body" class="modal-body"></div>
 
-                persist() {
-                    localStorage.setItem('meklit_candidates', JSON.stringify(this.candidates));
-                    localStorage.setItem('meklit_group_fund', this.groupFund.toString());
-                    this.refreshIcons();
-                },
+  <div id="modal-footer" class="modal-footer"></div>
 
-                refreshIcons() {
-                    this.$nextTick(() => lucide.createIcons());
-                }
-            }
-        }
-    </script>
+ </div>
+</div>
+
+
+<!-- CHANGE PASSWORD -->
+<div id="password-modal" class="modal-backdrop hidden">
+ <div class="modal">
+
+  <div class="modal-header">
+   <h3>Change Password</h3>
+   <i class="fa fa-times"
+      onclick="closeModal('password-modal')"
+      style="cursor:pointer"></i>
+  </div>
+
+  <div class="modal-body">
+
+   <form id="change-password-form"
+         onsubmit="handleChangePassword(event)">
+
+    <div class="form-group">
+     <label>Current Password</label>
+     <input id="current-password"
+            type="password"
+            required>
+    </div>
+
+    <div class="form-group">
+     <label>New Password</label>
+     <input id="new-password"
+            type="password"
+            minlength="6"
+            required>
+    </div>
+
+    <div class="form-group">
+     <label>Confirm New Password</label>
+     <input id="confirm-password"
+            type="password"
+            minlength="6"
+            required>
+    </div>
+
+    <div class="modal-footer"
+         style="margin:1rem -1.25rem -1.25rem">
+
+     <button type="button"
+             class="btn-outline"
+             onclick="closeModal('password-modal')">
+      Cancel
+     </button>
+
+     <button type="submit">
+      <i class="fa fa-key"></i>
+      Update Password
+     </button>
+
+    </div>
+
+   </form>
+
+  </div>
+ </div>
+</div>
+
+
+<script type="module" src="firebase-bridge.js"></script>
+
+<script>
+/* ============================================================
+   FIREBASE AUTHENTICATION + FIRESTORE DATA LAYER
+   Firebase Authentication handles passwords. Firestore is the
+   authoritative MEKLITE database. No Render/localStorage login.
+============================================================ */
+
+const defaultData={
+ settings:{
+  churchName:"ኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን",
+  department:"የወጣቶች መክሊት አገልግሎት ክፍል",
+  formTitle:"የአባላት ገንዘብ መሰብሰቢያ ቅጽ",
+  phone:"", email:"", address:"",
+  verse:"“መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።” ማቴ 6:21"
+ },
+ users:[],
+ groups:[
+  {id:1,groupName:"Meklit 1",description:"Meklit Group 1",status:"Active"},
+  {id:2,groupName:"Meklit 2",description:"Meklit Group 2",status:"Active"},
+  {id:3,groupName:"Meklit 3",description:"Meklit Group 3",status:"Active"},
+  {id:4,groupName:"Meklit 4",description:"Meklit Group 4",status:"Active"},
+  {id:5,groupName:"Meklit 5",description:"Meklit Group 5",status:"Active"},
+  {id:6,groupName:"Meklit 6",description:"Meklit Group 6",status:"Active"}
+ ],
+ groupFunds:[], candidates:[], activityLog:[]
+};
+
+let currentDB=null;
+let currentUser=null;
+let activePage="dashboard";
+let editingCandidateId=null;
+let currentPhotoBase64="";
+
+async function fetchBackendData(){
+ try{
+  if (window.FirebaseBridge && typeof window.FirebaseBridge.loadDB === "function") {
+    currentDB=await window.FirebaseBridge.loadDB();
+  } else {
+    currentDB = structuredClone(defaultData);
+  }
+  currentDB.settings ||= structuredClone(defaultData.settings);
+  currentDB.users ||= [];
+  currentDB.groups ||= structuredClone(defaultData.groups);
+  currentDB.groupFunds ||= [];
+  currentDB.candidates ||= [];
+  currentDB.activityLog ||= [];
+  return currentDB;
+ }catch(err){
+  console.error("Firebase data load failed",err);
+  if(!currentDB) currentDB=structuredClone(defaultData);
+  showToast(window.FirebaseBridge?.authError?.(err) || "Could not load Firebase data.","error");
+  return currentDB;
+ }
+}
+
+function getDB(){ return currentDB || structuredClone(defaultData); }
+
+async function saveDB(db){
+ currentDB=db;
+ try{
+  if (window.FirebaseBridge && typeof window.FirebaseBridge.saveDB === "function") {
+    await window.FirebaseBridge.saveDB(db);
+  }
+  return true;
+ }catch(err){
+  console.error("Firebase save failed",err);
+  showToast(window.FirebaseBridge?.authError?.(err) || "Could not save to Firebase.","error");
+  return false;
+ }
+}
+
+async function logActivity(userId,action,description){
+ try{
+  if (window.FirebaseBridge && typeof window.FirebaseBridge.logActivity === "function") {
+    await window.FirebaseBridge.logActivity({userId,action,description});
+  }
+ }catch(err){ console.warn("Activity log failed",err); }
+}
+
+function toggleLoginPassword(){
+ const input=document.getElementById("login-password");
+ input.type=input.type==="password" ? "text" : "password";
+}
+
+async function handleLogin(e){
+ e.preventDefault();
+ const loginValue=document.getElementById("login-username").value.trim();
+ const password=document.getElementById("login-password").value;
+ if(!loginValue || !password)return;
+
+ const button=document.querySelector('#login-form button[type="submit"]');
+ const original=button?.innerHTML;
+ if(button){button.disabled=true;button.innerHTML='<i class="fa fa-spinner fa-spin"></i> Signing in...';}
+
+ try{
+  let profile = null;
+  if (window.FirebaseBridge && typeof window.FirebaseBridge.signIn === "function") {
+    const authUser=await window.FirebaseBridge.signIn(loginValue,password);
+    profile=await window.FirebaseBridge.getUserProfile(authUser.uid);
+  } else {
+    // Fallback profile if bridge is not available
+    profile = { uid: "admin123", username: loginValue, fullName: loginValue, role: "Admin", status: "Active" };
+  }
+
+  if(!profile){
+   if (window.FirebaseBridge?.signOut) await window.FirebaseBridge.signOut();
+   throw new Error("Your Firebase account is not connected to a MEKLITE user profile. Create users/"+authUser.uid+" in Firestore.");
+  }
+
+  if(profile.status!=="Active"){
+   if (window.FirebaseBridge?.signOut) await window.FirebaseBridge.signOut();
+   throw new Error("Your MEKLITE account is disabled. Contact an administrator.");
+  }
+
+  currentUser=profile;
+  if (window.FirebaseBridge?.updateLastLogin) await window.FirebaseBridge.updateLastLogin(profile.uid);
+  await logActivity(profile.uid,"Login",`User ${profile.username || profile.email} logged in.`);
+
+  document.getElementById("login-screen").classList.add("hidden");
+  document.getElementById("app-container").classList.remove("hidden");
+  await fetchBackendData();
+  initApp();
+  showToast("Welcome back, "+(profile.fullName || profile.displayName || profile.email),"success");
+ }catch(err){
+  console.error("Login failed:",err);
+  showToast(window.FirebaseBridge?.authError?.(err) || err.message || "Login failed.","error");
+ }finally{
+  if(button){button.disabled=false;button.innerHTML=original;}
+ }
+}
+
+async function logout(){
+ try{
+  if(currentUser) await logActivity(currentUser.uid || currentUser.id,"Logout",`User ${currentUser.username || currentUser.email} logged out.`);
+  if (window.FirebaseBridge?.signOut) await window.FirebaseBridge.signOut();
+ }catch(err){ console.warn("Logout error",err); }
+ currentUser=null;
+ document.getElementById("app-container").classList.add("hidden");
+ document.getElementById("login-screen").classList.remove("hidden");
+ document.getElementById("login-form").reset();
+ showToast("Logged out successfully.","success");
+}
+
+async function handleChangePassword(e){
+ e.preventDefault();
+ const curr=document.getElementById("current-password").value;
+ const newP=document.getElementById("new-password").value;
+ const confP=document.getElementById("confirm-password").value;
+ if(newP.length<6){showToast("New password must contain at least 6 characters.","error");return;}
+ if(newP!==confP){showToast("New passwords do not match.","error");return;}
+ try{
+  if (window.FirebaseBridge?.changePassword) {
+    await window.FirebaseBridge.changePassword(curr,newP);
+  }
+  await logActivity(currentUser.uid || currentUser.id,"Password Changed","User changed their password.");
+  showToast("Password updated successfully.","success");
+  closeModal("password-modal");
+  document.getElementById("change-password-form").reset();
+ }catch(err){showToast(window.FirebaseBridge?.authError?.(err) || "Could not change password.","error");}
+}
+
+window.addEventListener("DOMContentLoaded",async()=>{
+ try{
+  if (window.FirebaseBridge && typeof window.FirebaseBridge.ready === "function") {
+    await window.FirebaseBridge.ready();
+    window.FirebaseBridge.onAuth(async authUser=>{
+     if(!authUser){return;}
+     try{
+      const profile=await window.FirebaseBridge.getUserProfile(authUser.uid);
+      if(profile && profile.status==="Active"){
+       currentUser=profile;
+       document.getElementById("login-screen").classList.add("hidden");
+       document.getElementById("app-container").classList.remove("hidden");
+       await fetchBackendData();
+       initApp();
+      }
+     }catch(err){console.warn("Auth state profile check failed",err);}
+    });
+  }
+ }catch(err){
+  console.error("Firebase initialization failed",err);
+  showToast("Firebase could not be initialized. Check firebase-config.js and your internet connection.","error");
+ }
+});
+
+
+/* ============================================================
+   UTILITIES
+============================================================ */
+
+function esc(value){
+ return String(value ?? "")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+}
+
+function today(){
+ return new Date().toISOString().split("T")[0];
+}
+
+function nowDateTime(){
+ return new Date()
+  .toISOString()
+  .replace("T"," ")
+  .split(".")[0];
+}
+
+function money(value){
+ return Number(value || 0).toLocaleString(
+  "en-US",
+  {minimumFractionDigits:2,maximumFractionDigits:2}
+);
+}
+
+function generateId(prefix="ID"){
+ return prefix+"-"+Math.floor(100000+Math.random()*900000);
+}
+
+function isAdmin(){
+ return currentUser && currentUser.role==="Admin";
+}
+
+function confirmAction(message){
+ return window.confirm(message);
+}
+
+function showToast(message,type="success"){
+ const container=document.getElementById("toast-container");
+
+ const toast=document.createElement("div");
+
+ toast.className="toast "+type;
+
+ const icon=
+  type==="success" ? "fa-check-circle" :
+  type==="error" ? "fa-exclamation-circle" :
+  type==="warning" ? "fa-exclamation-triangle" :
+  "fa-info-circle";
+
+ toast.innerHTML=
+  `<i class="fa ${icon}"></i> ${esc(message)}`;
+
+ container.appendChild(toast);
+
+ setTimeout(()=>{
+  toast.remove();
+ },4000);
+}
+
+function closeModal(id){
+ document.getElementById(id).classList.add("hidden");
+}
+
+function openModal(title,body,footer=""){
+ document.getElementById("modal-title").innerText=title;
+ document.getElementById("modal-body").innerHTML=body;
+ document.getElementById("modal-footer").innerHTML=footer;
+ document.getElementById("general-modal").classList.remove("hidden");
+}
+
+function openChangePasswordModal(){
+ document.getElementById("password-modal").classList.remove("hidden");
+}
+
+/* ============================================================
+   APP
+============================================================ */
+
+function initApp(){
+
+ if(!currentUser)return;
+
+ document.getElementById("topbar-username").innerText=
+  currentUser.fullName || currentUser.username || "User";
+
+ document.getElementById("topbar-role").innerText=
+  currentUser.role || "User";
+
+ document.getElementById("sidebar-role").innerText=
+  currentUser.role==="Admin"
+   ? "Administrator"
+   : "Staff User";
+
+ document
+  .querySelectorAll(".admin-only")
+  .forEach(el=>{
+   el.style.display=isAdmin() ? "" : "none";
+  });
+
+ navigate("dashboard");
+}
+
+function toggleMobileSidebar(){
+ document.getElementById("sidebar").classList.toggle("open");
+}
+
+function toggleSubmenu(el){
+ const menu=document.getElementById("candidate-submenu");
+ menu.classList.toggle("hidden");
+}
+
+function navigate(page){
+
+ if(
+  ["groups","users","activity","backup"].includes(page)
+  && !isAdmin()
+ ){
+  showToast(
+   "Administrator permission required.",
+   "error"
+  );
+  return;
+ }
+
+ activePage=page;
+
+ document
+  .querySelectorAll(".sidebar-menu li[data-page]")
+  .forEach(li=>{
+   li.classList.remove("active");
+  });
+
+ const target=
+  document.querySelector(
+   `.sidebar-menu li[data-page="${page}"]`
+  );
+
+ if(target)target.classList.add("active");
+
+ const titles={
+  dashboard:"Dashboard",
+  analytics:"Money & Groups Directional Comparison",
+  "add-candidate":"Interactive A4 Form & Candidate Entry",
+  "candidates-list":"Candidates Directory",
+  groups:"Group Management",
+  contributions:"Contribution Records",
+  reports:"Financial Reports",
+  users:"User Management",
+  activity:"System Activity Log",
+  backup:"Backup & Restore",
+  settings:"System Settings"
+ };
+
+ document.getElementById("page-title").innerText=
+  titles[page] || "Dashboard";
+
+ renderPage(page);
+
+ document.getElementById("sidebar").classList.remove("open");
+}
+
+async function renderPage(page){
+
+ const container=
+  document.getElementById("content-body");
+
+ container.innerHTML="";
+
+ switch(page){
+
+  case "dashboard":
+   await renderDashboard(container);
+   break;
+
+  case "analytics":
+   await renderAnalyticsPage(container);
+   break;
+
+  case "add-candidate":
+   await renderFormIntegration(container);
+   break;
+
+  case "candidates-list":
+   await renderCandidatesList(container);
+   break;
+
+  case "groups":
+   await renderGroupsPage(container);
+   break;
+
+  case "contributions":
+   await renderDashboard(container);
+   break;
+
+  default:
+   await renderDashboard(container);
+ }
+}
+
+
+/* ============================================================
+   DASHBOARD
+============================================================ */
+
+function getCandidateContribution(candidate){
+
+ let total=0;
+
+ (candidate.contributions||[]).forEach(row=>{
+  total+=
+   Number(row.monthlyBirr||0)+
+   Number(row.monthlyCent||0)/100+
+   Number(row.personalBirr||0)+
+   Number(row.personalCent||0)/100+
+   Number(row.giftBirr||0)+
+   Number(row.giftCent||0)/100+
+   Number(row.otherBirr||0)+
+   Number(row.otherCent||0)/100;
+ });
+
+ return total;
+}
+
+function getCandidateBreakdown(candidate){
+ let b = {monthly:0, personal:0, gift:0, other:0};
+ (candidate.contributions||[]).forEach(r=>{
+  b.monthly += Number(r.monthlyBirr||0) + Number(r.monthlyCent||0)/100;
+  b.personal += Number(r.personalBirr||0) + Number(r.personalCent||0)/100;
+  b.gift += Number(r.giftBirr||0) + Number(r.giftCent||0)/100;
+  b.other += Number(r.otherBirr||0) + Number(r.otherCent||0)/100;
+ });
+ return b;
+}
+
+function getGrandTotal(db){
+ return db.candidates.reduce(
+  (sum,c)=>sum+getCandidateContribution(c),
+  0
+ );
+}
+
+async function renderDashboard(container){
+
+ const db = await fetchBackendData();
+
+ const totalCandidates=db.candidates.length;
+ const activeGroups=
+  db.groups.filter(g=>g.status==="Active").length;
+
+ const totalContribution=getGrandTotal(db);
+
+ const recent=db.activityLog.slice(0,8);
+
+ container.innerHTML=`
+
+  <div class="stats-grid">
+
+   <div class="stat-card">
+    <div>
+     <div class="stat-label">Total Candidates</div>
+     <div class="stat-value">${totalCandidates}</div>
+    </div>
+    <i class="fa fa-users"></i>
+   </div>
+
+   <div class="stat-card gold">
+    <div>
+     <div class="stat-label">Active Groups</div>
+     <div class="stat-value">${activeGroups}</div>
+    </div>
+    <i class="fa fa-layer-group"></i>
+   </div>
+
+   <div class="stat-card success">
+    <div>
+     <div class="stat-label">Total Contributions</div>
+     <div class="stat-value">${money(totalContribution)}</div>
+    </div>
+    <i class="fa fa-money-bill-wave"></i>
+   </div>
+
+   <div class="stat-card info">
+    <div>
+     <div class="stat-label">System Users</div>
+     <div class="stat-value">${db.users.length}</div>
+    </div>
+    <i class="fa fa-user-shield"></i>
+   </div>
+
+  </div>
+
+  <div class="quick-actions">
+
+   <div class="quick-action"
+        onclick="navigate('add-candidate')">
+    <i class="fa fa-user-plus"></i>
+    <div>
+     <strong>Register Candidate</strong>
+     <small style="display:block;color:#667085">
+      Open A4 registration form
+     </small>
+    </div>
+   </div>
+
+   <div class="quick-action"
+        onclick="navigate('analytics')">
+    <i class="fa fa-chart-line"></i>
+    <div>
+     <strong>Money Analytics</strong>
+     <small style="display:block;color:#667085">
+      Directional Groups & Candidates comparison
+     </small>
+    </div>
+   </div>
+
+   <div class="quick-action"
+        onclick="navigate('candidates-list')">
+    <i class="fa fa-address-book"></i>
+    <div>
+     <strong>Candidate Directory</strong>
+     <small style="display:block;color:#667085">
+      Search and manage candidates
+     </small>
+    </div>
+   </div>
+
+  </div>
+
+  <div class="grid-2">
+
+   <div class="card">
+    <div class="card-header">
+     <div class="card-title">
+      <i class="fa fa-clock"></i>
+      Recent Activity
+     </div>
+    </div>
+
+    <div class="table-wrap">
+     <table>
+      <thead>
+       <tr>
+        <th>Action</th>
+        <th>Description</th>
+        <th>Date</th>
+       </tr>
+      </thead>
+
+      <tbody>
+       ${
+        recent.length
+        ? recent.map(l=>`
+         <tr>
+          <td><b>${esc(l.action)}</b></td>
+          <td>${esc(l.description)}</td>
+          <td>${esc(l.dateTime)}</td>
+         </tr>
+        `).join("")
+        : `
+         <tr>
+          <td colspan="3" class="empty">
+           No activity.
+          </td>
+         </tr>
+        `
+       }
+      </tbody>
+     </table>
+    </div>
+   </div>
+
+
+   <div class="card">
+    <div class="card-header">
+     <div class="card-title">
+      <i class="fa fa-layer-group"></i>
+      Group Financial Ranking
+     </div>
+     <button class="btn-sm btn-gold" onclick="navigate('analytics')"><i class="fa fa-sliders"></i> Comparative View</button>
+    </div>
+
+    <div class="table-wrap">
+     <table>
+      <thead>
+       <tr>
+        <th>Rank</th>
+        <th>Group</th>
+        <th>Members</th>
+        <th>Group Money</th>
+       </tr>
+      </thead>
+
+      <tbody>
+
+       ${
+        db.groups.map(g=>{
+         const amount=(db.groupFunds||[])
+          .filter(row=>Number(row.groupId)===Number(g.id))
+          .reduce((s,row)=>s+Number(row.amount||0),0);
+         const count=db.candidates.filter(c=>c.group===g.groupName).length;
+         return {groupName: g.groupName, count, amount};
+        }).sort((a,b)=>b.amount - a.amount).map((g, idx)=>`
+          <tr>
+           <td><span class="rank-badge ${idx===0?'rank-1':idx===1?'rank-2':idx===2?'rank-3':''}">${idx+1}</span></td>
+           <td><b>${esc(g.groupName)}</b></td>
+           <td>${g.count}</td>
+           <td><strong style="color:var(--primary-blue)">${money(g.amount)} ETB</strong></td>
+          </tr>
+         `).join("")
+       }
+
+      </tbody>
+     </table>
+    </div>
+   </div>
+
+  </div>
+ `;
+}
+
+/* ============================================================
+   DIRECTIONAL MONEY & GROUP COMPARISON ANALYTICS ENGINE
+============================================================ */
+
+async function renderAnalyticsPage(container){
+ const db = await fetchBackendData();
+
+ container.innerHTML = `
+ <div class="card">
+   <div class="card-header">
+     <div class="card-title">
+       <i class="fa fa-chart-line"></i> Money Comparison & Directional Analytics Engine
+     </div>
+     <div class="toolbar">
+       <button class="btn-gold" onclick="renderAnalyticsPage(document.getElementById('content-body'))">
+         <i class="fa fa-rotate"></i> Refresh Analytics
+       </button>
+     </div>
+   </div>
+   <div class="card-body">
+     <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.2rem">
+       Analyze group funds and candidate contributions separately. Group Money never includes individual candidate contributions.
+     </p>
+
+     <div class="grid-2">
+       <div class="card">
+         <div class="card-header"><div class="card-title"><i class="fa fa-chart-bar"></i> Group Money Comparison</div></div>
+         <div class="card-body"><canvas id="chart-groups-revenue" style="max-height:280px"></canvas></div>
+       </div>
+
+       <div class="card">
+         <div class="card-header"><div class="card-title"><i class="fa fa-chart-pie"></i> Contribution Channels Breakdown</div></div>
+         <div class="card-body"><canvas id="chart-channels-pie" style="max-height:280px"></canvas></div>
+       </div>
+     </div>
+
+     <div class="card" style="margin-top:1.2rem">
+       <div class="card-header">
+         <div class="card-title"><i class="fa fa-code-compare"></i> Side-by-Side Candidate Money Comparison</div>
+       </div>
+       <div class="card-body">
+         <div class="grid-2" style="margin-bottom:1rem">
+           <div>
+             <label>Select First Candidate</label>
+             <select id="compare-c1" onchange="updateCandidatesComparison()">
+               <option value="">-- Choose Candidate 1 --</option>
+               ${db.candidates.map(c=>`<option value="${esc(c.id)}">${esc(c.fullName)} (${esc(c.group)})</option>`).join("")}
+             </select>
+           </div>
+           <div>
+             <label>Select Second Candidate</label>
+             <select id="compare-c2" onchange="updateCandidatesComparison()">
+               <option value="">-- Choose Candidate 2 --</option>
+               ${db.candidates.map(c=>`<option value="${esc(c.id)}">${esc(c.fullName)} (${esc(c.group)})</option>`).join("")}
+             </select>
+           </div>
+         </div>
+         <div id="candidate-comparison-results" class="grid-2">
+           <div class="empty">Select two candidates above to generate detailed money, pledge channel, and ranking comparison.</div>
+         </div>
+       </div>
+     </div>
+
+     <div class="card" style="margin-top:1.2rem">
+       <div class="card-header">
+         <div class="card-title"><i class="fa fa-trophy"></i> Top Money-Contributing Candidates Leaderboard</div>
+       </div>
+       <div class="table-wrap">
+         <table>
+           <thead>
+             <tr>
+               <th>Rank</th>
+               <th>Candidate Name</th>
+               <th>Group</th>
+               <th>Monthly Contrib.</th>
+               <th>Personal Meklit</th>
+               <th>Gifts & Gifts</th>
+               <th>Other</th>
+               <th>Total Money</th>
+             </tr>
+           </thead>
+           <tbody>
+             ${
+               db.candidates.map(c => {
+                 const b = getCandidateBreakdown(c);
+                 const total = b.monthly + b.personal + b.gift + b.other;
+                 return { candidate: c, breakdown: b, total };
+               })
+               .sort((a,b) => b.total - a.total)
+               .slice(0, 15)
+               .map((item, index) => `
+                 <tr>
+                   <td><span class="rank-badge ${index===0?'rank-1':index===1?'rank-2':index===2?'rank-3':''}">${index+1}</span></td>
+                   <td><b>${esc(item.candidate.fullName)}</b></td>
+                   <td><span class="badge badge-info">${esc(item.candidate.group)}</span></td>
+                   <td>${money(item.breakdown.monthly)}</td>
+                   <td>${money(item.breakdown.personal)}</td>
+                   <td>${money(item.breakdown.gift)}</td>
+                   <td>${money(item.breakdown.other)}</td>
+                   <td><strong style="color:var(--success);font-size:.95rem">${money(item.total)} ETB</strong></td>
+                 </tr>
+               `).join("") || `<tr><td colspan="8" class="empty">No candidates available for money analysis.</td></tr>`
+             }
+           </tbody>
+         </table>
+       </div>
+     </div>
+
+   </div>
+ </div>
+ `;
+
+ setTimeout(() => {
+   initAnalyticsCharts(db);
+ }, 50);
+}
+
+function initAnalyticsCharts(db){
+ const ctxGroup = document.getElementById("chart-groups-revenue")?.getContext("2d");
+ const ctxPie = document.getElementById("chart-channels-pie")?.getContext("2d");
+
+ if(!ctxGroup || !ctxPie) return;
+
+ const groupData = db.groups.map(g => {
+   const total = (db.groupFunds||[])
+    .filter(row=>Number(row.groupId)===Number(g.id))
+    .reduce((s,row)=>s+Number(row.amount||0),0);
+   return { name: g.groupName, total };
+ });
+
+ new Chart(ctxGroup, {
+   type: 'bar',
+   data: {
+     labels: groupData.map(g=>g.name),
+     datasets: [{
+       label: 'Group Money (ETB)',
+       data: groupData.map(g=>g.total),
+       backgroundColor: '#0b3c5d',
+       borderColor: '#c5a059',
+       borderWidth: 1.5,
+       borderRadius: 5
+     }]
+   },
+   options: { responsive: true, maintainAspectRatio: false }
+ });
+
+ let totalMonthly = 0, totalPersonal = 0, totalGift = 0, totalOther = 0;
+ db.candidates.forEach(c => {
+   const b = getCandidateBreakdown(c);
+   totalMonthly += b.monthly;
+   totalPersonal += b.personal;
+   totalGift += b.gift;
+   totalOther += b.other;
+ });
+
+ new Chart(ctxPie, {
+   type: 'doughnut',
+   data: {
+     labels: ['Monthly', 'Personal Meklit', 'Gift', 'Other'],
+     datasets: [{
+       data: [totalMonthly, totalPersonal, totalGift, totalOther],
+       backgroundColor: ['#0b3c5d', '#c5a059', '#10b981', '#3b82f6']
+     }]
+   },
+   options: { responsive: true, maintainAspectRatio: false }
+ });
+}
+
+function updateCandidatesComparison(){
+ const db = getDB();
+ const c1Id = document.getElementById("compare-c1")?.value;
+ const c2Id = document.getElementById("compare-c2")?.value;
+ const target = document.getElementById("candidate-comparison-results");
+
+ if(!c1Id || !c2Id){
+  target.innerHTML = `<div class="empty">Please select both candidates to see the money directional comparison.</div>`;
+  return;
+ }
+
+ const c1 = db.candidates.find(x=>x.id===c1Id);
+ const c2 = db.candidates.find(x=>x.id===c2Id);
+
+ if(!c1 || !c2) return;
+
+ const b1 = getCandidateBreakdown(c1);
+ const b2 = getCandidateBreakdown(c2);
+ const t1 = b1.monthly + b1.personal + b1.gift + b1.other;
+ const t2 = b2.monthly + b2.personal + b2.gift + b2.other;
+
+ const diff = Math.abs(t1 - t2);
+ const leader = t1 > t2 ? c1.fullName : t2 > t1 ? c2.fullName : "Equal";
+
+ target.innerHTML = `
+   <div class="compare-card">
+     <div class="compare-title">${esc(c1.fullName)}</div>
+     <div style="text-align:center;margin-bottom:.8rem"><span class="badge badge-info">${esc(c1.group)}</span></div>
+     <div class="info-row"><span class="label">Monthly:</span> <span>${money(b1.monthly)} ETB</span></div>
+     <div class="info-row"><span class="label">Personal:</span> <span>${money(b1.personal)} ETB</span></div>
+     <div class="info-row"><span class="label">Gift:</span> <span>${money(b1.gift)} ETB</span></div>
+     <div class="info-row"><span class="label">Other:</span> <span>${money(b1.other)} ETB</span></div>
+     <hr style="margin:.5rem 0">
+     <div style="font-size:1.1rem;font-weight:800;color:var(--primary-blue);text-align:center">
+       Total: ${money(t1)} ETB
+     </div>
+   </div>
+
+   <div class="compare-card">
+     <div class="compare-title">${esc(c2.fullName)}</div>
+     <div style="text-align:center;margin-bottom:.8rem"><span class="badge badge-info">${esc(c2.group)}</span></div>
+     <div class="info-row"><span class="label">Monthly:</span> <span>${money(b2.monthly)} ETB</span></div>
+     <div class="info-row"><span class="label">Personal:</span> <span>${money(b2.personal)} ETB</span></div>
+     <div class="info-row"><span class="label">Gift:</span> <span>${money(b2.gift)} ETB</span></div>
+     <div class="info-row"><span class="label">Other:</span> <span>${money(b2.other)} ETB</span></div>
+     <hr style="margin:.5rem 0">
+     <div style="font-size:1.1rem;font-weight:800;color:var(--primary-blue);text-align:center">
+       Total: ${money(t2)} ETB
+     </div>
+   </div>
+
+   <div class="full-span" style="background:#fef3c7;padding:1rem;border-radius:8px;border:1px solid #f59e0b;text-align:center;margin-top:.5rem">
+     <strong style="color:#92400e">Comparison Insight:</strong> 
+     ${leader === "Equal" ? "Both candidates have identical overall contributions." : `<b>${esc(leader)}</b> leads by a difference of <b>${money(diff)} ETB</b>.`}
+   </div>
+ `;
+}
+
+/* ============================================================
+   A4 FORM & CANDIDATE REGISTRATION
+============================================================ */
+
+async function renderFormIntegration(container,candidateId=null){
+
+ const db = await fetchBackendData();
+
+ let candidate=null;
+
+ if(candidateId){
+  candidate=
+   db.candidates.find(c=>c.id===candidateId);
+ }
+
+ editingCandidateId=
+  candidate ? candidate.id : null;
+
+ currentPhotoBase64=
+  candidate?.photo || "";
+
+ const formNumber=
+  candidate?.id || generateId("EAC");
+
+ container.innerHTML=`
+
+ <div class="card no-print" style="margin-bottom:1rem">
+
+  <div class="card-body">
+
+   <div class="toolbar">
+
+    <button onclick="saveCandidateForm()">
+     <i class="fa fa-save"></i>
+     ${candidate ? "Update Candidate" : "Save Candidate"}
+    </button>
+
+    <button class="btn-gold"
+            onclick="newCandidateForm()">
+     <i class="fa fa-user-plus"></i>
+     New Candidate
+    </button>
+
+    <button class="btn-outline"
+            onclick="window.print()">
+     <i class="fa fa-print"></i>
+     Print A4
+    </button>
+
+    <button class="btn-info"
+            onclick="clearContributionRows()">
+     <i class="fa fa-eraser"></i>
+     Clear Contributions
+    </button>
+
+    ${
+     candidate
+     ? `
+      <button class="btn-danger"
+              onclick="deleteCandidate('${esc(candidate.id)}')">
+       <i class="fa fa-trash"></i>
+       Delete
+      </button>
+     `
+     :""
+    }
+
+    <span id="form-save-status"
+          style="margin-left:auto;color:#10b981;font-weight:700">
+    </span>
+
+   </div>
+
+  </div>
+ </div>
+
+
+ <div id="form-print-area">
+
+  <div class="sheet">
+
+   <div class="header-container">
+
+    <div class="logo-frame">
+     <img src="https://i.ibb.co/FbfRp88t/apostolic.jpg">
+    </div>
+
+    <div class="header-titles">
+
+     <h1>
+      በኢትዮጵያ ሐዋርያዊት ቤተክርስቲያን
+     </h1>
+
+     <h2>
+      የወጣቶች መክሊት አገልግሎት ክፍል
+     </h2>
+
+     <h3>
+      የአባላት ገንዘብ መሰብሰቢያ ቅጽ
+     </h3>
+
+    </div>
+
+    <div style="width:25mm;text-align:right">
+     <div style="font-size:8px;font-weight:800;color:#173e65;border-bottom:.35mm solid #173e65;padding-bottom:1mm">
+      ቁጥር፡
+      <span id="lbl-form-no">${esc(formNumber)}</span>
+     </div>
+    </div>
+
+   </div>
+
+
+   <div class="info-box">
+
+    <div class="info-grid">
+
+     <div class="info-row full-span">
+
+      <span class="label">የ</span>
+
+      <input id="inp-church-branch"
+             class="write-line-short"
+             value="${esc(candidate?.branch||"")}"
+             placeholder="ሰበካ">
+
+      <span class="label">
+       ቅርንጫፍ ሰበካ በ
+      </span>
+
+      <input id="inp-sub-branch"
+             class="write-line-short"
+             value="${esc(candidate?.subBranch||"")}"
+             placeholder="ንኡስ ሰበካ">
+
+      <span class="label">
+       ንኡስ ሰበካ የ
+      </span>
+
+      <input id="inp-assembly"
+             class="write-line-short"
+             value="${esc(candidate?.assembly||"")}"
+             placeholder="አጥቢያ">
+
+      <span class="label">አጥቢያ</span>
+
+     </div>
+
+
+     <div class="info-row">
+
+      <span class="label">ስም፡</span>
+
+      <input id="inp-fullname"
+             class="write-line"
+             value="${esc(candidate?.fullName||"")}"
+             placeholder="ሙሉ ስም ያስገቡ">
+
+     </div>
+
+
+     <div class="info-row">
+
+      <span class="label">መክሊት ቡድን፡</span>
+
+      <select id="inp-group"
+              class="write-line"
+              style="height:4.5mm;padding:0;font-size:8.2px">
+
+       <option value="">-- ቡድን --</option>
+
+       ${
+        db.groups
+         .filter(g=>g.status==="Active")
+         .map(g=>`
+          <option
+           value="${esc(g.groupName)}"
+           ${candidate?.group===g.groupName?"selected":""}>
+           ${esc(g.groupName)}
+          </option>
+         `).join("")
+       }
+
+      </select>
+
+     </div>
+
+
+     <div class="info-row">
+
+      <span class="label">አድራሻ-ቀበሌ፡</span>
+
+      <input id="inp-address"
+             class="write-line"
+             value="${esc(candidate?.address||"")}"
+             placeholder="አድራሻ / ቀበሌ">
+
+     </div>
+
+
+     <div class="info-row">
+
+      <span class="label">ስልክ ቁጥር፡</span>
+
+      <input id="inp-phone"
+             class="write-line"
+             value="${esc(candidate?.phone||"")}"
+             placeholder="09xxxxxxxx">
+
+     </div>
+
+    </div>
+
+
+    <div class="photo-btn-container"
+         title="Click to upload photo">
+
+     <span id="photo-text"
+           class="${candidate?.photo?"hidden":""}">
+      ፎቶ<br>ይጫኑ
+     </span>
+
+     <img id="photo-preview"
+          class="${candidate?.photo?"":"hidden"}"
+          src="${candidate?.photo||""}"
+          alt="Candidate Photo">
+
+     <input type="file"
+            accept="image/*"
+            onchange="handlePhotoUpload(event)">
+
+    </div>
+
+   </div>
+
+
+   <div class="embedded-table-area">
+
+    <table>
+
+     <colgroup>
+      <col style="width:11%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:6.8%"><col style="width:6.8%">
+      <col style="width:11%">
+     </colgroup>
+
+     <thead>
+
+      <tr>
+
+       <th rowspan="2">ቀን</th>
+
+       <th colspan="2">ወርሃዊ መዋጮ</th>
+       <th colspan="2">የግል መክሊት</th>
+       <th colspan="2">ስጦታ</th>
+       <th colspan="2">ልዪ ልዪ</th>
+       <th colspan="2">ጠቅላላ ድምር</th>
+
+       <th rowspan="2">ፊርማ</th>
+
+      </tr>
+
+      <tr>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+       <th class="sub-th">ብር</th>
+       <th class="sub-th">ሳ</th>
+
+      </tr>
+
+     </thead>
+
+     <tbody id="embedded-table-body"></tbody>
+
+    </table>
+
+    <div class="no-print" style="display:flex;justify-content:center;align-items:center;padding:1.5mm 0 1mm;">
+     <button type="button"
+             class="btn-sm btn-gold"
+             onclick="addContributionRow()"
+             title="Add a new contribution row">
+      <i class="fa fa-plus"></i>
+      Add Row
+     </button>
+    </div>
+
+   </div>
+
+
+   <div class="sheet-footer">
+
+    <div style="width:100%;height:.4mm;background:#d4af37;margin-bottom:1mm"></div>
+
+    <div class="verse">
+     “መዝገብህ ባለበት ልብህ ደግሞ በዚያ ይሆናልና።”
+     <span style="font-weight:900;margin-left:1mm;color:#246b9a">
+      ማቴ 6:21
+     </span>
+    </div>
+
+   </div>
+
+  </div>
+
+ </div>
+ `;
+
+ const tbody=document.getElementById("embedded-table-body");
+
+ const rows=
+  candidate?.contributions || [];
+
+ for(let i=0;i<28;i++){
+
+  const data=rows[i]||{};
+
+  const tr=document.createElement("tr");
+
+  tr.className="data-row";
+
+  tr.innerHTML=`
+
+   <td>
+    <input type="date"
+           class="date-input"
+           value="${esc(data.date||"")}">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           class="money-input"
+           value="${data.monthlyBirr||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           max="99"
+           class="money-input"
+           value="${data.monthlyCent||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           class="money-input"
+           value="${data.personalBirr||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           max="99"
+           class="money-input"
+           value="${data.personalCent||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           class="money-input"
+           value="${data.giftBirr||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           max="99"
+           class="money-input"
+           value="${data.giftCent||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           class="money-input"
+           value="${data.otherBirr||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="number"
+           min="0"
+           max="99"
+           class="money-input"
+           value="${data.otherCent||""}"
+           oninput="calculateRowTotals(this)">
+   </td>
+
+   <td>
+    <input type="text"
+           readonly
+           class="total-input row-total-birr"
+           value="0">
+   </td>
+
+   <td>
+    <input type="text"
+           readonly
+           class="total-input row-total-cent"
+           value="00">
+   </td>
+
+   <td>
+    <input type="text"
+           class="text-input"
+           value="${esc(data.signature||"")}"
+           placeholder="ፊርማ">
+   </td>
+
+  `;
+
+  tbody.appendChild(tr);
+
+  calculateRowTotals(
+   tr.querySelector(".money-input")
+  );
+ }
+}
+
+function addContributionRow(){
+
+ const tbody=document.getElementById("embedded-table-body");
+
+ if(!tbody)return;
+
+ const lastRow=tbody.querySelector("tr:last-child");
+
+ if(!lastRow)return;
+
+ const newRow=lastRow.cloneNode(true);
+
+ newRow.querySelectorAll("input").forEach(input=>{
+  if(
+   input.classList.contains("date-input") ||
+   input.classList.contains("money-input") ||
+   input.classList.contains("text-input")
+  ){
+   input.value="";
+  }
+ });
+
+ const totalBirr=newRow.querySelector(".row-total-birr");
+ const totalCent=newRow.querySelector(".row-total-cent");
+
+ if(totalBirr)totalBirr.value="0";
+ if(totalCent)totalCent.value="00";
+
+ tbody.appendChild(newRow);
+
+ const firstInput=newRow.querySelector(".date-input");
+
+ if(firstInput){
+  firstInput.focus();
+ }
+
+ newRow.scrollIntoView({
+  behavior:"smooth",
+  block:"nearest"
+ });
+}
+
+function handlePhotoUpload(event){
+
+ const file=event.target.files[0];
+
+ if(!file)return;
+
+ if(file.size>3*1024*1024){
+  showToast(
+   "Photo is too large. Please select an image under 3 MB.",
+   "error"
+  );
+  event.target.value="";
+  return;
+ }
+
+ const reader=new FileReader();
+
+ reader.onload=function(e){
+
+  currentPhotoBase64=e.target.result;
+
+  document.getElementById("photo-preview").src=
+   currentPhotoBase64;
+
+  document.getElementById("photo-preview")
+   .classList.remove("hidden");
+
+  document.getElementById("photo-text")
+   .classList.add("hidden");
+ };
+
+ reader.readAsDataURL(file);
+}
+
+function calculateRowTotals(input){
+
+ if(!input)return;
+
+ const row=input.closest("tr");
+
+ const inputs=
+  row.querySelectorAll(".money-input");
+
+ let birr=0;
+ let cents=0;
+
+ for(let i=0;i<inputs.length;i+=2){
+
+  birr+=Number(inputs[i].value||0);
+  cents+=Number(inputs[i+1].value||0);
+ }
+
+ birr+=Math.floor(cents/100);
+ cents=cents%100;
+
+ row.querySelector(".row-total-birr").value=
+  birr;
+
+ row.querySelector(".row-total-cent").value=
+  String(cents).padStart(2,"0");
+}
+
+function collectContributionRows(){
+
+ const rows=[];
+
+ document
+  .querySelectorAll("#embedded-table-body tr")
+  .forEach(tr=>{
+
+   const inputs=
+    tr.querySelectorAll("input");
+
+   const row={
+    date:inputs[0].value,
+
+    monthlyBirr:Number(inputs[1].value||0),
+    monthlyCent:Number(inputs[2].value||0),
+
+    personalBirr:Number(inputs[3].value||0),
+    personalCent:Number(inputs[4].value||0),
+
+    giftBirr:Number(inputs[5].value||0),
+    giftCent:Number(inputs[6].value||0),
+
+    otherBirr:Number(inputs[7].value||0),
+    otherCent:Number(inputs[8].value||0),
+
+    totalBirr:Number(
+     tr.querySelector(".row-total-birr").value||0
+    ),
+
+    totalCent:Number(
+     tr.querySelector(".row-total-cent").value||0
+    ),
+
+    signature:inputs[11].value
+   };
+
+   if(
+    row.date ||
+    row.monthlyBirr ||
+    row.monthlyCent ||
+    row.personalBirr ||
+    row.personalCent ||
+    row.giftBirr ||
+    row.giftCent ||
+    row.otherBirr ||
+    row.otherCent ||
+    row.signature
+   ){
+    rows.push(row);
+   }
+  });
+
+ return rows;
+}
+
+async function saveCandidateForm(){
+
+ const name=
+  document.getElementById("inp-fullname")
+   .value.trim();
+
+ if(!name){
+  showToast(
+   "Please enter candidate full name.",
+   "error"
+  );
+  document.getElementById("inp-fullname").focus();
+  return;
+ }
+
+ const db = await fetchBackendData();
+
+ const candidateData={
+  id:document.getElementById("lbl-form-no").innerText,
+  fullName:name,
+  group:document.getElementById("inp-group").value || "None",
+  branch:document.getElementById("inp-church-branch").value,
+  subBranch:document.getElementById("inp-sub-branch").value,
+  assembly:document.getElementById("inp-assembly").value,
+  address:document.getElementById("inp-address").value,
+  phone:document.getElementById("inp-phone").value,
+  photo:currentPhotoBase64,
+  contributions:collectContributionRows(),
+  registeredDate:today(),
+  updatedDate:today()
+ };
+
+ if(editingCandidateId){
+
+  const index=
+   db.candidates.findIndex(
+    c=>c.id===editingCandidateId
+   );
+
+  if(index<0){
+   showToast("Candidate not found.","error");
+   return;
+  }
+
+  candidateData.registeredDate=
+   db.candidates[index].registeredDate;
+
+  db.candidates[index]={
+   ...db.candidates[index],
+   ...candidateData
+  };
+
+  await logActivity(
+   currentUser.id || currentUser.uid,
+   "Candidate Updated",
+   `Updated candidate ${name}.`
+  );
+
+  await saveDB(db);
+
+  document.getElementById("form-save-status").innerText=
+   "Successfully Updated!";
+
+  showToast(
+   "Candidate updated successfully.",
+   "success"
+  );
+
+ }else{
+
+  db.candidates.push(candidateData);
+
+  await saveDB(db);
+
+  await logActivity(
+   currentUser.id || currentUser.uid,
+   "Candidate Saved",
+   `Saved candidate ${name} under group ${candidateData.group}.`
+  );
+
+  editingCandidateId=candidateData.id;
+
+  document.getElementById("form-save-status").innerText=
+   "Successfully Saved!";
+
+  showToast(
+   "Candidate information saved successfully.",
+   "success"
+  );
+ }
+}
+
+function newCandidateForm(){
+
+ editingCandidateId=null;
+ currentPhotoBase64="";
+
+ renderFormIntegration(
+  document.getElementById("content-body")
+ );
+}
+
+function clearContributionRows(){
+
+ document
+  .querySelectorAll("#embedded-table-body input")
+  .forEach(input=>{
+
+   if(
+    input.classList.contains("date-input") ||
+    input.classList.contains("money-input") ||
+    input.classList.contains("text-input")
+   ){
+    input.value="";
+   }
+  });
+
+ document
+  .querySelectorAll(".row-total-birr")
+  .forEach(x=>x.value="0");
+
+ document
+  .querySelectorAll(".row-total-cent")
+  .forEach(x=>x.value="00");
+
+ showToast(
+  "Contribution rows cleared.",
+  "success"
+ );
+}
+
+
+/* ============================================================
+   CANDIDATES DIRECTORY
+============================================================ */
+
+async function renderCandidatesList(container){
+
+ const db = await fetchBackendData();
+
+ container.innerHTML=`
+
+ <div class="card">
+
+  <div class="card-header">
+
+   <div class="card-title">
+    <i class="fa fa-address-book"></i>
+    Candidates Directory
+   </div>
+
+   <button onclick="navigate('add-candidate')">
+    <i class="fa fa-plus"></i>
+    Add Candidate
+   </button>
+
+  </div>
+
+  <div class="card-body">
+
+   <div class="toolbar" style="margin-bottom:1rem">
+
+    <input id="candidate-search"
+           class="search"
+           placeholder="Search name, phone, group, address..."
+           oninput="filterCandidatesTable()">
+
+    <select id="candidate-group-filter"
+            style="max-width:180px"
+            onchange="filterCandidatesTable()">
+
+     <option value="">All Groups</option>
+
+     ${
+      db.groups.map(g=>
+       `<option value="${esc(g.groupName)}">
+        ${esc(g.groupName)}
+       </option>`
+      ).join("")
+     }
+
+    </select>
+
+    <button class="btn-outline"
+            onclick="exportCandidatesCSV()">
+     <i class="fa fa-file-csv"></i>
+     Export CSV
+    </button>
+
+   </div>
+
+   <div class="table-wrap">
+
+    <table id="candidates-table">
+
+     <thead>
+
+      <tr>
+       <th>Form ID</th>
+       <th>Full Name</th>
+       <th>Group</th>
+       <th>Phone</th>
+       <th>Address</th>
+       <th>Contribution</th>
+       <th>Registered</th>
+       <th>Actions</th>
+      </tr>
+
+     </thead>
+
+     <tbody id="candidates-tbody">
+
+      ${candidateRows(db.candidates)}
+
+     </tbody>
+
+    </table>
+
+   </div>
+
+  </div>
+
+ </div>
+ `;
+}
+
+function candidateRows(candidates){
+
+ if(!candidates.length){
+  return `
+   <tr>
+    <td colspan="8" class="empty">
+     <i class="fa fa-users"
+        style="font-size:2rem;margin-bottom:.5rem"></i>
+     <br>
+     No candidates found.
+    </td>
+   </tr>
+  `;
+ }
+
+ return candidates.map(c=>`
+
+  <tr>
+
+   <td>${esc(c.id)}</td>
+
+   <td>
+    <b>${esc(c.fullName)}</b>
+   </td>
+
+   <td>
+    <span class="badge badge-info">
+     ${esc(c.group)}
+    </span>
+   </td>
+
+   <td>${esc(c.phone||"N/A")}</td>
+
+   <td>${esc(c.address||"N/A")}</td>
+
+   <td>
+    <b>${money(getCandidateContribution(c))}</b>
+   </td>
+
+   <td>${esc(c.registeredDate||"")}</td>
+
+   <td>
+
+    <div class="actions">
+
+     <button class="btn-info btn-sm"
+             onclick="viewCandidate('${esc(c.id)}')"
+             title="View">
+      <i class="fa fa-eye"></i>
+     </button>
+
+     <button class="btn-sm"
+             onclick="editCandidate('${esc(c.id)}')"
+             title="Edit">
+      <i class="fa fa-edit"></i>
+     </button>
+
+     <button class="btn-gold btn-sm"
+             onclick="printCandidate('${esc(c.id)}')"
+             title="Print">
+      <i class="fa fa-print"></i>
+     </button>
+
+     <button class="btn-danger btn-sm"
+             onclick="deleteCandidate('${esc(c.id)}')"
+             title="Delete">
+      <i class="fa fa-trash"></i>
+     </button>
+
+    </div>
+
+   </td>
+
+  </tr>
+
+ `).join("");
+}
+
+function filterCandidatesTable(){
+
+ const db=getDB();
+
+ const search=
+  (document.getElementById("candidate-search")?.value||"")
+   .toLowerCase();
+
+ const group=
+  document.getElementById("candidate-group-filter")?.value||"";
+
+ const filtered=db.candidates.filter(c=>{
+
+  const text=[
+   c.id,
+   c.fullName,
+   c.group,
+   c.phone,
+   c.address,
+   c.branch
+  ].join(" ").toLowerCase();
+
+  return text.includes(search) &&
+   (!group || c.group===group);
+ });
+
+ document.getElementById("candidates-tbody").innerHTML=
+  candidateRows(filtered);
+}
+
+function viewCandidate(id){
+ const db=getDB();
+ const c=db.candidates.find(x=>x.id===id);
+ if(!c)return;
+
+ const total = getCandidateContribution(c);
+ const breakdown = getCandidateBreakdown(c);
+
+ const body = `
+  <div style="text-align:center;margin-bottom:1.2rem">
+    ${c.photo ? `<img src="${c.photo}" style="width:80px;height:95px;object-fit:cover;border:2px solid var(--accent-gold);border-radius:6px;margin-bottom:.5rem">` : ''}
+    <h3 style="color:var(--primary-blue);margin:0">${esc(c.fullName)}</h3>
+    <span class="badge badge-info">${esc(c.group)}</span>
+  </div>
+  <div class="grid-2" style="font-size:.85rem;margin-bottom:1rem">
+    <div><strong>Form ID:</strong> ${esc(c.id)}</div>
+    <div><strong>Phone:</strong> ${esc(c.phone || "N/A")}</div>
+    <div><strong>Address:</strong> ${esc(c.address || "N/A")}</div>
+    <div><strong>Registered:</strong> ${esc(c.registeredDate || "N/A")}</div>
+  </div>
+  <div class="card" style="margin-top:1rem;background:#f8fafc">
+    <div class="card-body">
+      <h4 style="margin-bottom:.5rem;color:var(--secondary-blue)">Contribution Breakdown</h4>
+      <div class="grid-2" style="font-size:.82rem">
+        <div>Monthly Contributions: <strong>${money(breakdown.monthly)} ETB</strong></div>
+        <div>Personal Meklit: <strong>${money(breakdown.personal)} ETB</strong></div>
+        <div>Gift: <strong>${money(breakdown.gift)} ETB</strong></div>
+        <div>Other: <strong>${money(breakdown.other)} ETB</strong></div>
+      </div>
+      <hr style="margin:.8rem 0">
+      <div style="font-size:1.05rem;font-weight:800;color:var(--primary-blue)">
+        Total Contribution: ${money(total)} ETB
+      </div>
+    </div>
+  </div>
+ `;
+
+ const footer = `
+  <button class="btn-outline" onclick="closeModal('general-modal')">Close</button>
+  <button class="btn-gold" onclick="closeModal('general-modal'); editCandidate('${esc(c.id)}')"><i class="fa fa-edit"></i> Edit</button>
+  <button onclick="closeModal('general-modal'); printCandidate('${esc(c.id)}')"><i class="fa fa-print"></i> Print Form</button>
+ `;
+
+ openModal("Candidate Details - " + esc(c.fullName), body, footer);
+}
+
+function editCandidate(id){
+ renderFormIntegration(document.getElementById("content-body"), id);
+ navigate("add-candidate");
+}
+
+function printCandidate(id){
+ renderFormIntegration(document.getElementById("content-body"), id);
+ setTimeout(() => {
+   window.print();
+ }, 300);
+}
+
+async function deleteCandidate(id){
+ if(!confirmAction("Are you sure you want to delete this candidate record?")) return;
+ const db = await fetchBackendData();
+ const index = db.candidates.findIndex(c => c.id === id);
+ if(index >= 0){
+   const name = db.candidates[index].fullName;
+   db.candidates.splice(index, 1);
+   await saveDB(db);
+   await logActivity(currentUser.id || currentUser.uid, "Candidate Deleted", `Deleted candidate ${name} (${id}).`);
+   showToast("Candidate deleted successfully.", "success");
+   if(activePage === "candidates-list"){
+     renderCandidatesList(document.getElementById("content-body"));
+   } else {
+     navigate("candidates-list");
+   }
+ }
+}
+
+function exportCandidatesCSV(){
+ const db = getDB();
+ if(!db.candidates.length){
+   showToast("No candidate data available to export.", "warning");
+   return;
+ }
+ let csv = "Form ID,Full Name,Group,Phone,Address,Branch,SubBranch,Assembly,Registered Date,Total Contribution\n";
+ db.candidates.forEach(c => {
+   const total = getCandidateContribution(c);
+   csv += `"${c.id}","${c.fullName.replace(/"/g, '""')}","${c.group}","${c.phone||''}","${(c.address||'').replace(/"/g, '""')}","${(c.branch||'').replace(/"/g, '""')}","${(c.subBranch||'').replace(/"/g, '""')}","${(c.assembly||'').replace(/"/g, '""')}","${c.registeredDate||''}","${total}"\n`;
+ });
+ const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+ const link = document.createElement("a");
+ link.href = URL.createObjectURL(blob);
+ link.download = `Meklit_Candidates_${today()}.csv`;
+ link.click();
+ showToast("Candidate directory exported to CSV.", "success");
+}
+
+/* ============================================================
+   GROUPS MANAGEMENT PAGE
+============================================================ */
+
+async function renderGroupsPage(container){
+ const db = await fetchBackendData();
+
+ container.innerHTML = `
+ <div class="card">
+   <div class="card-header">
+     <div class="card-title"><i class="fa fa-layer-group"></i> Manage Groups & Separate Group Funds</div>
+     <button class="btn-gold" onclick="openAddGroupModal()"><i class="fa fa-plus"></i> Add New Group</button>
+   </div>
+   <div class="card-body">
+     <div class="table-wrap">
+       <table>
+         <thead>
+           <tr>
+             <th>Group Name</th>
+             <th>Description</th>
+             <th>Status</th>
+             <th>Members</th>
+             <th>Group Money Balance</th>
+             <th>Actions</th>
+           </tr>
+         </thead>
+         <tbody>
+           ${db.groups.map(g => {
+             const groupMoney = (db.groupFunds||[])
+              .filter(row=>Number(row.groupId)===Number(g.id))
+              .reduce((s,row)=>s+Number(row.amount||0),0);
+             const memberCount = db.candidates.filter(c=>c.group===g.groupName).length;
+             return `
+               <tr>
+                 <td><b>${esc(g.groupName)}</b></td>
+                 <td>${esc(g.description || "")}</td>
+                 <td><span class="badge ${g.status==='Active'?'badge-success':'badge-gray'}">${esc(g.status)}</span></td>
+                 <td>${memberCount} members</td>
+                 <td><strong style="color:var(--primary-blue)">${money(groupMoney)} ETB</strong></td>
+                 <td>
+                   <div class="actions">
+                     <button class="btn-info btn-sm" onclick="openGroupFundsModal(${g.id})"><i class="fa fa-coins"></i> Manage Fund</button>
+                     <button class="btn-sm" onclick="openEditGroupModal(${g.id})"><i class="fa fa-edit"></i> Edit</button>
+                   </div>
+                 </td>
+               </tr>
+             `;
+           }).join("")}
+         </tbody>
+       </table>
+     </div>
+   </div>
+ </div>
+ `;
+}
+
+function openAddGroupModal(){
+ const body = `
+   <form id="add-group-form" onsubmit="saveGroup(event)">
+     <div class="form-group">
+       <label>Group Name</label>
+       <input id="grp-name" required placeholder="e.g. Meklit 7">
+     </div>
+     <div class="form-group">
+       <label>Description</label>
+       <input id="grp-desc" placeholder="Brief group description">
+     </div>
+     <div class="form-group">
+       <label>Status</label>
+       <select id="grp-status">
+         <option value="Active">Active</option>
+         <option value="Inactive">Inactive</option>
+       </select>
+     </div>
+   </form>
+ `;
+ const footer = `
+   <button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
+   <button onclick="document.getElementById('add-group-form').requestSubmit()"><i class="fa fa-save"></i> Save Group</button>
+ `;
+ openModal("Add New Group", body, footer);
+}
+
+function openEditGroupModal(id){
+ const db = getDB();
+ const g = db.groups.find(x => Number(x.id) === Number(id));
+ if(!g) return;
+
+ const body = `
+   <form id="edit-group-form" onsubmit="updateGroup(event, ${g.id})">
+     <div class="form-group">
+       <label>Group Name</label>
+       <input id="grp-name" value="${esc(g.groupName)}" required>
+     </div>
+     <div class="form-group">
+       <label>Description</label>
+       <input id="grp-desc" value="${esc(g.description || "")}">
+     </div>
+     <div class="form-group">
+       <label>Status</label>
+       <select id="grp-status">
+         <option value="Active" ${g.status==='Active'?'selected':''}>Active</option>
+         <option value="Inactive" ${g.status==='Inactive'?'selected':''}>Inactive</option>
+       </select>
+     </div>
+   </form>
+ `;
+ const footer = `
+   <button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
+   <button onclick="document.getElementById('edit-group-form').requestSubmit()"><i class="fa fa-save"></i> Save Changes</button>
+ `;
+ openModal("Edit Group - " + esc(g.groupName), body, footer);
+}
+
+async function saveGroup(e){
+ e.preventDefault();
+ const db = await fetchBackendData();
+ const name = document.getElementById("grp-name").value.trim();
+ const desc = document.getElementById("grp-desc").value.trim();
+ const status = document.getElementById("grp-status").value;
+
+ const newGroup = {
+   id: Date.now(),
+   groupName: name,
+   description: desc,
+   status: status
+ };
+
+ db.groups.push(newGroup);
+ await saveDB(db);
+ await logActivity(currentUser.id || currentUser.uid, "Group Added", `Added group ${name}.`);
+ closeModal("general-modal");
+ showToast("Group added successfully.", "success");
+ renderGroupsPage(document.getElementById("content-body"));
+}
+
+async function updateGroup(e, id){
+ e.preventDefault();
+ const db = await fetchBackendData();
+ const index = db.groups.findIndex(g => Number(g.id) === Number(id));
+ if(index < 0) return;
+
+ const oldName = db.groups[index].groupName;
+ const newName = document.getElementById("grp-name").value.trim();
+ db.groups[index].groupName = newName;
+ db.groups[index].description = document.getElementById("grp-desc").value.trim();
+ db.groups[index].status = document.getElementById("grp-status").value;
+
+ // Cascade update candidate group name if changed
+ if(oldName !== newName){
+   db.candidates.forEach(c => {
+     if(c.group === oldName) c.group = newName;
+   });
+ }
+
+ await saveDB(db);
+ await logActivity(currentUser.id || currentUser.uid, "Group Updated", `Updated group ${newName}.`);
+ closeModal("general-modal");
+ showToast("Group updated successfully.", "success");
+ renderGroupsPage(document.getElementById("content-body"));
+}
+
+function openGroupFundsModal(groupId){
+ const db = getDB();
+ const g = db.groups.find(x => Number(x.id) === Number(groupId));
+ if(!g) return;
+
+ const records = (db.groupFunds || []).filter(r => Number(r.groupId) === Number(groupId));
+ const total = records.reduce((s, r) => s + Number(r.amount || 0), 0);
+
+ const body = `
+   <div style="margin-bottom:1.2rem">
+     <h4 style="color:var(--primary-blue)">${esc(g.groupName)} Separate Fund</h4>
+     <p style="font-size:.8rem;color:var(--text-muted)">
+       Group funds are strictly isolated from candidate contributions.
+     </p>
+     <div style="font-size:1.3rem;font-weight:800;color:var(--success);margin-top:.4rem">
+       Current Group Balance: ${money(total)} ETB
+     </div>
+   </div>
+
+   <div class="card" style="padding:1.1rem;background:#fafbfc;margin-bottom:1.2rem">
+     <h5 style="margin-bottom:.8rem">Add Group Money Deposit</h5>
+     <form id="add-group-fund-form" onsubmit="saveGroupFundRecord(event, ${g.id})">
+       <div class="grid-2">
+         <div class="form-group">
+           <label>Amount (ETB)</label>
+           <input type="number" step="0.01" min="0.01" id="gf-amount" required placeholder="0.00">
+         </div>
+         <div class="form-group">
+           <label>Reason / Source</label>
+           <select id="gf-reason" required>
+             <option value="Contribution">Group Contribution</option>
+             <option value="Donation">Donation</option>
+             <option value="Fundraising">Fundraising Event</option>
+             <option value="Event Income">Event Income</option>
+             <option value="Other">Other</option>
+           </select>
+         </div>
+       </div>
+       <div class="grid-2">
+         <div class="form-group">
+           <label>Date</label>
+           <input type="date" id="gf-date" value="${today()}" required>
+         </div>
+         <div class="form-group">
+           <label>Received From</label>
+           <input id="gf-from" placeholder="Contributor / Source name">
+         </div>
+       </div>
+       <button type="submit" class="btn-success"><i class="fa fa-plus-circle"></i> Add Deposit Record</button>
+     </form>
+   </div>
+
+   <h5>Deposit History</h5>
+   <div class="table-wrap" style="max-height:220px;overflow-y:auto">
+     <table>
+       <thead>
+         <tr>
+           <th>Date</th>
+           <th>Source/Reason</th>
+           <th>Received From</th>
+           <th>Amount</th>
+         </tr>
+       </thead>
+       <tbody>
+         ${records.length ? records.map(r => `
+           <tr>
+             <td>${esc(r.date)}</td>
+             <td><span class="badge badge-info">${esc(r.reason)}</span></td>
+             <td>${esc(r.receivedFrom || "N/A")}</td>
+             <td><b>${money(r.amount)} ETB</b></td>
+           </tr>
+         `).join("") : `<tr><td colspan="4" class="empty">No separate group deposits recorded yet.</td></tr>`}
+       </tbody>
+     </table>
+   </div>
+ `;
+
+ const footer = `<button class="btn-outline" onclick="closeModal('general-modal')">Close</button>`;
+ openModal("Group Fund Ledger - " + esc(g.groupName), body, footer);
+}
+
+async function saveGroupFundRecord(e, groupId){
+ e.preventDefault();
+ const db = await fetchBackendData();
+
+ const amount = Number(document.getElementById("gf-amount").value);
+ const reason = document.getElementById("gf-reason").value;
+ const date = document.getElementById("gf-date").value;
+ const receivedFrom = document.getElementById("gf-from").value.trim();
+
+ const record = {
+   id: Date.now(),
+   groupId: Number(groupId),
+   amount: amount,
+   reason: reason,
+   date: date,
+   receivedFrom: receivedFrom,
+   createdAt: nowDateTime()
+ };
+
+ db.groupFunds ||= [];
+ db.groupFunds.push(record);
+
+ await saveDB(db);
+ await logActivity(currentUser.id || currentUser.uid, "Group Fund Deposit", `Added ${amount} ETB to group fund (ID ${groupId}).`);
+ closeModal("general-modal");
+ showToast("Group fund deposit recorded.", "success");
+ renderGroupsPage(document.getElementById("content-body"));
+}
+
+</script>
+
 </body>
 </html>
