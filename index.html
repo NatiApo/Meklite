@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#0b3c5d">
+<meta name="theme-color" content="#071b2d">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -14,40 +14,40 @@
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <title>Ethiopian Apostolic Church - Youth Meklit Service</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- Chart.js Engine integration for dynamic directional charts -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 :root{
- --primary-blue:#0b3c5d;
- --secondary-blue:#1d2731;
- --blue2:#173e65;
- --blue3:#246b9a;
- --accent-gold:#c5a059;
- --gold:#d4af37;
- --accent-gold-light:#f4ebd0;
- --bg-color:#f4f6f9;
- --card-bg:#fff;
- --text-main:#333;
- --text-muted:#667085;
- --border-color:#d1d5db;
+ --primary-blue:#071b2d;
+ --secondary-blue:#0f2c4c;
+ --blue2:#133c6b;
+ --blue3:#1e5b99;
+ --accent-gold:#d4af37;
+ --gold:#e6c557;
+ --accent-gold-light:#fbf7ec;
+ --bg-color:#0b1320;
+ --card-bg:rgba(15, 29, 76, 0.65);
+ --text-main:#f1f5f9;
+ --text-muted:#94a3b8;
+ --border-color:rgba(212, 175, 55, 0.2);
  --success:#10b981;
  --danger:#ef4444;
  --warning:#f59e0b;
  --info:#3b82f6;
- --sidebar-width:260px;
- --shadow:0 4px 16px rgba(0,0,0,.08);
- --shadow-3d:0 10px 25px rgba(11,60,93,.15);
- --transition-speed:.25s;
+ --sidebar-width:270px;
+ --shadow:0 10px 30px -5px rgba(0,0,0,0.4);
+ --shadow-3d:0 20px 40px -10px rgba(7,27,45,0.6);
+ --transition-speed:.3s;
 }
 
 *{
  box-sizing:border-box;
  margin:0;
  padding:0;
- font-family:'Inter','Noto Sans Ethiopic',sans-serif;
+ font-family:'Plus Jakarta Sans','Noto Sans Ethiopic',sans-serif;
 }
 
 body{
@@ -59,82 +59,107 @@ body{
 
 button,.btn{
  border:0;
- background:var(--primary-blue);
+ background:linear-gradient(135deg, var(--blue2), var(--primary-blue));
  color:#fff;
- padding:.65rem 1rem;
- border-radius:8px;
- font-weight:600;
+ padding:.75rem 1.2rem;
+ border-radius:10px;
+ font-weight:700;
  cursor:pointer;
- transition:transform .18s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .18s ease, background .18s ease;
+ transition:transform .2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .2s ease, filter .2s ease;
  display:inline-flex;
  align-items:center;
  justify-content:center;
- gap:.45rem;
+ gap:.5rem;
  font-size:.88rem;
- box-shadow:0 2px 5px rgba(0,0,0,0.1);
- perspective:1000px;
- transform-style:preserve-3d;
+ box-shadow:0 4px 12px rgba(7,27,45,0.3);
+ border:1px solid rgba(212, 175, 55, 0.25);
+ position:relative;
+ overflow:hidden;
+}
+
+button::after,.btn::after{
+ content:'';
+ position:absolute;
+ inset:0;
+ background:linear-gradient(rgba(255,255,255,0.1), transparent);
+ opacity:0;
+ transition:opacity .2s;
 }
 
 button:hover,.btn:hover{
- background:#082d45;
- transform:translateY(-2px) translateZ(5px);
- box-shadow:0 6px 15px rgba(11,60,93,0.25);
+ filter:brightness(1.15);
+ transform:translateY(-2px);
+ box-shadow:0 8px 20px rgba(212,175,55,0.25);
+ border-color:var(--accent-gold);
+}
+
+button:hover::after,.btn:hover::after{
+ opacity:1;
 }
 
 button:active,.btn:active{
- transform:translateY(0) scale(.97);
- box-shadow:0 2px 4px rgba(0,0,0,0.1);
+ transform:translateY(0) scale(.98);
+ box-shadow:0 2px 6px rgba(0,0,0,0.2);
 }
 
-.btn-gold{background:var(--accent-gold);color:#17202a}
-.btn-gold:hover{background:#ad8742;box-shadow:0 6px 15px rgba(197,160,89,0.35)}
+.btn-gold{background:linear-gradient(135deg, var(--accent-gold), #b89329);color:#071b2d;border-color:#ffe082}
+.btn-gold:hover{background:linear-gradient(135deg, var(--gold), var(--accent-gold));box-shadow:0 8px 20px rgba(212,175,55,0.4)}
 
-.btn-success{background:var(--success)}
-.btn-success:hover{background:#059669;box-shadow:0 6px 15px rgba(16,185,129,0.35)}
+.btn-success{background:linear-gradient(135deg, #059669, #047857);border-color:#34d399}
+.btn-success:hover{background:linear-gradient(135deg, #10b981, #059669);box-shadow:0 8px 20px rgba(16,185,129,0.35)}
 
-.btn-danger{background:var(--danger)}
-.btn-danger:hover{background:#dc2626;box-shadow:0 6px 15px rgba(239,68,68,0.35)}
+.btn-danger{background:linear-gradient(135deg, #dc2626, #b91c1c);border-color:#f87171}
+.btn-danger:hover{background:linear-gradient(135deg, #ef4444, #dc2626);box-shadow:0 8px 20px rgba(239,68,68,0.35)}
 
-.btn-warning{background:var(--warning);color:#17202a}
-.btn-warning:hover{background:#d97706}
+.btn-warning{background:linear-gradient(135deg, #d97706, #b45309);color:#fff;border-color:#fbbf24}
+.btn-warning:hover{background:linear-gradient(135deg, #f59e0b, #d97706)}
 
-.btn-info{background:var(--info)}
-.btn-info:hover{background:#2563eb}
+.btn-info{background:linear-gradient(135deg, #2563eb, #1d4ed8);border-color:#60a5fa}
+.btn-info:hover{background:linear-gradient(135deg, #3b82f6, #2563eb)}
 
 .btn-outline{
- background:#fff;
+ background:rgba(15,29,76,0.4);
  color:var(--text-main);
- border:1px solid var(--border-color);
+ border:1px solid rgba(255,255,255,0.15);
+ backdrop-filter:blur(10px);
 }
 
 .btn-outline:hover{
- background:#f3f4f6;
- border-color:#9ca3af;
+ background:rgba(255,255,255,0.08);
+ border-color:var(--accent-gold);
+ color:var(--accent-gold);
 }
 
 .btn-sm{
- padding:.4rem .65rem;
+ padding:.45rem .8rem;
  font-size:.78rem;
- border-radius:6px;
+ border-radius:8px;
 }
 
 .hidden{display:none!important}
 
 input,select,textarea{
  width:100%;
- padding:.65rem .75rem;
- border:1px solid var(--border-color);
- border-radius:8px;
+ padding:.75rem 1rem;
+ border:1px solid rgba(255,255,255,0.12);
+ border-radius:10px;
  font-size:.9rem;
- background:#fff;
+ background:rgba(7,27,45,0.6);
+ color:#f8fafc;
  outline:none;
- transition:border-color .2s ease, box-shadow .2s ease;
+ transition:all .25s ease;
+ box-shadow:inset 0 2px 4px rgba(0,0,0,0.2);
 }
 
 input:focus,select:focus,textarea:focus{
- border-color:var(--primary-blue);
- box-shadow:0 0 0 3px rgba(11,60,93,.15);
+ border-color:var(--accent-gold);
+ box-shadow:0 0 0 4px rgba(212,175,55,0.15), inset 0 2px 4px rgba(0,0,0,0.2);
+ background:rgba(7,27,45,0.85);
+}
+
+select option{
+ background:#0f2c4c;
+ color:#f8fafc;
 }
 
 textarea{resize:vertical;min-height:90px}
@@ -143,28 +168,30 @@ label{
  display:block;
  font-size:.82rem;
  font-weight:700;
- color:var(--secondary-blue);
- margin-bottom:.35rem;
+ color:var(--accent-gold);
+ margin-bottom:.4rem;
+ letter-spacing:.02em;
+ text-transform:uppercase;
 }
 
-.form-group{margin-bottom:1rem}
+.form-group{margin-bottom:1.2rem}
 
 .grid-2{
  display:grid;
  grid-template-columns:repeat(2,1fr);
- gap:1rem;
+ gap:1.2rem;
 }
 
 .grid-3{
  display:grid;
  grid-template-columns:repeat(3,1fr);
- gap:1rem;
+ gap:1.2rem;
 }
 
 .grid-4{
  display:grid;
  grid-template-columns:repeat(4,1fr);
- gap:1rem;
+ gap:1.2rem;
 }
 
 .w-full{width:100%}
@@ -175,54 +202,78 @@ label{
  position:fixed;
  inset:0;
  z-index:9999;
- background:radial-gradient(circle at 50% 50%, #173e65 0%, #0b3c5d 50%, #1d2731 100%);
+ background:radial-gradient(circle at 50% 30%, #173e65 0%, #071b2d 60%, #030810 100%);
  display:flex;
  justify-content:center;
  align-items:center;
- padding:1rem;
+ padding:1.5rem;
  perspective:1000px;
+ overflow:hidden;
+}
+
+#login-screen::before{
+ content:'';
+ position:absolute;
+ width:600px;
+ height:600px;
+ background:radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+ top:50%;
+ left:50%;
+ transform:translate(-50%, -50%);
+ pointer-events:none;
 }
 
 .login-card{
- background:rgba(255,255,255,0.98);
- backdrop-filter:blur(10px);
+ background:rgba(15, 29, 76, 0.75);
+ backdrop-filter:blur(25px);
+ -webkit-backdrop-filter:blur(25px);
  width:100%;
- max-width:430px;
- padding:2.3rem 2rem;
- border-radius:18px;
- box-shadow:0 25px 60px rgba(0,0,0,.4), inset 0 1px 1px rgba(255,255,255,0.8);
+ max-width:440px;
+ padding:2.8rem 2.4rem;
+ border-radius:24px;
+ box-shadow:0 30px 80px rgba(0,0,0,.6), inset 0 1px 1px rgba(255,255,255,0.2);
+ border:1px solid rgba(212, 175, 55, 0.3);
  border-top:5px solid var(--accent-gold);
  text-align:center;
  transform-style:preserve-3d;
- transition:transform .3s ease;
+ transition:transform .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+ position:relative;
+ z-index:2;
 }
 
 .login-card:hover{
- transform:translateY(-3px) rotateX(1deg);
+ transform:translateY(-5px) rotateX(2deg);
+ box-shadow:0 35px 90px rgba(0,0,0,.7), inset 0 1px 2px rgba(255,255,255,0.3);
+ border-color:var(--accent-gold);
 }
 
 .logo-large{
- width:95px;
- height:95px;
+ width:100px;
+ height:100px;
  border-radius:50%;
  object-fit:contain;
  border:3px solid var(--accent-gold);
- margin-bottom:1rem;
- box-shadow:0 8px 20px rgba(0,0,0,0.2);
+ margin-bottom:1.2rem;
+ box-shadow:0 10px 25px rgba(212,175,55,0.3);
+ background:radial-gradient(circle, #fff 0%, #e2e8f0 100%);
+ padding:4px;
 }
 
 .login-card h1{
- font-size:1.2rem;
- color:var(--primary-blue);
- margin-bottom:.35rem;
+ font-size:1.35rem;
+ color:#fff;
+ margin-bottom:.4rem;
  font-weight:800;
+ letter-spacing:-0.01em;
+ text-shadow:0 2px 4px rgba(0,0,0,0.3);
 }
 
 .login-card h2{
- font-size:.86rem;
+ font-size:.85rem;
  color:var(--text-muted);
- margin-bottom:1.5rem;
+ margin-bottom:1.8rem;
  font-weight:500;
+ letter-spacing:0.02em;
 }
 
 .login-form{
@@ -234,21 +285,22 @@ label{
 }
 
 .password-wrapper input{
- padding-right:42px;
+ padding-right:45px;
 }
 
 .password-toggle{
  position:absolute;
- right:12px;
+ right:14px;
  top:50%;
  transform:translateY(-50%);
- color:#667085;
+ color:var(--text-muted);
  cursor:pointer;
  transition:color .2s;
+ font-size:1rem;
 }
 
 .password-toggle:hover{
- color:var(--primary-blue);
+ color:var(--accent-gold);
 }
 
 /* APP */
@@ -257,25 +309,27 @@ label{
  display:flex;
  height:100vh;
  overflow:hidden;
+ background:#071b2d;
 }
 
 aside{
  width:var(--sidebar-width);
- background:linear-gradient(180deg, #1d2731 0%, #0b3c5d 100%);
+ background:linear-gradient(180deg, #0f2c4c 0%, #071b2d 100%);
  color:#fff;
  display:flex;
  flex-direction:column;
  flex-shrink:0;
- box-shadow:3px 0 15px rgba(0,0,0,0.15);
+ box-shadow:5px 0 25px rgba(0,0,0,0.3);
  z-index:100;
+ border-right:1px solid rgba(212, 175, 55, 0.15);
 }
 
 .sidebar-header{
- padding:1.2rem 1rem;
+ padding:1.4rem 1.2rem;
  display:flex;
  align-items:center;
- gap:.7rem;
- background:rgba(0,0,0,.22);
+ gap:.9rem;
+ background:rgba(0,0,0,.3);
  border-bottom:1px solid rgba(255,255,255,.08);
 }
 
@@ -286,27 +340,39 @@ aside{
  object-fit:contain;
  background:#fff;
  border:2px solid var(--accent-gold);
- box-shadow:0 4px 10px rgba(0,0,0,0.3);
+ box-shadow:0 4px 12px rgba(212,175,55,0.25);
+ padding:2px;
 }
 
 .sidebar-title{
  font-weight:800;
- font-size:.88rem;
+ font-size:.92rem;
  letter-spacing:.02em;
+ color:#fff;
 }
 
 .sidebar-role{
  color:var(--accent-gold);
- font-size:.7rem;
- margin-top:2px;
- font-weight:600;
+ font-size:.72rem;
+ margin-top:3px;
+ font-weight:700;
+ letter-spacing:0.03em;
+ text-transform:uppercase;
 }
 
 .sidebar-menu{
  list-style:none;
- padding:.7rem 0;
+ padding:.8rem 0;
  overflow-y:auto;
  flex:1;
+}
+
+.sidebar-menu::-webkit-scrollbar{
+ width:4px;
+}
+.sidebar-menu::-webkit-scrollbar-thumb{
+ background:rgba(212,175,55,0.2);
+ border-radius:4px;
 }
 
 .sidebar-menu li a{
@@ -314,37 +380,54 @@ aside{
  text-decoration:none;
  display:flex;
  align-items:center;
- gap:.7rem;
- padding:.72rem 1.15rem;
+ gap:.85rem;
+ padding:.8rem 1.25rem;
  cursor:pointer;
  font-size:.87rem;
- transition:all .2s ease;
+ font-weight:500;
+ transition:all .25s ease;
  border-left:4px solid transparent;
+ margin:.2rem 0;
 }
 
 .sidebar-menu li a:hover,
 .sidebar-menu li.active>a{
- background:rgba(255,255,255,0.08);
+ background:linear-gradient(90deg, rgba(212,175,55,0.15), rgba(212,175,55,0.02));
  color:#fff;
  border-left-color:var(--accent-gold);
- padding-left:1.35rem;
+ padding-left:1.45rem;
+ font-weight:600;
 }
 
 .sidebar-menu li a i:first-child{
- width:18px;
+ width:20px;
  text-align:center;
+ color:var(--accent-gold);
+ font-size:.95rem;
+ transition:transform .2s;
+}
+
+.sidebar-menu li a:hover i:first-child{
+ transform:scale(1.15);
 }
 
 .submenu{
  list-style:none;
- background:rgba(0,0,0,.18);
- border-left:2px solid rgba(197,160,89,0.3);
- margin-left:1.2rem;
+ background:rgba(0,0,0,.25);
+ border-left:2px solid rgba(212,175,55,0.3);
+ margin-left:1.4rem;
+ border-radius:0 0 10px 0;
+ padding:.3rem 0;
 }
 
 .submenu a{
  padding-left:1.8rem!important;
- font-size:.8rem!important;
+ font-size:.81rem!important;
+ color:#94a3b8!important;
+}
+
+.submenu a:hover{
+ color:#fff!important;
 }
 
 main{
@@ -352,125 +435,162 @@ main{
  display:flex;
  flex-direction:column;
  min-width:0;
- background:#f4f6f9;
+ background:#091220;
 }
 
 .topbar{
- height:70px;
- background:#fff;
- border-bottom:1px solid var(--border-color);
+ height:76px;
+ background:rgba(15, 29, 76, 0.7);
+ backdrop-filter:blur(20px);
+ -webkit-backdrop-filter:blur(20px);
+ border-bottom:1px solid rgba(212, 175, 55, 0.15);
  display:flex;
  align-items:center;
  justify-content:space-between;
- padding:0 1.7rem;
+ padding:0 2rem;
  flex-shrink:0;
- box-shadow:0 2px 10px rgba(0,0,0,0.03);
+ box-shadow:0 4px 20px rgba(0,0,0,0.2);
 }
 
 .page-title{
- color:var(--primary-blue);
- font-size:1.25rem;
+ color:#fff;
+ font-size:1.3rem;
  font-weight:800;
  letter-spacing:-0.01em;
+ text-shadow:0 2px 4px rgba(0,0,0,0.2);
 }
 
 .top-user{
  display:flex;
  align-items:center;
- gap:.7rem;
+ gap:.9rem;
+ background:rgba(7,27,45,0.6);
+ padding:.4rem 1rem .4rem .5rem;
+ border-radius:30px;
+ border:1px solid rgba(212,175,55,0.2);
+ box-shadow:0 4px 12px rgba(0,0,0,0.2);
 }
 
 .top-user img{
- width:38px;
- height:38px;
+ width:40px;
+ height:40px;
  border-radius:50%;
  object-fit:contain;
  border:2px solid var(--accent-gold);
- box-shadow:0 2px 6px rgba(0,0,0,0.12);
+ box-shadow:0 2px 8px rgba(212,175,55,0.3);
+ background:#fff;
 }
 
 .top-user-name{
  font-weight:700;
- font-size:.85rem;
+ font-size:.88rem;
+ color:#fff;
 }
 
 .top-user-role{
- color:var(--text-muted);
+ color:var(--accent-gold);
  font-size:.72rem;
+ font-weight:700;
+ text-transform:uppercase;
 }
 
 .content-body{
  flex:1;
  overflow-y:auto;
- padding:1.7rem;
+ padding:2rem;
+ background:radial-gradient(circle at top right, #0f2c4c 0%, #091220 50%);
+}
+
+.content-body::-webkit-scrollbar{
+ width:8px;
+}
+.content-body::-webkit-scrollbar-track{
+ background:#091220;
+}
+.content-body::-webkit-scrollbar-thumb{
+ background:#1e5b99;
+ border-radius:4px;
+}
+.content-body::-webkit-scrollbar-thumb:hover{
+ background:var(--accent-gold);
 }
 
 /* CARDS */
 
 .card{
- background:#fff;
- border-radius:12px;
+ background:rgba(15, 29, 76, 0.55);
+ backdrop-filter:blur(16px);
+ -webkit-backdrop-filter:blur(16px);
+ border-radius:16px;
  box-shadow:var(--shadow);
- border:1px solid #e5e7eb;
- margin-bottom:1.2rem;
- transition:transform .2s ease, box-shadow .2s ease;
+ border:1px solid rgba(255,255,255,0.08);
+ margin-bottom:1.5rem;
+ transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
  overflow:hidden;
 }
 
 .card:hover{
- box-shadow:0 8px 24px rgba(0,0,0,.08);
+ box-shadow:0 15px 35px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+ border-color:rgba(212,175,55,0.25);
 }
 
 .card-header{
- padding:1rem 1.25rem;
- border-bottom:1px solid #f1f5f9;
+ padding:1.2rem 1.5rem;
+ border-bottom:1px solid rgba(255,255,255,0.06);
  display:flex;
  align-items:center;
  justify-content:space-between;
  gap:1rem;
- background:#fafbfc;
+ background:rgba(7, 27, 45, 0.4);
 }
 
 .card-title{
- font-size:.95rem;
+ font-size:1.05rem;
  font-weight:800;
- color:var(--secondary-blue);
+ color:#fff;
  display:flex;
  align-items:center;
- gap:.5rem;
+ gap:.6rem;
+ text-shadow:0 1px 2px rgba(0,0,0,0.2);
+}
+
+.card-title i{
+ color:var(--accent-gold);
 }
 
 .card-body{
- padding:1.25rem;
+ padding:1.5rem;
 }
 
 .stats-grid{
  display:grid;
- grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
- gap:1.1rem;
- margin-bottom:1.3rem;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:1.25rem;
+ margin-bottom:1.5rem;
  perspective:1000px;
 }
 
 .stat-card{
- background:#fff;
- border-radius:12px;
- padding:1.25rem;
+ background:rgba(15, 29, 76, 0.65);
+ backdrop-filter:blur(16px);
+ border-radius:16px;
+ padding:1.4rem;
  box-shadow:var(--shadow);
- border-left:5px solid var(--primary-blue);
+ border-left:5px solid var(--info);
  display:flex;
  justify-content:space-between;
  align-items:center;
- transition:transform .25s ease, box-shadow .25s ease;
+ transition:transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow .3s ease, border-color .3s ease;
  transform-style:preserve-3d;
- border-top:1px solid #f1f5f9;
- border-right:1px solid #f1f5f9;
- border-bottom:1px solid #f1f5f9;
+ border-top:1px solid rgba(255,255,255,0.08);
+ border-right:1px solid rgba(255,255,255,0.08);
+ border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
 .stat-card:hover{
- transform:translateY(-4px) translateZ(8px);
+ transform:translateY(-5px) translateZ(10px);
  box-shadow:var(--shadow-3d);
+ border-color:rgba(212,175,55,0.3);
 }
 
 .stat-card.gold{border-left-color:var(--accent-gold)}
@@ -480,101 +600,110 @@ main{
 
 .stat-label{
  color:var(--text-muted);
- font-size:.72rem;
+ font-size:.75rem;
  font-weight:800;
  text-transform:uppercase;
- letter-spacing:.04em;
- margin-bottom:.3rem;
+ letter-spacing:.05em;
+ margin-bottom:.4rem;
 }
 
 .stat-value{
- color:var(--secondary-blue);
- font-size:1.65rem;
+ color:#fff;
+ font-size:1.85rem;
  font-weight:800;
+ text-shadow:0 2px 4px rgba(0,0,0,0.3);
 }
 
 .stat-card i{
- color:#d7dde3;
- font-size:2.1rem;
- transition:color .2s;
+ color:rgba(255,255,255,0.15);
+ font-size:2.3rem;
+ transition:all .3s ease;
 }
 
 .stat-card:hover i{
- color:var(--primary-blue);
+ color:var(--info);
+ transform:scale(1.1) rotate(5deg);
 }
 
 .stat-card.gold:hover i{color:var(--accent-gold)}
 .stat-card.success:hover i{color:var(--success)}
-.stat-card.info:hover i{color:var(--info)}
+.stat-card.warning:hover i{color:var(--warning)}
 
 /* TABLE */
 
 .table-wrap{
  overflow-x:auto;
+ border-radius:10px;
+ border:1px solid rgba(255,255,255,0.08);
 }
 
 table{
  width:100%;
  border-collapse:collapse;
- font-size:.82rem;
+ font-size:.85rem;
 }
 
 th,td{
- padding:.75rem .85rem;
- border-bottom:1px solid #f1f5f9;
+ padding:.9rem 1rem;
+ border-bottom:1px solid rgba(255,255,255,0.06);
  text-align:left;
  white-space:nowrap;
 }
 
 th{
- background:#f8fafc;
- color:var(--secondary-blue);
+ background:rgba(7, 27, 45, 0.8);
+ color:var(--accent-gold);
  font-weight:800;
  text-transform:uppercase;
- font-size:.72rem;
- letter-spacing:.03em;
+ font-size:.75rem;
+ letter-spacing:.05em;
+ border-bottom:2px solid rgba(212,175,55,0.3);
 }
 
-tr:hover td{background:#f8fafc}
+tr:hover td{
+ background:rgba(212, 175, 55, 0.04);
+}
 
 .actions{
  display:flex;
- gap:.35rem;
+ gap:.5rem;
  align-items:center;
 }
 
 .badge{
  display:inline-flex;
  align-items:center;
- padding:.25rem .6rem;
+ padding:.3rem .75rem;
  border-radius:20px;
- font-size:.7rem;
+ font-size:.72rem;
  font-weight:800;
- letter-spacing:.02em;
+ letter-spacing:.03em;
+ box-shadow:0 2px 5px rgba(0,0,0,0.2);
 }
 
-.badge-success{background:#d1fae5;color:#047857}
-.badge-danger{background:#fee2e2;color:#b91c1c}
-.badge-warning{background:#fef3c7;color:#92400e}
-.badge-info{background:#dbeafe;color:#1d4ed8}
-.badge-gray{background:#e5e7eb;color:#374151}
+.badge-success{background:rgba(16,185,129,0.2);color:#34d399;border:1px solid rgba(16,185,129,0.4)}
+.badge-danger{background:rgba(239,68,68,0.2);color:#f87171;border:1px solid rgba(239,68,68,0.4)}
+.badge-warning{background:rgba(245,158,11,0.2);color:#fbbf24;border:1px solid rgba(245,158,11,0.4)}
+.badge-info{background:rgba(59,130,246,0.2);color:#60a5fa;border:1px solid rgba(59,130,246,0.4)}
+.badge-gray{background:rgba(148,163,184,0.2);color:#cbd5e1;border:1px solid rgba(148,163,184,0.4)}
 
 .empty{
  text-align:center;
  color:var(--text-muted);
- padding:2.5rem 1rem;
+ padding:3rem 1rem;
+ font-size:.95rem;
 }
 
 .toolbar{
  display:flex;
  flex-wrap:wrap;
- gap:.6rem;
+ gap:.8rem;
  align-items:center;
 }
 
 .toolbar .search{
  flex:1;
- min-width:200px;
+ min-width:220px;
 }
 
 /* MODAL */
@@ -582,14 +711,15 @@ tr:hover td{background:#f8fafc}
 .modal-backdrop{
  position:fixed;
  inset:0;
- background:rgba(15,23,42,.65);
- backdrop-filter:blur(4px);
+ background:rgba(3, 8, 16, 0.75);
+ backdrop-filter:blur(8px);
+ -webkit-backdrop-filter:blur(8px);
  z-index:5000;
  display:flex;
  align-items:center;
  justify-content:center;
  padding:1rem;
- animation:fadeIn .2s ease;
+ animation:fadeIn .25s ease;
 }
 
 @keyframes fadeIn{
@@ -599,74 +729,94 @@ tr:hover td{background:#f8fafc}
 
 .modal{
  width:100%;
- max-width:720px;
+ max-width:760px;
  max-height:92vh;
- background:#fff;
- border-radius:14px;
+ background:linear-gradient(145deg, #0f2c4c, #071b2d);
+ border-radius:20px;
  overflow:hidden;
- box-shadow:0 25px 70px rgba(0,0,0,.35);
+ box-shadow:0 30px 90px rgba(0,0,0,.7), inset 0 1px 1px rgba(255,255,255,0.2);
+ border:1px solid rgba(212, 175, 55, 0.3);
  display:flex;
  flex-direction:column;
- transform:scale(0.98);
- animation:modalPop .2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+ transform:scale(0.95);
+ animation:modalPop .3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 @keyframes modalPop{
  to{transform:scale(1)}
 }
 
-.modal-lg{max-width:1000px}
+.modal-lg{max-width:1050px}
 
 .modal-header{
- background:linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+ background:linear-gradient(90deg, #0f2c4c, #071b2d);
  color:#fff;
- padding:1.1rem 1.35rem;
+ padding:1.3rem 1.6rem;
  display:flex;
  justify-content:space-between;
  align-items:center;
+ border-bottom:1px solid rgba(212,175,55,0.2);
+}
+
+.modal-header h3{
+ color:#fff;
+ font-weight:800;
+ font-size:1.15rem;
+}
+
+.modal-header i.fa-times{
+ font-size:1.1rem;
+ color:var(--text-muted);
+ transition:color .2s, transform .2s;
+}
+
+.modal-header i.fa-times:hover{
+ color:var(--accent-gold);
+ transform:scale(1.2);
 }
 
 .modal-body{
- padding:1.35rem;
+ padding:1.6rem;
  overflow-y:auto;
 }
 
 .modal-footer{
- padding:1rem 1.35rem;
- background:#f8fafc;
- border-top:1px solid var(--border-color);
+ padding:1.2rem 1.6rem;
+ background:rgba(7, 27, 45, 0.6);
+ border-top:1px solid rgba(255,255,255,0.08);
  display:flex;
  justify-content:flex-end;
- gap:.5rem;
+ gap:.8rem;
 }
 
 /* TOAST */
 
 #toast-container{
  position:fixed;
- right:20px;
- top:20px;
+ right:24px;
+ top:24px;
  z-index:10000;
  display:flex;
  flex-direction:column;
- gap:8px;
+ gap:10px;
 }
 
 .toast{
- min-width:280px;
- max-width:420px;
- padding:.85rem 1.1rem;
- border-radius:10px;
- background:#1d2731;
+ min-width:300px;
+ max-width:440px;
+ padding:1rem 1.25rem;
+ border-radius:12px;
+ background:linear-gradient(135deg, #0f2c4c, #071b2d);
  color:#fff;
- box-shadow:0 12px 30px rgba(0,0,0,.25);
- border-left:5px solid var(--success);
- animation:toastIn .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
- font-size:.85rem;
- font-weight:500;
+ box-shadow:0 15px 35px rgba(0,0,0,.5);
+ border:1px solid rgba(212,175,55,0.3);
+ border-left:6px solid var(--success);
+ animation:toastIn .35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+ font-size:.9rem;
+ font-weight:600;
  display:flex;
  align-items:center;
- gap:.6rem;
+ gap:.8rem;
 }
 
 .toast.error{border-left-color:var(--danger)}
@@ -681,11 +831,14 @@ tr:hover td{background:#f8fafc}
 /* A4 FORM */
 
 #form-print-area{
- background:#dfe4e8;
- padding:1.2rem;
+ background:#040914;
+ padding:1.5rem;
  overflow:auto;
  display:flex;
  justify-content:center;
+ border-radius:12px;
+ border:1px solid rgba(255,255,255,0.08);
+ box-shadow:inset 0 4px 20px rgba(0,0,0,0.5);
 }
 
 .sheet{
@@ -699,7 +852,8 @@ tr:hover td{background:#f8fafc}
  flex-direction:column;
  overflow:hidden;
  border:1.1mm solid #173e65;
- box-shadow:0 12px 40px rgba(0,0,0,.22);
+ box-shadow:0 20px 60px rgba(0,0,0,.6);
+ color:#333;
 }
 
 .sheet:before{
@@ -830,6 +984,7 @@ tr:hover td{background:#f8fafc}
 
 .write-line:focus{
  border-bottom-color:#d4af37;
+ box-shadow:none;
 }
 
 .write-line-short{
@@ -976,106 +1131,119 @@ tr:hover td{background:#f8fafc}
 
 .quick-actions{
  display:grid;
- grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
- gap:.9rem;
- margin-bottom:1.3rem;
+ grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+ gap:1.25rem;
+ margin-bottom:1.5rem;
  perspective:1000px;
 }
 
 .quick-action{
- background:#fff;
- padding:1rem;
- border-radius:10px;
- border:1px solid #e5e7eb;
+ background:rgba(15, 29, 76, 0.6);
+ backdrop-filter:blur(16px);
+ padding:1.25rem;
+ border-radius:14px;
+ border:1px solid rgba(255,255,255,0.08);
  box-shadow:var(--shadow);
  cursor:pointer;
  display:flex;
  align-items:center;
- gap:.8rem;
- transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+ gap:1rem;
+ transition:transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow .3s ease, border-color .3s ease;
  transform-style:preserve-3d;
 }
 
 .quick-action:hover{
- transform:translateY(-3px) translateZ(5px);
+ transform:translateY(-4px) translateZ(8px);
  border-color:var(--accent-gold);
- box-shadow:0 8px 20px rgba(0,0,0,.08);
+ box-shadow:0 15px 35px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+ background:rgba(15, 29, 76, 0.85);
 }
 
 .quick-action i{
- width:42px;
- height:42px;
+ width:48px;
+ height:48px;
  display:flex;
  align-items:center;
  justify-content:center;
- border-radius:10px;
- background:#eef5fa;
- color:var(--primary-blue);
- font-size:1.1rem;
- transition:background .2s, color .2s;
+ border-radius:12px;
+ background:rgba(212, 175, 55, 0.1);
+ color:var(--accent-gold);
+ font-size:1.25rem;
+ border:1px solid rgba(212,175,55,0.2);
+ transition:all .3s ease;
 }
 
 .quick-action:hover i{
- background:var(--primary-blue);
- color:#fff;
+ background:var(--accent-gold);
+ color:#071b2d;
+ transform:scale(1.1) rotate(-5deg);
 }
 
 /* INTERACTIVE ANALYTICS EXTENSIONS */
 .rank-badge{
- display:inline-block;
- width:24px;
- height:24px;
- line-height:24px;
- text-align:center;
+ display:inline-flex;
+ width:26px;
+ height:26px;
+ align-items:center;
+ justify-content:center;
  border-radius:50%;
- font-weight:bold;
- font-size:.75rem;
- background:#e2e8f0;
- color:#475569;
+ font-weight:800;
+ font-size:.78rem;
+ background:rgba(255,255,255,0.1);
+ color:#cbd5e1;
+ border:1px solid rgba(255,255,255,0.15);
 }
-.rank-1{background:#fef08a;color:#854d0e;border:1px solid #eab308;box-shadow:0 2px 5px rgba(234,179,8,0.3)}
-.rank-2{background:#e2e8f0;color:#334155;border:1px solid #94a3b8}
-.rank-3{background:#ffedd5;color:#9a3412;border:1px solid #f97316}
+.rank-1{background:linear-gradient(135deg, #fef08a, #ca8a04);color:#071b2d;border-color:#fde047;box-shadow:0 4px 12px rgba(234,179,8,0.4)}
+.rank-2{background:linear-gradient(135deg, #e2e8f0, #94a3b8);color:#0f2c4c;border-color:#cbd5e1;box-shadow:0 4px 12px rgba(148,163,184,0.3)}
+.rank-3{background:linear-gradient(135deg, #fed7aa, #c2410c);color:#fff;border-color:#fb923c;box-shadow:0 4px 12px rgba(249,115,22,0.3)}
 
 .compare-card{
  border-top:4px solid var(--accent-gold);
- background:#fff;
- border-radius:10px;
- padding:1.1rem;
+ background:rgba(15, 29, 76, 0.7);
+ backdrop-filter:blur(16px);
+ border-radius:14px;
+ padding:1.4rem;
  box-shadow:var(--shadow);
- transition:transform .2s;
+ border-left:1px solid rgba(255,255,255,0.08);
+ border-right:1px solid rgba(255,255,255,0.08);
+ border-bottom:1px solid rgba(255,255,255,0.08);
+ transition:transform .3s ease;
 }
 
 .compare-card:hover{
- transform:translateY(-2px);
+ transform:translateY(-3px);
+ border-color:rgba(212,175,55,0.3);
 }
 
 .compare-title{
  font-weight:800;
- font-size:1.1rem;
- color:var(--primary-blue);
- margin-bottom:.5rem;
+ font-size:1.15rem;
+ color:#fff;
+ margin-bottom:.6rem;
  text-align:center;
+ text-shadow:0 1px 2px rgba(0,0,0,0.2);
 }
 
 /* MOBILE */
 
 .mobile-menu{
  display:none;
- background:none;
- color:var(--primary-blue);
- padding:.2rem;
+ background:rgba(255,255,255,0.08);
+ color:var(--accent-gold);
+ padding:.5rem;
+ border-radius:8px;
  font-size:1.2rem;
+ border:1px solid rgba(212,175,55,0.3);
 }
 
 @media(max-width:900px){
  aside{
   position:fixed;
-  left:-270px;
+  left:-280px;
   top:0;
   bottom:0;
   z-index:4000;
-  transition:left .25s ease;
+  transition:left .3s cubic-bezier(0.4, 0, 0.2, 1);
  }
 
  aside.open{left:0}
@@ -1087,12 +1255,12 @@ tr:hover td{background:#f8fafc}
 }
 
 @media(max-width:650px){
- .content-body{padding:1rem}
- .topbar{padding:0 1rem}
+ .content-body{padding:1.2rem}
+ .topbar{padding:0 1.2rem}
  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
  .top-user div{display:none}
  .stats-grid{grid-template-columns:1fr 1fr}
- .stats-grid .stat-value{font-size:1.3rem}
+ .stats-grid .stat-value{font-size:1.4rem}
  .quick-actions{grid-template-columns:1fr}
 }
 
@@ -1124,26 +1292,26 @@ tr:hover td{background:#f8fafc}
 /* ============================================================
    SEPARATE GROUP FUNDS - DOES NOT TOUCH CANDIDATE MONEY
 ============================================================ */
-.group-funds-panel{margin-top:1.25rem}
-.group-fund-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1rem}
-.group-fund-stat{background:linear-gradient(135deg,#fff,#f8fafc);border:1px solid #e5e7eb;border-radius:12px;padding:1rem;box-shadow:0 4px 14px rgba(15,23,42,.05)}
-.group-fund-stat .label{font-size:.78rem;color:#667085;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
-.group-fund-stat .value{margin-top:.35rem;font-size:1.35rem;font-weight:800;color:var(--primary-blue)}
-.group-fund-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.group-fund-card{border:1px solid #e5e7eb;border-radius:12px;padding:1rem;background:#fff;box-shadow:0 4px 16px rgba(15,23,42,.05)}
-.group-fund-card h4{margin:0 0 .35rem;color:var(--primary-blue)}
-.group-fund-balance{font-size:1.45rem;font-weight:900;color:#15803d}
-.group-fund-meta{font-size:.78rem;color:#667085;margin-top:.2rem}
+.group-funds-panel{margin-top:1.5rem}
+.group-fund-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:1.2rem}
+.group-fund-stat{background:rgba(15, 29, 76, 0.6);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:1.2rem;box-shadow:var(--shadow)}
+.group-fund-stat .label{font-size:.78rem;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.group-fund-stat .value{margin-top:.4rem;font-size:1.45rem;font-weight:800;color:var(--accent-gold)}
+.group-fund-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.group-fund-card{border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:1.2rem;background:rgba(15, 29, 76, 0.6);backdrop-filter:blur(16px);box-shadow:var(--shadow)}
+.group-fund-card h4{margin:0 0 .4rem;color:#fff;font-weight:800}
+.group-fund-balance{font-size:1.55rem;font-weight:900;color:#34d399}
+.group-fund-meta{font-size:.78rem;color:var(--text-muted);margin-top:.3rem}
 .group-members-list{max-height:420px;overflow:auto}
-.group-member-row{display:flex;align-items:center;gap:.8rem;padding:.75rem;border:1px solid #eef2f7;border-radius:10px;margin-bottom:.55rem;background:#fafcff}
-.group-member-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#eaf0f6;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--primary-blue)}
-.group-member-name{font-weight:800;color:#243b53}
-.group-member-meta{font-size:.78rem;color:#667085}
+.group-member-row{display:flex;align-items:center;gap:.9rem;padding:.85rem;border:1px solid rgba(255,255,255,0.06);border-radius:12px;margin-bottom:.6rem;background:rgba(7,27,45,0.4)}
+.group-member-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;background:rgba(212,175,55,0.15);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent-gold);border:1px solid rgba(212,175,55,0.3)}
+.group-member-name{font-weight:800;color:#fff}
+.group-member-meta{font-size:.78rem;color:var(--text-muted)}
 @media(max-width:900px){.group-fund-summary{grid-template-columns:repeat(2,1fr)}.group-fund-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.group-fund-summary,.group-fund-grid{grid-template-columns:1fr}}
-.group-money-section{margin-top:1.25rem}
+.group-money-section{margin-top:1.5rem}
 .group-money-table td,.group-money-table th{vertical-align:middle}
-.group-money-total{font-size:1.05rem;font-weight:900;color:#15803d}
+.group-money-total{font-size:1.1rem;font-weight:900;color:#34d399}
 
 </style>
 </head>
@@ -1188,15 +1356,15 @@ tr:hover td{background:#f8fafc}
     </div>
    </div>
 
-   <button type="submit" class="w-full" style="margin-top:.8rem">
+   <button type="submit" class="w-full btn-gold" style="margin-top:1rem;padding:.85rem">
     <i class="fa fa-sign-in-alt"></i>
-    LOGIN
+    LOGIN SECURELY
    </button>
 
   </form>
 
-  <div style="margin-top:1.5rem;font-size:.73rem;color:#667085">
-   ☝️:
+  <div style="margin-top:1.8rem;font-size:.78rem;color:var(--text-muted);border-top:1px solid rgba(255,255,255,0.08);padding-top:1.2rem">
+   ✨
    <strong>ONE GOD</strong> /
    <strong>JESUS CHRIST</strong>
   </div>
@@ -1318,7 +1486,7 @@ tr:hover td{background:#f8fafc}
    </li>
 
    <li>
-    <a onclick="logout()" style="color:#fca5a5">
+    <a onclick="logout()" style="color:#f87171">
      <i class="fa fa-sign-out-alt"></i>
      Logout
     </a>
@@ -1333,7 +1501,7 @@ tr:hover td{background:#f8fafc}
 
   <header class="topbar no-print">
 
-   <div style="display:flex;align-items:center;gap:.8rem">
+   <div style="display:flex;align-items:center;gap:1rem">
 
     <button class="mobile-menu"
             onclick="toggleMobileSidebar()">
@@ -1431,7 +1599,7 @@ tr:hover td{background:#f8fafc}
     </div>
 
     <div class="modal-footer"
-         style="margin:1rem -1.25rem -1.25rem">
+         style="margin:1.5rem -1.6rem -1.6rem">
 
      <button type="button"
              class="btn-outline"
@@ -1439,7 +1607,7 @@ tr:hover td{background:#f8fafc}
       Cancel
      </button>
 
-     <button type="submit">
+     <button type="submit" class="btn-gold">
       <i class="fa fa-key"></i>
       Update Password
      </button>
@@ -1946,7 +2114,7 @@ async function renderDashboard(container){
     <i class="fa fa-user-plus"></i>
     <div>
      <strong>Register Candidate</strong>
-     <small style="display:block;color:#667085">
+     <small style="display:block;color:var(--text-muted)">
       Open A4 registration form
      </small>
     </div>
@@ -1957,7 +2125,7 @@ async function renderDashboard(container){
     <i class="fa fa-chart-line"></i>
     <div>
      <strong>Money Analytics</strong>
-     <small style="display:block;color:#667085">
+     <small style="display:block;color:var(--text-muted)">
       Directional Groups & Candidates comparison
      </small>
     </div>
@@ -1968,7 +2136,7 @@ async function renderDashboard(container){
     <i class="fa fa-address-book"></i>
     <div>
      <strong>Candidate Directory</strong>
-     <small style="display:block;color:#667085">
+     <small style="display:block;color:var(--text-muted)">
       Search and manage candidates
      </small>
     </div>
@@ -2054,7 +2222,7 @@ async function renderDashboard(container){
            <td><span class="rank-badge ${idx===0?'rank-1':idx===1?'rank-2':idx===2?'rank-3':''}">${idx+1}</span></td>
            <td><b>${esc(g.groupName)}</b></td>
            <td>${g.count}</td>
-           <td><strong style="color:var(--primary-blue)">${money(g.amount)} ETB</strong></td>
+           <td><strong style="color:var(--success)">${money(g.amount)} ETB</strong></td>
           </tr>
          `).join("")
        }
@@ -2088,7 +2256,7 @@ async function renderAnalyticsPage(container){
      </div>
    </div>
    <div class="card-body">
-     <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.2rem">
+     <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.5rem">
        Analyze group funds and candidate contributions separately. Group Money never includes individual candidate contributions.
      </p>
 
@@ -2104,12 +2272,12 @@ async function renderAnalyticsPage(container){
        </div>
      </div>
 
-     <div class="card" style="margin-top:1.2rem">
+     <div class="card" style="margin-top:1.5rem">
        <div class="card-header">
          <div class="card-title"><i class="fa fa-code-compare"></i> Side-by-Side Candidate Money Comparison</div>
        </div>
        <div class="card-body">
-         <div class="grid-2" style="margin-bottom:1rem">
+         <div class="grid-2" style="margin-bottom:1.2rem">
            <div>
              <label>Select First Candidate</label>
              <select id="compare-c1" onchange="updateCandidatesComparison()">
@@ -2131,7 +2299,7 @@ async function renderAnalyticsPage(container){
        </div>
      </div>
 
-     <div class="card" style="margin-top:1.2rem">
+     <div class="card" style="margin-top:1.5rem">
        <div class="card-header">
          <div class="card-title"><i class="fa fa-trophy"></i> Top Money-Contributing Candidates Leaderboard</div>
        </div>
@@ -2205,13 +2373,21 @@ function initAnalyticsCharts(db){
      datasets: [{
        label: 'Group Money (ETB)',
        data: groupData.map(g=>g.total),
-       backgroundColor: '#0b3c5d',
-       borderColor: '#c5a059',
+       backgroundColor: '#1e5b99',
+       borderColor: '#d4af37',
        borderWidth: 1.5,
-       borderRadius: 5
+       borderRadius: 6
      }]
    },
-   options: { responsive: true, maintainAspectRatio: false }
+   options: { 
+     responsive: true, 
+     maintainAspectRatio: false,
+     plugins: { legend: { labels: { color: '#f8fafc' } } },
+     scales: {
+       x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+       y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+     }
+   }
  });
 
  let totalMonthly = 0, totalPersonal = 0, totalGift = 0, totalOther = 0;
@@ -2229,10 +2405,15 @@ function initAnalyticsCharts(db){
      labels: ['Monthly', 'Personal Meklit', 'Gift', 'Other'],
      datasets: [{
        data: [totalMonthly, totalPersonal, totalGift, totalOther],
-       backgroundColor: ['#0b3c5d', '#c5a059', '#10b981', '#3b82f6']
+       backgroundColor: ['#3b82f6', '#d4af37', '#10b981', '#f59e0b'],
+       borderWidth: 0
      }]
    },
-   options: { responsive: true, maintainAspectRatio: false }
+   options: { 
+     responsive: true, 
+     maintainAspectRatio: false,
+     plugins: { legend: { labels: { color: '#f8fafc' } } }
+   }
  });
 }
 
@@ -2268,8 +2449,8 @@ function updateCandidatesComparison(){
      <div class="info-row"><span class="label">Personal:</span> <span>${money(b1.personal)} ETB</span></div>
      <div class="info-row"><span class="label">Gift:</span> <span>${money(b1.gift)} ETB</span></div>
      <div class="info-row"><span class="label">Other:</span> <span>${money(b1.other)} ETB</span></div>
-     <hr style="margin:.5rem 0">
-     <div style="font-size:1.1rem;font-weight:800;color:var(--primary-blue);text-align:center">
+     <hr style="margin:.6rem 0;border-color:rgba(255,255,255,0.08)">
+     <div style="font-size:1.1rem;font-weight:800;color:var(--success);text-align:center">
        Total: ${money(t1)} ETB
      </div>
    </div>
@@ -2281,14 +2462,14 @@ function updateCandidatesComparison(){
      <div class="info-row"><span class="label">Personal:</span> <span>${money(b2.personal)} ETB</span></div>
      <div class="info-row"><span class="label">Gift:</span> <span>${money(b2.gift)} ETB</span></div>
      <div class="info-row"><span class="label">Other:</span> <span>${money(b2.other)} ETB</span></div>
-     <hr style="margin:.5rem 0">
-     <div style="font-size:1.1rem;font-weight:800;color:var(--primary-blue);text-align:center">
+     <hr style="margin:.6rem 0;border-color:rgba(255,255,255,0.08)">
+     <div style="font-size:1.1rem;font-weight:800;color:var(--success);text-align:center">
        Total: ${money(t2)} ETB
      </div>
    </div>
 
-   <div class="full-span" style="background:#fef3c7;padding:1rem;border-radius:8px;border:1px solid #f59e0b;text-align:center;margin-top:.5rem">
-     <strong style="color:#92400e">Comparison Insight:</strong> 
+   <div class="full-span" style="background:rgba(245,158,11,0.15);padding:1.2rem;border-radius:12px;border:1px solid rgba(245,158,11,0.3);text-align:center;margin-top:.5rem">
+     <strong style="color:#fbbf24">Comparison Insight:</strong> 
      ${leader === "Equal" ? "Both candidates have identical overall contributions." : `<b>${esc(leader)}</b> leads by a difference of <b>${money(diff)} ETB</b>.`}
    </div>
  `;
@@ -2320,13 +2501,13 @@ async function renderFormIntegration(container,candidateId=null){
 
  container.innerHTML=`
 
- <div class="card no-print" style="margin-bottom:1rem">
+ <div class="card no-print" style="margin-bottom:1.5rem">
 
   <div class="card-body">
 
    <div class="toolbar">
 
-    <button onclick="saveCandidateForm()">
+    <button class="btn-success" onclick="saveCandidateForm()">
      <i class="fa fa-save"></i>
      ${candidate ? "Update Candidate" : "Save Candidate"}
     </button>
@@ -2362,7 +2543,7 @@ async function renderFormIntegration(container,candidateId=null){
     }
 
     <span id="form-save-status"
-          style="margin-left:auto;color:#10b981;font-weight:700">
+          style="margin-left:auto;color:var(--success);font-weight:700">
     </span>
 
    </div>
@@ -3047,7 +3228,7 @@ async function renderCandidatesList(container){
     Candidates Directory
    </div>
 
-   <button onclick="navigate('add-candidate')">
+   <button class="btn-gold" onclick="navigate('add-candidate')">
     <i class="fa fa-plus"></i>
     Add Candidate
    </button>
@@ -3056,7 +3237,7 @@ async function renderCandidatesList(container){
 
   <div class="card-body">
 
-   <div class="toolbar" style="margin-bottom:1rem">
+   <div class="toolbar" style="margin-bottom:1.5rem">
 
     <input id="candidate-search"
            class="search"
@@ -3129,7 +3310,7 @@ function candidateRows(candidates){
    <tr>
     <td colspan="8" class="empty">
      <i class="fa fa-users"
-        style="font-size:2rem;margin-bottom:.5rem"></i>
+        style="font-size:2rem;margin-bottom:.5rem;color:var(--accent-gold)"></i>
      <br>
      No candidates found.
     </td>
@@ -3158,7 +3339,7 @@ function candidateRows(candidates){
    <td>${esc(c.address||"N/A")}</td>
 
    <td>
-    <b>${money(getCandidateContribution(c))}</b>
+    <strong style="color:var(--success)">${money(getCandidateContribution(c))} ETB</strong>
    </td>
 
    <td>${esc(c.registeredDate||"")}</td>
@@ -3239,28 +3420,28 @@ function viewCandidate(id){
  const breakdown = getCandidateBreakdown(c);
 
  const body = `
-  <div style="text-align:center;margin-bottom:1.2rem">
-    ${c.photo ? `<img src="${c.photo}" style="width:80px;height:95px;object-fit:cover;border:2px solid var(--accent-gold);border-radius:6px;margin-bottom:.5rem">` : ''}
-    <h3 style="color:var(--primary-blue);margin:0">${esc(c.fullName)}</h3>
-    <span class="badge badge-info">${esc(c.group)}</span>
+  <div style="text-align:center;margin-bottom:1.5rem">
+    ${c.photo ? `<img src="${c.photo}" style="width:90px;height:110px;object-fit:cover;border:3px solid var(--accent-gold);border-radius:8px;margin-bottom:.8rem;box-shadow:0 8px 20px rgba(0,0,0,0.4)">` : ''}
+    <h3 style="color:#fff;margin:0;font-size:1.2rem">${esc(c.fullName)}</h3>
+    <span class="badge badge-info" style="margin-top:.4rem">${esc(c.group)}</span>
   </div>
-  <div class="grid-2" style="font-size:.85rem;margin-bottom:1rem">
+  <div class="grid-2" style="font-size:.88rem;margin-bottom:1.2rem;background:rgba(7,27,45,0.4);padding:1rem;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
     <div><strong>Form ID:</strong> ${esc(c.id)}</div>
     <div><strong>Phone:</strong> ${esc(c.phone || "N/A")}</div>
     <div><strong>Address:</strong> ${esc(c.address || "N/A")}</div>
     <div><strong>Registered:</strong> ${esc(c.registeredDate || "N/A")}</div>
   </div>
-  <div class="card" style="margin-top:1rem;background:#f8fafc">
+  <div class="card" style="margin-top:1rem;background:rgba(7,27,45,0.6)">
     <div class="card-body">
-      <h4 style="margin-bottom:.5rem;color:var(--secondary-blue)">Contribution Breakdown</h4>
-      <div class="grid-2" style="font-size:.82rem">
+      <h4 style="margin-bottom:.8rem;color:var(--accent-gold);font-size:.95rem">Contribution Breakdown</h4>
+      <div class="grid-2" style="font-size:.85rem">
         <div>Monthly Contributions: <strong>${money(breakdown.monthly)} ETB</strong></div>
         <div>Personal Meklit: <strong>${money(breakdown.personal)} ETB</strong></div>
         <div>Gift: <strong>${money(breakdown.gift)} ETB</strong></div>
         <div>Other: <strong>${money(breakdown.other)} ETB</strong></div>
       </div>
-      <hr style="margin:.8rem 0">
-      <div style="font-size:1.05rem;font-weight:800;color:var(--primary-blue)">
+      <hr style="margin:1rem 0;border-color:rgba(255,255,255,0.08)">
+      <div style="font-size:1.15rem;font-weight:800;color:var(--success);text-align:center">
         Total Contribution: ${money(total)} ETB
       </div>
     </div>
@@ -3270,7 +3451,7 @@ function viewCandidate(id){
  const footer = `
   <button class="btn-outline" onclick="closeModal('general-modal')">Close</button>
   <button class="btn-gold" onclick="closeModal('general-modal'); editCandidate('${esc(c.id)}')"><i class="fa fa-edit"></i> Edit</button>
-  <button onclick="closeModal('general-modal'); printCandidate('${esc(c.id)}')"><i class="fa fa-print"></i> Print Form</button>
+  <button class="btn-info" onclick="closeModal('general-modal'); printCandidate('${esc(c.id)}')"><i class="fa fa-print"></i> Print Form</button>
  `;
 
  openModal("Candidate Details - " + esc(c.fullName), body, footer);
@@ -3363,7 +3544,7 @@ async function renderGroupsPage(container){
                  <td>${esc(g.description || "")}</td>
                  <td><span class="badge ${g.status==='Active'?'badge-success':'badge-gray'}">${esc(g.status)}</span></td>
                  <td>${memberCount} members</td>
-                 <td><strong style="color:var(--primary-blue)">${money(groupMoney)} ETB</strong></td>
+                 <td><strong style="color:var(--success)">${money(groupMoney)} ETB</strong></td>
                  <td>
                    <div class="actions">
                      <button class="btn-info btn-sm" onclick="openGroupFundsModal(${g.id})"><i class="fa fa-coins"></i> Manage Fund</button>
@@ -3403,7 +3584,7 @@ function openAddGroupModal(){
  `;
  const footer = `
    <button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
-   <button onclick="document.getElementById('add-group-form').requestSubmit()"><i class="fa fa-save"></i> Save Group</button>
+   <button class="btn-gold" onclick="document.getElementById('add-group-form').requestSubmit()"><i class="fa fa-save"></i> Save Group</button>
  `;
  openModal("Add New Group", body, footer);
 }
@@ -3434,7 +3615,7 @@ function openEditGroupModal(id){
  `;
  const footer = `
    <button class="btn-outline" onclick="closeModal('general-modal')">Cancel</button>
-   <button onclick="document.getElementById('edit-group-form').requestSubmit()"><i class="fa fa-save"></i> Save Changes</button>
+   <button class="btn-gold" onclick="document.getElementById('edit-group-form').requestSubmit()"><i class="fa fa-save"></i> Save Changes</button>
  `;
  openModal("Edit Group - " + esc(g.groupName), body, footer);
 }
@@ -3496,18 +3677,18 @@ function openGroupFundsModal(groupId){
  const total = records.reduce((s, r) => s + Number(r.amount || 0), 0);
 
  const body = `
-   <div style="margin-bottom:1.2rem">
-     <h4 style="color:var(--primary-blue)">${esc(g.groupName)} Separate Fund</h4>
-     <p style="font-size:.8rem;color:var(--text-muted)">
+   <div style="margin-bottom:1.5rem">
+     <h4 style="color:#fff;font-size:1.1rem">${esc(g.groupName)} Separate Fund</h4>
+     <p style="font-size:.82rem;color:var(--text-muted)">
        Group funds are strictly isolated from candidate contributions.
      </p>
-     <div style="font-size:1.3rem;font-weight:800;color:var(--success);margin-top:.4rem">
+     <div style="font-size:1.45rem;font-weight:900;color:var(--success);margin-top:.6rem">
        Current Group Balance: ${money(total)} ETB
      </div>
    </div>
 
-   <div class="card" style="padding:1.1rem;background:#fafbfc;margin-bottom:1.2rem">
-     <h5 style="margin-bottom:.8rem">Add Group Money Deposit</h5>
+   <div class="card" style="padding:1.2rem;background:rgba(7,27,45,0.6);margin-bottom:1.5rem">
+     <h5 style="margin-bottom:1rem;color:var(--accent-gold);font-size:.9rem">Add Group Money Deposit</h5>
      <form id="add-group-fund-form" onsubmit="saveGroupFundRecord(event, ${g.id})">
        <div class="grid-2">
          <div class="form-group">
@@ -3539,7 +3720,7 @@ function openGroupFundsModal(groupId){
      </form>
    </div>
 
-   <h5>Deposit History</h5>
+   <h5 style="color:#fff;font-size:.9rem;margin-bottom:.8rem">Deposit History</h5>
    <div class="table-wrap" style="max-height:220px;overflow-y:auto">
      <table>
        <thead>
@@ -3556,7 +3737,7 @@ function openGroupFundsModal(groupId){
              <td>${esc(r.date)}</td>
              <td><span class="badge badge-info">${esc(r.reason)}</span></td>
              <td>${esc(r.receivedFrom || "N/A")}</td>
-             <td><b>${money(r.amount)} ETB</b></td>
+             <td><strong style="color:var(--success)">${money(r.amount)} ETB</strong></td>
            </tr>
          `).join("") : `<tr><td colspan="4" class="empty">No separate group deposits recorded yet.</td></tr>`}
        </tbody>
